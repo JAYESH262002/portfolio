@@ -23,22 +23,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.querySelector(".menu-toggle");
   const siteNav = document.querySelector("#site-nav");
   const siteNavLinks = [...siteNav.querySelectorAll('a[href^="#"]')];
-  const homeLink = document.querySelector(".wordmark__label");
-  const navigableSections = [
-    document.querySelector("#home"),
-    ...siteNavLinks.map((link) => document.querySelector(link.getAttribute("href"))),
-  ];
+  const navigableSections = siteNavLinks.map((link) =>
+    document.querySelector(link.getAttribute("href")),
+  );
   const themeToggle = document.querySelector(".theme-toggle");
   const profileDialog = document.querySelector("#profile-dialog");
   const profileTrigger = document.querySelector(".profile-trigger");
   const profileClose = document.querySelector(".profile-dialog__close");
+  const infoDialog = document.querySelector("#info-dialog");
+  const infoDialogTitle = document.querySelector("#info-dialog-title");
+  const infoDialogDescription = document.querySelector("#info-dialog-description");
+  const infoDialogClose = document.querySelector(".info-dialog__close");
+  const infoDialogDiagram = document.querySelector(".info-dialog__diagram");
+  const infoDialogSteps = [...infoDialogDiagram.querySelectorAll(".info-dialog__step")];
+  const infoDialogTriggers = document.querySelectorAll(
+    ".info-dialog-trigger, .hero__visual-card",
+  );
   const revealTargets = document.querySelectorAll(
-    ".about__grid, .section-heading, .experience-card, .expertise-card, .minor-note, .projects__grid, .education-item, .education__aside, .contact__content, .site-footer",
+    ".about-layout, .content-heading, .resume-entry, .focus-grid, .minor-row, .project-layout, .education-entry, .off-clock, .contact-layout, .site-footer",
   );
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  let currentSectionId = null;
   function setCurrentSection(sectionId) {
-    homeLink.removeAttribute("aria-current");
+    if (currentSectionId === sectionId) return;
+    currentSectionId = sectionId;
+
     siteNavLinks.forEach((link) => {
       if (link.hash === `#${sectionId}`) {
         link.setAttribute("aria-current", "location");
@@ -47,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    if (sectionId === "home") homeLink.setAttribute("aria-current", "location");
   }
 
   let sectionUpdateScheduled = false;
@@ -128,28 +137,72 @@ document.addEventListener("DOMContentLoaded", () => {
     profileDialog.close();
   });
 
+  let infoDialogTrigger = null;
+  infoDialogTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const steps = trigger.dataset.infoSteps?.split("|") ?? [];
+      const motion = trigger.dataset.infoMotion;
+
+      if (
+        steps.length !== infoDialogSteps.length ||
+        steps.some((step) => !step.trim()) ||
+        !motion
+      ) {
+        console.error("The information popup requires three diagram steps and a motion type.");
+        return;
+      }
+
+      infoDialogTrigger = trigger;
+      infoDialogTitle.textContent = trigger.dataset.infoTitle;
+      infoDialogDescription.textContent = trigger.dataset.infoDescription;
+      infoDialogDiagram.dataset.motion = motion;
+      infoDialogSteps.forEach((step, index) => {
+        step.textContent = steps[index];
+      });
+      infoDialogDiagram.classList.remove("is-animating");
+      if (!reducedMotion) {
+        void infoDialogDiagram.offsetWidth;
+        infoDialogDiagram.classList.add("is-animating");
+      }
+      infoDialog.showModal();
+    });
+  });
+  infoDialogClose.addEventListener("click", () => infoDialog.close());
+  infoDialog.addEventListener("click", (event) => {
+    if (event.target === infoDialog) infoDialog.close();
+  });
+  infoDialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    infoDialog.close();
+  });
+  infoDialog.addEventListener("close", () => {
+    infoDialogDiagram.classList.remove("is-animating");
+    infoDialogTrigger?.focus();
+  });
+
   const contactForm = document.querySelector("#contact-form");
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const formData = new FormData(contactForm);
-    const name = formData.get("name").trim();
-    const email = formData.get("email").trim();
-    const topic = formData.get("subject");
-    const message = formData.get("message").trim();
-    const subject = `Portfolio enquiry: ${topic}`;
+    const subject = `Portfolio enquiry: ${formData.get("subject")}`;
     const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Topic: ${topic}`,
+      `Name: ${formData.get("name").trim()}`,
+      `Email: ${formData.get("email").trim()}`,
+      `Topic: ${formData.get("subject")}`,
       "",
-      message,
+      formData.get("message").trim(),
     ].join("\n");
-    const mailto = `mailto:jayeshsingh9b@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-    document.querySelector("#contact-form-status").textContent =
-      "Your email app should open with this message. Review it and press Send to contact Jayesh.";
-    window.location.href = mailto;
+    const query = new URLSearchParams({
+      view: "cm",
+      fs: "1",
+      to: "jayeshsingh9b@gmail.com",
+      su: subject,
+      body,
+    });
+    const gmailUrl = `https://mail.google.com/mail/?${query}`;
+    contactForm.reset();
+    window.location.assign(gmailUrl);
   });
 
   menuToggle.addEventListener("click", () => {
@@ -169,6 +222,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
+
+    if (infoDialog.open) {
+      event.preventDefault();
+      infoDialog.close();
+      return;
+    }
 
     if (profileDialog.open) {
       profileDialog.close();

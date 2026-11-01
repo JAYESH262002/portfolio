@@ -17,6 +17,7 @@
       rel="stylesheet"
     >
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sections.css">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -27,13 +28,14 @@
           <img src="profile-photo-transparent.png" alt="">
           <span class="wordmark__mark-dot" aria-hidden="true"></span>
         </button>
-        <a class="wordmark__label" href="#home">Jayesh Singh<small>MBA · Operations &amp; Logistics</small></a>
+        <a class="wordmark__label" href="#home"><span class="wordmark__name">Jayesh Singh</span><small>MBA · Operations &amp; Logistics</small></a>
       </div>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
         <span class="menu-toggle__icon" aria-hidden="true"></span>
         <span class="visually-hidden">Toggle navigation</span>
       </button>
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#focus">Focus</a>
@@ -57,7 +59,7 @@
         <button class="profile-dialog__close" type="button" aria-label="Close profile">×</button>
         <img class="profile-dialog__photo" src="profile-photo-transparent.png" alt="Portrait of Jayesh Singh">
         <p class="profile-dialog__eyebrow">A LITTLE ABOUT ME</p>
-        <h2 id="profile-dialog-name">Jayesh Singh</h2>
+        <h2 id="profile-dialog-name" class="profile-dialog__name">Jayesh Singh</h2>
         <p class="profile-dialog__role">MBA candidate · Operations &amp; Logistics</p>
         <p class="profile-dialog__bio">Now based in Phagwara, Punjab, where I’m pursuing my MBA at Lovely Professional University. Previously in Mumbai, with interests in supply chains, sourcing, retail distribution, and thoughtful operations.</p>
         <div class="profile-dialog__links">
@@ -68,11 +70,29 @@
       </div>
     </dialog>
 
+    <dialog class="info-dialog" id="info-dialog" aria-labelledby="info-dialog-title" aria-describedby="info-dialog-description">
+      <div class="info-dialog__card">
+        <button class="info-dialog__close" type="button" aria-label="Close information">×</button>
+        <p class="info-dialog__eyebrow">A QUICK NOTE</p>
+        <h2 id="info-dialog-title"></h2>
+        <p id="info-dialog-description"></p>
+        <div class="info-dialog__diagram" aria-hidden="true">
+          <div class="info-dialog__route">
+            <span class="info-dialog__traveler"><i></i></span>
+          </div>
+          <div class="info-dialog__steps">
+            <span class="info-dialog__step"></span>
+            <span class="info-dialog__step"></span>
+            <span class="info-dialog__step"></span>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
     <main id="main">
       <section class="hero section-wrap" id="home">
         <div class="hero__copy">
-          <div class="eyebrow"><span class="status-dot"></span> Based in Phagwara, Punjab</div>
-          <h1>Operations
+          <h1><span class="hero__title-main headline__white">Operations</span>
             <svg class="hero__title-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <path d="M5 24.5 12.2 17l5.2 4.1L27 10.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
               <path d="M20.5 10.5H27V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -93,15 +113,14 @@
           </div>
           <div class="hero__footnote"><span>STUDYING</span> MBA · Operations &amp; Logistics</div>
           <div class="hero__credentials" aria-label="Experience across">
-            <span>FMCG field sales</span>
-            <span>Sourcing &amp; trade</span>
-            <span>Retail distribution</span>
+            <button class="info-dialog-trigger" type="button" aria-haspopup="dialog" aria-controls="info-dialog" data-info-motion="sales-route" data-info-title="FMCG field sales" data-info-description="Working with shops to take orders and keep everyday products on the shelves." data-info-steps="Visit|Order|Restock">FMCG field sales</button>
+            <button class="info-dialog-trigger" type="button" aria-haspopup="dialog" aria-controls="info-dialog" data-info-motion="supplier-search" data-info-title="Sourcing &amp; trade" data-info-description="Finding suppliers and buying goods, often across countries." data-info-steps="Find|Buy|Import">Sourcing &amp; trade</button>
+            <button class="info-dialog-trigger" type="button" aria-haspopup="dialog" aria-controls="info-dialog" data-info-motion="shop-restock" data-info-title="Retail distribution" data-info-description="Getting products from warehouses to shops and customers." data-info-steps="Warehouse|Store|Customer">Retail distribution</button>
           </div>
         </div>
         <div class="hero__visual">
           <div class="hero__visual-kicker">
-            <span><span class="status-dot"></span> SYSTEMS IN MOTION</span>
-            <small>SOURCE · FLOW · DELIVER</small>
+            <span><span class="status-dot"></span> THE SUPPLY CHAIN, IN MOTION</span>
           </div>
           <div class="hero__system">
             <span class="hero__orbit hero__orbit--outer" aria-hidden="true"></span>
@@ -118,9 +137,40 @@
             <svg class="hero__system-map" viewBox="0 0 440 440" fill="none" aria-hidden="true">
               <circle class="hero__system-ring" cx="220" cy="220" r="177"></circle>
               <circle class="hero__system-ring hero__system-ring--inner" cx="220" cy="220" r="129"></circle>
+              <path class="hero__system-spokes" d="M220 119V91m101 129h27M220 321v28M119 220H91"></path>
               <path class="hero__system-route" d="M220 88c73 0 132 59 132 132s-59 132-132 132S88 293 88 220 147 88 220 88Z"></path>
               <path class="hero__system-route hero__system-route--flow" d="M220 88c73 0 132 59 132 132s-59 132-132 132S88 293 88 220 147 88 220 88Z"></path>
+              <g class="hero__system-parcel">
+                <rect x="-7" y="-6" width="14" height="12" rx="2"></rect>
+                <path d="M-7-2 0 1l7-3M0 1v5"></path>
+                <animateMotion dur="8s" repeatCount="indefinite" rotate="auto" path="M220 88c73 0 132 59 132 132s-59 132-132 132S88 293 88 220 147 88 220 88Z"></animateMotion>
+              </g>
             </svg>
+            <div class="hero__debris-field" aria-hidden="true">
+              <span class="hero__debris-orbit hero__debris-orbit--cargo">
+                <svg class="hero__debris hero__debris--cargo" viewBox="0 0 20 20" fill="none">
+                  <path d="m3.5 6 6.5-3 6.5 3v8l-6.5 3-6.5-3V6Z M3.5 6 10 9l6.5-3M10 9v8M6.7 4.5l6.6 3" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+              <span class="hero__debris-orbit hero__debris-orbit--stock">
+                <svg class="hero__debris hero__debris--stock" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 14.5h12M5 11h10M7 7.5h6M9 4h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <span class="hero__debris-orbit hero__debris-orbit--route">
+                <svg class="hero__debris hero__debris--route" viewBox="0 0 20 20" fill="none">
+                  <circle cx="5" cy="14" r="2" stroke="currentColor" stroke-width="1.3"></circle>
+                  <circle cx="15" cy="6" r="2" stroke="currentColor" stroke-width="1.3"></circle>
+                  <path d="m6.5 12.5 7-5" stroke="currentColor" stroke-width="1.3" stroke-dasharray="2 2"></path>
+                </svg>
+              </span>
+              <span class="hero__debris-orbit hero__debris-orbit--signal">
+                <svg class="hero__debris hero__debris--signal" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 3.5 16.5 10 10 16.5 3.5 10 10 3.5Z" stroke="currentColor" stroke-width="1.3"></path>
+                  <circle cx="10" cy="10" r="1.5" fill="currentColor"></circle>
+                </svg>
+              </span>
+            </div>
             <div class="hero__system-center">
               <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
                 <path d="M8 19.5 24 11l16 8.5v17H8v-17Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
@@ -131,37 +181,61 @@
             </div>
           </div>
           <div class="hero__visual-meta">
-            <div class="hero__visual-card hero__visual-card--location">
+            <button
+              class="hero__visual-card hero__visual-card--location"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="info-dialog"
+              data-info-motion="place-arrival"
+              data-info-title="Based in Punjab"
+              data-info-description="I’m currently studying at Lovely Professional University in Phagwara."
+              data-info-steps="Mumbai|Phagwara|LPU"
+            >
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M19 10.2c0 5-7 11-7 11s-7-6-7-11a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.6"></path>
                 <circle cx="12" cy="10" r="2.2" stroke="currentColor" stroke-width="1.6"></circle>
               </svg>
               <span><small>BASED IN</small><strong>PHAGWARA, PUNJAB</strong></span>
-            </div>
-            <div class="hero__visual-card hero__visual-card--study">
+              <span class="hero__visual-card-hint" aria-hidden="true">↗</span>
+            </button>
+            <button
+              class="hero__visual-card hero__visual-card--study"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="info-dialog"
+              data-info-motion="learning-steps"
+              data-info-title="MBA in progress"
+              data-info-description="I’m building my focus in Operations &amp; Logistics at Lovely Professional University."
+              data-info-steps="Learn|Apply|Grow"
+            >
               <span class="hero__study-icon" aria-hidden="true">✳</span>
               <span><strong>MBA IN PROGRESS</strong><small>Operations &amp; Logistics</small></span>
-            </div>
+              <span class="hero__visual-card-hint" aria-hidden="true">↗</span>
+            </button>
           </div>
         </div>
         <a class="scroll-cue" href="#about"><span></span> Scroll to discover</a>
       </section>
 
-      <div class="ticker" aria-hidden="true">
-        <div class="ticker__track">
-          <span>Operations</span><b>✳</b><span>Logistics</span><b>✳</b>
-          <span>Supply chains</span><b>✳</b><span>Retail distribution</span><b>✳</b>
-          <span>Sourcing &amp; trade</span><b>✳</b><span>Operations</span><b>✳</b>
-          <span>Logistics</span><b>✳</b><span>Supply chains</span><b>✳</b>
-          <span>Retail distribution</span><b>✳</b><span>Sourcing &amp; trade</span><b>✳</b>
+      <div class="ticker">
+        <div class="ticker__track" role="group" aria-label="Explore operations terms">
+          <button class="ticker__term info-dialog-trigger" type="button" aria-haspopup="dialog" aria-controls="info-dialog" data-info-motion="process-pulse" data-info-title="Operations" data-info-description="Planning work, people and materials so a business runs well." data-info-steps="Plan|Do|Improve">Operations</button>
+          <button class="ticker__term info-dialog-trigger" type="button" aria-haspopup="dialog" aria-controls="info-dialog" data-info-motion="delivery-run" data-info-title="Logistics" data-info-description="Moving and storing products so they reach the right place." data-info-steps="Pack|Move|Deliver">Logistics</button>
+          <button class="ticker__term info-dialog-trigger" type="button" aria-haspopup="dialog" aria-controls="info-dialog" data-info-motion="chain-link" data-info-title="Supply chains" data-info-description="The connected steps that take a product from raw materials to a customer." data-info-steps="Source|Make|Deliver">Supply chains</button>
+          <button class="ticker__term info-dialog-trigger" type="button" aria-haspopup="dialog" aria-controls="info-dialog" data-info-motion="stock-flow" data-info-title="Retail distribution" data-info-description="Getting products from warehouses to shops and customers." data-info-steps="Warehouse|Store|Customer">Retail distribution</button>
+          <button class="ticker__term info-dialog-trigger" type="button" aria-haspopup="dialog" aria-controls="info-dialog" data-info-motion="global-trade" data-info-title="Sourcing &amp; trade" data-info-description="Finding suppliers and buying goods, often across countries." data-info-steps="Find|Buy|Import">Sourcing &amp; trade</button>
         </div>
       </div>
 
-      <section class="about section-wrap section-pad" id="about">
-        <div class="section-label"><span>01 / ABOUT</span><span>Grounded experience. An operations mindset.</span></div>
-        <div class="about__grid">
-          <h2>From the field<br><span>to the bigger picture.</span></h2>
-          <div class="about__body">
+      <section class="content-section content-section--about" id="about">
+        <div class="content-container">
+          <div class="content-label"><span>01 / ABOUT</span><span>Grounded experience. An operations mindset.</span></div>
+          <div class="about-layout">
+            <div class="about-intro">
+              <p class="content-kicker">A PRACTICAL POINT OF VIEW</p>
+              <h2><span class="headline__white">From the field</span> <em>to the bigger picture.</em></h2>
+            </div>
+            <div class="about-copy">
             <p class="lead">
               My perspective on operations comes from seeing the work up close:
               retail routes, inventory replenishment, supplier coordination and the
@@ -172,154 +246,148 @@
               Operations &amp; Logistics. I’m particularly interested in the links
               between supply chains, sourcing, distribution and day-to-day execution.
             </p>
-            <p class="about__note">These experiences give me a practical foundation as I deepen my focus on operations and logistics.</p>
+            <p class="about-note"><span>WHAT I BRING</span>These experiences give me a practical foundation as I deepen my focus on operations and logistics.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="experience section-pad" id="experience">
-        <div class="section-wrap">
-          <div class="section-label"><span>02 / EXPERIENCE</span><span>Practical experience across distribution and trade.</span></div>
-          <div class="section-heading">
-            <h2>Experience<br><span>in the real world.</span></h2>
+      <section class="content-section content-section--experience" id="experience">
+        <div class="content-container">
+          <div class="content-label"><span>02 / EXPERIENCE</span><span>Practical experience across distribution and trade.</span></div>
+          <div class="content-heading">
+            <div>
+              <p class="content-kicker">SELECTED EXPERIENCE</p>
+              <h2><span class="headline__white">Experience</span> <em>in the real world.</em></h2>
+            </div>
             <p>Field sales and a founder’s view of importing and distribution — a practical foundation for further study in operations.</p>
           </div>
 
-          <article class="experience-card experience-card--featured">
-            <div class="experience-card__index">01</div>
-            <div class="experience-card__main">
-              <div class="experience-card__meta"><span>FIELD SALES · FMCG</span><span>OCT 2025 — FEB 2026</span></div>
-              <h3>Sales Representative</h3>
-              <p class="experience-card__company">CavinKare <span>· Third-party payroll</span></p>
-              <p class="experience-card__location">Territory: Andheri to Bandra, Mumbai</p>
-              <p class="experience-card__summary">
-                Supported retail distribution and sales across general trade outlets,
-                supermarkets and local distributors in a high-activity Mumbai corridor.
-              </p>
-              <ul class="experience-card__details">
-                <li>Planned territory routes, prospected retail accounts and supported outlet onboarding.</li>
-                <li>Coordinated order booking and inventory replenishment to maintain product availability.</li>
-                <li>Tracked targets and shared market and competitor feedback to inform territory decisions.</li>
-              </ul>
-            </div>
-          </article>
+          <div class="resume-list">
+            <article class="resume-entry">
+              <div class="resume-index">01</div>
+              <div class="resume-meta"><span>OCT 2025 — FEB 2026</span><span>FIELD SALES · FMCG</span></div>
+              <div class="resume-main">
+                <h3>Sales Representative</h3>
+                <p class="resume-company">CavinKare <span>· Third-party payroll</span></p>
+                <p class="resume-location">Territory: Andheri to Bandra, Mumbai</p>
+                <p class="resume-summary">Supported retail distribution and sales across general trade outlets, supermarkets and local distributors in a high-activity Mumbai corridor.</p>
+                <ul class="resume-details">
+                  <li>Planned territory routes, prospected retail accounts and supported outlet onboarding.</li>
+                  <li>Coordinated order booking and inventory replenishment to maintain product availability.</li>
+                  <li>Tracked targets and shared market and competitor feedback to inform territory decisions.</li>
+                </ul>
+              </div>
+            </article>
 
-          <article class="experience-card">
-            <div class="experience-card__index">02</div>
-            <div class="experience-card__main">
-              <div class="experience-card__meta"><span>ENTREPRENEURSHIP · IMPORT &amp; EXPORT</span><span>2024 — EARLY 2025</span></div>
-              <h3>Co-Founder &amp; Business Head</h3>
-              <p class="experience-card__company">Only Solar</p>
-              <p class="experience-card__summary">
-                Co-founded a venture focused on sourcing and distributing commercial,
-                street and flood lighting products.
-              </p>
-              <ul class="experience-card__details">
-                <li>Developed the sales strategy, pricing approach and go-to-market plan.</li>
-                <li>Managed international supplier sourcing, vendor negotiations and import logistics.</li>
-                <li>Built customer and distributor relationships and oversaw operations, P&amp;L and commercial decisions.</li>
-              </ul>
-            </div>
-          </article>
+            <article class="resume-entry">
+              <div class="resume-index">02</div>
+              <div class="resume-meta"><span>2024 — EARLY 2025</span><span>ENTREPRENEURSHIP · IMPORT &amp; EXPORT</span></div>
+              <div class="resume-main">
+                <h3>Co-Founder &amp; Business Head</h3>
+                <p class="resume-company">Only Solar</p>
+                <p class="resume-summary">Co-founded a venture focused on sourcing and distributing commercial, street and flood lighting products.</p>
+                <ul class="resume-details">
+                  <li>Developed the sales strategy, pricing approach and go-to-market plan.</li>
+                  <li>Managed international supplier sourcing, vendor negotiations and import logistics.</li>
+                  <li>Built customer and distributor relationships and oversaw operations, P&amp;L and commercial decisions.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section class="expertise section-wrap section-pad" id="focus">
-        <div class="section-label"><span>03 / MBA FOCUS</span><span>A direction in progress—not a finished specialism.</span></div>
-        <div class="section-heading">
-          <h2>Operations first.<br><span>Curiosity, always.</span></h2>
+      <section class="content-section content-section--focus" id="focus">
+        <div class="content-container">
+        <div class="content-label"><span>03 / MBA FOCUS</span><span>A direction in progress—not a finished specialism.</span></div>
+        <div class="content-heading">
+          <div>
+            <p class="content-kicker">DIRECTION IN PROGRESS</p>
+            <h2><span class="headline__white">Operations first.</span> <em>Curiosity, always.</em></h2>
+          </div>
           <p>My MBA specialisation is Operations &amp; Logistics. I’m still considering Product Management and Sales &amp; Marketing for my minor.</p>
         </div>
-        <div class="expertise__grid">
-          <article class="expertise-card expertise-card--primary">
-            <span class="expertise-card__number">01</span>
-            <span class="expertise-card__icon" aria-hidden="true">↗</span>
-            <p class="expertise-card__eyebrow">MBA SPECIALISATION</p>
+        <div class="focus-grid">
+          <article class="focus-item focus-item--primary">
+            <div class="focus-item-top"><span>01</span><p>MBA SPECIALISATION</p></div>
             <h3>Operations &amp; logistics</h3>
             <p>Learning how planning, inventory and distribution connect across the flow of goods.</p>
             <ul><li>Operations</li><li>Logistics</li><li>Inventory replenishment</li><li>Distribution</li></ul>
           </article>
-          <article class="expertise-card">
-            <span class="expertise-card__number">02</span>
-            <span class="expertise-card__icon" aria-hidden="true">⌘</span>
-            <p class="expertise-card__eyebrow">TRANSFERABLE EXPERIENCE</p>
+          <article class="focus-item">
+            <div class="focus-item-top"><span>02</span><p>TRANSFERABLE EXPERIENCE</p></div>
             <h3>Sourcing &amp; trade</h3>
             <p>First-hand exposure to international sourcing, suppliers and import logistics.</p>
             <ul><li>Supplier sourcing</li><li>Vendor negotiation</li><li>Import logistics</li><li>Commercial operations</li></ul>
           </article>
-          <article class="expertise-card">
-            <span class="expertise-card__number">03</span>
-            <span class="expertise-card__icon" aria-hidden="true">◎</span>
-            <p class="expertise-card__eyebrow">AREAS I’M EXPLORING</p>
+          <article class="focus-item">
+            <div class="focus-item-top"><span>03</span><p>AREAS I’M EXPLORING</p></div>
             <h3>Commercial perspective</h3>
             <p>Keeping customer and market needs in view as I develop an operations-led perspective.</p>
             <ul><li>Field sales</li><li>Retail distribution</li><li>Market feedback</li><li>Go-to-market planning</li></ul>
           </article>
         </div>
-        <div class="minor-note">
-          <span class="minor-note__label">MINOR · STILL DECIDING</span>
-          <span class="minor-note__option">Product Management</span>
-          <span class="minor-note__or">or</span>
-          <span class="minor-note__option">Sales &amp; Marketing</span>
-          <span class="minor-note__caption">I’ll update this once I’ve made my choice.</span>
+        <div class="minor-row">
+          <span class="minor-row-label">MINOR · STILL DECIDING</span>
+          <span>Product Management</span><b>or</b><span>Sales &amp; Marketing</span>
+          <small>I’ll update this once I’ve made my choice.</small>
+        </div>
         </div>
       </section>
 
-      <section class="projects section-pad" id="projects">
-        <div class="section-wrap">
-          <div class="section-label"><span>04 / PROJECTS</span><span>A portfolio that will grow with my MBA.</span></div>
-          <div class="projects__grid">
-            <div>
-              <p class="projects__eyebrow"><span class="status-dot"></span> A GROWING PORTFOLIO</p>
-              <h2>Applied learning,<br><span>shared in time.</span></h2>
+      <section class="content-section content-section--projects" id="projects">
+        <div class="content-container">
+          <div class="content-label"><span>04 / PROJECTS</span><span>A portfolio that will grow with my MBA.</span></div>
+          <div class="project-layout">
+            <div class="project-intro">
+              <p class="content-kicker">A GROWING PORTFOLIO</p>
+              <h2><span class="headline__white">Applied learning,</span><br><em>shared in time.</em></h2>
             </div>
-            <div class="projects__content">
-              <p>
-                This space is ready for future project work. As I build practical
-                operations and logistics skills during my MBA, I’ll share completed
-                projects here with their context and key takeaways.
-              </p>
-              <div class="projects__placeholder">
-                <span class="projects__placeholder-icon" aria-hidden="true">↗</span>
-                <span><strong>Operations &amp; logistics</strong><small>Project details will follow as the work develops</small></span>
-                <span class="projects__placeholder-tag">COMING SOON</span>
+            <div class="project-body">
+              <span class="project-status">CURRENTLY IN DEVELOPMENT</span>
+              <p>This space is ready for future project work. As I build practical operations and logistics skills during my MBA, I’ll share completed projects here with their context and key takeaways.</p>
+              <div class="project-preview">
+                <span class="project-preview-index">01</span>
+                <div><strong>Operations &amp; logistics</strong><small>Project details will follow as the work develops</small></div>
+                <span class="project-preview-status">COMING SOON <b aria-hidden="true">↗</b></span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="education section-pad" id="education">
-        <div class="section-wrap">
-          <div class="section-label"><span>05 / EDUCATION</span><span>Learning with purpose.</span></div>
-          <div class="education__grid">
-            <h2>Study that<br><span>builds perspective.</span></h2>
+      <section class="content-section content-section--education" id="education">
+        <div class="content-container">
+          <div class="content-label"><span>05 / EDUCATION</span><span>Learning with purpose.</span></div>
+          <div class="education-layout">
+            <div class="education-intro"><p class="content-kicker">ACADEMIC FOUNDATION</p><h2><span class="headline__white">Study that</span><br><em>builds perspective.</em></h2></div>
             <div class="education-list">
-              <article class="education-item">
-                <span class="education-item__date">2026 — 2028 <i>IN PROGRESS</i></span>
+              <article class="education-entry education-entry--current">
+                <span class="education-date">2026 — 2028 <i>IN PROGRESS</i></span>
                 <div><h3>Master of Business Administration</h3><p>Operations &amp; Logistics · Lovely Professional University</p></div>
               </article>
-              <article class="education-item">
-                <span class="education-item__date">GRADUATED 2024</span>
+              <article class="education-entry">
+                <span class="education-date">GRADUATED 2024</span>
                 <div><h3>Bachelor of Technology</h3><p>Computer Science Engineering · Lovely Professional University</p></div>
               </article>
-              <p class="education__aside"><span>OFF THE CLOCK</span>Business and commercial strategy, strategic games, music, and following market trends.</p>
+              <p class="off-clock"><span>OFF THE CLOCK</span>Business and commercial strategy, strategic games, music, and following market trends.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="contact" id="contact">
-        <div class="contact__inner section-wrap">
-          <div class="section-label"><span>06 / CONTACT</span><span class="contact__section-tagline">Good conversations start somewhere.</span></div>
-          <div class="contact__content">
-            <div class="contact__intro">
+      <section class="contact content-section" id="contact">
+        <div class="contact-inner content-container">
+          <div class="content-label"><span>06 / CONTACT</span><span>OPEN TO CONVERSATION</span></div>
+          <div class="contact-layout">
+            <div class="contact-intro">
               <p class="eyebrow"><span class="status-dot"></span> Phagwara, Punjab</p>
-              <h2>Let’s talk.</h2>
-              <p class="contact__tagline">Good ideas start with good conversations.</p>
+              <h2><span class="headline__white">Let’s talk.</span></h2>
+              <p class="contact-tagline">Let’s move good ideas forward.</p>
             </div>
-            <div class="contact__details">
-              <p>Interested in operations, logistics, or a future project? Leave me a note and your email app will open with your message ready to send.</p>
+            <div class="contact-form-shell">
+              <p>Interested in operations, logistics, or a future project? Send me a note using the form below.</p>
               <form class="contact-form" id="contact-form">
                 <div class="contact-form__row">
                   <div class="contact-form__field">
@@ -346,12 +414,9 @@
                   <textarea id="contact-message" name="message" rows="4" placeholder="Tell me a little about it..." maxlength="2000" required></textarea>
                 </div>
                 <button class="button button--primary contact-form__submit" type="submit">
-                  Open email draft <span aria-hidden="true">↗</span>
+                  Send message <span aria-hidden="true">↗</span>
                 </button>
-                <p class="contact-form__hint" id="contact-form-hint">
-                  Your message stays on your device until you send it from your email app.
-                </p>
-                <p class="contact-form__status" id="contact-form-status" role="status" aria-live="polite"></p>
+                <p class="contact-form__hint" id="contact-form-hint">Click Send message to open a Gmail draft. Review it and press Send in Gmail to deliver your message.</p>
               </form>
               <div class="contact__links">
                 <a href="mailto:jayeshsingh9b@gmail.com">Email me directly <span aria-hidden="true">↗</span></a>
@@ -359,10 +424,50 @@
               </div>
             </div>
           </div>
+          <div class="contact__logistics" aria-hidden="true">
+            <svg viewBox="0 0 1200 190" fill="none" focusable="false" preserveAspectRatio="xMidYMax slice">
+              <path class="contact__scene-line" d="M0 158h1200"></path>
+              <path class="contact__scene-structure" d="M72 55h126v103M72 55v103m0-69h126m-126 35h126m-101-35v35m51-35v35"></path>
+              <path class="contact__scene-crate" d="M91 68h24v21H91zm37 0h24v21h-24zm37 0h24v21h-24zM91 103h24v21H91zm37 0h24v21h-24zm37 0h24v21h-24z"></path>
+              <path class="contact__scene-belt" d="M201 139h280l35 19"></path>
+              <path class="contact__scene-belt contact__scene-belt--top" d="M201 132h280"></path>
+              <path class="contact__scene-roller" d="M218 139v19m32-19v19m32-19v19m32-19v19m32-19v19m32-19v19m32-19v19m32-19v19m32-19v19"></path>
+              <g class="contact__scene-conveyor-parcel">
+                <path class="contact__scene-parcel" d="M0 0h27v24H0zm0 7 13.5 7L27 7m-13.5 7v10"></path>
+                <animateMotion dur="12s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.08;.17;.19;1" keyPoints="0;0;.58;1;1" keySplines=".42 0 .58 1;.42 0 .58 1;.42 0 .58 1;.42 0 .58 1" path="M365 112C405 112 456 111 515 111"></animateMotion>
+                <animate attributeName="opacity" dur="12s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;.08;.17;.19;1"></animate>
+              </g>
+              <g class="contact__scene-moving-forklift" transform="translate(438 111)">
+                <path class="contact__scene-forklift" d="M0 0h46l22 17v22H0zm46 0v-24h19v65m0-13h49m-49 10h49"></path>
+                <circle class="contact__scene-wheel" cx="20" cy="40" r="9"></circle>
+                <circle class="contact__scene-wheel" cx="55" cy="40" r="9"></circle>
+                <g class="contact__scene-forklift-parcel">
+                  <path d="M78 0h24v21H78zm0 6 12 6 12-6M90 12v9"></path>
+                  <animate attributeName="opacity" dur="12s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;.17;.19;.45;.48;1"></animate>
+                </g>
+                <animateTransform attributeName="transform" type="translate" additive="sum" dur="12s" repeatCount="indefinite" calcMode="spline" values="0 0;0 0;112 0;112 0;0 0;0 0" keyTimes="0;.20;.40;.46;.62;1" keySplines=".42 0 .58 1;.42 0 .58 1;.42 0 .58 1;.42 0 .58 1;.42 0 .58 1"></animateTransform>
+              </g>
+              <g class="contact__scene-truck">
+                <path class="contact__scene-truck-body" d="M680 67h250v62H680zm250 19h68l49 43H930z"></path>
+                <path class="contact__scene-truck-detail" d="M953 95h34l27 25h-61zm-249-17h39v42h-39z"></path>
+                <path class="contact__scene-parcel" d="M755 82h31v29h-31zm39 0h31v29h-31zm39 0h31v29h-31z"></path>
+                <g class="contact__scene-loaded-parcel">
+                  <path d="M690 82h31v29h-31zm0 8 15.5 8 15.5-8m-15.5 8v21"></path>
+                  <animate attributeName="opacity" dur="12s" repeatCount="indefinite" values="0;0;1;1" keyTimes="0;.48;.50;1"></animate>
+                </g>
+                <circle class="contact__scene-wheel" cx="746" cy="134" r="14"></circle>
+                <circle class="contact__scene-wheel" cx="963" cy="134" r="14"></circle>
+                <circle class="contact__scene-wheel" cx="1020" cy="134" r="14"></circle>
+                <animate attributeName="opacity" dur="12s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;.46;.50;.90;.94;1"></animate>
+                <animateTransform attributeName="transform" type="translate" dur="12s" repeatCount="indefinite" calcMode="spline" values="0 0;0 0;430 0;430 0" keyTimes="0;.74;.88;1" keySplines=".42 0 .58 1;.42 0 .58 1;.42 0 .58 1"></animateTransform>
+              </g>
+              <path class="contact__scene-road" d="M650 158h440"></path>
+            </svg>
+          </div>
           <footer class="site-footer">
-            <a class="wordmark wordmark--footer" href="#home"><span class="wordmark__mark" aria-hidden="true">JS<span class="wordmark__mark-dot"></span></span><span class="wordmark__label">Jayesh Singh<small>MBA · Operations &amp; Logistics</small></span></a>
-            <span>Built as I learn.</span>
-            <a href="#home">Back to top <span aria-hidden="true">↑</span></a>
+            <span class="site-footer__eyebrow">Thanks for stopping by</span>
+            <span class="site-footer__note"><span class="site-footer__note-accent">Thoughtful operations.</span> <strong>Better flow.</strong></span>
+            <a class="site-footer__top" href="#home"><span aria-hidden="true">↑</span> Back to top</a>
           </footer>
         </div>
       </section>
