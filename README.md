@@ -18,7 +18,7 @@
 
 I'm **Jayesh Singh**, an MBA candidate at Lovely Professional University, specialising in **Operations & Logistics**.
 
-My professional interests lie at the intersection of supply chain management, sourcing, retail distribution and business operations. Having gained practical exposure to FMCG field sales, vendor coordination, international sourcing and distribution, I'm interested in understanding how businesses operate beyond the boardroom.
+My professional interests lie at the intersection of supply chain management, sourcing, retail distribution and business operations. With practical exposure to FMCG field sales, vendor coordination, international sourcing and distribution, I'm interested in understanding how businesses operate beyond the boardroom.
 
 With a background in Computer Science Engineering and a growing interest in business strategy, I aim to combine analytical thinking, technology and operational execution to solve real-world business problems.
 
@@ -85,9 +85,7 @@ This portfolio is built using:
 I'm always open to connecting with people working in operations, logistics, supply chains, business strategy and technology.
 
 - **Portfolio:** [jayesh-singh-portfolio.vercel.app](https://jayesh-singh-portfolio.vercel.app)
-- **Email:** [jayeshsingh9b@gmail.com](mailto:jayeshsingh9b@gmail.com)
 - **GitHub:** [@JAYESH262002](https://github.com/JAYESH262002)
-- **Resume:** [View Resume](./Jayesh-Singh-Resume.pdf)
 
 ---
 
