@@ -1,16 +1,16 @@
-# Jayesh Singh — Operations & systems
+# Jayesh Singh — Handoff Index
 
-A warm editorial portfolio for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
+An original indexed portfolio for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
 
 ## Architecture
 
 This is a dependency-free static site:
 
 - `index.html` — page structure, content and semantic landmarks
-- `field-notes.css` — warm editorial visual system, responsive layout and motion
-- `field-notes.js` — chapter menu, case-file dialogs and scroll reveals
+- `surface.css` — Handoff Index visual system, responsive layout and motion
+- `surface.js` — index menu, dossier dialogs and scroll reveals
 
-The current application is intentionally separate from the legacy portfolio implementation. The previous root application is recoverable on the local `portfolio-legacy-2026-11-03` branch.
+The current application is intentionally separate from the previous portfolio implementations. The V8 warm editorial application is recoverable on `portfolio-v8-warm-2026-11-03`; the earlier root application is recoverable on `portfolio-legacy-2026-11-03`.
 
 ## Local preview
 

@@ -1,0 +1,29 @@
+# V9 design research and direction
+
+## Reference observations
+
+The Awwwards listing for [Pensatori Irrazionali](https://www.awwwards.com/sites/pensatori-irrazionali) emphasises a compact two-colour identity and treats menu, transition and universe as authored moments. [Artocea](https://www.awwwards.com/sites/artocea) uses a product-studio point of view and interactive 3D as a coherent home/studio language. [Gianluca Boccia](https://www.awwwards.com/sites/gianluca-boccia-still-drawing) tells a personal practice through one continuous drawing rather than a standard portfolio sequence. [Elena Gonci](https://www.awwwards.com/sites/elena-gonci-portfolio) turns the portfolio into a familiar operating environment with folders, widgets and a dock.
+
+The additional research sources reinforced different principles: [Codrops](https://tympanus.net/codrops/) demonstrates that motion is strongest when it is attached to a clear interaction or editorial idea; [One Page Love](https://onepagelove.com/) shows the value of concise information architecture and strong section-level composition. These sources were used as principles, not visual templates.
+
+## Five original directions
+
+### 1. Handoff Index — selected
+An indexed professional archive about what happens between a signal and an action. A mineral field, ruled surfaces, a persistent chapter index and expandable dossiers create a calm working environment. Typography pairs a restrained grotesk with a compact display serif. Motion is limited to index movement, evidence reveals and a single handoff line. Mobile becomes a readable vertical register.
+
+### 2. Material Ledger
+Treat the career as a set of physical materials: paper, carton, metal, and light. Each experience becomes a material study with a tactile texture and a short evidence note. The hero would be a quiet workbench, not a split illustration. This is expressive but risks becoming too art-directed for recruiter scanning.
+
+### 3. Signal / Noise
+A monochrome editorial system where each project begins as a noisy field and resolves into a single readable decision. Strong typographic contrast and generative grain would make the concept memorable. It is visually distinctive, but the data-like treatment could overstate the analytical side of the profile.
+
+### 4. The Open Route
+A mapless travelogue of professional transitions: each chapter is a destination, with handwritten annotations and full-bleed photographic crops. It would provide warmth and narrative depth, but available assets do not support a rich photographic story without inventing context.
+
+### 5. Working Index
+An extremely restrained typographic portfolio where the entire page is a live index of questions, roles and projects. Hovering a row reveals a small answer. It is fast and professional, but too quiet to carry the requested artistic signature without additional visual language.
+
+## Selection rationale
+
+**Handoff Index** best balances originality, professional credibility, truthful content and performance. It challenges the default portfolio sequence without hiding the recruiter path. The identity belongs to Jayesh's actual story: technology, field execution, entrepreneurship and operations are represented as connected handoffs rather than decorative routes or dashboard widgets.
+
