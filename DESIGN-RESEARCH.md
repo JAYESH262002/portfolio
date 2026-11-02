@@ -27,3 +27,12 @@ An extremely restrained typographic portfolio where the entire page is a live in
 
 **Handoff Index** best balances originality, professional credibility, truthful content and performance. It challenges the default portfolio sequence without hiding the recruiter path. The identity belongs to Jayesh's actual story: technology, field execution, entrepreneurship and operations are represented as connected handoffs rather than decorative routes or dashboard widgets.
 
+## V10 creative review
+
+The current V10 review compared three approaches before implementation:
+
+1. **Refined editorial** — a quiet paper surface, Newsreader display type and a single register instrument. Strong readability, but it needed a more personal interaction than a static editorial page.
+2. **Minimal artistic** — a restrained “room of working notes” with one recurring register and dossier rows. This made the professional story feel authored without relying on decorative illustration.
+3. **Interactive contemporary** — an index that reveals dossier depth on focus/click, with an animated handoff register and progressive section entrances. This was selected as the motion layer, not as the visual surface.
+
+The final V10 implementation combines the second direction's visual identity with the third direction's interaction model. It intentionally removes the previous oversized question-led cover, dark dossier section, and repeated card treatment.
