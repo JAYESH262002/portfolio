@@ -200,32 +200,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const caseData = {
     fmcg: {
       kicker: "CASE STUDY 01 · FMCG OPERATIONS & ROUTE INTELLIGENCE",
-      title: "Optimizing Retail Distribution & Replenishment in Mumbai’s Andheri–Bandra Corridor",
+      title: "Optimizing High-Frequency FMCG Retail Distribution & Replenishment in Mumbai’s Andheri–Bandra Corridor",
       sections: [
-        ["Context", "High outlet density, variable retailer reorder cycles and shelf-space competition across general trade and supermarkets."],
-        ["Operational Bottleneck", "Field signals were fragmented across beat visits, order booking and distributor stock availability."],
-        ["Framework & Execution", "Segment beats by outlet velocity, standardize order-booking cadence and create distributor stock-out feedback loops."],
-        ["Key Business Takeaways", "Frontline friction becomes DMS/SFA product requirements: better route visibility, reorder triggers and fill-rate instrumentation."]
+        ["Role & Operating Context", "Sales Representative, CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026 · Andheri to Bandra, Mumbai · 50+ General Trade and supermarket outlets."],
+        ["Operational & Commercial Bottleneck", "High outlet density, constrained retailer shelf space and asynchronous reorder cycles between field booking and distributor dispatch created stockout risks and stagnant reach in underserved sub-beats."],
+        ["3-Step Execution Framework", "1. Beat segmentation and route engineering by turnover velocity and credit reliability, onboarding 10+ new GT accounts in Month 1 (+20% active base). 2. Synchronized primary and secondary order booking with distributor stock levels while securing hot-spot visibility. 3. Matched trade promotions to outlet shopper profiles, driving +30% MoM focus-category revenue."],
+        ["Ops + PM + GTM Synthesis", "Frontline sales execution depends on tight replenishment discipline and reveals opportunities for automated beat-level reorder alerts, better fill-rate instrumentation and exception-based field workflows."]
       ]
     },
     solar: {
       kicker: "CASE STUDY 02 · 0-TO-1 SUPPLY CHAIN & COMMERCIAL LAUNCH",
-      title: "End-to-End International Sourcing, Import Logistics & GTM for Only Solar",
+      title: "0-to-1 International Sourcing, Landed-Cost Modeling & B2B Channel Launch at Only Solar",
       sections: [
-        ["Context", "A commercial and street lighting line required cross-border vendor vetting, lead-time planning and multi-tier distributor margins."],
-        ["Operational Bottleneck", "Supplier uncertainty and landed-cost variability made pricing, inventory and working-capital decisions inseparable."],
-        ["Framework & Execution", "Built supplier evaluation matrices, RFQ negotiation workflows, landed-cost pricing models and direct distributor channel economics."],
-        ["Key Business Takeaways", "A successful launch connects sourcing discipline to channel-ready pricing, quality assurance and P&L ownership."]
+        ["Role & Operating Context", "Co-Founder & Business Head · Only Solar (Import & Export) · 2024 – Early 2025 · Commercial, street and flood lighting."],
+        ["Operational & Commercial Bottleneck", "Overseas manufacturing lead times and freight/duty volatility had to be balanced against strict margin expectations from B2B buyers and regional distributors."],
+        ["3-Step Execution Framework", "1. Evaluated manufacturers across defect tolerance, MOQ flexibility and FOB pricing. 2. Built unit economics for freight, customs duty, buffer inventory and tiered distributor margins. 3. Led B2B acquisition and distributor onboarding while managing cash conversion cycles and quality assurance."],
+        ["Ops + PM + GTM Synthesis", "Cross-border procurement and landed-cost discipline connect directly to channel pricing, positioning and B2B sales conversion."]
       ]
     },
     visibility: {
       kicker: "CASE STUDY 03 · TECH + OPS PRODUCT CONCEPT",
-      title: "Retailer Replenishment & Territory Visibility Playbook",
+      title: "Field-to-Distributor Replenishment & Sales Intelligence System",
       sections: [
-        ["Context", "Information asymmetry between field reps, local distributors and supply planners causes lost secondary sales."],
-        ["Operational Bottleneck", "Teams lack a shared view of fill rate, beat strike rate and SKU velocity at the moment decisions are made."],
-        ["Framework & Execution", "Combine B.Tech CS systems thinking with field insight to define KPI instrumentation, workflow automation and exception-based alerts."],
-        ["Key Business Takeaways", "Physical supply-chain bottlenecks can be translated into scalable digital product specifications and measurable outcomes."]
+        ["Role & Operating Context", "Applied Systems & Analytics Case Study synthesizing B.Tech CS (LPU, 2024), SQL/Power BI analytics and Mumbai FMCG field operations."],
+        ["Operational & Commercial Bottleneck", "Field reps book orders without real-time distributor stock visibility while planners see only aggregated primary sales, causing lost secondary sales, phantom stockouts and inefficient beat coverage."],
+        ["3-Step Execution Framework", "1. Design a relational schema linking Outlet Master, Beat Visit Logs, SKU Order Bookings and Distributor Closing Inventory. 2. Instrument Beat Strike Rate, Outlet Drop Size, SKU Fill-Rate Gap and Days-Since-Last-Order in Power BI. 3. Specify SFA/DMS rules that flag high-velocity outlets at risk before the morning beat."],
+        ["Ops + PM + GTM Synthesis", "Computer Science and BI tools solve real replenishment and territory-sales bottlenecks, creating a practical bridge between product, operations and commercial teams."]
       ]
     }
   };
@@ -259,28 +259,32 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const contactForm = document.querySelector("#contact-form");
-  contactForm.addEventListener("submit", async (event) => {
+  contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const submitButton = contactForm.querySelector("button[type='submit']");
     const hint = document.querySelector("#contact-form-hint");
-    submitButton.disabled = true;
-    hint.textContent = "Sending your note…";
     const formData = new FormData(contactForm);
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/jayeshsingh9b@gmail.com", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-      if (!response.ok) throw new Error(`Contact submission failed with status ${response.status}.`);
-      contactForm.reset();
-      hint.textContent = "Thanks — your message is on its way.";
-    } catch (error) {
-      console.error(error);
-      hint.textContent = "Something went wrong. Please copy the email address and send your note directly.";
-    } finally {
-      submitButton.disabled = false;
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const subject = String(formData.get("subject") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
+    if (!name || !email || !subject || !message) {
+      hint.textContent = "Please complete your name, email, topic and message.";
+      return;
     }
+    const body = [`Name: ${name}`, `Email: ${email}`, `Topic: ${subject}`, "", message].join("\n");
+    const mailtoUri = `mailto:jayeshsingh9b@gmail.com?subject=${encodeURIComponent(`Portfolio enquiry: ${subject}`)}&body=${encodeURIComponent(body)}`;
+    submitButton.disabled = true;
+    navigator.clipboard?.writeText(body).catch((error) => console.warn("Could not copy the contact message.", error));
+    window.location.href = mailtoUri;
+    hint.textContent = "Draft opened in your mail client (and message copied to clipboard)! You can also email me directly at jayeshsingh9b@gmail.com.";
+    contactForm.reset();
+    window.setTimeout(() => { submitButton.disabled = false; }, 600);
+  });
+
+  document.querySelector(".site-footer__top")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   });
 
   menuToggle.addEventListener("click", () => {
