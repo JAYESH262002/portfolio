@@ -1,349 +1,110 @@
 history.scrollRestoration = "manual";
-if (window.location.hash) {
-  history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
-}
 
-const themeStorageKey = "jayesh-portfolio-theme-v3";
-let currentTheme = "dark";
-
+const themeKey = "jayesh-portfolio-theme-v4";
+let theme = "light";
 try {
-  const savedTheme = localStorage.getItem(themeStorageKey);
-  if (savedTheme === "light" || savedTheme === "dark") currentTheme = savedTheme;
+  const saved = localStorage.getItem(themeKey);
+  if (saved === "dark" || saved === "light") theme = saved;
 } catch (error) {
-  console.warn("Could not read the saved color theme.", error);
+  console.warn("Could not read the saved theme.", error);
 }
-
-document.documentElement.dataset.theme = currentTheme;
-document.querySelector('meta[name="theme-color"]').content =
-  currentTheme === "dark" ? "#020617" : "#f8f6f0";
+document.documentElement.dataset.theme = theme;
+document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#121416" : "#f3f0e9";
 
 document.addEventListener("DOMContentLoaded", () => {
-  window.scrollTo({ top: 0, behavior: "instant" });
-
-  const menuToggle = document.querySelector(".menu-toggle");
-  const siteNav = document.querySelector("#site-nav");
-  const siteNavLinks = [...siteNav.querySelectorAll('a[href^="#"]')];
-  const navigableSections = siteNavLinks.map((link) =>
-    document.querySelector(link.getAttribute("href")),
-  );
+  const nav = document.querySelector("#site-nav");
+  const menu = document.querySelector(".menu-toggle");
   const themeToggle = document.querySelector(".theme-toggle");
-  const profileDialog = document.querySelector("#profile-dialog");
-  const profileTrigger = document.querySelector(".profile-trigger");
-  const profileClose = document.querySelector(".profile-dialog__close");
-  const infoDialog = document.querySelector("#info-dialog");
-  const infoDialogTitle = document.querySelector("#info-dialog-title");
-  const infoDialogDescription = document.querySelector("#info-dialog-description");
-  const infoDialogClose = document.querySelector(".info-dialog__close");
-  const infoDialogDiagram = document.querySelector(".info-dialog__diagram");
-  const infoDialogSteps = [...infoDialogDiagram.querySelectorAll(".info-dialog__step")];
-  const caseDialog = document.querySelector("#case-dialog");
-  const caseDialogTitle = document.querySelector("#case-dialog-title");
-  const caseDialogKicker = document.querySelector("#case-dialog-kicker");
-  const caseDialogBody = document.querySelector("#case-dialog-body");
-  let caseDialogTrigger = null;
-  const infoDialogTriggers = document.querySelectorAll(
-    ".info-dialog-trigger, .hero__visual-card",
-  );
-  const revealTargets = document.querySelectorAll(
-    ".about-layout, .content-heading, .resume-entry, .focus-grid, .minor-row, .project-layout, .education-entry, .off-clock, .contact-layout, .site-footer",
-  );
+  const sections = [...document.querySelectorAll("main section[id]")];
+  const navLinks = [...nav.querySelectorAll("a")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  let currentSectionId = null;
-  function setCurrentSection(sectionId) {
-    if (currentSectionId === sectionId) return;
-    currentSectionId = sectionId;
+  const setTheme = (next) => {
+    theme = next;
+    document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#121416" : "#f3f0e9";
+    themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+    themeToggle.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} mode`);
+    try { localStorage.setItem(themeKey, theme); } catch (error) { console.warn("Could not save the selected theme.", error); }
+  };
+  setTheme(theme);
 
-    siteNavLinks.forEach((link) => {
-      if (link.hash === `#${sectionId}`) {
-        link.setAttribute("aria-current", "location");
-      } else {
-        link.removeAttribute("aria-current");
-      }
-    });
-
-  }
-
-  let sectionUpdateScheduled = false;
-  function updateCurrentSection() {
-    if (sectionUpdateScheduled) return;
-    sectionUpdateScheduled = true;
-
-    window.requestAnimationFrame(() => {
-      sectionUpdateScheduled = false;
-      const activationPoint = window.innerHeight * 0.35;
-      let currentSection = navigableSections[0];
-
-      for (const section of navigableSections) {
-        if (section.getBoundingClientRect().top > activationPoint) break;
-        currentSection = section;
-      }
-
-      setCurrentSection(currentSection.id);
-    });
-  }
-
-  window.addEventListener("scroll", updateCurrentSection, { passive: true });
-  window.addEventListener("resize", updateCurrentSection);
-  updateCurrentSection();
-
-  if (reducedMotion || !("IntersectionObserver" in window)) {
-    revealTargets.forEach((element) => element.classList.add("is-visible"));
-  } else {
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -36px 0px" },
-    );
-
-    revealTargets.forEach((element) => {
-      element.classList.add("reveal-on-scroll");
-      revealObserver.observe(element);
-    });
-  }
-
-  function updateThemeButton() {
-    const isDark = currentTheme === "dark";
-    const label = `Switch to ${isDark ? "light" : "dark"} mode`;
-    themeToggle.setAttribute("aria-pressed", String(isDark));
-    themeToggle.setAttribute("aria-label", label);
-    themeToggle.title = label;
-  }
-
-  themeToggle.addEventListener("click", () => {
-    currentTheme = currentTheme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = currentTheme;
-    document.querySelector('meta[name="theme-color"]').content =
-      currentTheme === "dark" ? "#020617" : "#f8f6f0";
-    updateThemeButton();
-
-    try {
-      localStorage.setItem(themeStorageKey, currentTheme);
-    } catch (error) {
-      console.error("Could not save the selected color theme.", error);
+  menu.addEventListener("click", () => {
+    const open = menu.getAttribute("aria-expanded") === "true";
+    menu.setAttribute("aria-expanded", String(!open));
+    nav.classList.toggle("is-open", !open);
+  });
+  nav.addEventListener("click", (event) => {
+    if (event.target.closest("a")) {
+      menu.setAttribute("aria-expanded", "false");
+      nav.classList.remove("is-open");
     }
   });
+  themeToggle.addEventListener("click", () => setTheme(theme === "dark" ? "light" : "dark"));
 
-  updateThemeButton();
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach((link) => link.toggleAttribute("aria-current", link.hash === `#${entry.target.id}`));
+    });
+  }, { rootMargin: "-30% 0px -60% 0px", threshold: 0 });
+  sections.forEach((section) => observer.observe(section));
 
-  profileTrigger.addEventListener("click", () => profileDialog.showModal());
-  profileClose.addEventListener("click", () => profileDialog.close());
-  profileDialog.addEventListener("click", (event) => {
-    if (event.target === profileDialog) profileDialog.close();
-  });
-  profileDialog.addEventListener("cancel", (event) => {
-    event.preventDefault();
-    profileDialog.close();
-  });
-
-  let infoDialogTrigger = null;
-  infoDialogTriggers.forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      const steps = trigger.dataset.infoSteps?.split("|") ?? [];
-      const motion = trigger.dataset.infoMotion;
-
-      if (
-        steps.length !== infoDialogSteps.length ||
-        steps.some((step) => !step.trim()) ||
-        !motion
-      ) {
-        console.error("The information popup requires three diagram steps and a motion type.");
-        return;
-      }
-
-      infoDialogTrigger = trigger;
-      infoDialogTitle.textContent = trigger.dataset.infoTitle;
-      infoDialogDescription.textContent = trigger.dataset.infoDescription;
-      infoDialogDiagram.dataset.motion = motion;
-      infoDialogSteps.forEach((step, index) => {
-        step.textContent = steps[index];
+  if (!reducedMotion) {
+    const revealObserver = new IntersectionObserver((entries, instance) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-revealed");
+        instance.unobserve(entry.target);
       });
-      infoDialogDiagram.classList.remove("is-animating");
-      if (!reducedMotion) {
-        void infoDialogDiagram.offsetWidth;
-        infoDialogDiagram.classList.add("is-animating");
-      }
-      infoDialog.showModal();
+    }, { threshold: .12 });
+    document.querySelectorAll(".panel > *, .work-card, .experience-row, .education-items article").forEach((item) => {
+      item.classList.add("reveal");
+      revealObserver.observe(item);
     });
-  });
-  infoDialogClose.addEventListener("click", () => infoDialog.close());
-  infoDialog.addEventListener("click", (event) => {
-    if (event.target === infoDialog) infoDialog.close();
-  });
-  infoDialog.addEventListener("cancel", (event) => {
-    event.preventDefault();
-    infoDialog.close();
-  });
-  infoDialog.addEventListener("close", () => {
-    infoDialogDiagram.classList.remove("is-animating");
-    infoDialogTrigger?.focus();
-  });
+  }
 
-  const lensTabs = [...document.querySelectorAll(".lens-tab")];
-  const lensPanels = [...document.querySelectorAll(".lens-panel")];
-  lensTabs.forEach((tab) => tab.addEventListener("click", () => {
-    const lens = tab.dataset.lens;
-    lensTabs.forEach((item) => item.classList.toggle("is-active", item === tab));
-    lensTabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
-    lensPanels.forEach((panel) => {
-      const active = panel.id === `lens-${lens}`;
-      panel.hidden = !active;
-      panel.classList.toggle("is-active", active);
-    });
+  const filters = [...document.querySelectorAll(".work-filters button")];
+  const cards = [...document.querySelectorAll(".work-card")];
+  filters.forEach((filter) => filter.addEventListener("click", () => {
+    filters.forEach((item) => item.classList.toggle("is-active", item === filter));
+    const selected = filter.dataset.filter;
+    cards.forEach((card) => card.toggleAttribute("hidden", selected !== "all" && !card.dataset.tags.includes(selected)));
   }));
 
   const caseData = {
-    fmcg: {
-      kicker: "CASE STUDY 01 · FMCG OPERATIONS & ROUTE INTELLIGENCE",
-      title: "Optimizing High-Frequency FMCG Retail Distribution & Replenishment in Mumbai’s Andheri–Bandra Corridor",
-      sections: [
-        ["Role & Operating Context", "Sales Representative, CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026 · Andheri to Bandra, Mumbai · 50+ General Trade and supermarket outlets."],
-        ["Operational & Commercial Bottleneck", "High outlet density, constrained retailer shelf space and asynchronous reorder cycles between field booking and distributor dispatch created stockout risks and stagnant reach in underserved sub-beats."],
-        ["3-Step Execution Framework", "1. Beat segmentation and route engineering by turnover velocity and credit reliability, onboarding 10+ new GT accounts in Month 1 (+20% active base). 2. Synchronized primary and secondary order booking with distributor stock levels while securing hot-spot visibility. 3. Matched trade promotions to outlet shopper profiles, driving +30% MoM focus-category revenue."],
-        ["Ops + PM + GTM Synthesis", "Frontline sales execution depends on tight replenishment discipline and reveals opportunities for automated beat-level reorder alerts, better fill-rate instrumentation and exception-based field workflows."]
-      ]
-    },
-    solar: {
-      kicker: "CASE STUDY 02 · 0-TO-1 SUPPLY CHAIN & COMMERCIAL LAUNCH",
-      title: "0-to-1 International Sourcing, Landed-Cost Modeling & B2B Channel Launch at Only Solar",
-      sections: [
-        ["Role & Operating Context", "Co-Founder & Business Head · Only Solar (Import & Export) · 2024 – Early 2025 · Commercial, street and flood lighting."],
-        ["Operational & Commercial Bottleneck", "Overseas manufacturing lead times and freight/duty volatility had to be balanced against strict margin expectations from B2B buyers and regional distributors."],
-        ["3-Step Execution Framework", "1. Evaluated manufacturers across defect tolerance, MOQ flexibility and FOB pricing. 2. Built unit economics for freight, customs duty, buffer inventory and tiered distributor margins. 3. Led B2B acquisition and distributor onboarding while managing cash conversion cycles and quality assurance."],
-        ["Ops + PM + GTM Synthesis", "Cross-border procurement and landed-cost discipline connect directly to channel pricing, positioning and B2B sales conversion."]
-      ]
-    },
-    visibility: {
-      kicker: "CASE STUDY 03 · TECH + OPS PRODUCT CONCEPT",
-      title: "Field-to-Distributor Replenishment & Sales Intelligence System",
-      sections: [
-        ["Role & Operating Context", "Applied Systems & Analytics Case Study synthesizing B.Tech CS (LPU, 2024), SQL/Power BI analytics and Mumbai FMCG field operations."],
-        ["Operational & Commercial Bottleneck", "Field reps book orders without real-time distributor stock visibility while planners see only aggregated primary sales, causing lost secondary sales, phantom stockouts and inefficient beat coverage."],
-        ["3-Step Execution Framework", "1. Design a relational schema linking Outlet Master, Beat Visit Logs, SKU Order Bookings and Distributor Closing Inventory. 2. Instrument Beat Strike Rate, Outlet Drop Size, SKU Fill-Rate Gap and Days-Since-Last-Order in Power BI. 3. Specify SFA/DMS rules that flag high-velocity outlets at risk before the morning beat."],
-        ["Ops + PM + GTM Synthesis", "Computer Science and BI tools solve real replenishment and territory-sales bottlenecks, creating a practical bridge between product, operations and commercial teams."]
-      ]
-    },
-    dashboard: {
-      kicker: "CASE STUDY 04 · PROPOSED OPERATIONS ANALYTICS CONCEPT",
-      title: "Inventory & Operations Performance Dashboard",
-      sections: [
-        ["Project Status", "Independent portfolio concept using synthetic or sample data. This is not presented as a deployed company dashboard."],
-        ["Business Context", "Operations teams need a concise view of stock health, service levels and replenishment risk before issues become stockouts or excess inventory."],
-        ["Analytical Approach", "Model inventory movement, SKU velocity and outlet-level demand to explore inventory turnover, ABC classification, reorder levels, stockout frequency and service-level trends."],
-        ["Proposed Output", "A Power BI or spreadsheet dashboard with an exception-first view: items at risk, root-cause filters, trend context and clear next actions for replenishment planning."],
-        ["Limitations & Learning", "The concept requires validated operational data, agreed KPI definitions and stakeholder testing before any business decision should rely on it."]
-      ]
-    }
+    fmcg: ["Field operations / route intelligence", "Making a beat work harder.", [["Context", "Sales Representative at CavinKare, covering 50+ general trade and supermarket outlets across Mumbai’s Andheri–Bandra corridor."], ["Move", "Grouped outlets by velocity and route behaviour, synced field booking with distributor replenishment and used trade schemes where they could change the next order."], ["Signal", "The active GT retailer base grew 20% in month one, with a 30% month-on-month lift in a focus category."]]],
+    solar: ["0→1 launch / commercial operations", "From supplier to shelf.", [["Context", "Only Solar was an import-distribution venture built around overseas sourcing and B2B channel development."], ["Move", "Owned the chain from RFQs and landed-cost modelling through customs coordination, tiered pricing, channel conversations and P&L decisions."], ["Signal", "A practical operating model that connected supplier terms to what the market could actually absorb."]]],
+    visibility: ["Systems / product concept", "See the whole flow.", [["Problem", "Order booking, distributor dispatch and outlet inventory often live in separate views."], ["Approach", "A relational SQL model and Power BI layer connecting outlet master data, beat visits, SKU bookings and closing inventory."], ["Output", "Exception-first signals for fill-rate gaps, days since last order and high-velocity outlets at risk."]]],
+    dashboard: ["Concept / operations analytics", "Exceptions first.", [["Frame", "A clearly labelled portfolio concept using synthetic or sample data, not a deployed company dashboard."], ["Model", "Inventory movement, SKU velocity and outlet-level demand translated into turnover, ABC classification, reorder level and service-level views."], ["Principle", "A dashboard should make the next replenishment action clearer, not simply show more charts."]]]
   };
-  const caseCards = [...document.querySelectorAll(".case-card")];
-  document.querySelectorAll(".case-filter").forEach((filter) => filter.addEventListener("click", () => {
-    document.querySelectorAll(".case-filter").forEach((item) => item.classList.toggle("is-active", item === filter));
-    const tag = filter.dataset.filter;
-    caseCards.forEach((card) => { card.hidden = tag !== "all" && !card.dataset.tags.split(",").includes(tag); });
-  }));
-  document.querySelectorAll(".case-open").forEach((button) => button.addEventListener("click", () => {
-    const data = caseData[button.dataset.case];
+  const dialog = document.querySelector("#case-dialog");
+  const dialogTitle = document.querySelector("#case-dialog-title");
+  const dialogKicker = document.querySelector("#case-dialog-kicker");
+  const dialogBody = document.querySelector("#case-dialog-body");
+  let trigger = null;
+  document.querySelectorAll(".work-card").forEach((card) => card.addEventListener("click", (event) => {
+    if (event.target.closest("button")) trigger = card;
+    const data = caseData[card.dataset.case];
     if (!data) return;
-    caseDialogTrigger = button;
-    caseDialogKicker.textContent = data.kicker;
-    caseDialogTitle.textContent = data.title;
-    caseDialogBody.innerHTML = data.sections.map(([heading, copy]) => `<section><h3>${heading}</h3><p>${copy}</p></section>`).join("");
-    caseDialog.showModal();
+    dialogKicker.textContent = data[0];
+    dialogTitle.textContent = data[1];
+    dialogBody.innerHTML = data[2].map(([heading, copy]) => `<section><h3>${heading}</h3><p>${copy}</p></section>`).join("");
+    dialog.showModal();
   }));
-  document.querySelector(".case-dialog__close").addEventListener("click", () => caseDialog.close());
-  caseDialog.addEventListener("click", (event) => { if (event.target === caseDialog) caseDialog.close(); });
-  caseDialog.addEventListener("close", () => {
-    caseDialogTrigger?.focus();
-    caseDialogTrigger = null;
-  });
+  document.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  dialog.addEventListener("close", () => trigger?.focus());
 
-  const copyEmail = document.querySelector(".copy-email");
-  copyEmail.addEventListener("click", async () => {
+  const copy = document.querySelector(".copy-email");
+  copy.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(copyEmail.dataset.email);
-      copyEmail.textContent = "Copied!";
-      setTimeout(() => { copyEmail.textContent = "Copy Email (jayeshsingh9b@gmail.com)"; }, 1800);
+      await navigator.clipboard.writeText(copy.dataset.email);
+      copy.innerHTML = "Copied — thank you <span>✓</span>";
+      setTimeout(() => { copy.innerHTML = "Copy email <span>⌘C</span>"; }, 1800);
     } catch (error) {
-      console.error("Could not copy the email address.", error);
-      copyEmail.textContent = "Copy failed — use the email link";
-    }
-  });
-
-  const contactForm = document.querySelector("#contact-form");
-  contactForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const submitButton = contactForm.querySelector("button[type='submit']");
-    const hint = document.querySelector("#contact-form-hint");
-    const formData = new FormData(contactForm);
-    const name = String(formData.get("name") ?? "").trim();
-    const email = String(formData.get("email") ?? "").trim();
-    const subject = String(formData.get("subject") ?? "").trim();
-    const message = String(formData.get("message") ?? "").trim();
-    if (!name || !email || !subject || !message) {
-      hint.textContent = "Please complete your name, email, topic and message.";
-      return;
-    }
-    const body = [`Name: ${name}`, `Email: ${email}`, `Topic: ${subject}`, "", message].join("\n");
-    const mailtoUri = `mailto:jayeshsingh9b@gmail.com?subject=${encodeURIComponent(`Portfolio enquiry: ${subject}`)}&body=${encodeURIComponent(body)}`;
-    submitButton.disabled = true;
-    navigator.clipboard?.writeText(body).catch((error) => console.warn("Could not copy the contact message.", error));
-    window.location.href = mailtoUri;
-    hint.textContent = "Draft opened in your mail client (and message copied to clipboard)! You can also email me directly at jayeshsingh9b@gmail.com.";
-    contactForm.reset();
-    window.setTimeout(() => { submitButton.disabled = false; }, 600);
-  });
-
-  document.querySelector(".site-footer__top")?.addEventListener("click", (event) => {
-    event.preventDefault();
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  });
-
-  menuToggle.addEventListener("click", () => {
-    const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
-    menuToggle.setAttribute("aria-expanded", String(!isExpanded));
-    siteNav.classList.toggle("is-open", !isExpanded);
-  });
-
-  siteNav.addEventListener("click", (event) => {
-    const link = event.target.closest("a");
-    if (link) {
-      setCurrentSection(link.hash.slice(1));
-      menuToggle.setAttribute("aria-expanded", "false");
-      siteNav.classList.remove("is-open");
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-
-    if (caseDialog.open) {
-      event.preventDefault();
-      caseDialog.close();
-      return;
-    }
-
-    if (infoDialog.open) {
-      event.preventDefault();
-      infoDialog.close();
-      return;
-    }
-
-    if (profileDialog.open) {
-      profileDialog.close();
-      profileTrigger.focus();
-      return;
-    }
-
-    if (siteNav.classList.contains("is-open")) {
-      menuToggle.setAttribute("aria-expanded", "false");
-      siteNav.classList.remove("is-open");
-      menuToggle.focus();
+      copy.textContent = "Copy unavailable — use the email link";
+      console.warn("Clipboard access failed.", error);
     }
   });
 });
