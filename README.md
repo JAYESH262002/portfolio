@@ -1,16 +1,16 @@
-# Jayesh Singh — Living Field Notebook
+# Jayesh Singh — Signal Garden
 
-An original interactive field notebook for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
+An original interactive editorial garden for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
 
 ## Architecture
 
 This is a dependency-free static site:
 
 - `index.html` — page structure, content and semantic landmarks
-- `notebook.css` — Living Field Notebook visual system, responsive layout and motion
-- `notebook.js` — chapter map, process explorer, project filters/case study, experiments, milestones and copy interaction
+- `garden.css` — Signal Garden visual system, responsive layout and motion
+- `garden.js` — reactive constellation, principle explorer, project filters/case notes, decision experiments, journey and copy interaction
 
-The current application is intentionally separate from the previous portfolio implementations. The V13 Open Circuit application is recoverable on `portfolio-v13-open-circuit-2026-11-03`; earlier applications remain recoverable on their dated branches.
+The current application is intentionally separate from the previous portfolio implementations. The V14 Living Field Notebook application is recoverable on `portfolio-v14-notebook-2026-11-03`; earlier applications remain recoverable on their dated branches.
 
 ## Local preview
 

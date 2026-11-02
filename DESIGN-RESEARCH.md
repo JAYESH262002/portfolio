@@ -70,3 +70,14 @@ Three directions were compared:
 3. **Working Library** — a searchable editorial archive with expandable notes and a separate case-study reading mode.
 
 Living Field Notebook was selected because it preserves the calm editorial character the user values while adding meaningful content depth and reactive exploration. It uses porcelain, sage, lilac, peach and mist-blue paper tones, Instrument Serif and Manrope typography, and a motion system of map selection, stateful tabs, progressive disclosure, slider recalculation, filtering, milestone switching and clipboard feedback. Synthetic experiments are explicitly labelled and no unsupported results are claimed.
+## V15 — Signal Garden
+
+Fresh interaction research included Casey McVicker’s cursor-led portfolio case study, Hilo Studio Lab’s scroll-as-storytelling approach, and the editorial/interactive references in A1 Gallery, Codrops and One Page Love. The useful principles were restrained chrome, interaction that communicates context, and progressive disclosure instead of spectacle.
+
+Three directions were compared:
+
+1. **Signal Garden** — a reactive constellation opening, principle “signals”, a filtered project route, and integrated decision studios.
+2. **Quiet Instrument** — a typography-led interface where visitor choices tune the emphasis of the story.
+3. **Field Relay** — a scroll-linked chain of professional chapters with a single evolving visual.
+
+Signal Garden was selected because it keeps the light editorial personality while changing the composition from the notebook. It uses a soft paper palette, a constellation metaphor tied to the professional journey, stateful principle and journey panels, case-note disclosure, two labelled synthetic experiments, and reduced-motion fallbacks.
