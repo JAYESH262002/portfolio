@@ -18,6 +18,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const sections = [...document.querySelectorAll("main section[id]")];
   const navLinks = [...nav.querySelectorAll("a")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hero = document.querySelector(".hero");
+  const heroRoute = document.querySelector(".hero__route");
+
+  if (!reducedMotion && hero && heroRoute) {
+    let pointerFrame = 0;
+    hero.addEventListener("pointermove", (event) => {
+      if (pointerFrame) return;
+      pointerFrame = requestAnimationFrame(() => {
+        const bounds = hero.getBoundingClientRect();
+        const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+        heroRoute.style.setProperty("--route-x", `${x * 10}px`);
+        heroRoute.style.setProperty("--route-y", `${y * 8}px`);
+        pointerFrame = 0;
+      });
+    });
+    hero.addEventListener("pointerleave", () => {
+      heroRoute.style.setProperty("--route-x", "0px");
+      heroRoute.style.setProperty("--route-y", "0px");
+    });
+  }
 
   const setTheme = (next) => {
     theme = next;
