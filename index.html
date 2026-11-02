@@ -3,82 +3,78 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#e2e8e2">
-    <meta name="description" content="Jayesh Singh — an indexed portfolio of operations, sourcing and systems work.">
-    <title>Jayesh Singh — Handoff Index</title>
+    <meta name="theme-color" content="#f7f6f1">
+    <meta name="description" content="Jayesh Singh — operations, sourcing and systems thinking in practice.">
+    <title>Jayesh Singh — Quiet signals</title>
     <link rel="icon" href="profile-photo-transparent.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="surface.css">
-    <script src="surface.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quiet.css">
+    <script src="quiet.js" defer></script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <header class="topbar">
-      <a class="brand" href="#top" aria-label="Jayesh Singh home"><span>JS</span><strong>Jayesh Singh</strong></a>
-      <p class="topbar__status">HANDOFF INDEX / 2026</p>
-      <button class="menu" type="button" aria-expanded="false" aria-controls="index-menu"><i></i><i></i><span>Index</span></button>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Jayesh Singh home"><span>JS</span><strong>Jayesh Singh</strong></a>
+      <nav class="desktop-nav" aria-label="Primary navigation"><a href="#about">About</a><a href="#work">Work</a><a href="#journey">Journey</a><a href="#contact">Contact</a></nav>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav"><i></i><i></i><span>Menu</span></button>
     </header>
-    <nav class="index-menu" id="index-menu" aria-label="Portfolio index">
-      <div><p class="micro">A SHORT INDEX OF THE WORK</p><a href="#top"><b>00</b>Opening statement</a><a href="#practice"><b>01</b>Working practice</a><a href="#dossiers"><b>02</b>Evidence / dossiers</a><a href="#journey"><b>03</b>Professional record</a><a href="#open"><b>04</b>Open line</a></div>
-    </nav>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation"><a href="#home">Home</a><a href="#about">About</a><a href="#work">Selected work</a><a href="#journey">Journey</a><a href="#contact">Contact</a></nav>
 
     <main id="main">
-      <section class="cover" id="top">
-        <div class="cover__margin micro">JAYESH SINGH<br>OPERATIONS &amp; LOGISTICS</div>
-        <div class="cover__main">
-          <p class="overline">A working index of decisions, systems and field experience</p>
-          <h1>What happens<br><em>between</em> a signal<br>and an action?</h1>
-          <p class="cover__lede">I work across the handoff: from the real-world detail of a route or supplier conversation to the clearer system that helps a team move.</p>
-          <a class="cover__link" href="#dossiers">Open the index <span>↓</span></a>
+      <section class="hero" id="home">
+        <div class="hero__meta micro"><span>JAYESH SINGH / 2026</span><span>OPERATIONS &amp; LOGISTICS</span></div>
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <p class="eyebrow">A portfolio of useful movement</p>
+            <h1>Making the<br><em>next step</em> clearer.</h1>
+            <p class="hero__lede">I work where field reality, commercial decisions and practical systems meet — turning complex work into a clearer way forward.</p>
+            <div class="hero__actions"><a class="button" href="#work">See selected work <span>↘</span></a><a class="quiet-link" href="Jayesh-Singh-Resume.pdf" download>Résumé <span>↓</span></a></div>
+          </div>
+          <div class="hero__art" aria-label="A quiet visual showing a signal becoming a decision">
+            <div class="art__label micro">A SMALL STUDY / 01</div>
+            <svg viewBox="0 0 460 360" role="img">
+              <path class="art__horizon" d="M25 285H435M80 60V315"></path>
+              <path class="art__signal" d="M80 285C140 285 132 115 205 115s55 120 112 120 45-105 118-105"></path>
+              <circle cx="80" cy="285" r="5"></circle><circle cx="205" cy="115" r="5"></circle><circle cx="317" cy="235" r="5"></circle><circle cx="435" cy="130" r="5"></circle>
+              <text x="77" y="310">notice</text><text x="196" y="91">sort</text><text x="305" y="260">choose</text><text x="396" y="106">move</text>
+            </svg>
+            <p class="art__note">A process becomes useful when the next decision is easier to see.</p>
+          </div>
         </div>
-        <div class="cover__register" aria-label="Handoff index visual">
-          <div class="register__head micro"><span>HANDOFF / 001</span><span>ACTIVE</span></div>
-          <div class="register__rows"><div><span>01</span><b>observe</b><i></i></div><div><span>02</span><b>translate</b><i></i></div><div><span>03</span><b>decide</b><i></i></div><div><span>04</span><b>move</b><i></i></div></div>
-          <p class="register__note">The quality of an operation lives in the handoff between what one person sees and what the next person can use.</p>
-        </div>
-        <div class="cover__footer micro"><span>PB / INDIA</span><span>SCROLL TO READ ↓</span></div>
+        <a class="scroll-link micro" href="#about">Scroll to explore <span>↓</span></a>
       </section>
 
-      <section class="band band--light" id="practice">
-        <div class="band__head"><span class="band__number">01</span><span class="micro">WORKING PRACTICE</span><span class="line"></span></div>
-        <div class="practice__intro"><h2>Make the<br>next step <em>clear.</em></h2><p>The work is practical: look closely, structure what matters, then leave behind a rhythm that can be used again.</p></div>
-        <div class="practice__list">
-          <article><span class="practice__key">A / FIELD</span><div><h3>Observe before optimising.</h3><p>Spend time with the real process. Notice what the spreadsheet leaves out and what the frontline already knows.</p></div></article>
-          <article><span class="practice__key">B / SYSTEM</span><div><h3>Make the signal legible.</h3><p>Translate scattered activity into a view a team can understand, challenge and use without ceremony.</p></div></article>
-          <article><span class="practice__key">C / RHYTHM</span><div><h3>Leave a repeatable handoff.</h3><p>The output is a clearer next action that survives the next busy week.</p></div></article>
+      <section class="section about" id="about">
+        <div class="section-head"><span class="section-number">01</span><span class="micro">ABOUT / POINT OF VIEW</span><i></i></div>
+        <div class="about__intro"><h2>Close to<br>the <em>work.</em></h2><p>I’m interested in the useful middle: where a strategy becomes a route plan, where a supplier conversation becomes a landed cost, where a dashboard changes the next decision.</p></div>
+        <div class="about__notes"><article><span class="note-letter">A</span><h3>Observe before optimising.</h3><p>Spend time with the real process. Notice what the spreadsheet leaves out and what the frontline already knows.</p></article><article><span class="note-letter">B</span><h3>Make the signal legible.</h3><p>Translate scattered activity into a view a team can understand, challenge and use without ceremony.</p></article><article><span class="note-letter">C</span><h3>Leave a useful rhythm.</h3><p>The output is a clearer next action that survives the next busy week.</p></article></div>
+      </section>
+
+      <section class="section work" id="work">
+        <div class="section-head"><span class="section-number">02</span><span class="micro">WORK / SELECTED NOTES</span><i></i></div>
+        <div class="work__intro"><h2>Four ways<br>to make work <em>move.</em></h2><p>Two field experiences and two independent concepts. Each project opens as a concise note, with context, approach and limitations kept visible.</p></div>
+        <div class="project-list">
+          <button class="project project--one" data-project="beat"><span class="project__number">01</span><span class="project__title"><small>FIELD EXPERIENCE / CAVINKARE</small><strong>Making a Beat<br>Work Harder.</strong></span><span class="project__tag">retail rhythm</span><span class="project__arrow">↗</span></button>
+          <button class="project project--two" data-project="shelf"><span class="project__number">02</span><span class="project__title"><small>ENTREPRENEURSHIP / ONLY SOLAR</small><strong>From Supplier<br>to Shelf.</strong></span><span class="project__tag">commercial flow</span><span class="project__arrow">↗</span></button>
+          <button class="project project--three" data-project="flow"><span class="project__number">03</span><span class="project__title"><small>INDEPENDENT CONCEPT / SQL + POWER BI</small><strong>See the Whole<br>Flow.</strong></span><span class="project__tag">visibility layer</span><span class="project__arrow">↗</span></button>
+          <button class="project project--four" data-project="exceptions"><span class="project__number">04</span><span class="project__title"><small>INDEPENDENT CONCEPT / ANALYTICS</small><strong>Exceptions<br>First.</strong></span><span class="project__tag">decision surface</span><span class="project__arrow">↗</span></button>
         </div>
       </section>
 
-      <section class="band band--ink" id="dossiers">
-        <div class="band__head"><span class="band__number">02</span><span class="micro">EVIDENCE / DOSSIERS</span><span class="line"></span></div>
-        <div class="dossiers__intro"><h2>Four questions<br>worth <em>following.</em></h2><p>Experience and independent concepts are marked separately. Open a dossier for context, approach and limitations.</p></div>
-        <div class="dossier-list">
-          <button class="dossier dossier--active" data-file="beat"><span class="dossier__no">01</span><span class="dossier__body"><small>FIELD EXPERIENCE / CAVINKARE</small><strong>Making a Beat<br>Work Harder.</strong><em>retail rhythm</em></span><span class="dossier__mark">+</span></button>
-          <button class="dossier" data-file="shelf"><span class="dossier__no">02</span><span class="dossier__body"><small>ENTREPRENEURSHIP / ONLY SOLAR</small><strong>From Supplier<br>to Shelf.</strong><em>commercial handoff</em></span><span class="dossier__mark">+</span></button>
-          <button class="dossier" data-file="flow"><span class="dossier__no">03</span><span class="dossier__body"><small>INDEPENDENT CONCEPT / SQL + POWER BI</small><strong>See the Whole<br>Flow.</strong><em>visibility layer</em></span><span class="dossier__mark">+</span></button>
-          <button class="dossier" data-file="exceptions"><span class="dossier__no">04</span><span class="dossier__body"><small>INDEPENDENT CONCEPT / ANALYTICS</small><strong>Exceptions<br>First.</strong><em>decision surface</em></span><span class="dossier__mark">+</span></button>
-        </div>
+      <section class="section journey" id="journey">
+        <div class="section-head"><span class="section-number">03</span><span class="micro">JOURNEY / PROFESSIONAL RECORD</span><i></i></div>
+        <div class="journey__intro"><h2>One curiosity,<br>many <em>settings.</em></h2><p>Computer Science → FMCG field experience → entrepreneurship → MBA in Operations &amp; Logistics.</p></div>
+        <ol class="timeline"><li><time>2020—2024</time><div><h3>B.Tech / Computer Science &amp; Engineering</h3><p>Lovely Professional University · 75.8%</p></div></li><li><time>2024—EARLY 2025</time><div><h3>Co-Founder &amp; Business Head / Only Solar</h3><p>Import-distribution venture · sourcing, commercial operations and channel development</p></div></li><li><time>OCT 2025—FEB 2026</time><div><h3>Sales Representative / CavinKare</h3><p>Third-party payroll · FMCG field sales and retail distribution</p></div></li><li><time>2026—2028</time><div><h3>MBA / Operations &amp; Logistics</h3><p>Lovely Professional University · pursuing · minor undecided</p></div></li></ol>
       </section>
 
-      <section class="band band--mineral" id="journey">
-        <div class="band__head"><span class="band__number">03</span><span class="micro">PROFESSIONAL RECORD</span><span class="line"></span></div>
-        <div class="journey__intro"><h2>One thread,<br>four <em>settings.</em></h2><p>Computer Science → FMCG field experience → entrepreneurship → MBA in Operations &amp; Logistics.</p></div>
-        <ol class="record">
-          <li><time>2020—2024</time><div><h3>B.Tech / Computer Science &amp; Engineering</h3><p>Lovely Professional University · 75.8%</p></div></li>
-          <li><time>2024—EARLY 2025</time><div><h3>Co-Founder &amp; Business Head / Only Solar</h3><p>Import-distribution venture · sourcing, commercial operations and channel development</p></div></li>
-          <li><time>OCT 2025—FEB 2026</time><div><h3>Sales Representative / CavinKare</h3><p>Third-party payroll · FMCG field sales and retail distribution</p></div></li>
-          <li><time>2026—2028</time><div><h3>MBA / Operations &amp; Logistics</h3><p>Lovely Professional University · pursuing · minor undecided</p></div></li>
-        </ol>
-      </section>
-
-      <section class="band band--light open" id="open">
-        <div class="band__head"><span class="band__number">04</span><span class="micro">OPEN LINE / CONTACT</span><span class="line"></span></div>
-        <div class="open__grid"><h2>Bring me<br>a real <em>problem.</em></h2><div><p>I’m open to operations, supply chain, product operations, business analysis and commercial roles where clear thinking meets real execution.</p><a href="mailto:jayeshsingh9b@gmail.com">jayeshsingh9b@gmail.com <span>↗</span></a><a href="https://www.linkedin.com/in/jsingh26" target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a><a class="download" href="Jayesh-Singh-Resume.pdf" download>Download résumé ↓</a></div></div>
+      <section class="section contact" id="contact">
+        <div class="section-head"><span class="section-number">04</span><span class="micro">CONTACT / OPEN LINE</span><i></i></div>
+        <div class="contact__grid"><h2>Have a good<br><em>problem?</em></h2><div><p>I’m open to operations, supply chain, product operations, business analysis and commercial roles where clear thinking meets real execution.</p><a href="mailto:jayeshsingh9b@gmail.com">jayeshsingh9@gmail.com <span>↗</span></a><a href="https://www.linkedin.com/in/jsingh26" target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a><a class="download" href="Jayesh-Singh-Resume.pdf" download>Download résumé ↓</a></div></div>
       </section>
     </main>
-    <footer class="footer"><span>© 2026 Jayesh Singh</span><span class="micro">Handoff Index / current edition</span><a href="#top">Back to top ↑</a></footer>
-    <dialog class="dossier-dialog" id="dossier-dialog" aria-labelledby="dossier-title"><div><button class="dialog-close" type="button" aria-label="Close dossier">×</button><p class="micro" id="dossier-kicker"></p><h2 id="dossier-title"></h2><div id="dossier-content"></div></div></dialog>
+    <footer class="footer"><span>© 2026 Jayesh Singh</span><span class="micro">Soft signals / clear work</span><a href="#home">Back to top ↑</a></footer>
+    <dialog class="project-dialog" id="project-dialog" aria-labelledby="project-dialog-title"><div><button class="dialog-close" type="button" aria-label="Close project note">×</button><p class="micro" id="project-dialog-kicker"></p><h2 id="project-dialog-title"></h2><div id="project-dialog-body"></div></div></dialog>
   </body>
 </html>
