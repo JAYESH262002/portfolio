@@ -1,16 +1,16 @@
-# Jayesh Singh — Open Circuit
+# Jayesh Singh — Living Field Notebook
 
-An original interactive workspace for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
+An original interactive field notebook for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
 
 ## Architecture
 
 This is a dependency-free static site:
 
 - `index.html` — page structure, content and semantic landmarks
-- `circuit.css` — Open Circuit visual system, responsive layout and motion
-- `circuit.js` — stateful project workspace, draggable notes, accordions and dialogs
+- `notebook.css` — Living Field Notebook visual system, responsive layout and motion
+- `notebook.js` — chapter map, process explorer, project filters/case study, experiments, milestones and copy interaction
 
-The current application is intentionally separate from the previous portfolio implementations. The V12 Field Atlas application is recoverable on `portfolio-v12-field-atlas-2026-11-03`; earlier applications remain recoverable on their dated branches.
+The current application is intentionally separate from the previous portfolio implementations. The V13 Open Circuit application is recoverable on `portfolio-v13-open-circuit-2026-11-03`; earlier applications remain recoverable on their dated branches.
 
 ## Local preview
 

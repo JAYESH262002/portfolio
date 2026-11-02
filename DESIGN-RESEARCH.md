@@ -59,3 +59,14 @@ Four directions were explored:
 4. **Room Tone** — a gallery-like composition using one large responsive artwork and layered annotations.
 
 Open Circuit was selected because it is a clear break from the previous fixed rail and archive structures while remaining intuitive for recruiters. Its restrained palette uses porcelain, lilac, peach, sage and mist blue. Its motion system combines lightweight scroll reveals, tab state transitions, tactile note dragging, accordion expansion and native dialog disclosure, with reduced-motion support.
+## V14 — Living Field Notebook
+
+The V14 reset studied Pensatori Irrazionali, Artocea, A1 Gallery, One Page Love, Godly and Codrops again, focusing on interaction behaviour rather than screenshots. The useful principles were: let a single visual metaphor carry the page, keep the idle state calm, use progressive disclosure for depth, and make interactive controls expose real information.
+
+Three directions were compared:
+
+1. **Living Field Notebook** — connected chapter map, process explorer, layered case studies and small decision experiments.
+2. **Quiet Observatory** — a scroll-led visual instrument where the visitor changes the emphasis of a professional story.
+3. **Working Library** — a searchable editorial archive with expandable notes and a separate case-study reading mode.
+
+Living Field Notebook was selected because it preserves the calm editorial character the user values while adding meaningful content depth and reactive exploration. It uses porcelain, sage, lilac, peach and mist-blue paper tones, Instrument Serif and Manrope typography, and a motion system of map selection, stateful tabs, progressive disclosure, slider recalculation, filtering, milestone switching and clipboard feedback. Synthetic experiments are explicitly labelled and no unsupported results are claimed.
