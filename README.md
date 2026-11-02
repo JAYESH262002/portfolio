@@ -1,13 +1,13 @@
-# Jayesh Singh — Field Notes
+# Jayesh Singh — Operations & systems
 
-An editorial portfolio for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
+A warm editorial portfolio for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
 
 ## Architecture
 
 This is a dependency-free static site:
 
 - `index.html` — page structure, content and semantic landmarks
-- `field-notes.css` — independent visual system, responsive layout and motion
+- `field-notes.css` — warm editorial visual system, responsive layout and motion
 - `field-notes.js` — chapter menu, case-file dialogs and scroll reveals
 
 The current application is intentionally separate from the legacy portfolio implementation. The previous root application is recoverable on the local `portfolio-legacy-2026-11-03` branch.
