@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const caseDialogTitle = document.querySelector("#case-dialog-title");
   const caseDialogKicker = document.querySelector("#case-dialog-kicker");
   const caseDialogBody = document.querySelector("#case-dialog-body");
+  let caseDialogTrigger = null;
   const infoDialogTriggers = document.querySelectorAll(
     ".info-dialog-trigger, .hero__visual-card",
   );
@@ -227,6 +228,17 @@ document.addEventListener("DOMContentLoaded", () => {
         ["3-Step Execution Framework", "1. Design a relational schema linking Outlet Master, Beat Visit Logs, SKU Order Bookings and Distributor Closing Inventory. 2. Instrument Beat Strike Rate, Outlet Drop Size, SKU Fill-Rate Gap and Days-Since-Last-Order in Power BI. 3. Specify SFA/DMS rules that flag high-velocity outlets at risk before the morning beat."],
         ["Ops + PM + GTM Synthesis", "Computer Science and BI tools solve real replenishment and territory-sales bottlenecks, creating a practical bridge between product, operations and commercial teams."]
       ]
+    },
+    dashboard: {
+      kicker: "CASE STUDY 04 · PROPOSED OPERATIONS ANALYTICS CONCEPT",
+      title: "Inventory & Operations Performance Dashboard",
+      sections: [
+        ["Project Status", "Independent portfolio concept using synthetic or sample data. This is not presented as a deployed company dashboard."],
+        ["Business Context", "Operations teams need a concise view of stock health, service levels and replenishment risk before issues become stockouts or excess inventory."],
+        ["Analytical Approach", "Model inventory movement, SKU velocity and outlet-level demand to explore inventory turnover, ABC classification, reorder levels, stockout frequency and service-level trends."],
+        ["Proposed Output", "A Power BI or spreadsheet dashboard with an exception-first view: items at risk, root-cause filters, trend context and clear next actions for replenishment planning."],
+        ["Limitations & Learning", "The concept requires validated operational data, agreed KPI definitions and stakeholder testing before any business decision should rely on it."]
+      ]
     }
   };
   const caseCards = [...document.querySelectorAll(".case-card")];
@@ -238,6 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".case-open").forEach((button) => button.addEventListener("click", () => {
     const data = caseData[button.dataset.case];
     if (!data) return;
+    caseDialogTrigger = button;
     caseDialogKicker.textContent = data.kicker;
     caseDialogTitle.textContent = data.title;
     caseDialogBody.innerHTML = data.sections.map(([heading, copy]) => `<section><h3>${heading}</h3><p>${copy}</p></section>`).join("");
@@ -245,6 +258,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }));
   document.querySelector(".case-dialog__close").addEventListener("click", () => caseDialog.close());
   caseDialog.addEventListener("click", (event) => { if (event.target === caseDialog) caseDialog.close(); });
+  caseDialog.addEventListener("close", () => {
+    caseDialogTrigger?.focus();
+    caseDialogTrigger = null;
+  });
 
   const copyEmail = document.querySelector(".copy-email");
   copyEmail.addEventListener("click", async () => {

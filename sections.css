@@ -1,4 +1,6 @@
 /* Minimal editorial system for the six content sections. */
+[hidden] { display: none !important; }
+
 .content-section {
   --section-accent-gradient: linear-gradient(110deg, #ff7049 0%, #ff9a68 54%, #8fc7a5 100%);
   padding: clamp(62px, 6vw, 82px) 0;
@@ -501,11 +503,11 @@
   .resume-summary { font-size: 14px; }
   .resume-details { font-size: 13px; }
   .focus-grid { grid-template-columns: 1fr; margin-top: 29px; }
-  .focus-item { min-height: 0; padding: 21px;     .lens-tabs { flex-direction: column; }
-    .lens-tab { width: 100%; }
-    .tools-bar strong { flex-basis: 100%; }
-    .certifications__grid { grid-template-columns: 1fr; }
-  }
+  .focus-item { min-height: 0; padding: 21px; }
+  .lens-tabs { flex-direction: column; }
+  .lens-tab { width: 100%; }
+  .tools-bar strong { flex-basis: 100%; }
+  .certifications__grid { grid-template-columns: 1fr; }
   .focus-item ul { margin-top: 20px; }
   .minor-row { flex-wrap: wrap; gap: 9px; }
   .minor-row-label { flex-basis: 100%; }
