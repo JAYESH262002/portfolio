@@ -1,16 +1,16 @@
-# Jayesh Singh — Signal Garden
+# Jayesh Singh — Prismatic Field
 
-An original interactive editorial garden for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
+An original interactive editorial field for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
 
 ## Architecture
 
 This is a dependency-free static site:
 
 - `index.html` — page structure, content and semantic landmarks
-- `garden.css` — Signal Garden visual system, responsive layout and motion
-- `garden.js` — reactive constellation, principle explorer, project filters/case notes, decision experiments, journey and copy interaction
+- `prism.css` — Prismatic Field visual system, glossy navigation, animated identity and responsive motion
+- `prism.js` — cursor field, moving glass-nav indicator, process/lens state, project cases, experiments, journey and copy interaction
 
-The current application is intentionally separate from the previous portfolio implementations. The V14 Living Field Notebook application is recoverable on `portfolio-v14-notebook-2026-11-03`; earlier applications remain recoverable on their dated branches.
+The current application is intentionally separate from the previous portfolio implementations. The V15 Signal Garden application is recoverable on `portfolio-v15-signal-garden-2026-11-03`; earlier applications remain recoverable on their dated branches.
 
 ## Local preview
 

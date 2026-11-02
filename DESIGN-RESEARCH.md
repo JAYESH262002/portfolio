@@ -81,3 +81,14 @@ Three directions were compared:
 3. **Field Relay** — a scroll-linked chain of professional chapters with a single evolving visual.
 
 Signal Garden was selected because it keeps the light editorial personality while changing the composition from the notebook. It uses a soft paper palette, a constellation metaphor tied to the professional journey, stateful principle and journey panels, case-note disclosure, two labelled synthetic experiments, and reduced-motion fallbacks.
+## V16 — Prismatic Field
+
+Fresh reference checks covered Webflow glass treatments, cursor-led portfolio storytelling, and scroll-linked product narratives. The useful principles were a glass surface that remains legible, motion that communicates state, and pointer interaction that amplifies a visual system instead of replacing content.
+
+Three directions were compared:
+
+1. **Prismatic Field** — glossy floating navigation, independently animated JAYESH / SINGH wordmarks, a cursor-reactive field, and stateful editorial tools.
+2. **Quiet Instrument** — a typography-first reading experience with a single evolving signal.
+3. **Field Relay** — a scroll-linked chain of professional chapters connected by one visual route.
+
+Prismatic Field was selected for the requested larger leap. It preserves the light Quiet Signals atmosphere while making the two requested identity effects explicit: the glass header has backdrop blur, reflective rim, hover illumination, moving active indicator and scroll state; the name parts have separate, continuously animated colour sweeps. The rest of the system uses restrained process animation, case disclosure, synthetic decision tools, responsive journey panels and reduced-motion fallbacks.
