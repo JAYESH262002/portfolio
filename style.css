@@ -1305,6 +1305,31 @@ button { color: inherit; }
   .theme-toggle { width: 36px; height: 36px; flex-basis: 36px; }
 }
 
+.impact-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 30px;
+  border: 1px solid var(--border-soft);
+  background: var(--border-soft);
+}
+.impact-strip > div {
+  min-height: 105px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+}
+.impact-strip strong { display: block; color: var(--green-deep); font: 700 18px var(--display); letter-spacing: -.03em; }
+.impact-strip span { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+@media (max-width: 900px) {
+  .impact-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .impact-strip { margin-top: 25px; }
+  .impact-strip > div { min-height: 94px; padding: 12px; }
+  .impact-strip strong { font-size: 15px; }
+  .impact-strip span { font-size: 10px; }
+}
+
 @media (max-width: 380px) {
   .site-header { padding-inline: 8px; }
   .site-header .wordmark { gap: 9px; }

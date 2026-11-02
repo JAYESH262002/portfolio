@@ -36,6 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const infoDialogClose = document.querySelector(".info-dialog__close");
   const infoDialogDiagram = document.querySelector(".info-dialog__diagram");
   const infoDialogSteps = [...infoDialogDiagram.querySelectorAll(".info-dialog__step")];
+  const caseDialog = document.querySelector("#case-dialog");
+  const caseDialogTitle = document.querySelector("#case-dialog-title");
+  const caseDialogKicker = document.querySelector("#case-dialog-kicker");
+  const caseDialogBody = document.querySelector("#case-dialog-body");
   const infoDialogTriggers = document.querySelectorAll(
     ".info-dialog-trigger, .hero__visual-card",
   );
@@ -180,29 +184,103 @@ document.addEventListener("DOMContentLoaded", () => {
     infoDialogTrigger?.focus();
   });
 
-  const contactForm = document.querySelector("#contact-form");
-  contactForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(contactForm);
-    const subject = `Portfolio enquiry: ${formData.get("subject")}`;
-    const body = [
-      `Name: ${formData.get("name").trim()}`,
-      `Email: ${formData.get("email").trim()}`,
-      `Topic: ${formData.get("subject")}`,
-      "",
-      formData.get("message").trim(),
-    ].join("\n");
-    const query = new URLSearchParams({
-      view: "cm",
-      fs: "1",
-      to: "jayeshsingh9b@gmail.com",
-      su: subject,
-      body,
+  const lensTabs = [...document.querySelectorAll(".lens-tab")];
+  const lensPanels = [...document.querySelectorAll(".lens-panel")];
+  lensTabs.forEach((tab) => tab.addEventListener("click", () => {
+    const lens = tab.dataset.lens;
+    lensTabs.forEach((item) => item.classList.toggle("is-active", item === tab));
+    lensTabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
+    lensPanels.forEach((panel) => {
+      const active = panel.id === `lens-${lens}`;
+      panel.hidden = !active;
+      panel.classList.toggle("is-active", active);
     });
-    const gmailUrl = `https://mail.google.com/mail/?${query}`;
-    contactForm.reset();
-    window.location.assign(gmailUrl);
+  }));
+
+  const caseData = {
+    fmcg: {
+      kicker: "CASE STUDY 01 · FMCG OPERATIONS & ROUTE INTELLIGENCE",
+      title: "Optimizing Retail Distribution & Replenishment in Mumbai’s Andheri–Bandra Corridor",
+      sections: [
+        ["Context", "High outlet density, variable retailer reorder cycles and shelf-space competition across general trade and supermarkets."],
+        ["Operational Bottleneck", "Field signals were fragmented across beat visits, order booking and distributor stock availability."],
+        ["Framework & Execution", "Segment beats by outlet velocity, standardize order-booking cadence and create distributor stock-out feedback loops."],
+        ["Key Business Takeaways", "Frontline friction becomes DMS/SFA product requirements: better route visibility, reorder triggers and fill-rate instrumentation."]
+      ]
+    },
+    solar: {
+      kicker: "CASE STUDY 02 · 0-TO-1 SUPPLY CHAIN & COMMERCIAL LAUNCH",
+      title: "End-to-End International Sourcing, Import Logistics & GTM for Only Solar",
+      sections: [
+        ["Context", "A commercial and street lighting line required cross-border vendor vetting, lead-time planning and multi-tier distributor margins."],
+        ["Operational Bottleneck", "Supplier uncertainty and landed-cost variability made pricing, inventory and working-capital decisions inseparable."],
+        ["Framework & Execution", "Built supplier evaluation matrices, RFQ negotiation workflows, landed-cost pricing models and direct distributor channel economics."],
+        ["Key Business Takeaways", "A successful launch connects sourcing discipline to channel-ready pricing, quality assurance and P&L ownership."]
+      ]
+    },
+    visibility: {
+      kicker: "CASE STUDY 03 · TECH + OPS PRODUCT CONCEPT",
+      title: "Retailer Replenishment & Territory Visibility Playbook",
+      sections: [
+        ["Context", "Information asymmetry between field reps, local distributors and supply planners causes lost secondary sales."],
+        ["Operational Bottleneck", "Teams lack a shared view of fill rate, beat strike rate and SKU velocity at the moment decisions are made."],
+        ["Framework & Execution", "Combine B.Tech CS systems thinking with field insight to define KPI instrumentation, workflow automation and exception-based alerts."],
+        ["Key Business Takeaways", "Physical supply-chain bottlenecks can be translated into scalable digital product specifications and measurable outcomes."]
+      ]
+    }
+  };
+  const caseCards = [...document.querySelectorAll(".case-card")];
+  document.querySelectorAll(".case-filter").forEach((filter) => filter.addEventListener("click", () => {
+    document.querySelectorAll(".case-filter").forEach((item) => item.classList.toggle("is-active", item === filter));
+    const tag = filter.dataset.filter;
+    caseCards.forEach((card) => { card.hidden = tag !== "all" && !card.dataset.tags.split(",").includes(tag); });
+  }));
+  document.querySelectorAll(".case-open").forEach((button) => button.addEventListener("click", () => {
+    const data = caseData[button.dataset.case];
+    if (!data) return;
+    caseDialogKicker.textContent = data.kicker;
+    caseDialogTitle.textContent = data.title;
+    caseDialogBody.innerHTML = data.sections.map(([heading, copy]) => `<section><h3>${heading}</h3><p>${copy}</p></section>`).join("");
+    caseDialog.showModal();
+  }));
+  document.querySelector(".case-dialog__close").addEventListener("click", () => caseDialog.close());
+  caseDialog.addEventListener("click", (event) => { if (event.target === caseDialog) caseDialog.close(); });
+
+  const copyEmail = document.querySelector(".copy-email");
+  copyEmail.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(copyEmail.dataset.email);
+      copyEmail.textContent = "Copied!";
+      setTimeout(() => { copyEmail.textContent = "Copy Email (jayeshsingh9b@gmail.com)"; }, 1800);
+    } catch (error) {
+      console.error("Could not copy the email address.", error);
+      copyEmail.textContent = "Copy failed — use the email link";
+    }
+  });
+
+  const contactForm = document.querySelector("#contact-form");
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const submitButton = contactForm.querySelector("button[type='submit']");
+    const hint = document.querySelector("#contact-form-hint");
+    submitButton.disabled = true;
+    hint.textContent = "Sending your note…";
+    const formData = new FormData(contactForm);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/jayeshsingh9b@gmail.com", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      });
+      if (!response.ok) throw new Error(`Contact submission failed with status ${response.status}.`);
+      contactForm.reset();
+      hint.textContent = "Thanks — your message is on its way.";
+    } catch (error) {
+      console.error(error);
+      hint.textContent = "Something went wrong. Please copy the email address and send your note directly.";
+    } finally {
+      submitButton.disabled = false;
+    }
   });
 
   menuToggle.addEventListener("click", () => {
@@ -222,6 +300,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
+
+    if (caseDialog.open) {
+      event.preventDefault();
+      caseDialog.close();
+      return;
+    }
 
     if (infoDialog.open) {
       event.preventDefault();
