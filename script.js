@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const hero = document.querySelector(".hero");
   const heroRoute = document.querySelector(".hero__route");
+  const progressCurrent = document.querySelector(".page-progress__current");
+  const progressFill = document.querySelector(".page-progress__line i");
 
   if (!reducedMotion && hero && heroRoute) {
     let pointerFrame = 0;
@@ -67,9 +69,19 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       navLinks.forEach((link) => link.toggleAttribute("aria-current", link.hash === `#${entry.target.id}`));
+      const sectionIndex = sections.indexOf(entry.target) + 1;
+      if (progressCurrent) progressCurrent.textContent = String(sectionIndex).padStart(2, "0");
     });
   }, { rootMargin: "-30% 0px -60% 0px", threshold: 0 });
   sections.forEach((section) => observer.observe(section));
+
+  const updateProgress = () => {
+    if (!progressFill) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    progressFill.style.height = `${scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0}%`;
+  };
+  updateProgress();
+  window.addEventListener("scroll", updateProgress, { passive: true });
 
   if (!reducedMotion) {
     const revealObserver = new IntersectionObserver((entries, instance) => {
@@ -114,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dialog.showModal();
   }));
   document.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("cancel", () => dialog.close());
   dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
   dialog.addEventListener("close", () => trigger?.focus());
 
