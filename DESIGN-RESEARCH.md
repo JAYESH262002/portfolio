@@ -47,3 +47,15 @@ Three directions were considered:
 3. **Open Table** — a modular workspace where professional facts and projects rearrange around a central working question.
 
 Field Atlas was selected because it creates the clearest break from the previous hero-and-sections grammar while remaining practical and credible. The active system uses porcelain, lilac, peach, mist blue and sage as restrained paper tones; Manrope, Newsreader and DM Mono for hierarchy; and motion limited to rail/drawer transitions, entry hover lifts, dialog openings and scroll reveals. The atlas object is an original CSS/SVG-free composition of indexed words, points and connections rather than a reused route illustration.
+## V13 — Open Circuit
+
+Fresh reference checks across Pensatori Irrazionali, A1 Gallery and One Page Love pointed to three principles for this reset: interaction can be introduced through a small number of tactile objects; editorial layouts benefit from a calm idle state and a clear reveal moment; and a single interactive workspace can communicate more than a grid of repeated cards.
+
+Four directions were explored:
+
+1. **Open Circuit** — a workbench metaphor with draggable notes, a stateful project circuit, and expandable career evidence.
+2. **Quiet Instrument** — a typography-led interface where visitor choices tune the emphasis of the story.
+3. **Paper Trail** — a scrollable case-study publication with paper folds and sequential reveals.
+4. **Room Tone** — a gallery-like composition using one large responsive artwork and layered annotations.
+
+Open Circuit was selected because it is a clear break from the previous fixed rail and archive structures while remaining intuitive for recruiters. Its restrained palette uses porcelain, lilac, peach, sage and mist blue. Its motion system combines lightweight scroll reveals, tab state transitions, tactile note dragging, accordion expansion and native dialog disclosure, with reduced-motion support.

@@ -1,16 +1,16 @@
-# Jayesh Singh — Field Atlas
+# Jayesh Singh — Open Circuit
 
-An original light editorial archive for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
+An original interactive workspace for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
 
 ## Architecture
 
 This is a dependency-free static site:
 
 - `index.html` — page structure, content and semantic landmarks
-- `atlas.css` — Field Atlas visual system, responsive layout and motion
-- `atlas.js` — rail navigation, archive dialogs and scroll reveals
+- `circuit.css` — Open Circuit visual system, responsive layout and motion
+- `circuit.js` — stateful project workspace, draggable notes, accordions and dialogs
 
-The current application is intentionally separate from the previous portfolio implementations. The V11 Quiet Signals application is recoverable on `portfolio-v11-quiet-signals-2026-11-03`; earlier applications remain recoverable on their dated branches.
+The current application is intentionally separate from the previous portfolio implementations. The V12 Field Atlas application is recoverable on `portfolio-v12-field-atlas-2026-11-03`; earlier applications remain recoverable on their dated branches.
 
 ## Local preview
 
