@@ -1,80 +1,57 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f7f6f1">
-    <meta name="description" content="Jayesh Singh — operations, sourcing and systems thinking in practice.">
-    <title>Jayesh Singh — Quiet signals</title>
-    <link rel="icon" href="profile-photo-transparent.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="quiet.css">
-    <script src="quiet.js" defer></script>
-  </head>
-  <body>
-    <a class="skip" href="#main">Skip to content</a>
-    <header class="site-header">
-      <a class="brand" href="#home" aria-label="Jayesh Singh home"><span>JS</span><strong>Jayesh Singh</strong></a>
-      <nav class="desktop-nav" aria-label="Primary navigation"><a href="#about">About</a><a href="#work">Work</a><a href="#journey">Journey</a><a href="#contact">Contact</a></nav>
-      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav"><i></i><i></i><span>Menu</span></button>
-    </header>
-    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation"><a href="#home">Home</a><a href="#about">About</a><a href="#work">Selected work</a><a href="#journey">Journey</a><a href="#contact">Contact</a></nav>
-
-    <main id="main">
-      <section class="hero" id="home">
-        <div class="hero__meta micro"><span>JAYESH SINGH / 2026</span><span>OPERATIONS &amp; LOGISTICS</span></div>
-        <div class="hero__grid">
-          <div class="hero__copy">
-            <p class="eyebrow">A portfolio of useful movement</p>
-            <h1>Making the<br><em>next step</em> clearer.</h1>
-            <p class="hero__lede">I work where field reality, commercial decisions and practical systems meet — turning complex work into a clearer way forward.</p>
-            <div class="hero__actions"><a class="button" href="#work">See selected work <span>↘</span></a><a class="quiet-link" href="Jayesh-Singh-Resume.pdf" download>Résumé <span>↓</span></a></div>
-          </div>
-          <div class="hero__art" aria-label="A quiet visual showing a signal becoming a decision">
-            <div class="art__label micro">A SMALL STUDY / 01</div>
-            <svg viewBox="0 0 460 360" role="img">
-              <path class="art__horizon" d="M25 285H435M80 60V315"></path>
-              <path class="art__signal" d="M80 285C140 285 132 115 205 115s55 120 112 120 45-105 118-105"></path>
-              <circle cx="80" cy="285" r="5"></circle><circle cx="205" cy="115" r="5"></circle><circle cx="317" cy="235" r="5"></circle><circle cx="435" cy="130" r="5"></circle>
-              <text x="77" y="310">notice</text><text x="196" y="91">sort</text><text x="305" y="260">choose</text><text x="396" y="106">move</text>
-            </svg>
-            <p class="art__note">A process becomes useful when the next decision is easier to see.</p>
-          </div>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Jayesh Singh — field notes on operations, sourcing and commercial systems.">
+  <title>Jayesh Singh / Field Atlas</title>
+  <link rel="icon" href="profile-photo-transparent.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="atlas.css"><script src="atlas.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <aside class="rail">
+    <a class="mark" href="#top" aria-label="Jayesh Singh home"><span>J</span><span>S</span></a>
+    <p class="rail__label">FIELD<br>ATLAS<br><b>26</b></p>
+    <nav aria-label="Section navigation"><a href="#about"><span>01</span>About</a><a href="#work"><span>02</span>Work</a><a href="#path"><span>03</span>Path</a><a href="#contact"><span>04</span>Open</a></nav>
+    <button class="rail__menu" aria-label="Open navigation" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+  </aside>
+  <nav class="drawer" id="drawer" aria-label="Mobile navigation"><a href="#about">About <i>01</i></a><a href="#work">Work <i>02</i></a><a href="#path">Path <i>03</i></a><a href="#contact">Open <i>04</i></a></nav>
+  <main id="content">
+    <section class="atlas-top" id="top">
+      <div class="topline"><span>JAYESH SINGH</span><span>OPERATIONS / LOGISTICS / INDIA</span><time datetime="2026-11-03">03—11—26</time></div>
+      <div class="intro-grid">
+        <div class="intro-copy"><p class="kicker">An independent working archive</p><h1>Notes from<br><i>the middle.</i></h1><p class="intro-text">The place between a plan and its arrival. I study the handoffs, frictions and quiet decisions that make operations useful.</p><a class="text-link" href="#work">Enter the archive <b>↘</b></a></div>
+        <div class="atlas-object" aria-label="Interactive field atlas index">
+          <div class="object-top"><span>OBSERVATION INDEX</span><span>001—006</span></div>
+          <div class="object-field"><span class="field-word field-word--one">source</span><span class="field-word field-word--two">route</span><span class="field-word field-word--three">stock</span><span class="field-word field-word--four">signal</span><span class="field-dot dot--one"></span><span class="field-dot dot--two"></span><span class="field-dot dot--three"></span><span class="field-line line--one"></span><span class="field-line line--two"></span><span class="field-note">A useful view<br>makes the next<br>move visible.</span></div>
+          <div class="object-bottom"><span>FIELD NOTES / 04</span><span>DRAG TO TRACE</span></div>
         </div>
-        <a class="scroll-link micro" href="#about">Scroll to explore <span>↓</span></a>
-      </section>
-
-      <section class="section about" id="about">
-        <div class="section-head"><span class="section-number">01</span><span class="micro">ABOUT / POINT OF VIEW</span><i></i></div>
-        <div class="about__intro"><h2>Close to<br>the <em>work.</em></h2><p>I’m interested in the useful middle: where a strategy becomes a route plan, where a supplier conversation becomes a landed cost, where a dashboard changes the next decision.</p></div>
-        <div class="about__notes"><article><span class="note-letter">A</span><h3>Observe before optimising.</h3><p>Spend time with the real process. Notice what the spreadsheet leaves out and what the frontline already knows.</p></article><article><span class="note-letter">B</span><h3>Make the signal legible.</h3><p>Translate scattered activity into a view a team can understand, challenge and use without ceremony.</p></article><article><span class="note-letter">C</span><h3>Leave a useful rhythm.</h3><p>The output is a clearer next action that survives the next busy week.</p></article></div>
-      </section>
-
-      <section class="section work" id="work">
-        <div class="section-head"><span class="section-number">02</span><span class="micro">WORK / SELECTED NOTES</span><i></i></div>
-        <div class="work__intro"><h2>Four ways<br>to make work <em>move.</em></h2><p>Two field experiences and two independent concepts. Each project opens as a concise note, with context, approach and limitations kept visible.</p></div>
-        <div class="project-list">
-          <button class="project project--one" data-project="beat"><span class="project__number">01</span><span class="project__title"><small>FIELD EXPERIENCE / CAVINKARE</small><strong>Making a Beat<br>Work Harder.</strong></span><span class="project__tag">retail rhythm</span><span class="project__arrow">↗</span></button>
-          <button class="project project--two" data-project="shelf"><span class="project__number">02</span><span class="project__title"><small>ENTREPRENEURSHIP / ONLY SOLAR</small><strong>From Supplier<br>to Shelf.</strong></span><span class="project__tag">commercial flow</span><span class="project__arrow">↗</span></button>
-          <button class="project project--three" data-project="flow"><span class="project__number">03</span><span class="project__title"><small>INDEPENDENT CONCEPT / SQL + POWER BI</small><strong>See the Whole<br>Flow.</strong></span><span class="project__tag">visibility layer</span><span class="project__arrow">↗</span></button>
-          <button class="project project--four" data-project="exceptions"><span class="project__number">04</span><span class="project__title"><small>INDEPENDENT CONCEPT / ANALYTICS</small><strong>Exceptions<br>First.</strong></span><span class="project__tag">decision surface</span><span class="project__arrow">↗</span></button>
-        </div>
-      </section>
-
-      <section class="section journey" id="journey">
-        <div class="section-head"><span class="section-number">03</span><span class="micro">JOURNEY / PROFESSIONAL RECORD</span><i></i></div>
-        <div class="journey__intro"><h2>One curiosity,<br>many <em>settings.</em></h2><p>Computer Science → FMCG field experience → entrepreneurship → MBA in Operations &amp; Logistics.</p></div>
-        <ol class="timeline"><li><time>2020—2024</time><div><h3>B.Tech / Computer Science &amp; Engineering</h3><p>Lovely Professional University · 75.8%</p></div></li><li><time>2024—EARLY 2025</time><div><h3>Co-Founder &amp; Business Head / Only Solar</h3><p>Import-distribution venture · sourcing, commercial operations and channel development</p></div></li><li><time>OCT 2025—FEB 2026</time><div><h3>Sales Representative / CavinKare</h3><p>Third-party payroll · FMCG field sales and retail distribution</p></div></li><li><time>2026—2028</time><div><h3>MBA / Operations &amp; Logistics</h3><p>Lovely Professional University · pursuing · minor undecided</p></div></li></ol>
-      </section>
-
-      <section class="section contact" id="contact">
-        <div class="section-head"><span class="section-number">04</span><span class="micro">CONTACT / OPEN LINE</span><i></i></div>
-        <div class="contact__grid"><h2>Have a good<br><em>problem?</em></h2><div><p>I’m open to operations, supply chain, product operations, business analysis and commercial roles where clear thinking meets real execution.</p><a href="mailto:jayeshsingh9b@gmail.com">jayeshsingh9@gmail.com <span>↗</span></a><a href="https://www.linkedin.com/in/jsingh26" target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a><a class="download" href="Jayesh-Singh-Resume.pdf" download>Download résumé ↓</a></div></div>
-      </section>
-    </main>
-    <footer class="footer"><span>© 2026 Jayesh Singh</span><span class="micro">Soft signals / clear work</span><a href="#home">Back to top ↑</a></footer>
-    <dialog class="project-dialog" id="project-dialog" aria-labelledby="project-dialog-title"><div><button class="dialog-close" type="button" aria-label="Close project note">×</button><p class="micro" id="project-dialog-kicker"></p><h2 id="project-dialog-title"></h2><div id="project-dialog-body"></div></div></dialog>
-  </body>
+      </div>
+      <div class="top-bottom"><span>01 / 04</span><span>Scroll slowly. The archive opens in layers.</span><span class="scroll-cue">↓</span></div>
+    </section>
+    <section class="atlas-section about" id="about">
+      <header class="section-marker"><span>01</span><span>ABOUT THE PRACTICE</span><i></i><span>FIELD / DESK / SYSTEM</span></header>
+      <div class="about-grid"><p class="display">I like the part<br>where <i>things</i><br>become clear.</p><div class="about-copy"><p>My work moves between the field and the spreadsheet: observing how products travel, how people decide and where a process quietly loses energy.</p><p>Computer Science gave me a systems lens. FMCG field work and entrepreneurship gave me context. My MBA in Operations &amp; Logistics is helping me connect the two.</p><div class="principles"><span><b>01</b>Stay close to reality.</span><span><b>02</b>Name the constraint.</span><span><b>03</b>Make the next action obvious.</span></div></div></div>
+    </section>
+    <section class="atlas-section work" id="work">
+      <header class="section-marker"><span>02</span><span>SELECTED FIELD NOTES</span><i></i><span>4 ENTRIES</span></header>
+      <div class="work-intro"><h2>Things I’ve<br>been <i>following.</i></h2><p>Not a collection of finished trophies. A working archive of questions, situations and prototypes.</p></div>
+      <div class="archive">
+        <button class="entry entry--peach" data-entry="beat"><span class="entry-id">A / 01</span><span class="entry-title">Making a Beat<br><i>Work Harder.</i></span><span class="entry-type">field / distribution</span><span class="entry-open">open ↗</span></button>
+        <button class="entry entry--lilac" data-entry="shelf"><span class="entry-id">B / 02</span><span class="entry-title">From Supplier<br><i>to Shelf.</i></span><span class="entry-type">venture / sourcing</span><span class="entry-open">open ↗</span></button>
+        <button class="entry entry--blue" data-entry="flow"><span class="entry-id">C / 03</span><span class="entry-title">See the Whole<br><i>Flow.</i></span><span class="entry-type">concept / visibility</span><span class="entry-open">open ↗</span></button>
+        <button class="entry entry--sage" data-entry="exceptions"><span class="entry-id">D / 04</span><span class="entry-title">Exceptions<br><i>First.</i></span><span class="entry-type">concept / analytics</span><span class="entry-open">open ↗</span></button>
+      </div>
+    </section>
+    <section class="atlas-section path" id="path">
+      <header class="section-marker"><span>03</span><span>A SHORT PATH</span><i></i><span>NOT A STRAIGHT LINE</span></header>
+      <div class="path-grid"><h2>Different rooms.<br>Same <i>question.</i></h2><ol class="path-list"><li><time>20—24</time><div><b>Computer Science &amp; Engineering</b><small>Lovely Professional University · 75.8%</small></div></li><li><time>24—25</time><div><b>Only Solar / Co-Founder &amp; Business Head</b><small>Sourcing, import logistics, pricing and B2B distribution</small></div></li><li><time>25—26</time><div><b>CavinKare / Sales Representative</b><small>October 2025 – February 2026 · third-party payroll</small></div></li><li><time>26—28</time><div><b>MBA / Operations &amp; Logistics</b><small>Lovely Professional University · pursuing · minor undecided</small></div></li></ol></div>
+    </section>
+    <section class="atlas-section contact" id="contact"><header class="section-marker"><span>04</span><span>OPEN LINE</span><i></i><span>LET’S COMPARE NOTES</span></header><div class="contact-grid"><p class="display">Bring me a<br>messy <i>question.</i></p><div><p>I’m open to operations, supply chain, product operations, business analysis and commercial roles where clear thinking meets real execution.</p><a class="contact-email" href="mailto:jayeshsingh9b@gmail.com">jayeshsingh9b@gmail.com <b>↗</b></a><a href="https://www.linkedin.com/in/jsingh26" target="_blank" rel="noopener noreferrer">LinkedIn <b>↗</b></a><a href="Jayesh-Singh-Resume.pdf" download>Résumé <b>↓</b></a></div></div></section>
+  </main>
+  <footer><span>© Jayesh Singh / Field Atlas</span><span>Made for useful conversations</span><a href="#top">↑ top</a></footer>
+  <dialog id="entry-dialog"><button class="dialog-close" aria-label="Close note">×</button><div class="dialog-inner"><p class="kicker" id="dialog-kicker"></p><h2 id="dialog-title"></h2><div id="dialog-body"></div></div></dialog>
+</body>
 </html>

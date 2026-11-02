@@ -1,16 +1,16 @@
-# Jayesh Singh — Quiet Signals
+# Jayesh Singh — Field Atlas
 
-An original soft-light editorial portfolio for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
+An original light editorial archive for Jayesh Singh, an MBA candidate specialising in Operations & Logistics with a B.Tech foundation and experience across FMCG field sales, entrepreneurship, sourcing and commercial operations.
 
 ## Architecture
 
 This is a dependency-free static site:
 
 - `index.html` — page structure, content and semantic landmarks
-- `quiet.css` — Quiet Signals visual system, responsive layout and motion
-- `quiet.js` — mobile menu, project-note dialogs and scroll reveals
+- `atlas.css` — Field Atlas visual system, responsive layout and motion
+- `atlas.js` — rail navigation, archive dialogs and scroll reveals
 
-The current application is intentionally separate from the previous portfolio implementations. The V10 Handoff Index is recoverable on `portfolio-v10-index-2026-11-03`; earlier applications remain recoverable on their dated branches.
+The current application is intentionally separate from the previous portfolio implementations. The V11 Quiet Signals application is recoverable on `portfolio-v11-quiet-signals-2026-11-03`; earlier applications remain recoverable on their dated branches.
 
 ## Local preview
 

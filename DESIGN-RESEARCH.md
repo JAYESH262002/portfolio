@@ -36,3 +36,14 @@ The current V10 review compared three approaches before implementation:
 3. **Interactive contemporary** — an index that reveals dossier depth on focus/click, with an animated handoff register and progressive section entrances. This was selected as the motion layer, not as the visual surface.
 
 The final V10 implementation combines the second direction's visual identity with the third direction's interaction model. It intentionally removes the previous oversized question-led cover, dark dossier section, and repeated card treatment.
+## V12 — Field Atlas
+
+The V12 reset deliberately starts from a different visual premise than the prior Handoff Index and Quiet Signals versions. A short reference pass across Artocea, Godly and Codrops reinforced three useful observations: strong work uses a single visual idea rather than a collection of decorations; motion is most effective when it reveals structure; and editorial websites can feel interactive through pacing, indexing and transitions instead of spectacle.
+
+Three directions were considered:
+
+1. **Field Atlas** — a fixed vertical index, an editorial “desk” opening, and an archive of project notes arranged as coloured field sheets.
+2. **Soft Register** — a long-form typographic publication with marginalia and chapter transitions.
+3. **Open Table** — a modular workspace where professional facts and projects rearrange around a central working question.
+
+Field Atlas was selected because it creates the clearest break from the previous hero-and-sections grammar while remaining practical and credible. The active system uses porcelain, lilac, peach, mist blue and sage as restrained paper tones; Manrope, Newsreader and DM Mono for hierarchy; and motion limited to rail/drawer transitions, entry hover lifts, dialog openings and scroll reveals. The atlas object is an original CSS/SVG-free composition of indexed words, points and connections rather than a reused route illustration.
