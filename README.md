@@ -1,4 +1,75 @@
-# Jayesh Singh — Portfolio V22
+# Jayesh Singh — Portfolio V23.1
+## Critical Functional Fix: Interactive Operations Pipeline & Demand Feedback Loop
+
+**Location:** `/Users/rajput/Documents/main decision/jayesh-portfolio-next/`  
+**Identity:** Operations, Logistics & Commercial Systems  
+**Core Thesis:** *Show less initially. Reveal more when someone is interested.*  
+**Live Target Reference:** `https://jayesh-singh-portfolio.vercel.app/#contact`  
+**Primary Career Source:** `Jayesh-Singh-Resume.pdf`
+
+---
+
+## 1. Executive Summary & V23.1 Functional Fixes
+
+Portfolio V23.1 delivers a comprehensive, functional reconstruction of the signature **Operations Pipeline & Demand Loop** component. All 6 nodes, 3 scenarios (Steady / Delay / Surge), and the Reverse Demand Feedback Loop are now 100% interactive, responsive, and synchronized through an authoritative reactive state machine.
+
+```
+                         OPERATIONS PIPELINE & DEMAND LOOP
+   ┌────────────────────────────────────────────────────────────────────────┐
+   │ [ Steady ]  [ Delay (Bottleneck) ]  [ Surge (Throughput) ]            │
+   │                                                                        │
+   │  (01) ───► (02) ───► (03) ───► (04) ───► (05) ───► (06)               │
+   │ Supplier  Sourcing  Inventory Warehouse  Distrib.   Retail            │
+   │             [HOLD]                                  [LIFT]             │
+   │                                                                        │
+   │      ◄────────────────────────────────────────────────────             │
+   │         [ ↺ REVERSE DEMAND FEEDBACK LOOP (Interactive Toggle) ]        │
+   └────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼ Updates synchronously
+   ┌────────────────────────────────────────────────────────────────────────┐
+   │ TELEMETRY PANEL                                                        │
+   │ • Status Banner: STEADY / BOTTLENECK ALERT / DEMAND SURGE              │
+   │ • Feedback Loop Pill: Standard Latency vs Upstream Pull Engaged        │
+   │ • Stage Tag & Grounding: Verified Only Solar / CavinKare context       │
+   │ • Title & Operational Description                                      │
+   │ • Dynamic Impact Card: Scenario Impact + Real-time Demand Feedback     │
+   │ • Metadata Row: Focus Area + Grounding Context                         │
+   └────────────────────────────────────────────────────────────────────────┘
+```
+
+### Root Causes Diagnosed & Resolved
+
+1. **JavaScript Syntax Error**: A duplicate `const finePointer` declaration was crashing script execution before pipeline event handlers could bind. Removed duplicate and unified matchMedia queries.
+2. **Missing SVG Click Implementation**: In Chrome and Safari, `SVGGraphicsElement` does not inherit `HTMLElement.prototype.click()`. Added native SVG click polyfill and pointer event delegation so all nodes and loops respond instantly on desktop and touch devices.
+3. **SVG Transform Collisions**: CSS `:hover` / `:focus-visible` transforms (`translateY(-4px)`) previously wiped out inline SVG `transform="translate(x, y)"` coordinates. Re-architected hover animations to target inner `.node-ring` and `.node-halo` elements, maintaining 100% stable node alignment along the pipeline track.
+4. **State Clobbering**: `mouseenter` was previously overwriting user-selected stages on cursor movement. Replaced with authoritative click/tap/keyboard state (`pipelineState = { stage, scenario, isReversed }`) ensuring all three state axes operate independently without clobbering each other.
+5. **Static Feedback Loop**: Converted static loop label into a fully accessible interactive toggle button with state persistence, directional pulse reversal, and upstream demand pull telemetry.
+
+---
+
+## 2. V23.1 Verification & Acceptance Matrix
+
+| Requirement | Implementation in V23.1 | Test Result & Status |
+|---|---|---|
+| **Stage 01 (Supplier)** | Active node styling, "Supplier Sourcing & Negotiations" title, Only Solar grounding, MOQ/vendor negotiation focus. | **PASS** (Suite 2) |
+| **Stage 02 (Sourcing)** | "Import Logistics & Landed-Cost Modeling" title, Only Solar import logistics grounding. Displays amber bottleneck aura & badge during Delay scenario. | **PASS** (Suite 2 & 3) |
+| **Stage 03 (Inventory)** | "Safety Stock & Replenishment Planning" title, Analytical Operations Model grounding, buffer cover telemetry. | **PASS** (Suite 2) |
+| **Stage 04 (Warehouse)** | "Depot Storage & Product Availability Flow" title, order staging and availability telemetry. | **PASS** (Suite 2) |
+| **Stage 05 (Distribution)** | "Territory Beat Routing & Fulfillment" title, CavinKare Andheri–Bandra territory grounding. Displays cyan surge aura during Surge scenario. | **PASS** (Suite 2 & 3) |
+| **Stage 06 (Retail)** | "Retail Availability & General Trade Execution" title, CavinKare 50+ retail counters, 10+ GT accounts in M1, +20% active base, +30% MoM focus category lift. | **PASS** (Suite 2 & 3) |
+| **Steady Scenario** | Restores 5s nominal pulse speed, nominal status indicator, clears bottlenecks and surges, returns balanced cadence. | **PASS** (Suite 3) |
+| **Delay Scenario** | Slows pulses to 10s, highlights Sourcing as primary bottleneck (`HOLD +12D`), updates status banner to Bottleneck Alert, explains downstream buffer depletion. | **PASS** (Suite 3) |
+| **Surge Scenario** | Accelerates pulses to 2.2s, highlights Distribution & Retail with cyan throughput glow (`+40% LIFT`), updates status banner to Demand Surge. | **PASS** (Suite 3) |
+| **Feedback Loop Toggle** | Clickable badge toggles `is-active`, updates badge text to `↺ DEMAND PULL ACTIVE // UPSTREAM SIGNAL ON`, reverses pulse direction, updates telemetry loop pill. | **PASS** (Suite 4) |
+| **Independent State Machine** | Changing scenario never resets the active stage; changing stage never resets feedback loop. All 3 state variables operate in complete harmony. | **PASS** (Suite 5) |
+| **Keyboard Accessibility** | Full Left/Right Arrow navigation between stages, Enter/Space activation, and visible focus rings. | **PASS** (Suite 6) |
+| **Zero Overflow & Touch** | Scaled SVG viewport with 72x96px touch hit targets on nodes, zero horizontal overflow on mobile (500px). | **PASS** (Suite 7) |
+| **Automated CDP Test Suite** | 79 automated assertions executed via Chrome DevTools Protocol in headless Chrome: **79 PASSED, 0 FAILED**. | **79 / 79 PASS** |
+
+---
+
+# Jayesh Singh — Portfolio V22 (Historical Archive)
 ## Refinement Pass: Personal Identity, Spacing, Minimalism & Interaction Quality
 
 **Location:** `/Users/rajput/Documents/main decision/jayesh-portfolio-next/`  

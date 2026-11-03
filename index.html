@@ -184,27 +184,34 @@
                   <circle class="pipe-pulse pulse-feedback" r="4.5" />
 
                   <!-- Stage 1: Supplier -->
-                  <g class="op-node is-active" data-stage="0" transform="translate(60, 110)" role="button" tabindex="0" aria-label="Stage 1: Supplier">
+                  <g class="op-node is-active" data-stage="0" transform="translate(60, 110)" role="button" tabindex="0" aria-label="Stage 1: Supplier" aria-selected="true">
+                    <rect class="node-hit-area" x="-36" y="-30" width="72" height="96" fill="transparent" pointer-events="all"></rect>
                     <circle class="node-halo" r="28"></circle>
                     <circle class="node-ring" r="18"></circle>
                     <circle class="node-core" r="8"></circle>
                     <text class="node-num" y="3">01</text>
                     <text class="node-label" y="38">SUPPLIER</text>
-                    <text class="node-sublabel" y="52">Factory Vetting</text>
+                    <text class="node-sublabel" y="52">Vendor Terms</text>
                   </g>
 
                   <!-- Stage 2: Sourcing -->
-                  <g class="op-node" data-stage="1" transform="translate(164, 110)" role="button" tabindex="0" aria-label="Stage 2: Sourcing">
+                  <g class="op-node" data-stage="1" transform="translate(164, 110)" role="button" tabindex="0" aria-label="Stage 2: Sourcing" aria-selected="false">
+                    <rect class="node-hit-area" x="-36" y="-30" width="72" height="96" fill="transparent" pointer-events="all"></rect>
                     <circle class="node-halo" r="28"></circle>
                     <circle class="node-ring" r="18"></circle>
                     <circle class="node-core" r="8"></circle>
                     <text class="node-num" y="3">02</text>
                     <text class="node-label" y="38">SOURCING</text>
                     <text class="node-sublabel" y="52">Import Logistics</text>
+                    <g class="stage-tag-badge bottleneck-tag" transform="translate(0, -32)" opacity="0">
+                      <rect x="-26" y="-7" width="52" height="15" rx="7.5" class="tag-badge-bg tag-delay-bg"></rect>
+                      <text class="tag-badge-text tag-delay-text" text-anchor="middle" y="4">HOLD +12D</text>
+                    </g>
                   </g>
 
                   <!-- Stage 3: Inventory -->
-                  <g class="op-node" data-stage="2" transform="translate(268, 110)" role="button" tabindex="0" aria-label="Stage 3: Inventory">
+                  <g class="op-node" data-stage="2" transform="translate(268, 110)" role="button" tabindex="0" aria-label="Stage 3: Inventory" aria-selected="false">
+                    <rect class="node-hit-area" x="-36" y="-30" width="72" height="96" fill="transparent" pointer-events="all"></rect>
                     <circle class="node-halo" r="28"></circle>
                     <circle class="node-ring" r="18"></circle>
                     <circle class="node-core" r="8"></circle>
@@ -214,7 +221,8 @@
                   </g>
 
                   <!-- Stage 4: Warehouse -->
-                  <g class="op-node" data-stage="3" transform="translate(372, 110)" role="button" tabindex="0" aria-label="Stage 4: Warehouse">
+                  <g class="op-node" data-stage="3" transform="translate(372, 110)" role="button" tabindex="0" aria-label="Stage 4: Warehouse" aria-selected="false">
+                    <rect class="node-hit-area" x="-36" y="-30" width="72" height="96" fill="transparent" pointer-events="all"></rect>
                     <circle class="node-halo" r="28"></circle>
                     <circle class="node-ring" r="18"></circle>
                     <circle class="node-core" r="8"></circle>
@@ -224,7 +232,8 @@
                   </g>
 
                   <!-- Stage 5: Distribution -->
-                  <g class="op-node" data-stage="4" transform="translate(476, 110)" role="button" tabindex="0" aria-label="Stage 5: Distribution">
+                  <g class="op-node" data-stage="4" transform="translate(476, 110)" role="button" tabindex="0" aria-label="Stage 5: Distribution" aria-selected="false">
+                    <rect class="node-hit-area" x="-36" y="-30" width="72" height="96" fill="transparent" pointer-events="all"></rect>
                     <circle class="node-halo" r="28"></circle>
                     <circle class="node-ring" r="18"></circle>
                     <circle class="node-core" r="8"></circle>
@@ -234,36 +243,68 @@
                   </g>
 
                   <!-- Stage 6: Retail -->
-                  <g class="op-node" data-stage="5" transform="translate(580, 110)" role="button" tabindex="0" aria-label="Stage 6: Retail">
+                  <g class="op-node" data-stage="5" transform="translate(580, 110)" role="button" tabindex="0" aria-label="Stage 6: Retail" aria-selected="false">
+                    <rect class="node-hit-area" x="-36" y="-30" width="72" height="96" fill="transparent" pointer-events="all"></rect>
                     <circle class="node-halo" r="28"></circle>
                     <circle class="node-ring" r="18"></circle>
                     <circle class="node-core" r="8"></circle>
                     <text class="node-num" y="3">06</text>
                     <text class="node-label" y="38">RETAIL</text>
                     <text class="node-sublabel" y="52">50+ Outlets</text>
+                    <g class="stage-tag-badge surge-tag" transform="translate(0, -32)" opacity="0">
+                      <rect x="-24" y="-7" width="48" height="15" rx="7.5" class="tag-badge-bg tag-surge-bg"></rect>
+                      <text class="tag-badge-text tag-surge-text" text-anchor="middle" y="4">+40% LIFT</text>
+                    </g>
                   </g>
 
-                  <!-- Loop Label -->
-                  <g transform="translate(320, 268)">
-                    <rect x="-115" y="-14" width="230" height="24" rx="12" class="loop-badge-bg"></rect>
-                    <text class="loop-text" text-anchor="middle" y="2">REVERSE DEMAND FEEDBACK LOOP ↺</text>
+                  <!-- Interactive Feedback Loop Toggle -->
+                  <g class="loop-badge-btn" id="feedbackLoopBtn" transform="translate(320, 268)" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Reverse Demand Feedback Loop">
+                    <rect class="loop-hit-area" x="-135" y="-18" width="270" height="38" fill="transparent" pointer-events="all"></rect>
+                    <rect x="-122" y="-14" width="244" height="28" rx="14" class="loop-badge-bg"></rect>
+                    <text class="loop-text" id="loopBadgeText" text-anchor="middle" y="3.5">REVERSE DEMAND FEEDBACK LOOP ↺</text>
                   </g>
                 </svg>
               </div>
 
-              <!-- Live Telemetry Readout (Updates dynamically on node hover/click) -->
+              <!-- Live Telemetry Readout (Updates dynamically on node click/select and scenario change) -->
               <div class="node-telemetry" id="nodeTelemetry" aria-live="polite">
+                <!-- System Status & Mode Banner -->
+                <div class="telemetry-banner">
+                  <span class="telemetry-banner-pill pill-steady" id="telemetryScenarioPill"><i class="status-dot"></i> STEADY STATE // NOMINAL CADENCE</span>
+                  <span class="telemetry-banner-pill telemetry-loop-pill" id="telemetryLoopPill">Demand Loop: Standard Latency</span>
+                </div>
+
                 <div class="telemetry-top">
                   <span class="telemetry-stage-tag" id="telemetryStage">STAGE 01 // SUPPLIER</span>
-                  <span class="telemetry-status" id="telemetryStatus"><i class="status-dot"></i> NOMINAL CADENCE</span>
+                  <span class="telemetry-grounding-tag" id="telemetryGrounding">GROUNDING: ONLY SOLAR SOURCING</span>
                 </div>
-                <h4 class="telemetry-title" id="telemetryTitle">Factory Vetting &amp; Supplier Negotiations</h4>
+
+                <h4 class="telemetry-title" id="telemetryTitle">Supplier Sourcing &amp; Negotiations</h4>
                 <p class="telemetry-desc" id="telemetryDesc">
-                  Evaluating overseas manufacturers, negotiating commercial terms, and aligning production lead times with import requirements. Sourcing reliability starts at the manufacturer gate.
+                  Evaluating overseas manufacturers, negotiating commercial MOQs and unit economics, and aligning production schedules with import cycles. Sourcing reliability starts at vendor contract rigor.
                 </p>
+
+                <!-- Dynamic Scenario & Feedback Impact Box -->
+                <div class="telemetry-impact-card" id="telemetryImpactCard">
+                  <div class="impact-item">
+                    <span class="impact-label">SCENARIO IMPACT:</span>
+                    <span class="impact-text" id="telemetryScenarioImpact">Factory cadence nominal. Production schedules aligned with planned shipping windows and baseline stock buffers.</span>
+                  </div>
+                  <div class="impact-item">
+                    <span class="impact-label">DEMAND FEEDBACK:</span>
+                    <span class="impact-text" id="telemetryFeedbackImpact">Store-level sell-through signals pull upstream replenishment before regional depot stocks hit reorder red-lines.</span>
+                  </div>
+                </div>
+
                 <div class="telemetry-meta-row">
-                  <span class="telemetry-pill-mono" id="telemetryMetric">Supplier Due Diligence</span>
-                  <span class="telemetry-pill-context" id="telemetryContext">Only Solar Lighting Sourcing</span>
+                  <div class="telemetry-meta-item">
+                    <span class="meta-label">FOCUS AREA:</span>
+                    <span class="telemetry-pill-mono" id="telemetryMetric">Supplier Relationships &amp; Price Negotiations</span>
+                  </div>
+                  <div class="telemetry-meta-item">
+                    <span class="meta-label">SYSTEM CONTEXT:</span>
+                    <span class="telemetry-pill-context" id="telemetryContext">Only Solar Venture Grounding</span>
+                  </div>
                 </div>
               </div>
             </div>

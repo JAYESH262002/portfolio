@@ -12,6 +12,14 @@
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
+  // Polyfill SVGElement.prototype.click for SVG graphics groups (<g>, <rect>, etc.)
+  if (typeof SVGElement !== 'undefined' && typeof SVGElement.prototype.click !== 'function') {
+    SVGElement.prototype.click = function() {
+      const evt = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
+      this.dispatchEvent(evt);
+    };
+  }
+
   // ==========================================================================
   // 1. THEME MANAGEMENT (Light / Dark with localStorage)
   // ==========================================================================
@@ -169,10 +177,8 @@
   // 5. SMOOTH GPU-ACCELERATED CURSOR FOLLOWER (Zero Choppiness / Native Pointer)
   // ==========================================================================
   const cursorHalo = $('#cursorHalo');
-  const finePointer = window.matchMedia('(pointer: fine)').matches;
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (finePointer && !prefersReduced && cursorHalo) {
+  if (finePointer && !prefersReducedMotion && cursorHalo) {
     let mouseX = -100;
     let mouseY = -100;
     let ringX = -100;
@@ -225,124 +231,318 @@
   }
 
   // ==========================================================================
-  // 6. SIGNATURE OPERATIONS VISUAL (Replaces Photograph)
+  // 6. SIGNATURE OPERATIONS VISUAL & INTERACTIVE PIPELINE SYSTEM
   // Supplier → Sourcing → Inventory → Warehouse → Distribution → Retail + Loop
   // ==========================================================================
   const stageData = [
     {
-      stage: 'STAGE 01 // SUPPLIER',
-      status: 'FACTORY AUDIT CADENCE',
-      title: 'Factory Vetting & Supplier Negotiations',
-      desc: 'Evaluating overseas manufacturing capacity, negotiating unit pricing and MOQ terms, and securing reliable production schedules before committing capital.',
-      metric: 'Vendor Due Diligence',
-      context: 'Only Solar Lighting Sourcing'
+      num: '01',
+      name: 'SUPPLIER',
+      title: 'Supplier Sourcing & Negotiations',
+      focus: 'Supplier Relationships & Vendor Negotiations',
+      grounding: 'GROUNDING: ONLY SOLAR SOURCING',
+      desc: 'Evaluating overseas manufacturers, negotiating commercial MOQs and unit economics, and aligning production schedules with import cycles. Sourcing reliability starts at vendor contract rigor.',
+      scenarios: {
+        normal: 'Factory cadence nominal. Production schedules aligned with planned shipping windows and baseline stock buffers.',
+        delay: 'Upstream buffer queued. Factory holds completed product runs until port customs backlog eases.',
+        surge: 'Factory lead-times expedited. Requires early MOQ renegotiation and production capacity reservations with overseas vendors.'
+      },
+      feedback: 'Real-time retail sell-through signals pull upstream production batches before regional safety stocks reach reorder red-lines.'
     },
     {
-      stage: 'STAGE 02 // SOURCING',
-      status: 'LANDED PRICING ACTIVE',
+      num: '02',
+      name: 'SOURCING',
       title: 'Import Logistics & Landed-Cost Modeling',
-      desc: 'Factoring container shipping rates, port customs tariffs, and local freight to establish viable wholesale and distributor pricing structures.',
-      metric: 'Cost Build-Up Clarity',
-      context: 'Venture Pricing & Sourcing Management'
+      focus: 'Supplier Selection & Landed-Cost Analysis',
+      grounding: 'GROUNDING: ONLY SOLAR IMPORT LOGISTICS',
+      desc: 'Managing cross-border container freight, customs duties, and landed-cost modeling to preserve viable wholesale and distributor margin structures across fluctuating import tariffs.',
+      scenarios: {
+        normal: 'Container shipping and port clearance tracking within standard transit windows (18–24 days).',
+        delay: 'PRIMARY BOTTLENECK: Port customs documentation hold introduces +12 days transit delay, freezing downstream depot intake.',
+        surge: 'Container dispatch velocity accelerated; priority freight lanes evaluated for high-velocity SKUs.'
+      },
+      feedback: 'Distributor reorder velocity directly dictates container booking schedules, preventing demurrage fees and over-ordering.'
     },
     {
-      stage: 'STAGE 03 // INVENTORY',
-      status: 'STOCK BUFFER OPTIMAL',
+      num: '03',
+      name: 'INVENTORY',
       title: 'Safety Stock & Replenishment Planning',
-      desc: 'Balancing inventory investment against retail stockout risk. Aligning primary distributor orders with lead-time requirements to maintain continuous product availability.',
-      metric: 'Replenishment Synchronization',
-      context: 'Beat Replenishment Coordination'
+      focus: 'Stock Availability & Buffer Modeling',
+      grounding: 'GROUNDING: ANALYTICAL OPERATIONS MODEL',
+      desc: 'Balancing working capital investment against stockout risks. Calculating reorder points and safety stock levels to absorb upstream transit variations.',
+      scenarios: {
+        normal: 'Buffer inventory operating at nominal 21-day cover. Reorder cycles synchronized with depot consumption.',
+        delay: 'Safety stock absorbing upstream port hold. Buffer drawn down to 7 days; automated alerts flag critical SKUs.',
+        surge: 'Stock depletion velocity doubles. Emergency safety stock allocations released to meet retail demand spikes.'
+      },
+      feedback: 'Secondary sales velocity triggers automated replenishment thresholds, preventing bullwhip demand amplification.'
     },
     {
-      stage: 'STAGE 04 // WAREHOUSE',
-      status: 'AVAILABILITY VERIFIED',
-      title: 'Depot Intake & Product Availability',
-      desc: 'Verifying shipment intake, batch serialization, and stock availability to support secondary order dispatches without fulfillment bottlenecks.',
-      metric: 'Distributor Stock Sync',
-      context: 'Distributor Closing Stock Alignment'
+      num: '04',
+      name: 'WAREHOUSE',
+      title: 'Depot Storage & Product Availability Flow',
+      focus: 'Depot Handling & Availability Within Flow',
+      grounding: 'GROUNDING: ANALYTICAL OPERATIONS MODEL',
+      desc: 'Coordinating depot intake, batch serialization, and order staging to ensure seamless stock availability for downstream regional distribution beats.',
+      scenarios: {
+        normal: 'Inbound staging and outbound dispatch synchronized. Order pick-and-pack operating on standard 24-hour cycle.',
+        delay: 'Outbound dispatch constrained by inbound delays. Warehouse teams prioritize high-turnover SKUs for immediate staging.',
+        surge: 'Depot cross-docking activated. Primary shipments routed directly to fulfillment bays to maintain dispatch velocity.'
+      },
+      feedback: 'Field distributor bookings dictate staging order priorities at the warehouse loading dock.'
     },
     {
-      stage: 'STAGE 05 // DISTRIBUTION',
-      status: 'BEAT ROUTING ACTIVE',
-      title: 'Territory Route Scheduling & Fulfillment',
-      desc: 'Sequencing high-frequency retail visits across Andheri to Bandra. Balancing store frequency with order booking to optimize daily beat productivity.',
-      metric: '50+ Outlets Covered',
-      context: 'CavinKare Mumbai Beat Route Engineering'
+      num: '05',
+      name: 'DISTRIBUTION',
+      title: 'Territory Beat Routing & Fulfillment',
+      focus: 'Channel Movement & Territory Beat Coverage',
+      grounding: 'GROUNDING: CAVINKARE BEAT ROUTING',
+      desc: 'Structuring high-frequency retail beat routes across Andheri to Bandra, Mumbai. Balancing store visit frequency with order booking to maximize daily fulfillment productivity.',
+      scenarios: {
+        normal: 'Standard daily beat schedule active. 50+ retail counters serviced on structured weekly visit cycles.',
+        delay: 'Beat routes adjusted to ration available inventory across key counters, protecting high-velocity accounts.',
+        surge: 'Daily beat frequency intensified. Same-day distributor re-dispatch mobilized to fulfill surge volume.'
+      },
+      feedback: 'Daily sales beat reports feed ground-level retailer demand and counter sentiments directly back to distribution managers.'
     },
     {
-      stage: 'STAGE 06 // RETAIL',
-      status: 'SHELF VISIBILITY ACTIVE',
-      title: '50+ General Trade Outlets & Account Growth',
-      desc: 'Direct field presence across 50+ retail counters in Mumbai. Drove merchandising compliance, planograms, trade schemes, and onboarded 10+ new accounts in Month 1.',
-      metric: '+20% Active Reach | +30% MoM Lift',
-      context: 'CavinKare Territory Sales Execution'
+      num: '06',
+      name: 'RETAIL',
+      title: 'Retail Availability & General Trade Execution',
+      focus: 'Shelf Availability, Account Acquisition & Feedback',
+      grounding: 'GROUNDING: CAVINKARE GT SALES EXECUTION',
+      desc: 'Direct counter execution across 50+ General Trade retail outlets in Mumbai. Onboarded 10+ new accounts in Month 1, expanded active retailer base by +20%, and achieved +30% MoM focus category lift.',
+      scenarios: {
+        normal: '50+ counters fully merchandised. Trade schemes, counter visibility, and replenishment operating steadily.',
+        delay: 'Counter stock tightens. Field representatives deploy alternative SKUs and trade allowances to protect counter share.',
+        surge: 'High retail sell-through. Counter stock turnover accelerates, translating footfall into +30% MoM focus category growth.'
+      },
+      feedback: 'Point-of-sale customer demand and retail counter reorders initiate the reverse feedback signal upstream through distribution to procurement.'
     }
   ];
 
+  // Unified Reactive Pipeline State Model
+  const pipelineState = {
+    stage: 0,              // 0: Supplier, 1: Sourcing, 2: Inventory, 3: Warehouse, 4: Distribution, 5: Retail
+    scenario: 'normal',    // 'normal' | 'delay' | 'surge'
+    isReversed: false      // boolean: toggles reverse feedback loop
+  };
+
   const opNodes = $$('.op-node');
+  const scenarioBtns = $$('.scenario-btn');
+  const forwardPulses = $$('.pipe-pulse:not(.pulse-feedback)');
+  const feedbackPulse = $('.pulse-feedback');
+  const feedbackLoopBtn = $('#feedbackLoopBtn');
+  const loopBadgeText = $('#loopBadgeText');
+  const feedbackTrack = $('#feedbackPath');
+
   const telemetryStage = $('#telemetryStage');
-  const telemetryStatus = $('#telemetryStatus');
+  const telemetryGrounding = $('#telemetryGrounding');
+  const telemetryScenarioPill = $('#telemetryScenarioPill');
+  const telemetryLoopPill = $('#telemetryLoopPill');
   const telemetryTitle = $('#telemetryTitle');
   const telemetryDesc = $('#telemetryDesc');
+  const telemetryScenarioImpact = $('#telemetryScenarioImpact');
+  const telemetryFeedbackImpact = $('#telemetryFeedbackImpact');
   const telemetryMetric = $('#telemetryMetric');
   const telemetryContext = $('#telemetryContext');
 
-  function updateTelemetry(stageIdx) {
-    const data = stageData[stageIdx];
-    if (!data) return;
+  function renderPipeline() {
+    const currentStage = stageData[pipelineState.stage];
+    if (!currentStage) return;
 
+    // 1. Update Op-Nodes styling and ARIA attributes
     opNodes.forEach((node, idx) => {
-      node.classList.toggle('is-active', idx === stageIdx);
+      const isSelected = idx === pipelineState.stage;
+      node.classList.toggle('is-active', isSelected);
+      node.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+
+      // Bottleneck on Sourcing (idx 1) when Delay scenario
+      const isBottleneck = pipelineState.scenario === 'delay' && idx === 1;
+      node.classList.toggle('is-bottleneck', isBottleneck);
+
+      // Surge on Distribution (idx 4) & Retail (idx 5) when Surge scenario
+      const isSurge = pipelineState.scenario === 'surge' && (idx === 4 || idx === 5);
+      node.classList.toggle('is-surge', isSurge);
     });
 
-    if (telemetryStage) telemetryStage.textContent = data.stage;
-    if (telemetryStatus) telemetryStatus.innerHTML = `<i class="status-dot"></i> ${data.status}`;
-    if (telemetryTitle) telemetryTitle.textContent = data.title;
-    if (telemetryDesc) telemetryDesc.textContent = data.desc;
-    if (telemetryMetric) telemetryMetric.textContent = data.metric;
-    if (telemetryContext) telemetryContext.textContent = data.context;
+    // 2. Update Scenario Buttons
+    scenarioBtns.forEach((btn) => {
+      const isBtnActive = btn.dataset.scenario === pipelineState.scenario;
+      btn.classList.toggle('is-active', isBtnActive);
+      btn.setAttribute('aria-pressed', isBtnActive ? 'true' : 'false');
+    });
+
+    // 3. Update Forward Signal Pulses
+    if (pipelineState.scenario === 'normal') {
+      forwardPulses.forEach((p) => {
+        p.style.animationDuration = '5s';
+        p.style.fill = '';
+      });
+    } else if (pipelineState.scenario === 'delay') {
+      forwardPulses.forEach((p) => {
+        p.style.animationDuration = '10s';
+        p.style.fill = 'var(--accent-coral)';
+      });
+    } else if (pipelineState.scenario === 'surge') {
+      forwardPulses.forEach((p) => {
+        p.style.animationDuration = '2.2s';
+        p.style.fill = '#38bdf8';
+      });
+    }
+
+    // 4. Update Feedback Loop Button & Signal
+    if (feedbackLoopBtn) {
+      feedbackLoopBtn.classList.toggle('is-active', pipelineState.isReversed);
+      feedbackLoopBtn.setAttribute('aria-pressed', pipelineState.isReversed ? 'true' : 'false');
+    }
+
+    if (loopBadgeText) {
+      loopBadgeText.textContent = pipelineState.isReversed
+        ? '↺ DEMAND PULL ACTIVE // UPSTREAM SIGNAL ON'
+        : 'REVERSE DEMAND FEEDBACK LOOP ↺';
+    }
+
+    if (feedbackTrack) {
+      feedbackTrack.classList.toggle('is-active', pipelineState.isReversed);
+    }
+
+    if (feedbackPulse) {
+      if (pipelineState.isReversed) {
+        feedbackPulse.style.animationDirection = 'reverse';
+        feedbackPulse.style.animationDuration = pipelineState.scenario === 'surge' ? '1.5s' : '2.4s';
+        feedbackPulse.style.fill = 'var(--accent-teal)';
+      } else {
+        feedbackPulse.style.animationDirection = 'normal';
+        feedbackPulse.style.animationDuration = pipelineState.scenario === 'delay' ? '7s' : (pipelineState.scenario === 'surge' ? '2.2s' : '4.5s');
+        feedbackPulse.style.fill = 'var(--accent-coral)';
+      }
+    }
+
+    // 5. Update Telemetry Panel Content
+    if (telemetryStage) {
+      telemetryStage.textContent = `STAGE ${currentStage.num} // ${currentStage.name}`;
+    }
+    if (telemetryGrounding) {
+      telemetryGrounding.textContent = currentStage.grounding;
+    }
+
+    if (telemetryScenarioPill) {
+      if (pipelineState.scenario === 'normal') {
+        telemetryScenarioPill.className = 'telemetry-banner-pill pill-steady';
+        telemetryScenarioPill.innerHTML = '<i class="status-dot"></i> STEADY STATE // NOMINAL CADENCE';
+      } else if (pipelineState.scenario === 'delay') {
+        telemetryScenarioPill.className = 'telemetry-banner-pill pill-delay';
+        telemetryScenarioPill.innerHTML = '<i class="status-dot status-delay"></i> BOTTLENECK ALERT // PORT CLEARANCE (+12D)';
+      } else if (pipelineState.scenario === 'surge') {
+        telemetryScenarioPill.className = 'telemetry-banner-pill pill-surge';
+        telemetryScenarioPill.innerHTML = '<i class="status-dot status-surge"></i> DEMAND SURGE // +40% CHANNEL VELOCITY';
+      }
+    }
+
+    if (telemetryLoopPill) {
+      telemetryLoopPill.textContent = pipelineState.isReversed
+        ? 'Demand Loop: Upstream Pull Engaged'
+        : 'Demand Loop: Standard Latency';
+      telemetryLoopPill.classList.toggle('is-engaged', pipelineState.isReversed);
+    }
+
+    if (telemetryTitle) {
+      telemetryTitle.textContent = currentStage.title;
+    }
+    if (telemetryDesc) {
+      telemetryDesc.textContent = currentStage.desc;
+    }
+    if (telemetryScenarioImpact) {
+      telemetryScenarioImpact.textContent = currentStage.scenarios[pipelineState.scenario];
+    }
+    if (telemetryFeedbackImpact) {
+      telemetryFeedbackImpact.textContent = currentStage.feedback;
+    }
+    if (telemetryMetric) {
+      telemetryMetric.textContent = currentStage.focus;
+    }
+    if (telemetryContext) {
+      telemetryContext.textContent = currentStage.grounding;
+    }
   }
 
+  // Bind Op-Nodes (Click, Touch, Keyboard)
   opNodes.forEach((node) => {
     const idx = parseInt(node.dataset.stage, 10);
-    node.addEventListener('click', () => updateTelemetry(idx));
-    node.addEventListener('mouseenter', () => updateTelemetry(idx));
+    const selectStage = (e) => {
+      if (e) e.preventDefault();
+      pipelineState.stage = idx;
+      renderPipeline();
+    };
+
+    node.addEventListener('click', selectStage);
+    node.addEventListener('pointerup', (e) => {
+      if (e.pointerType === 'touch') selectStage(e);
+    });
+
     node.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        updateTelemetry(idx);
+        pipelineState.stage = idx;
+        renderPipeline();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        pipelineState.stage = (idx + 1) % opNodes.length;
+        opNodes[pipelineState.stage].focus();
+        renderPipeline();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        pipelineState.stage = (idx - 1 + opNodes.length) % opNodes.length;
+        opNodes[pipelineState.stage].focus();
+        renderPipeline();
       }
     });
   });
 
-  // Scenario Buttons
-  const scenarioBtns = $$('.scenario-btn');
-  const forwardPulses = $$('.pipe-pulse');
-  const feedbackPulse = $('.pulse-feedback');
-
+  // Bind Scenario Buttons
   scenarioBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      scenarioBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
-      const scenario = btn.dataset.scenario;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const newScenario = btn.dataset.scenario;
+      pipelineState.scenario = newScenario;
+      renderPipeline();
 
-      if (scenario === 'normal') {
-        forwardPulses.forEach((p) => p.style.animationDuration = '5s');
-        if (feedbackPulse) feedbackPulse.style.animationDuration = '4.5s';
-        if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot"></i> NOMINAL STEADY FLOW';
-        showToast('Pipeline Scenario: Steady state operations nominal');
-      } else if (scenario === 'delay') {
-        forwardPulses.forEach((p) => p.style.animationDuration = '9s');
-        if (feedbackPulse) feedbackPulse.style.animationDuration = '6s';
-        if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot" style="background:#c46244;box-shadow:0 0 6px #c46244"></i> PORT CLEARANCE DELAY SIMULATED';
-        showToast('Pipeline Simulation: Port clearance delay simulated (+12 days lead-time)');
-      } else if (scenario === 'surge') {
-        forwardPulses.forEach((p) => p.style.animationDuration = '2.5s');
-        if (feedbackPulse) feedbackPulse.style.animationDuration = '2s';
-        if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot" style="background:#38bdf8;box-shadow:0 0 6px #38bdf8"></i> DEMAND SURGE DETECTED';
-        showToast('Pipeline Simulation: Retail demand surge triggered rapid replenishment cycle');
-      }
+      const toastLabel = newScenario === 'normal'
+        ? 'Pipeline Scenario: Steady state operations nominal'
+        : newScenario === 'delay'
+        ? 'Pipeline Simulation: Port clearance delay (+12 days lead-time bottleneck)'
+        : 'Pipeline Simulation: Retail demand surge (+40% channel velocity)';
+      showToast(toastLabel);
     });
   });
+
+  // Bind Interactive Feedback Loop Button
+  if (feedbackLoopBtn) {
+    const toggleLoop = (e) => {
+      if (e) e.preventDefault();
+      pipelineState.isReversed = !pipelineState.isReversed;
+      renderPipeline();
+
+      const toastLabel = pipelineState.isReversed
+        ? 'Demand Feedback Loop: Active upstream pull engaged'
+        : 'Demand Feedback Loop: Restored to standard flow';
+      showToast(toastLabel);
+    };
+
+    feedbackLoopBtn.addEventListener('click', toggleLoop);
+    feedbackLoopBtn.addEventListener('pointerup', (e) => {
+      if (e.pointerType === 'touch') toggleLoop(e);
+    });
+    feedbackLoopBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        toggleLoop(e);
+      }
+    });
+  }
+
+  // Initial Pipeline Render
+  renderPipeline();
 
   // ==========================================================================
   // 7. PROGRESSIVE DISCLOSURE MODAL DIALOGS
@@ -911,6 +1111,9 @@
   const toastManager = $('#toastManager');
   function showToast(message) {
     if (!toastManager) return;
+    while (toastManager.children.length >= 2) {
+      toastManager.removeChild(toastManager.firstChild);
+    }
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.textContent = message;

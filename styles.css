@@ -1150,12 +1150,37 @@ button {
 .op-node {
   cursor: pointer;
   outline: none;
-  transition: transform 0.3s var(--ease-spring);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.op-node:hover,
-.op-node:focus-visible {
-  transform: translateY(-4px) scale(1.08);
+.op-node:hover .node-ring,
+.op-node:focus-visible .node-ring {
+  stroke: var(--accent-teal);
+  stroke-width: 2.8px;
+}
+
+.op-node:hover .node-halo,
+.op-node:focus-visible .node-halo {
+  fill: rgba(56, 149, 140, 0.18);
+  r: 32;
+}
+
+.op-node:hover .node-label,
+.op-node:focus-visible .node-label {
+  fill: var(--accent-teal);
+}
+
+.node-hit-area {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.op-node * {
+  pointer-events: none;
+}
+
+.op-node .node-hit-area {
+  pointer-events: all;
 }
 
 .node-halo {
@@ -1189,6 +1214,7 @@ button {
   text-anchor: middle;
   pointer-events: none;
   text-transform: uppercase;
+  transition: fill 0.25s, font-weight 0.25s;
 }
 
 .node-sublabel {
@@ -1224,17 +1250,178 @@ button {
   50% { r: 30; opacity: 0.8; }
 }
 
-/* Feedback Loop Badge */
+/* Bottleneck Node Highlight (Delay Scenario - Stage 02 Sourcing) */
+.op-node.is-bottleneck .node-ring {
+  stroke: #d97706;
+  stroke-width: 2.8px;
+  animation: bottleneckRing 1.8s ease-in-out infinite;
+}
+
+.op-node.is-bottleneck .node-halo {
+  fill: rgba(217, 119, 6, 0.25);
+  animation: bottleneckHalo 1.8s ease-in-out infinite;
+}
+
+.op-node.is-bottleneck .node-label {
+  fill: #d97706;
+}
+
+.op-node.is-bottleneck .bottleneck-tag {
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.tag-badge-bg {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+}
+
+.tag-delay-bg {
+  fill: #fef3c7;
+  stroke: #d97706;
+  stroke-width: 1;
+}
+
+.tag-delay-text {
+  font: 700 7px var(--mono);
+  fill: #b45309;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="dark"] .tag-delay-bg {
+  fill: rgba(217, 119, 6, 0.2);
+  stroke: #f59e0b;
+}
+[data-theme="dark"] .tag-delay-text {
+  fill: #fbbf24;
+}
+
+@keyframes bottleneckRing {
+  0%, 100% { stroke: #d97706; }
+  50% { stroke: #ef4444; }
+}
+
+@keyframes bottleneckHalo {
+  0%, 100% { r: 24; opacity: 0.4; }
+  50% { r: 32; opacity: 0.85; }
+}
+
+/* Surge Node Highlight (Surge Scenario - Stages 05 & 06) */
+.op-node.is-surge .node-ring {
+  stroke: #0284c7;
+  stroke-width: 2.8px;
+  animation: surgeRing 1.4s ease-in-out infinite;
+}
+
+.op-node.is-surge .node-halo {
+  fill: rgba(2, 132, 199, 0.22);
+  animation: surgeHalo 1.4s ease-in-out infinite;
+}
+
+.op-node.is-surge .node-label {
+  fill: #0284c7;
+}
+
+.op-node.is-surge .surge-tag {
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.tag-surge-bg {
+  fill: #e0f2fe;
+  stroke: #0284c7;
+  stroke-width: 1;
+}
+
+.tag-surge-text {
+  font: 700 7px var(--mono);
+  fill: #0369a1;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="dark"] .tag-surge-bg {
+  fill: rgba(2, 132, 199, 0.2);
+  stroke: #38bdf8;
+}
+[data-theme="dark"] .tag-surge-text {
+  fill: #7dd3fc;
+}
+
+@keyframes surgeRing {
+  0%, 100% { stroke: #0284c7; }
+  50% { stroke: #38bdf8; }
+}
+
+@keyframes surgeHalo {
+  0%, 100% { r: 24; opacity: 0.35; }
+  50% { r: 30; opacity: 0.75; }
+}
+
+/* Feedback Loop Interactive Toggle Button */
+.loop-badge-btn {
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.25s var(--ease-spring), filter 0.25s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.loop-hit-area {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.loop-badge-btn * {
+  pointer-events: none;
+}
+
+.loop-badge-btn .loop-hit-area {
+  pointer-events: all;
+}
+
+.loop-badge-btn:hover .loop-badge-bg,
+.loop-badge-btn:focus-visible .loop-badge-bg {
+  stroke: var(--accent-coral);
+  stroke-width: 1.8;
+  filter: drop-shadow(0 2px 8px rgba(224, 112, 80, 0.25));
+}
+
 .loop-badge-bg {
   fill: var(--paper);
-  stroke: var(--line);
+  stroke: var(--line-strong);
   stroke-width: 1.2;
+  transition: fill 0.3s, stroke 0.3s, stroke-width 0.3s;
 }
 
 .loop-text {
   font: 700 8.5px var(--mono);
   fill: var(--accent-coral);
   letter-spacing: 0.08em;
+  transition: fill 0.3s, font-weight 0.3s;
+}
+
+/* Active Toggled Loop Button */
+.loop-badge-btn.is-active .loop-badge-bg {
+  fill: rgba(224, 112, 80, 0.12);
+  stroke: var(--accent-coral);
+  stroke-width: 1.8;
+}
+
+.loop-badge-btn.is-active .loop-text {
+  fill: var(--accent-coral);
+  font-weight: 800;
+}
+
+[data-theme="dark"] .loop-badge-btn.is-active .loop-badge-bg {
+  fill: rgba(224, 112, 80, 0.25);
+  stroke: #f87171;
+}
+[data-theme="dark"] .loop-badge-btn.is-active .loop-text {
+  fill: #fca5a5;
+}
+
+.pipe-track-feedback.is-active {
+  stroke: var(--accent-coral);
+  stroke-width: 2.8;
+  opacity: 1;
 }
 
 /* Dynamic Node Telemetry Box */
@@ -1247,17 +1434,90 @@ button {
   transition: background 0.3s, border-color 0.3s;
 }
 
+.telemetry-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.telemetry-banner-pill {
+  font: 700 9.5px var(--mono);
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  background: var(--paper-soft);
+  color: var(--ink-muted);
+}
+
+.telemetry-banner-pill.pill-steady {
+  border-color: rgba(56, 149, 140, 0.25);
+  background: rgba(56, 149, 140, 0.08);
+  color: var(--accent-teal);
+}
+
+.telemetry-banner-pill.pill-delay {
+  border-color: rgba(217, 119, 6, 0.3);
+  background: rgba(217, 119, 6, 0.1);
+  color: #b45309;
+}
+[data-theme="dark"] .telemetry-banner-pill.pill-delay {
+  color: #fbbf24;
+  background: rgba(217, 119, 6, 0.2);
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.telemetry-banner-pill.pill-surge {
+  border-color: rgba(2, 132, 199, 0.3);
+  background: rgba(2, 132, 199, 0.1);
+  color: #0284c7;
+}
+[data-theme="dark"] .telemetry-banner-pill.pill-surge {
+  color: #38bdf8;
+  background: rgba(2, 132, 199, 0.2);
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.telemetry-loop-pill {
+  font: 600 9px var(--mono);
+  color: var(--ink-light);
+  border-color: var(--line);
+  transition: color 0.3s, background 0.3s, border-color 0.3s;
+}
+
+.telemetry-loop-pill.is-engaged {
+  border-color: rgba(224, 112, 80, 0.35);
+  background: rgba(224, 112, 80, 0.09);
+  color: var(--accent-coral);
+  font-weight: 700;
+}
+
 .telemetry-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.5rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .telemetry-stage-tag {
   font: 700 10px var(--mono);
   letter-spacing: 0.1em;
   color: var(--accent-teal);
+}
+
+.telemetry-grounding-tag {
+  font: 600 9px var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-light);
+  text-transform: uppercase;
 }
 
 .telemetry-status {
@@ -1268,17 +1528,60 @@ button {
   gap: 0.35rem;
 }
 
+.status-delay {
+  background: #d97706 !important;
+  box-shadow: 0 0 6px rgba(217, 119, 6, 0.8) !important;
+}
+
+.status-surge {
+  background: #0284c7 !important;
+  box-shadow: 0 0 6px rgba(2, 132, 199, 0.8) !important;
+}
+
 .telemetry-title {
   font: 700 1.05rem var(--display);
   color: var(--ink);
   margin-bottom: 0.35rem;
+  transition: color 0.25s;
 }
 
 .telemetry-desc {
   font-size: 0.88rem;
   line-height: 1.55;
   color: var(--ink-muted);
+  margin-bottom: 0.85rem;
+}
+
+/* Impact Card */
+.telemetry-impact-card {
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
   margin-bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.impact-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.impact-label {
+  font: 700 8.5px var(--mono);
+  letter-spacing: 0.07em;
+  color: var(--ink-light);
+  flex-shrink: 0;
+}
+
+.impact-text {
+  color: var(--ink);
+  font-size: 0.82rem;
 }
 
 .telemetry-meta-row {
@@ -1291,6 +1594,19 @@ button {
   flex-wrap: wrap;
 }
 
+.telemetry-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.meta-label {
+  font: 700 8px var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--ink-light);
+  text-transform: uppercase;
+}
+
 .telemetry-pill-mono {
   font: 700 11px var(--mono);
   color: var(--accent-lavender);
@@ -1300,6 +1616,13 @@ button {
 .telemetry-pill-context {
   font: 500 11px var(--sans);
   color: var(--ink-light);
+}
+
+@media (max-width: 600px) {
+  .impact-item {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
 }
 
 /* ==========================================================================
