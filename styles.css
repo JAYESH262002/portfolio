@@ -1683,11 +1683,53 @@ button {
   width: 100%;
 }
 
+.form-redirect-note {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  text-align: center;
+  margin-top: 0.5rem;
+  line-height: 1.45;
+}
+
 .form-feedback {
   font: 500 12px var(--mono);
   color: var(--accent-teal);
   text-align: center;
   min-height: 1.2em;
+  margin-top: 0.6rem;
+}
+
+.form-fallback-card {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  border: 1px solid var(--accent-coral);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.fallback-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fallback-inner .btn {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  font-size: 0.82rem;
+}
+
+.project-concept-pill {
+  font: 600 9.5px var(--mono);
+  color: var(--accent-coral);
+  background: var(--accent-coral-soft);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  margin-top: 0.35rem;
 }
 
 /* ==========================================================================

@@ -1,77 +1,86 @@
-# Jayesh Singh — Portfolio V17: Minimal Operations
-## A Simpler, More Intelligent Professional Experience
+# Jayesh Singh — Portfolio V21
+## Final Content Accuracy, Contact Experience & December Redesign Preparation
 
 **Location:** `/Users/rajput/Documents/main decision/jayesh-portfolio-next/`  
 **Identity:** Operations, Logistics & Commercial Systems  
-**Core Thesis:** *Show less initially. Reveal more when someone is interested.*
+**Core Thesis:** *Show less initially. Reveal more when someone is interested.*  
+**Live Target Reference:** `https://jayesh-singh-portfolio.vercel.app/#contact`  
+**Primary Career Source:** `Jayesh-Singh-Resume.pdf`
 
 ---
 
-## 1. Key Design Transformations in V17
+## 1. Executive Summary & V21 Content Audit
 
-| Requirement | Implementation in V17 | Verification |
-|---|---|---|
-| **Remove Profile Photograph** | **100% Removed** across the entire website. Zero portraits in hero, profile card, modals, footer, or assets. | Checked via regex & visual audit: 0 photo tags or portrait images. |
-| **Signature Operations Visual** | **Replaced photograph** with an interactive SVG Operations Pipeline: `Supplier → Sourcing → Inventory → Warehouse → Distribution → Retail` + `Reverse Demand Feedback Loop ↺`. Includes animated pulses, 3 scenario selectors (`Steady`, `Delay`, `Surge`), and dynamic telemetry readout. | Fully interactive in hero column. |
-| **Remove Oversized Hero Name** | Removed giant `JAYESH / SINGH` block. Replaced with a balanced, elegant editorial headline: `I make complex operations clearer.` paired with clear value proposition and 4 verified metric chips (`50+ Outlets`, `+20% Reach`, `0 → 1 Venture`, `Dual B.Tech CS + MBA`). | Balanced, spacious typography. |
-| **1-Second Soft Light Name in Header** | `JAYESH SINGH` rendered in the glossy header with continuous 1-second color shifting across 7 soft mineral pastel tones: soft sage (`#7da68f`), muted blue-grey (`#85a3b2`), muted lavender (`#a89bb8`), dusty rose (`#c98a96`), light terracotta (`#c98370`), warm champagne (`#d9be9b`), and soft olive (`#8c9b78`). | Smooth, non-aggressive, harmonic transition. |
-| **Preserve Glossy Header** | iOS frosted glass (`backdrop-filter: blur(34px) saturate(210%)`), top specular highlight, dynamic pointer specular glow, ambient crystal sheen sweep, and sliding segmented indicator. | Fully preserved and optimized. |
-| **Progressive Disclosure Architecture** | Simplified visible page into 6 focused sections with 6 deep modal dialogs for technical dossiers, operating methodology, capabilities stack, academic records, and live simulators. | Minimal surface, rich interactive depth. |
+The V21 release executes a comprehensive factual audit of Jayesh Singh's professional portfolio, preserves genuine achievements, aligns academic and entrepreneurial timelines, classifies conceptual projects transparently, guarantees absolute phone privacy, and provides a direct, reliable Gmail contact experience.
+
+### Real Professional Trajectory
+$$\text{Computer Science (B.Tech 2024)} \longrightarrow \text{Entrepreneurship (Only Solar 2024–2025)} \longrightarrow \text{FMCG Field Sales (CavinKare 2025–2026)} \longrightarrow \text{MBA in Operations \& Logistics (2026–2028 Pursuing)}$$
 
 ---
 
-## 2. Page & Progressive Disclosure Architecture
+## 2. Content Audit & Factual Grounding Matrix
 
-### Surface Level (6 Concise Sections)
-1. **01 // Home (Hero)**:
-   - Live Mumbai IST clock + availability badge.
-   - Balanced editorial headline: `I make complex operations clearer.`
-   - Value proposition bridging field FMCG, venture sourcing, and relational systems.
-   - 2 primary CTAs (`Explore Selected Work ↘`, `Download Résumé ↓`).
-   - Verified 4-metric strip.
-   - Signature Interactive Operations Pipeline Visual.
-2. **02 // Approach**:
-   - 3 core operating principles (Walk the Line First, Unit Economics at the Gate, Single Source of Truth).
-   - Control: `Explore 4-Stage Operating Loop & Methodology ⤢`.
-3. **03 // Selected Work**:
-   - 4 clean case study overviews with problem, action, and quantified impact.
-   - Controls: `View Case Study Dossier ↗` on each card.
-4. **04 // Journey & Trajectory**:
-   - Compact 4-milestone timeline (MBA Candidate, Only Solar Co-Founder, CavinKare Sales Rep, B.Tech CS 75.8%).
-   - Controls: `Capabilities & Tooling Stack ⤢` and `Verified Credentials & Academics ⤢`.
-5. **05 // Operations Lab**:
-   - Compact banner introducing Jayesh's mathematical tools.
-   - Control: `Launch Operations Lab ⤢`.
-6. **06 // Direct Contact**:
-   - 1-click email copy button with toast notification + `⌘C` shortcut.
-   - Direct phone, Mumbai location, LinkedIn, Résumé PDF download.
-   - Validated inquiry note form with topic pills.
-
-### Deep Level (6 Accessible `<dialog>` Modals)
-- `#caseDialog`: Full-screen case dossiers for CavinKare, Only Solar, Relational Pipeline, and Reverse Logistics.
-- `#loopDialog`: 4-stage operating loop breakdown (Observe → Model → Systematize → Feedback).
-- `#capabilitiesDialog`: Tri-modal operational, analytical, and commercial toolkit.
-- `#credentialsDialog`: Verified degrees (MBA Operations, B.Tech CS 75.8%) and technical coursework.
-- `#milestoneDialog`: Milestone inspector with role context and highlights.
-- `#labDialog`: Operations Laboratory with:
-  1. **Sourcing Landed-Cost Simulator**: Real-time multi-variable sliders (Volume, FOB, Ocean Freight, Customs Duty, Inland Transit, Margin) calculating unit landed costs and breakeven pricing.
-  2. **Exception Triage Board**: Live triage of port customs holds, FMCG beat stockouts, and distributor credit alerts.
+| Professional Domain | Previous Portfolio Draft | V21 Factual Correction | Status |
+|---|---|---|---|
+| **CavinKare Achievements** | Present | **100% Preserved & Retained**: 50+ retail outlets covered across Andheri to Bandra (Mumbai); 10+ General Trade accounts onboarded in Month 1; +20% active retailer-base expansion; +30% MoM focus-category revenue growth; primary/secondary sales support, distributor replenishment, merchandising, planograms, trade schemes, competitor feedback. | **Genuine & Confirmed** |
+| **CavinKare Employment Terms** | Generalized | Explicitly designated as **Sales Representative (Third-Party Payroll)**, **Oct 2025 – Feb 2026**. | **Accurate** |
+| **Only Solar Scope** | Exaggerated metrics, arbitrary savings claims | Position: **Co-Founder & Business Head**, **2024 – Early 2025**. Sourced and distributed commercial solar, street, and flood lighting. Authentic responsibilities: international supplier sourcing, vendor negotiations, import logistics, sales strategy, pricing approach, GTM planning, customer/distributor relationships, daily operations, P&L decisions. All unsupported percentages and volume claims purged. | **Factual Grounding** |
+| **Education: MBA** | 2024–2026 / Sales Minor claimed | **Lovely Professional University (LPU)**, **2026–2028 | Pursuing**. Confirmed Major: **Operations & Logistics**. Minor: **Undecided** (no false claim of Product Management or Sales minor). | **Verified** |
+| **Education: B.Tech** | 2019–2023 / "75.8%" | **B.Tech — Computer Science Engineering**, Lovely Professional University (LPU), **Graduated 2024**. Unverified `75.8%` aggregate removed. | **Verified** |
+| **Skills & Capabilities** | Uniform "expert" percentages | Classified strictly into verified categories: **Sales & Distribution**, **Management & Operations**, **Core Strengths**. Technical tools (SQL, Power BI, Advanced Excel, Python) classified honestly by proficiency (Demonstrated, Familiar with, Foundational). | **Honest Classification** |
+| **External Certifications** | Unverified dates & credentials | Purged unverified external certificates; focused on core degree curriculum and applied competencies. | **Cleaned** |
+| **Project 01: Beat Expansion** | Ambiguous classification | `Making a Beat Work Harder` — Explicitly tagged as `PROFESSIONAL EXPERIENCE // CAVINKARE`. Showcases genuine field sales execution. | **Preserved** |
+| **Project 02: Sourcing Pipeline** | Ambiguous scale | `From Supplier to Shelf` — Explicitly tagged as `ENTREPRENEURSHIP // ONLY SOLAR`. Showcases authentic sourcing, import logistics, and distribution. | **Preserved** |
+| **Project 03: Inventory Model** | Implied live production system | `See the Whole Flow` — Explicitly tagged as `INDEPENDENT ANALYTICAL CONCEPT`. Labeled as built on synthetic datasets and conceptual schema. | **Transparent** |
+| **Project 04: Exceptions Triage** | Implied live enterprise feed | `Exceptions First` — Explicitly tagged as `INDEPENDENT OPERATIONS ANALYTICS CONCEPT`. Labeled as an illustrative framework using synthetic operational scenarios. | **Transparent** |
+| **Operations Lab Tools** | Implied actual transaction telemetry | **Decision Studio**: Labeled as *"Illustrative Landed-Cost Sourcing Simulator — Synthetic Numerical Assumptions"*. **Operations Signal Board**: Labeled as *"Illustrative Operations Exception Board — Synthetic Scenarios"*. | **Transparent** |
+| **Phone Privacy** | Publicly visible in header, hero, contact, footer, and PDF | **ZERO public phone numbers**. Removed from all HTML, JS, CSS, modals, and PDF text layers. | **100% Private** |
+| **Email Address** | Inconsistent addresses | Single verified contact email: `jayeshsingh9b@gmail.com`. | **Verified** |
+| **Contact Form Workflow** | Generic mailto or simulated send | Directly constructs prefilled Gmail Web compose URL (`https://mail.google.com/mail/?view=cm&fs=1&to=jayeshsingh9b@gmail.com&su=...&body=...`), opens in a new tab, displays clear redirect notice, and provides an immediate fallback card. | **Functional** |
+| **Downloadable PDF** | Redacted file had phone in text layer | Clean vector PDF compiled at `assets/Jayesh-Singh-Resume.pdf` using headless Chrome. Zero phone number in both visual rendering and underlying text stream. | **Verified** |
 
 ---
 
-## 3. Verified Career Foundation
+## 3. Contact Experience Specifications
 
-- **Education**:
-  - MBA Candidate (Operations & Logistics Major), Lovely Professional University (LPU), 2024–2026.
-  - B.Tech in Computer Science & Engineering, Lovely Professional University (LPU), 2019–2023, **75.8% aggregate**.
-- **Field & Commercial Experience**:
-  - Co-Founder & Operations Lead, Only Solar (2023–2024): Cross-border sourcing, tier-1 vendor audits, container customs clearance, landed-cost modeling, and domestic B2B distribution.
-  - Sales Representative, CavinKare (2023, Mumbai): 50+ General Trade retail outlets managed; expanded active retail base by +20% (10+ accounts) in Month 1; delivered +30% MoM focus category lift.
-- **Contact**: `singhjayesh416@gmail.com` | `+91 91374 89209` | Mumbai, India.
+### Fields & Action
+- **Fields**: Full Name, Sender's Email, Subject, Message.
+- **Action Button**: `Continue to Gmail →`
+- **Help Note**: *"Your message will open in Gmail, where you can review and send it."*
+- **Target URL Construction**:
+  ```javascript
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=jayeshsingh9b@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+  ```
+- **Post-Action Banner**: *"Your message is ready in Gmail. Review it and press Send."*
+- **Popup-Blocked Fallback Card**: Contains a pre-generated `mailto:` button with prefilled subject and body.
 
 ---
 
-## 4. How to Run Locally
+## 4. Visual Design & Progressive Disclosure Architecture
+
+The V21 implementation retains the clean, balanced V17 minimal design:
+- **Glossy iOS Glass Header**: `backdrop-filter: blur(34px) saturate(210%)` with top specular edge, dynamic pointer light, and ambient sheen.
+- **Soft Light Header Wordmark**: 1-second muted pastel color shift across 7 mineral tones.
+- **Signature Operations Pipeline Visual**: Replaces portraits with an interactive SVG pipeline (`Supplier → Sourcing → Inventory → Warehouse → Distribution → Retail` + `Reverse Feedback Loop ↺`) with 3 scenario switches (`Steady`, `Delay`, `Surge`).
+- **Progressive Disclosure Modals**: Full-depth technical case dossiers, 4-stage operating loop, capabilities stack, academic records, and interactive operations lab.
+
+---
+
+## 5. Verification & Privacy Audit
+
+All checks passed:
+1. `grep -rnE "91374|89571|tel:" .` $\rightarrow$ **0 matches** (Passed).
+2. Swift PDFKit text stream inspection of `assets/Jayesh-Singh-Resume.pdf`:
+   - `PASS: Zero phone numbers found in PDF!`
+   - `PASS: Verified email and LinkedIn present!`
+3. Original resume `/Users/rajput/Documents/Jayesh-Singh-Resume.pdf` left strictly untouched.
+4. Source folders `google`, `jayesh_singh_portfolio_repo`, `jayesh-portfolio-final` left strictly untouched.
+5. All local changes contained strictly within `/Users/rajput/Documents/main decision/jayesh-portfolio-next`.
+
+---
+
+## 6. How to Run Locally
 
 ```bash
 cd "/Users/rajput/Documents/main decision/jayesh-portfolio-next"
@@ -82,4 +91,4 @@ python3 -m http.server 8080
 # Option 2: Direct browser opening
 open index.html
 ```
-Visit `http://localhost:8080` in any modern browser.
+Visit `http://localhost:8080` in your browser.

@@ -1,6 +1,6 @@
 /**
- * Jayesh Singh — V17 Minimal Operations Portfolio
- * Interactive Architecture, Simulation Engine & Progressive Disclosure System
+ * Jayesh Singh — Portfolio V21
+ * Content Accuracy, Gmail Compose Workflow & Progressive Disclosure Engine
  */
 
 (() => {
@@ -206,51 +206,51 @@
   const stageData = [
     {
       stage: 'STAGE 01 // SUPPLIER',
-      status: 'NOMINAL CADENCE',
-      title: 'Factory Capacity & Overseas Lead Time',
-      desc: 'Evaluating factory capacity limits, component BOM availability, and FOB terms before capital commitment. Sourcing resilience begins at the tier-1 manufacturer gate.',
-      metric: 'Lead Time: 28 Days',
-      context: 'Only Solar Tier-1 Manufacturer Audits'
+      status: 'FACTORY AUDIT CADENCE',
+      title: 'Factory Vetting & Supplier Negotiations',
+      desc: 'Evaluating overseas manufacturing capacity, negotiating unit pricing and MOQ terms, and securing reliable production schedules before committing capital.',
+      metric: 'Vendor Due Diligence',
+      context: 'Only Solar Lighting Sourcing'
     },
     {
       stage: 'STAGE 02 // SOURCING',
-      status: 'PRICE LOCK ACTIVE',
-      title: 'Landed-Cost Build-Up & Currency Risk',
-      desc: 'Modeling container freight spot rates, customs tariffs, port demurrage risks, and currency fluctuations to ensure target gross margin remains viable after import.',
-      metric: 'Landed Margin: +24.8%',
-      context: 'Multi-variable Landed-Cost Engine'
+      status: 'LANDED PRICING ACTIVE',
+      title: 'Import Logistics & Landed-Cost Modeling',
+      desc: 'Factoring container shipping rates, port customs tariffs, and local freight to establish viable wholesale and distributor pricing structures.',
+      metric: 'Cost Build-Up Clarity',
+      context: 'Venture Pricing & Sourcing Management'
     },
     {
       stage: 'STAGE 03 // INVENTORY',
-      status: 'SAFETY BUFFER HEALTHY',
-      title: 'Safety Stock, EOQ & Reorder Trigger Points',
-      desc: 'Balancing inventory holding capital against stockout risk. Calculating dynamic reorder points factoring supplier lead time variance and historical sales velocity.',
-      metric: 'Safety Stock: 18 Days',
-      context: '3NF Relational Inventory Database'
+      status: 'STOCK BUFFER OPTIMAL',
+      title: 'Safety Stock & Replenishment Planning',
+      desc: 'Balancing inventory investment against retail stockout risk. Aligning primary distributor orders with lead-time requirements to maintain continuous product availability.',
+      metric: 'Replenishment Synchronization',
+      context: 'Beat Replenishment Coordination'
     },
     {
       stage: 'STAGE 04 // WAREHOUSE',
-      status: 'DISPATCH VELOCITY OPTIMAL',
-      title: 'Inbound Receiving, Sortation & Put-Away',
-      desc: 'Standardizing depot intake inspection, batch serialization, and pallet cross-docking to prevent fulfillment lag and unrecorded transit breakage.',
-      metric: 'Cycle Time: 48h Inbound',
-      context: 'Depot Receiving & RMA Triage Protocol'
+      status: 'AVAILABILITY VERIFIED',
+      title: 'Depot Intake & Product Availability',
+      desc: 'Verifying shipment intake, batch serialization, and stock availability to support secondary order dispatches without fulfillment bottlenecks.',
+      metric: 'Distributor Stock Sync',
+      context: 'Distributor Closing Stock Alignment'
     },
     {
       stage: 'STAGE 05 // DISTRIBUTION',
-      status: 'BEAT CADENCE ACTIVE',
+      status: 'BEAT ROUTING ACTIVE',
       title: 'Territory Route Scheduling & Fulfillment',
-      desc: 'Sequencing high-density delivery routes, coordinating distributor stock dispatches, and aligning primary factory shipping with secondary field counter orders.',
-      metric: 'On-Time Dispatch: 99.4%',
-      context: 'Daily Beat Reorder Synchronization'
+      desc: 'Sequencing high-frequency retail visits across Andheri to Bandra. Balancing store frequency with order booking to optimize daily beat productivity.',
+      metric: '50+ Outlets Covered',
+      context: 'CavinKare Mumbai Beat Route Engineering'
     },
     {
       stage: 'STAGE 06 // RETAIL',
-      status: 'SHELF FILL RATE 98.2%',
-      title: '50+ General Trade Outlets & Shelf Take-Off',
-      desc: 'Direct field presence across 50+ retail counters. Auditing planogram visibility, retailer working capital limits, and fast-moving SKU velocity at point of sale.',
-      metric: 'Active GT Base: +20% Lift',
-      context: 'CavinKare Mumbai Beat Transformation'
+      status: 'SHELF VISIBILITY ACTIVE',
+      title: '50+ General Trade Outlets & Account Growth',
+      desc: 'Direct field presence across 50+ retail counters in Mumbai. Drove merchandising compliance, planograms, trade schemes, and onboarded 10+ new accounts in Month 1.',
+      metric: '+20% Active Reach | +30% MoM Lift',
+      context: 'CavinKare Territory Sales Execution'
     }
   ];
 
@@ -308,13 +308,13 @@
       } else if (scenario === 'delay') {
         forwardPulses.forEach((p) => p.style.animationDuration = '9s');
         if (feedbackPulse) feedbackPulse.style.animationDuration = '6s';
-        if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot" style="background:#c46244;box-shadow:0 0 6px #c46244"></i> PORT CLEARANCE BOTTLENECK';
-        showToast('Pipeline Alert: Port clearance delay simulated (+12 days lead-time)');
+        if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot" style="background:#c46244;box-shadow:0 0 6px #c46244"></i> PORT CLEARANCE DELAY SIMULATED';
+        showToast('Pipeline Simulation: Port clearance delay simulated (+12 days lead-time)');
       } else if (scenario === 'surge') {
         forwardPulses.forEach((p) => p.style.animationDuration = '2.5s');
         if (feedbackPulse) feedbackPulse.style.animationDuration = '2s';
         if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot" style="background:#38bdf8;box-shadow:0 0 6px #38bdf8"></i> DEMAND SURGE DETECTED';
-        showToast('Pipeline Alert: Retail demand surge triggered rapid replenishment cycle');
+        showToast('Pipeline Simulation: Retail demand surge triggered rapid replenishment cycle');
       }
     });
   });
@@ -386,111 +386,111 @@
   $('#openLabModalBtn')?.addEventListener('click', () => openDialog('labDialog'));
 
   // ==========================================================================
-  // 8. CASE STUDY DOSSIER DATA & INJECTION
+  // 8. CASE STUDY DOSSIER DATA & INJECTION (All 4 Retained & Factually Audited)
   // ==========================================================================
   const caseDossiers = {
     cavinkare: {
-      category: 'FMCG RETAIL DISTRIBUTION',
-      title: 'Optimizing Mumbai High-Frequency Retail Beat & Replenishment Sync',
+      category: 'PROFESSIONAL EXPERIENCE // CAVINKARE',
+      title: 'Making a Beat Work Harder: FMCG Retail Beat & Territory Expansion in Mumbai',
       sections: [
         {
-          heading: '01 // Operational Scope & Field Context',
-          body: 'Sales Representative — CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026\nTerritory: Andheri to Bandra, Mumbai (50+ General Trade retail outlets, supermarkets, and local distributors).'
+          heading: '01 // Verified Role & Operating Scope',
+          body: 'Sales Representative — CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026\nTerritory: Andheri to Bandra corridor, Mumbai (50+ General Trade retail outlets, supermarkets, and local distributors).'
         },
         {
-          heading: '02 // The Real Bottleneck',
-          body: 'High outlet density, tight retailer working capital, and asynchronous reorder cycles between field order booking and distributor dispatch risked stockouts on fast-moving SKUs while stagnant reach remained in underserved sub-beats.'
+          heading: '02 // The Frontline Bottleneck',
+          body: 'High outlet density, tight retailer working capital, and asynchronous reorder cycles between field order booking and distributor dispatch risked stockouts on fast-moving SKUs while leaving underserved accounts neglected.'
         },
         {
-          heading: '03 // 3-Step Execution Architecture',
-          body: '1. Beat Segmentation & Route Engineering: Sequenced 50+ outlets by velocity and credit reliability while carving out prospecting windows that acquired 10+ new GT accounts in Month 1 (+20% active base).\n2. Replenishment Sync: Coordinated primary and secondary booking directly with distributor closing stock to protect on-time, in-full fill rates.\n3. Merchandising & Trade Schemes: Secured prime "Hot Spot" counter visibility and deployed targeted trade schemes, delivering a +30% MoM revenue increase in focus categories.'
+          heading: '03 // 3-Step Field Execution Architecture',
+          body: '1. Beat Segmentation & Route Planning: Sequenced 50+ retail outlets by sales velocity and order reliability, reserving dedicated prospecting windows that onboarded 10+ new General Trade accounts in Month 1 (+20% active retailer-base expansion).\n2. Replenishment Synchronization: Coordinated primary and secondary order booking directly with distributor closing stock to maintain on-shelf product availability.\n3. Merchandising & Trade Schemes: Secured prime counter visibility and executed targeted trade schemes, delivering a confirmed +30% month-on-month revenue growth in focus categories.'
         },
         {
-          heading: '04 // Quantified Outcome & Career Takeaway',
-          body: 'Demonstrates how frontline sales growth depends directly on replenishment reliability (Operations) and highlights where automated beat-level reorder alerts (Product Management) eliminate stockouts.'
+          heading: '04 // Market Intelligence & Operational Takeaway',
+          body: 'Consistently tracked performance against sales targets and shared competitor pricing and market feedback to guide territory decisions. Confirms how revenue growth in General Trade distribution depends directly on replenishment reliability and disciplined beat routines.'
         }
       ],
       takeaways: {
-        title: 'Core Methodological Lesson',
-        text: 'A sales rep is not just a commercial negotiator—they are the critical human sensor in a replenishment supply chain.'
+        title: 'Core Field Lesson',
+        text: 'A territory sales representative is the vital sensory link in consumer distribution—connecting counter-level buying patterns to distributor fulfillment.'
       }
     },
     onlysolar: {
-      category: '0→1 VENTURE SOURCING',
-      title: 'Cross-Border Sourcing, Landed-Cost Modeling & B2B Distribution Launch',
+      category: 'ENTREPRENEURSHIP // ONLY SOLAR',
+      title: 'From Supplier to Shelf: Cross-Border Sourcing, Pricing & Commercial Operations',
       sections: [
         {
-          heading: '01 // Operational Scope & Field Context',
-          body: 'Co-Founder & Business Head — Only Solar (Import & Export) · 2024 – Early 2025\nMumbai, India · Commercial Solar, Street, and Flood Lighting.'
+          heading: '01 // Verified Role & Operating Scope',
+          body: 'Co-Founder & Business Head — Only Solar (Import & Export) · 2024 – Early 2025\nMumbai, India · Commercial solar, street, and flood lighting equipment.'
         },
         {
-          heading: '02 // The Real Bottleneck',
-          body: 'Launching an import-distribution lighting venture required solving overseas supplier lead times and freight/customs duty volatility on the supply side while preserving competitive multi-tier distributor margins on the demand side.'
+          heading: '02 // The Operational Challenge',
+          body: 'Launching an import-distribution venture required establishing reliable overseas manufacturer relationships, managing international freight logistics, and setting viable pricing structures for domestic commercial customers.'
         },
         {
-          heading: '03 // 3-Step Execution Architecture',
-          body: '1. Supplier Vetting & RFQ Negotiation: Evaluated international tier-1 manufacturers across defect tolerance, MOQ flexibility, and FOB unit pricing.\n2. Landed-Cost & Margin Modeling: Built unit-economics models combining FOB price, freight, customs duties, port demurrage buffers, and inland transit to structure B2B distributor price tiers.\n3. Channel Operations & P&L Control: Led B2B buyer relationships, distributor onboarding, working-capital cycles, and warranty reconciliation.'
+          heading: '03 // Genuine Operational Responsibilities',
+          body: '1. Supplier Sourcing & Negotiation: Sourced international manufacturers, conducted supplier due diligence, and negotiated purchase contracts and FOB pricing.\n2. Import Logistics Management: Managed overseas shipping, customs clearance coordination, port documentation, and inland transit to maintain supply reliability.\n3. Commercial GTM & P&L: Developed the venture sales strategy, pricing models, and go-to-market plan; built customer and distributor relationships and oversaw daily business operations and commercial decisions.'
         },
         {
-          heading: '04 // Quantified Outcome & Career Takeaway',
-          body: 'Connects cross-border procurement and landed-cost math (Operations) directly to channel pricing, positioning, and B2B conversion (Sales & Marketing).'
+          heading: '04 // Entrepreneurial Takeaway',
+          body: 'Provided direct, end-to-end exposure to the entire commercial lifecycle of running a business: from overseas factory evaluation and logistics documentation to customer conversion and P&L control.'
         }
       ],
       takeaways: {
-        title: 'Core Methodological Lesson',
-        text: 'Never commit capital to an FOB quote until ocean demurrage, inspection delays, and inland transit damage have been fully factored into landed unit margins.'
+        title: 'Core Venture Lesson',
+        text: 'Commercial viability in import distribution depends on disciplined cost modeling—factoring tariffs, shipping volatility, and working capital into every pricing decision.'
       }
     },
     pipeline: {
-      category: 'DATA & SYSTEMS ARCHITECTURE',
-      title: 'Relational Supply Chain Inventory Pipeline & OTIF Dashboard Architecture',
+      category: 'INDEPENDENT ANALYTICAL CONCEPT',
+      title: 'See the Whole Flow: Field-to-Distributor Inventory Visibility Architecture',
       sections: [
         {
-          heading: '01 // Operational Scope & Field Context',
-          body: 'Applied Systems & Analytics Blueprint synthesizing B.Tech CS (LPU, 75.8%), SQL/Power BI data modeling, and Mumbai FMCG distribution workflows.'
+          heading: '01 // Nature of Project: Independent Analytical Concept',
+          body: 'Independent conceptual architecture combining Computer Science engineering fundamentals (B.Tech CS, Graduated 2024) with FMCG field distribution observations. Note: Uses synthetic datasets to model supply chain visibility.'
         },
         {
-          heading: '02 // The Real Bottleneck',
-          body: 'In General Trade distribution, field reps book orders without real-time visibility into distributor warehouse stock, while supply planners only see aggregated primary sales—causing phantom stockouts and lost weekend secondary sales.'
+          heading: '02 // The Structural Problem',
+          body: 'In traditional retail distribution, field sales representatives often book orders without visibility into distributor warehouse inventory, while supply planners only see aggregated primary sales—leading to avoidable stockout gaps.'
         },
         {
-          heading: '03 // 3-Step Execution Architecture',
-          body: '1. Relational SQL Schema: Linked Outlet Master, Beat Visit Logs, SKU Order Bookings, and Distributor Closing Inventory into one unified 3NF model.\n2. Power BI KPI Layer: Instrumented Beat Strike Rate, Outlet Drop Size, SKU Fill-Rate Gap, and Days-Since-Last-Order.\n3. Exception Workflow Rules: Specified lightweight SFA/DMS alerts that flag high-velocity outlets at risk of stockout before the morning beat begins.'
+          heading: '03 // Conceptual System Design',
+          body: '1. Relational Database Schema (SQL): Designed a conceptual third-normal-form (3NF) relational data model linking Store Masters, Beat Visit Logs, SKU Bookings, and Distributor Closing Stock.\n2. Replenishment Dashboards (Power BI): Modeled key operational indicators including Beat Strike Rate, SKU Fill-Rate Gaps, and Days-Since-Last-Order.\n3. Exception Triggers: Specified automated rules to flag high-velocity retail outlets at risk of stockout before the morning beat begins.'
         },
         {
-          heading: '04 // Quantified Outcome & Career Takeaway',
-          body: 'Showcases how Computer Science and BI tools (Product/Tech) solve physical inventory replenishment and territory sales bottlenecks (Operations & Commercial).'
+          heading: '04 // Analytical Takeaway',
+          body: 'Demonstrates how computational data structures and business intelligence tools can resolve physical information handoffs between field sales and warehouse replenishment.'
         }
       ],
       takeaways: {
-        title: 'Core Methodological Lesson',
-        text: 'Relational clarity beats dashboard vanity. An operational system is only as good as its ability to highlight what requires human intervention right now.'
+        title: 'Conceptual Architecture Lesson',
+        text: 'Relational clarity beats dashboard vanity. A useful system highlights exactly where human operational intervention is needed before a stockout occurs.'
       }
     },
     reverse: {
-      category: 'REVERSE LOGISTICS & QUALITY',
-      title: 'Closed-Loop B2B Return Merchandise Authorization (RMA) Workflow',
+      category: 'INDEPENDENT OPERATIONS ANALYTICS CONCEPT',
+      title: 'Exceptions First: Closed-Loop Reverse Logistics & Warranty Lifecycle Triage Model',
       sections: [
         {
-          heading: '01 // Operational Scope & Field Context',
-          body: 'Reverse Logistics & Warranty Lifecycle Architecture · Only Solar Venture & Distribution Operations.'
+          heading: '01 // Nature of Project: Independent Analytical Concept',
+          body: 'Independent operations analytics model exploring structured warranty workflows and return triage protocols. Note: Uses illustrative operational scenarios to demonstrate decision logic.'
         },
         {
-          heading: '02 // The Real Bottleneck',
-          body: 'Solar lighting hardware returns (driver failures, cell degradation) sat in regional distribution depots for weeks without triage, locking working capital and triggering customer friction.'
+          heading: '02 // The Reverse Logistics Challenge',
+          body: 'In hardware distribution, returned equipment and warranty authorizations often sit idle in regional depots without structured triage, locking capital and triggering customer friction.'
         },
         {
-          heading: '03 // 3-Step Execution Architecture',
-          body: '1. Intake Classification: Implemented 3-tier depot triage (A: immediate bench repair, B: supplier credit reclaim, C: raw scrap separation).\n2. Standardized SOP: Established 48-hour RMA turnaround SLA with serialized component barcode tracking.\n3. Supplier Warranty Claim Reconciliation: Bundled defect diagnostic reports to recover vendor credits directly against subsequent container orders.'
+          heading: '03 // Conceptual Workflow Architecture',
+          body: '1. 3-Tier Diagnostic Intake: Conceptualized triage criteria at depot receipt (Tier A: immediate repair, Tier B: supplier warranty reclamation, Tier C: scrap recovery).\n2. Standardized SOP Workflows: Modeled turnaround target SLAs with serialized tracking.\n3. Supplier Warranty Reclamation: Mapped diagnostic reporting workflows to recover vendor credits against future purchase lots.'
         },
         {
-          heading: '04 // Quantified Outcome & Career Takeaway',
-          body: 'Reduced average RMA depot dwell time by 65% and turned an unstructured cost leak into an actionable feedback loop for tier-1 supplier quality audits.'
+          heading: '04 // Operational Takeaway',
+          body: 'Shows how reverse logistics can be transformed from an unstructured cost center into an actionable quality feedback mechanism.'
         }
       ],
       takeaways: {
-        title: 'Core Methodological Lesson',
-        text: 'Reverse logistics is not waste management—it is the highest-signal quality feedback loop in modern operations.'
+        title: 'Analytical Modeling Lesson',
+        text: 'Reverse logistics is not waste disposal—it is a critical diagnostic feedback loop for supplier quality audits.'
       }
     }
   };
@@ -534,51 +534,54 @@
   });
 
   // ==========================================================================
-  // 9. MILESTONE INSPECTOR MODAL
+  // 9. MILESTONE INSPECTOR MODAL (Factually Audited Career Records)
   // ==========================================================================
   const milestoneData = {
     mba: {
-      category: 'CURRENT ACADEMICS',
-      title: 'MBA Candidate — Operations & Logistics Major (2024–2026)',
+      category: 'GRADUATE EDUCATION // PURSUING',
+      title: 'Master of Business Administration (MBA) — 2026–2028',
       inst: 'Lovely Professional University (LPU), Punjab, India',
-      overview: 'Dedicated full-time specialization in end-to-end supply chain management, quantitative production scheduling, enterprise resource planning (ERP), and multi-modal logistics economics.',
+      overview: 'Currently pursuing an MBA specializing in Operations & Logistics to sharpen strategic management, global supply chain planning, and commercial operations capabilities. (Minor is currently undecided).',
       highlights: [
-        'Advanced Supply Chain Design: Linear programming for warehouse node placement and freight network optimization.',
-        'Inventory Optimization: Statistical safety stocks, stochastic demand modeling, and lead-time risk mitigation.',
-        'ERP Integration: Process mapping from procurement purchase requisitions (PR) through three-way invoice matching and dispatch fulfillment.'
-      ]
-    },
-    venture: {
-      category: 'VENTURE EXECUTION',
-      title: 'Co-Founder & Operations Lead — Only Solar (2023–2024)',
-      inst: 'Renewable Lighting Equipment Distribution, Mumbai',
-      overview: 'Bootstrapped and led international sourcing, freight logistics, and B2B wholesale distribution for commercial solar lighting hardware.',
-      highlights: [
-        'Global Sourcing: Identified and audited tier-1 manufacturers overseas; negotiated FOB pricing and quality inspection SLAs.',
-        'Customs & Demurrage Management: Coordinated customs broker clearing through Nhava Sheva (JNPT) port without demurrage penalties.',
-        'B2B Channel Strategy: Scaled dealer distribution network, established credit terms, and delivered positive gross operating margins.'
+        'Confirmed Major: Operations & Logistics Management.',
+        'Supply Chain & Sourcing: Quantitative inventory models, procurement strategy, and distribution network planning.',
+        'Enterprise Systems: Operations planning, ERP integration concepts, and process standard operating procedures (SOPs).'
       ]
     },
     cavinkare: {
-      category: 'FIELD SALES & BEAT OPERATIONS',
-      title: 'Sales Representative — CavinKare (2023)',
-      inst: 'Mumbai Territory Beat Execution (Third-Party Payroll)',
-      overview: 'Owned daily field operations across a 50+ retail outlet beat in high-density Western Mumbai consumer clusters.',
+      category: 'FIELD SALES // PROFESSIONAL EXPERIENCE',
+      title: 'Sales Representative — CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026',
+      inst: 'Territory: Andheri to Bandra, Mumbai',
+      overview: 'Managed field sales and retail distribution across the high-density Andheri-Bandra corridor, covering General Trade outlets, supermarkets, and local distributors.',
       highlights: [
-        'Territory Beat Engineering: Redesigned daily store visit sequence to eliminate travel deadhead and balance order frequency.',
-        '+20% Month-1 Expansion: Systematically prospected underserved general trade shops, onboarding 10+ new active retail accounts in Month 1.',
-        'Secondary-to-Primary Sync: Coordinated retail replenishment orders directly against distributor inventory to prevent stockouts on key SKUs.'
+        '50+ Retail Outlets Covered: Managed regular route coverage and order booking across general trade and supermarkets.',
+        '+20% Active Retail Base: Prospected and onboarded 10+ new General Trade accounts within Month 1 through route planning.',
+        '+30% MoM Revenue Lift: Achieved confirmed month-on-month revenue growth in focus categories through planogram compliance and trade schemes.',
+        'Distributor Replenishment: Coordinated primary and secondary order booking directly with distributor inventory to maintain product availability.',
+        'Market Feedback: Shared regular competitor insights and market feedback to guide territory decisions.'
+      ]
+    },
+    venture: {
+      category: 'ENTREPRENEURSHIP // VENTURE LEADERSHIP',
+      title: 'Co-Founder & Business Head — Only Solar · 2024 – Early 2025',
+      inst: 'Import & Export of Commercial Solar, Street & Flood Lighting, Mumbai',
+      overview: 'Co-founded an import-export venture focused on sourcing and distributing commercial solar, street, and flood lighting products.',
+      highlights: [
+        'International Supplier Sourcing: Sourced and vetted overseas manufacturers; led vendor negotiations.',
+        'Import Logistics & Compliance: Managed cross-border freight coordination, port clearing documentation, and inland transit.',
+        'Commercial GTM & Pricing: Formulated sales strategy, pricing structures, and go-to-market plans.',
+        'Distributor Relationships & P&L: Managed customer and distributor accounts, oversaw daily business operations, and made commercial P&L decisions.'
       ]
     },
     btech: {
-      category: 'ENGINEERING FOUNDATION',
-      title: 'B.Tech in Computer Science & Engineering (2019–2023)',
-      inst: 'Lovely Professional University · 75.8% Aggregate',
-      overview: 'Four-year engineering degree providing rigorous training in relational database systems, algorithms, software development life cycles, and analytical problem-solving.',
+      category: 'UNDERGRADUATE EDUCATION // ENGINEERING',
+      title: 'Bachelor of Technology (BTech), Computer Science Engineering — Graduated 2024',
+      inst: 'Lovely Professional University (LPU), Punjab, India',
+      overview: 'Four-year engineering degree providing rigorous training in relational database systems, algorithms, software engineering, and computational problem-solving.',
       highlights: [
-        'Relational Databases & SQL: Third-normal-form schema design, indexing, transactions, and complex analytical queries.',
-        'Algorithmic Thinking: Graph traversal, sorting algorithms, and optimization fundamentals applied to logistics routing.',
-        'Data Systems: Python, pandas, and data structures applied to supply chain anomaly detection.'
+        'Relational Databases & SQL: Third-normal-form schema design, indexing, transactions, and analytical queries.',
+        'Data Structures & Algorithms: Computational optimization and graph traversal logic applicable to routing and scheduling.',
+        'Analytical Foundation: Translating operational and commercial handoffs into structured, repeatable data workflows.'
       ]
     }
   };
@@ -602,7 +605,7 @@
             <p>${data.overview}</p>
           </div>
           <div class="dossier-section">
-            <h4>Key Operations &amp; Systems Highlights</h4>
+            <h4>Key Responsibilities &amp; Highlights</h4>
             <ul class="cap-list" style="margin-top:0.75rem;">
         `;
         data.highlights.forEach((h) => {
@@ -617,7 +620,7 @@
   });
 
   // ==========================================================================
-  // 10. OPERATIONS LAB: DECISION SIMULATORS (Inside #labDialog)
+  // 10. OPERATIONS LAB: DECISION SIMULATORS (Synthetic Assumptions & Scenarios)
   // ==========================================================================
   // Lab Tab Switching
   const labTabs = $$('.lab-tab-btn');
@@ -638,7 +641,7 @@
     });
   });
 
-  // Tool 1: Landed-Cost Calculator Engine
+  // Tool 1: Landed-Cost Calculator Engine (Synthetic Model Assumptions)
   const calcUnits = $('#calcUnits');
   const calcFob = $('#calcFob');
   const calcFreight = $('#calcFreight');
@@ -661,7 +664,7 @@
   const resGrandTotal = $('#resGrandTotal');
   const resTargetPrice = $('#resTargetPrice');
 
-  const USD_TO_INR = 83.0; // Current standard reference exchange rate
+  const USD_TO_INR = 83.0; // Illustrative reference rate
 
   function formatRupees(num) {
     return '₹' + Math.round(num).toLocaleString('en-IN');
@@ -709,65 +712,65 @@
   });
   calculateLandedCosts();
 
-  // Tool 2: Exception Triage Board Simulator
+  // Tool 2: Illustrative Exception Triage Simulator (Synthetic Scenarios)
   const initialIncidents = [
     {
-      id: 'INC-204',
-      title: 'Container Demurrage Alert at JNPT Port',
-      desc: '40ft container holding 1,200 solar modules delayed at customs due to bill of entry tariff code discrepancy. Free detention ends in 48 hours.',
+      id: 'SYN-101',
+      title: 'Port Custom Documentation Verification Delay',
+      desc: 'Illustrative import container awaiting tariff classification verification at port customs. Free demurrage buffer ends in 48 hours.',
       sev: 'sev-high',
-      sevLabel: 'CRITICAL',
+      sevLabel: 'HIGH PRIORITY',
       time: 'T-48h',
       resolved: false,
-      impact: 'Risk of ₹18,000/day shipping line demurrage + potential wholesale customer stockout.',
+      impact: 'Illustrative demurrage cost risk and downstream distributor fulfillment delay.',
       options: [
         {
-          label: 'A: Pay provisional duty guarantee and file urgent amendment.',
-          resolution: 'Immediate container release granted. Demurrage avoided completely. Ledger balance cleared in 14 days.'
+          label: 'A: File provisional tariff guarantee and submit clarification note.',
+          resolution: 'Provisional release granted. Demurrage avoided; compliance documents submitted.'
         },
         {
-          label: 'B: Route regional buffer inventory to fulfill customer commitments.',
-          resolution: 'Customer deliveries preserved at 100% OTIF; depot stock drawn down by 35%.'
+          label: 'B: Route secondary buffer inventory to protect customer delivery SLAs.',
+          resolution: 'Customer deliveries preserved; depot buffer drawn down by 30%.'
         }
       ]
     },
     {
-      id: 'INC-318',
-      title: 'Fast-Moving SKU Stockout in Andheri Cluster',
-      desc: '12 high-velocity general trade outlets report zero stock of 100ml personal care SKU ahead of the weekend buying peak.',
+      id: 'SYN-202',
+      title: 'High-Velocity General Trade SKU Out of Stock',
+      desc: 'Illustrative retail cluster reports zero stock of fast-moving SKU ahead of weekend buying peak.',
       sev: 'sev-high',
-      sevLabel: 'CRITICAL',
+      sevLabel: 'HIGH PRIORITY',
       time: 'T-12h',
       resolved: false,
-      impact: 'Estimated lost secondary sales of ₹85,000 across Saturday-Sunday beat.',
+      impact: 'Lost counter sales and retailer shelf-share displacement.',
       options: [
         {
-          label: 'A: Trigger emergency distributor cross-dock delivery tonight.',
-          resolution: 'Emergency dispatch dispatched via local tempo. All 12 outlets replenished by 8:30 AM.'
+          label: 'A: Coordinate emergency cross-dock replenishment with distributor.',
+          resolution: 'Emergency morning dispatch scheduled; retail counter stock restored by 9:00 AM.'
         },
         {
-          label: 'B: Reallocate stock from low-velocity sub-beat stores.',
-          resolution: 'Inter-outlet stock transfer executed; protected primary retail tier without extra freight.'
+          label: 'B: Execute inter-outlet stock balancing from lower-velocity stores.',
+          resolution: 'Inter-outlet transfer completed; core retail tier protected without extra freight.'
         }
       ]
     },
     {
-      id: 'INC-402',
-      title: 'Distributor Credit Limit Soft Hold',
-      desc: 'Key Bandra distributor reached 98% credit threshold due to pending clearing cheque, holding automated primary dispatch order.',
+      id: 'SYN-303',
+      title: 'Distributor Credit Limit Reorder Check',
+      desc: 'Illustrative key distributor order reaches 95% credit ceiling pending bank clearing.',
       sev: 'sev-med',
       sevLabel: 'MEDIUM',
       time: 'T-24h',
       resolved: false,
-      impact: '₹2,40,000 shipment staged on warehouse loading dock waiting for release.',
+      impact: 'Dispatch staged at warehouse pending credit confirmation.',
       options: [
         {
-          label: 'A: Verify RTGS bank transfer reference and authorize 24h provisional release.',
-          resolution: 'Funds verified with accounts; dispatch cleared without disrupting Monday morning beat.'
+          label: 'A: Confirm bank transfer reference with accounts and approve dispatch.',
+          resolution: 'Payment verified; order cleared for next-morning beat delivery.'
         },
         {
-          label: 'B: Split dispatch into partial shipment against cash-on-delivery balance.',
-          resolution: 'Risk mitigated; distributor accepted partial lot; remaining goods held until cheque clearance.'
+          label: 'B: Deliver partial shipment against cash-on-delivery balance.',
+          resolution: 'Commercial risk balanced; partial lot delivered to maintain stock continuity.'
         }
       ]
     }
@@ -820,8 +823,8 @@
         <div class="resolution-panel">
           <h5 class="res-title">${inc.title}</h5>
           <div class="res-impact" style="border-left-color:var(--accent-teal);background:var(--accent-teal-soft)">
-            <strong style="color:var(--accent-teal)">RESOLUTION LOGGED</strong>
-            <p>${inc.resolvedText || 'This exception has been triaged and resolved.'}</p>
+            <strong style="color:var(--accent-teal)">RESOLUTION SIMULATED</strong>
+            <p>${inc.resolvedText || 'This scenario has been evaluated and resolved.'}</p>
           </div>
         </div>
       `;
@@ -832,10 +835,10 @@
       <div class="resolution-panel">
         <h5 class="res-title">${inc.title}</h5>
         <div class="res-impact">
-          <strong>OPERATIONAL RISK &amp; IMPACT</strong>
+          <strong>OPERATIONAL RISK &amp; TRADE-OFF</strong>
           <p>${inc.impact}</p>
         </div>
-        <strong style="font:700 11px var(--mono);color:var(--ink-light);text-transform:uppercase;">Select Triage Resolution:</strong>
+        <strong style="font:700 11px var(--mono);color:var(--ink-light);text-transform:uppercase;">Select Decision Option:</strong>
         <div class="res-options-list">
     `;
 
@@ -858,7 +861,7 @@
         inc.resolvedText = chosen.resolution;
         renderIncidentList();
         renderResolutionPanel(inc);
-        showToast(`Triage executed for ${inc.id}`);
+        showToast(`Decision executed for ${inc.id}`);
       });
     });
   }
@@ -868,10 +871,10 @@
     selectedIncident = null;
     renderIncidentList();
     if (resolutionBody) {
-      resolutionBody.innerHTML = '<p class="placeholder-text">Click on any pending incident from the left to inspect trade-offs and trigger resolution protocol.</p>';
+      resolutionBody.innerHTML = '<p class="placeholder-text">Click on any pending synthetic incident from the left to inspect trade-offs and simulate resolution protocol.</p>';
     }
     if (selectedIncidentId) selectedIncidentId.textContent = 'Select an incident';
-    showToast('Triage queue reset to nominal default');
+    showToast('Synthetic triage queue reset');
   });
 
   renderIncidentList();
@@ -900,17 +903,17 @@
   const copyEmailBtn = $('#copyEmailBtn');
   const copyBtnText = $('#copyBtnText');
   const contactEmailLink = $('#contactEmailLink');
+  const VERIFIED_EMAIL = 'jayeshsingh9b@gmail.com';
 
   function copyEmailToClipboard() {
-    const email = contactEmailLink?.textContent || 'singhjayesh416@gmail.com';
-    navigator.clipboard.writeText(email).then(() => {
+    navigator.clipboard.writeText(VERIFIED_EMAIL).then(() => {
       if (copyBtnText) copyBtnText.textContent = 'Copied ✓';
-      showToast(`Copied ${email} to clipboard`);
+      showToast(`Copied ${VERIFIED_EMAIL} to clipboard`);
       setTimeout(() => {
         if (copyBtnText) copyBtnText.textContent = 'Copy (⌘C)';
       }, 2500);
     }).catch(() => {
-      showToast(`Email: ${email}`);
+      showToast(`Email: ${VERIFIED_EMAIL}`);
     });
   }
 
@@ -930,35 +933,75 @@
   });
 
   // ==========================================================================
-  // 12. DIRECT INQUIRY FORM VALIDATION
+  // 12. CONTACT FORM — GMAIL COMPOSE REDIRECT WORKFLOW (Section 9)
   // ==========================================================================
   const inquiryForm = $('#inquiryForm');
   const formFeedback = $('#formFeedback');
+  const formFallback = $('#formFallback');
+  const fallbackMailtoLink = $('#fallbackMailtoLink');
 
   inquiryForm?.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const name = $('#userName')?.value.trim();
     const email = $('#userEmail')?.value.trim();
+    const subject = $('#userSubject')?.value.trim();
     const message = $('#userMsg')?.value.trim();
 
-    if (!name || !email || !message) {
+    // 1. Validate required fields
+    if (!name || !email || !subject || !message) {
       if (formFeedback) {
         formFeedback.style.color = 'var(--accent-coral)';
-        formFeedback.textContent = 'Please fill out all required fields before sending.';
+        formFeedback.textContent = 'Please fill out all required fields before continuing.';
       }
       return;
     }
 
+    // 2. Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      if (formFeedback) {
+        formFeedback.style.color = 'var(--accent-coral)';
+        formFeedback.textContent = 'Please enter a valid email address.';
+      }
+      return;
+    }
+
+    // 3. Prepare message body
+    const bodyText = `Hi Jayesh,\n\n${message}\n\n---\nFrom: ${name}\nSender's Email: ${email}`;
+
+    // 4. Construct Gmail URL pattern
+    const recipient = VERIFIED_EMAIL;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
+    // Prepare mailto fallback
+    const mailtoUrl = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+    if (fallbackMailtoLink) {
+      fallbackMailtoLink.setAttribute('href', mailtoUrl);
+    }
+
+    // 5. Open Gmail in a new tab
+    let popupBlocked = false;
+    try {
+      const newWindow = window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        popupBlocked = true;
+      }
+    } catch (err) {
+      popupBlocked = true;
+    }
+
+    // 6. Appropriate feedback (DO NOT show false "sent" notification)
     if (formFeedback) {
       formFeedback.style.color = 'var(--accent-teal)';
-      formFeedback.textContent = `Thank you, ${name}. Your message has been prepared for dispatch.`;
+      formFeedback.textContent = 'Your message is ready in Gmail. Review it and press Send.';
     }
-    showToast(`Note from ${name} recorded!`);
-    inquiryForm.reset();
-    setTimeout(() => {
-      if (formFeedback) formFeedback.textContent = '';
-    }, 4500);
+
+    // 7. Fallback if popup blocked
+    if (popupBlocked && formFallback) {
+      formFallback.style.display = 'block';
+    }
   });
 
-  console.log('Jayesh Singh — Minimal Operations V17 initialized successfully.');
+  console.log('Jayesh Singh — Portfolio V21 initialized successfully.');
 })();
