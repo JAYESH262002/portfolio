@@ -96,8 +96,8 @@
     </div>
   </nav>
 
-  <!-- Smooth GPU-Accelerated Cursor Halo (Zero Choppiness) -->
-  <div class="cursor-halo" id="cursorHalo" aria-hidden="true"></div>
+  <!-- Smooth GPU-Accelerated Cursor Follower (Refined Hollow Circle - Portfolio V25) -->
+  <div class="cursor-circle cursor-halo" id="cursorHalo" aria-hidden="true"></div>
 
   <main id="main">
     <!-- ======================================================================
@@ -136,7 +136,7 @@
 
           <!-- SIGNATURE OPERATIONS VISUAL (Replaces Photograph) -->
           <div class="hero-visual-col">
-            <div class="operations-visual-card" id="operationsVisual">
+            <div class="operations-visual-card" id="operationsVisual" data-pipeline-root>
               <div class="card-glass-header">
                 <div class="header-indicator">
                   <span class="pulse-beacon" aria-hidden="true"></span>
@@ -184,7 +184,7 @@
                   <circle class="pipe-pulse pulse-feedback" r="4.5" />
 
                   <!-- Stage 1: Supplier -->
-                  <g class="op-node is-active" data-stage="0" transform="translate(60, 110)" role="button" tabindex="0" aria-label="Stage 1: Supplier" aria-selected="true">
+                  <g class="op-node" data-stage="0" transform="translate(60, 110)" role="button" tabindex="0" aria-label="Stage 1: Supplier" aria-selected="false">
                     <rect class="node-hit-area" x="-36" y="-30" width="72" height="96" fill="transparent" pointer-events="all"></rect>
                     <circle class="node-halo" r="28"></circle>
                     <circle class="node-ring" r="18"></circle>
@@ -266,14 +266,33 @@
                 </svg>
               </div>
 
-              <!-- Live Telemetry Readout (Updates dynamically on node click/select and scenario change) -->
-              <div class="node-telemetry" id="nodeTelemetry" aria-live="polite">
-                <!-- System Status & Mode Banner -->
-                <div class="telemetry-banner">
-                  <span class="telemetry-banner-pill pill-steady" id="telemetryScenarioPill"><i class="status-dot"></i> STEADY STATE // NOMINAL CADENCE</span>
-                  <span class="telemetry-banner-pill telemetry-loop-pill" id="telemetryLoopPill">Demand Loop: Standard Latency</span>
+              <!-- Minimal-By-Default Pipeline Status Strip (Portfolio V25) -->
+              <div class="pipeline-status-strip" id="pipelineStatusStrip">
+                <div class="status-strip-left">
+                  <span class="status-strip-pill pill-steady" id="statusStripScenarioPill">
+                    <i class="status-dot"></i> STEADY STATE // NOMINAL CADENCE
+                  </span>
+                  <span class="status-strip-hint" id="statusStripHint">
+                    Click any stage (01–06) to inspect operational flow →
+                  </span>
                 </div>
+                <div class="status-strip-right">
+                  <button class="btn-scenario-details-toggle" id="scenarioDetailsToggleBtn" type="button" aria-expanded="false" title="Toggle scenario mechanics">
+                    <span id="scenarioDetailsBtnText">Scenario Details ↓</span>
+                  </button>
+                </div>
+              </div>
 
+              <!-- Scenario Details Drawer (Expandable on demand) -->
+              <div class="scenario-details-box" id="scenarioDetailsBox" style="display: none;" aria-hidden="true">
+                <span class="scenario-details-title" id="scenarioDetailsTitle">Steady Flow System Dynamics</span>
+                <p class="scenario-details-text" id="scenarioDetailsText">
+                  All six pipeline stages operate at balanced throughput. Overseas production runs match container freight bookings, buffer inventories absorb planned transit variances, and distributor beats fulfill retail orders without stockout bottlenecks.
+                </p>
+              </div>
+
+              <!-- Compact Stage Telemetry Panel (Revealed on node click/select) -->
+              <div class="node-telemetry" id="nodeTelemetry" aria-live="polite">
                 <div class="telemetry-top">
                   <span class="telemetry-stage-tag" id="telemetryStage">STAGE 01 // SUPPLIER</span>
                   <span class="telemetry-grounding-tag" id="telemetryGrounding">GROUNDING: ONLY SOLAR SOURCING</span>
@@ -284,26 +303,39 @@
                   Evaluating overseas manufacturers, negotiating commercial MOQs and unit economics, and aligning production schedules with import cycles. Sourcing reliability starts at vendor contract rigor.
                 </p>
 
-                <!-- Dynamic Scenario & Feedback Impact Box -->
-                <div class="telemetry-impact-card" id="telemetryImpactCard">
-                  <div class="impact-item">
-                    <span class="impact-label">SCENARIO IMPACT:</span>
-                    <span class="impact-text" id="telemetryScenarioImpact">Factory cadence nominal. Production schedules aligned with planned shipping windows and baseline stock buffers.</span>
-                  </div>
-                  <div class="impact-item">
-                    <span class="impact-label">DEMAND FEEDBACK:</span>
-                    <span class="impact-text" id="telemetryFeedbackImpact">Store-level sell-through signals pull upstream replenishment before regional depot stocks hit reorder red-lines.</span>
-                  </div>
-                </div>
-
-                <div class="telemetry-meta-row">
+                <!-- Compact Action & Focus Area Row -->
+                <div class="telemetry-action-row">
                   <div class="telemetry-meta-item">
                     <span class="meta-label">FOCUS AREA:</span>
                     <span class="telemetry-pill-mono" id="telemetryMetric">Supplier Relationships &amp; Price Negotiations</span>
                   </div>
-                  <div class="telemetry-meta-item">
-                    <span class="meta-label">SYSTEM CONTEXT:</span>
-                    <span class="telemetry-pill-context" id="telemetryContext">Only Solar Venture Grounding</span>
+                  <button class="btn-explore-stage" id="exploreStageBtn" type="button" aria-expanded="false" title="Explore deeper stage details">
+                    <span id="exploreStageBtnText">Explore this stage ↓</span>
+                  </button>
+                </div>
+
+                <!-- Deep Stage Exploration Drawer (Expandable on demand) -->
+                <div class="explore-stage-content" id="exploreStageContent" style="display: none;" aria-hidden="true">
+                  <div class="telemetry-impact-card" id="telemetryImpactCard">
+                    <div class="impact-item">
+                      <span class="impact-label">SCENARIO IMPACT:</span>
+                      <span class="impact-text" id="telemetryScenarioImpact">Factory cadence nominal. Production schedules aligned with planned shipping windows and baseline stock buffers.</span>
+                    </div>
+                    <div class="impact-item">
+                      <span class="impact-label">DEMAND FEEDBACK:</span>
+                      <span class="impact-text" id="telemetryFeedbackImpact">Store-level sell-through signals pull upstream replenishment before regional depot stocks hit reorder red-lines.</span>
+                    </div>
+                  </div>
+
+                  <div class="telemetry-meta-row">
+                    <div class="telemetry-meta-item">
+                      <span class="meta-label">SYSTEM CONTEXT:</span>
+                      <span class="telemetry-pill-context" id="telemetryContext">Only Solar Venture Grounding</span>
+                    </div>
+                    <div class="telemetry-meta-item">
+                      <span class="meta-label">FEEDBACK LOOP:</span>
+                      <span class="telemetry-pill-mono" id="telemetryLoopPill">Demand Loop: Standard Latency</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -647,48 +679,150 @@
           <span class="section-eyebrow">06 // DIRECT CONTACT</span>
           <h2 class="section-title" id="contactHeadline">Start an operational conversation.</h2>
           <p class="section-desc">
-            Currently open to Operations, Logistics, Retail Distribution, and Commercial Systems discussions. Connect via direct email or submit the form below to continue directly to Gmail.
+            Whether discussing FMCG retail distribution, cross-border import operations, or practical relational systems — I welcome direct, thoughtful conversations.
           </p>
         </div>
 
         <div class="contact-grid">
-          <!-- Direct Links Column (No Phone Number) -->
-          <div class="contact-direct-card">
-            <h3 class="contact-block-title">Direct Channels</h3>
-            
-            <div class="direct-channel-item">
-              <span class="channel-label">Email Address</span>
-              <div class="email-copy-wrap">
-                <a class="channel-val" href="mailto:jayeshsingh9b@gmail.com" id="contactEmailLink">jayeshsingh9b@gmail.com</a>
-                <button class="btn-copy-email" id="copyEmailBtn" type="button" aria-label="Copy email address" title="Copy email address">
-                  <span id="copyBtnText">Copy (⌘C)</span>
-                </button>
+          <!-- Direct Channels Editorial Directory Column -->
+          <div class="contact-direct-card" id="contactDirectCard">
+            <div class="direct-card-header">
+              <div class="direct-card-tag">
+                <span class="direct-badge-dot"></span>
+                <span class="direct-badge-text">DIRECT CHANNELS</span>
+              </div>
+              <h3 class="contact-block-title">Direct Directory</h3>
+              <p class="direct-card-desc">
+                Direct reach for operational roles, supply chain discussions, and commercial logistics inquiries.
+              </p>
+            </div>
+
+            <div class="direct-channels-list" role="list">
+              <!-- Channel 1: Email Address -->
+              <div class="direct-channel-row" role="listitem">
+                <div class="channel-row-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <div class="channel-row-main">
+                  <span class="channel-row-label">EMAIL ADDRESS</span>
+                  <a class="channel-row-val" href="mailto:jayeshsingh9b@gmail.com" id="contactEmailLink">jayeshsingh9b@gmail.com</a>
+                </div>
+                <div class="channel-row-action">
+                  <button class="btn-copy-email btn-channel-action" id="copyEmailBtn" type="button" aria-label="Copy email address" title="Copy email address">
+                    <span id="copyBtnText">Copy Email</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Channel 2: Professional Profile -->
+              <div class="direct-channel-row" role="listitem">
+                <div class="channel-row-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                  </svg>
+                </div>
+                <div class="channel-row-main">
+                  <span class="channel-row-label">PROFESSIONAL PROFILE</span>
+                  <a class="channel-row-val" href="https://linkedin.com/in/jsingh26" target="_blank" rel="noopener noreferrer">
+                    linkedin.com/in/jsingh26
+                  </a>
+                </div>
+                <div class="channel-row-action">
+                  <a class="btn-channel-action" href="https://linkedin.com/in/jsingh26" target="_blank" rel="noopener noreferrer" aria-label="Visit LinkedIn profile">
+                    <span>View Profile ↗</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Channel 3: Location Base -->
+              <div class="direct-channel-row" role="listitem">
+                <div class="channel-row-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="channel-row-main">
+                  <span class="channel-row-label">LOCATION BASE</span>
+                  <span class="channel-row-val channel-val-static">Mumbai, India</span>
+                </div>
+                <div class="channel-row-action">
+                  <span class="channel-status-tag">Primary Base</span>
+                </div>
+              </div>
+
+              <!-- Channel 4: Download Profile -->
+              <div class="direct-channel-row" role="listitem">
+                <div class="channel-row-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <polyline points="9 15 12 18 15 15"></polyline>
+                  </svg>
+                </div>
+                <div class="channel-row-main">
+                  <span class="channel-row-label">DOWNLOAD PROFILE</span>
+                  <span class="channel-row-val channel-val-static">Jayesh-Singh-Resume.pdf</span>
+                </div>
+                <div class="channel-row-action">
+                  <a class="btn-channel-action btn-channel-download" download href="assets/Jayesh-Singh-Resume.pdf" aria-label="Download Résumé PDF">
+                    <span>Download (PDF) ↓</span>
+                  </a>
+                </div>
               </div>
             </div>
 
-            <div class="direct-channel-item">
-              <span class="channel-label">Professional Profile</span>
-              <a class="channel-val" href="https://linkedin.com/in/jsingh26" target="_blank" rel="noopener noreferrer">linkedin.com/in/jsingh26 ↗</a>
-            </div>
-
-            <div class="direct-channel-item">
-              <span class="channel-label">Location Base</span>
-              <span class="channel-text">Mumbai, India (Open to Relocation &amp; Travel)</span>
-            </div>
-
-            <div class="direct-channel-item">
-              <span class="channel-label">Download Profile</span>
-              <div class="channel-links">
-                <a class="channel-link-chip" download href="assets/Jayesh-Singh-Resume.pdf">
-                  Download Résumé (PDF) ↓
-                </a>
+            <!-- Bottom Detail Connecting to the Rest of the Portfolio -->
+            <div class="direct-card-footer">
+              <div class="footer-cadence-item">
+                <span class="cadence-label">TIMEZONE // LOCATION:</span>
+                <span class="cadence-val">MUMBAI (IST · UTC+5:30)</span>
+              </div>
+              <div class="footer-cadence-item">
+                <span class="cadence-label">AVAILABILITY CADENCE:</span>
+                <span class="cadence-val">Open for Operations &amp; Logistics roles</span>
               </div>
             </div>
           </div>
 
-          <!-- Quick Inquiry Form — Gmail Redirect Workflow -->
-          <div class="contact-form-card">
-            <h3 class="contact-block-title">Compose a Direct Message</h3>
+          <!-- Interactive Inquiry Form — Gmail Redirect Workflow -->
+          <div class="contact-form-card topic-ops" id="contactFormCard">
+            <div class="contact-signal-header">
+              <h3 class="contact-block-title">Compose a Direct Message</h3>
+              <span class="contact-signal-beacon"><i class="beacon-dot"></i> SIGNAL ACTIVE</span>
+            </div>
+
+            <!-- Interactive Conversation Category Chips -->
+            <div class="contact-categories-wrap">
+              <span class="categories-label">What would you like to discuss?</span>
+              <div class="category-chips-group" role="radiogroup" aria-label="Conversation topics">
+                <button class="category-chip is-selected" type="button" role="radio" aria-checked="true" data-topic="ops">
+                  Operations &amp; Logistics
+                </button>
+                <button class="category-chip" type="button" role="radio" aria-checked="false" data-topic="supply">
+                  Supply Chain &amp; Sourcing
+                </button>
+                <button class="category-chip" type="button" role="radio" aria-checked="false" data-topic="commercial">
+                  Commercial Opportunities
+                </button>
+                <button class="category-chip" type="button" role="radio" aria-checked="false" data-topic="projects">
+                  Projects &amp; Collaboration
+                </button>
+                <button class="category-chip" type="button" role="radio" aria-checked="false" data-topic="general">
+                  General Enquiry
+                </button>
+              </div>
+              <div class="category-context-note" id="categoryContextNote">
+                Discussing inventory visibility, beat route productivity, and warehouse fulfillment optimization.
+              </div>
+            </div>
+
             <form class="inquiry-form" id="inquiryForm" novalidate>
               <div class="form-row">
                 <div class="form-group">
@@ -753,92 +887,153 @@
        PROGRESSIVE DISCLOSURE MODAL DIALOGS
        ====================================================================== -->
 
-  <!-- Modal 0: Personal Briefing Profile Card Modal -->
+  <!-- Modal 0: Compact Digital Identity Card Modal (Portfolio V27 Redesign) -->
   <dialog class="app-dialog profile-card-dialog" id="profileDialog" aria-labelledby="profileDialogName" aria-modal="true">
-    <div class="dialog-frame profile-card-frame">
-      <div class="dialog-topbar">
-        <div class="dialog-crumb">
-          <span class="crumb-section">PERSONAL BRIEFING</span>
-          <span class="crumb-sep">/</span>
-          <span class="crumb-id">PROFILE</span>
+    <div class="dialog-frame profile-id-frame">
+      <!-- Close Button (Top Right) -->
+      <button class="btn-id-close" id="profileDialogCloseBtn" data-close-dialog="profileDialog" type="button" aria-label="Close profile card">✕</button>
+
+      <!-- Identity Hero -->
+      <div class="profile-id-hero">
+        <div class="profile-id-avatar-frame">
+          <img src="assets/jayesh-singh.png" alt="Jayesh Singh portrait" class="profile-id-avatar" />
+          <span class="profile-id-dot" aria-hidden="true"></span>
         </div>
-        <button class="btn-dialog-close" data-close-dialog="profileDialog" type="button" aria-label="Close profile card">✕</button>
-      </div>
-      <div class="profile-card-body">
-        <div class="profile-card-header">
-          <div class="profile-card-avatar-wrap">
-            <img src="assets/jayesh-singh.png" alt="Jayesh Singh portrait" class="profile-card-avatar" />
-            <span class="profile-card-status-dot" aria-hidden="true"></span>
-          </div>
-          <div class="profile-card-title-group">
-            <h2 class="profile-card-name" id="profileDialogName">
+        <div class="profile-id-intro">
+          <div class="profile-id-name-row">
+            <h2 class="profile-id-name" id="profileDialogName">
               <span class="wordmark-first">JAYESH</span>
               <span class="wordmark-last">SINGH</span>
             </h2>
-            <p class="profile-card-sub">OPERATIONS / COMMERCIAL SYSTEMS</p>
-            <div class="profile-card-contact-pills">
-              <a href="mailto:jayeshsingh9b@gmail.com" class="profile-mini-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <span>jayeshsingh9b@gmail.com</span>
-              </a>
-              <span class="profile-mini-pill muted">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>Mumbai, India</span>
-              </span>
+          </div>
+          <p class="profile-id-subtitle">OPERATIONS / COMMERCIAL SYSTEMS</p>
+          <div class="profile-id-meta-row">
+            <a href="mailto:jayeshsingh9b@gmail.com" class="profile-mini-pill" title="Email Jayesh Singh">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>jayeshsingh9b@gmail.com</span>
+            </a>
+            <span class="profile-mini-pill muted">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Mumbai, India</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Segmented Tab Navigation -->
+      <div class="profile-id-nav" role="tablist" aria-label="Profile Card Navigation">
+        <button class="profile-nav-btn is-active" id="profileTabOverview" type="button" role="tab" aria-selected="true" aria-controls="profilePanelOverview" data-profile-tab="overview">
+          <span>Overview</span>
+        </button>
+        <button class="profile-nav-btn" id="profileTabJourney" type="button" role="tab" aria-selected="false" aria-controls="profilePanelJourney" data-profile-tab="journey">
+          <span>Journey</span>
+        </button>
+        <button class="profile-nav-btn" id="profileTabInterests" type="button" role="tab" aria-selected="false" aria-controls="profilePanelInterests" data-profile-tab="interests">
+          <span>Interests</span>
+        </button>
+        <div class="profile-tab-indicator" id="profileTabIndicator" aria-hidden="true"></div>
+      </div>
+
+      <!-- Dynamic Tab Content Panels -->
+      <div class="profile-id-content">
+        <!-- Panel 1: OVERVIEW -->
+        <div class="profile-panel is-active" id="profilePanelOverview" role="tabpanel" aria-labelledby="profileTabOverview">
+          <p class="profile-id-bio">
+            MBA student specialising in Operations &amp; Logistics, with a Computer Science background, FMCG field-sales experience and entrepreneurial exposure through import-export.
+          </p>
+
+          <div class="overview-grid">
+            <div class="overview-card">
+              <span class="overview-eyebrow">GRADUATE DEGREE</span>
+              <h4 class="overview-title">MBA — Operations &amp; Logistics</h4>
+              <p class="overview-institution">Lovely Professional University · 2026–2028 (Pursuing)</p>
+            </div>
+            <div class="overview-card">
+              <span class="overview-eyebrow">UNDERGRADUATE DEGREE</span>
+              <h4 class="overview-title">B.Tech — Computer Science &amp; Engineering</h4>
+              <p class="overview-institution">Lovely Professional University · Graduated 2024</p>
+            </div>
+          </div>
+
+          <div class="overview-foundation-bar">
+            <span class="foundation-label">CORE FOUNDATION:</span>
+            <span class="foundation-text">Engineering Systems Thinking + Frontline FMCG Territory Execution + Cross-Border Sourcing</span>
+          </div>
+        </div>
+
+        <!-- Panel 2: JOURNEY (Interactive Timeline) -->
+        <div class="profile-panel" id="profilePanelJourney" role="tabpanel" aria-labelledby="profileTabJourney" hidden>
+          <div class="journey-stepper" role="radiogroup" aria-label="Professional Journey Chapters">
+            <button class="journey-step-btn" type="button" role="radio" aria-checked="false" data-chapter="cs">
+              <span class="step-num">01</span>
+              <span class="step-label">Computer Science</span>
+              <span class="step-time">2020–2024</span>
+            </button>
+            <button class="journey-step-btn" type="button" role="radio" aria-checked="false" data-chapter="solar">
+              <span class="step-num">02</span>
+              <span class="step-label">Only Solar</span>
+              <span class="step-time">2024–2025</span>
+            </button>
+            <button class="journey-step-btn is-active" type="button" role="radio" aria-checked="true" data-chapter="cavinkare">
+              <span class="step-num">03</span>
+              <span class="step-label">CavinKare Sales</span>
+              <span class="step-time">Oct 25–Feb 26</span>
+            </button>
+            <button class="journey-step-btn" type="button" role="radio" aria-checked="false" data-chapter="mba">
+              <span class="step-num">04</span>
+              <span class="step-label">MBA Operations</span>
+              <span class="step-time">2026–2028</span>
+            </button>
+          </div>
+          <div class="journey-detail-card" id="journeyDetailCard">
+            <div class="journey-detail-header">
+              <span class="journey-chapter-tag" id="journeyChapterTag">CHAPTER 03 // FMCG FIELD SALES</span>
+              <span class="journey-period-tag" id="journeyPeriodTag">OCTOBER 2025 – FEBRUARY 2026</span>
+            </div>
+            <h4 class="journey-detail-title" id="journeyDetailTitle">Sales Representative — CavinKare (Third-Party Payroll)</h4>
+            <p class="journey-detail-text" id="journeyDetailText">
+              Managed frontline General Trade distribution across Mumbai (Andheri to Bandra). Maintained 50+ active retail outlets, onboarded 10+ new GT accounts within Month 1, achieved a +20% active retailer-base expansion, and delivered a +30% month-on-month focus-category revenue increase.
+            </p>
+            <div class="journey-detail-metrics" id="journeyDetailMetrics">
+              <span class="metric-pill">50+ Outlets Covered</span>
+              <span class="metric-pill">10+ GT Accounts M1</span>
+              <span class="metric-pill">+20% Retailer Expansion</span>
+              <span class="metric-pill">+30% MoM Lift</span>
             </div>
           </div>
         </div>
 
-        <p class="profile-card-bio">
-          MBA student specialising in Operations &amp; Logistics, with a Computer Science background, FMCG field-sales experience and entrepreneurial exposure in import-export.
-        </p>
-
-        <div class="profile-card-grid">
-          <div class="profile-section-block">
-            <h3 class="profile-block-heading">EDUCATION</h3>
-            <div class="profile-item">
-              <div class="profile-item-title">MBA — Operations &amp; Logistics</div>
-              <div class="profile-item-sub">Lovely Professional University · 2026–2028 (Pursuing)</div>
+        <!-- Panel 3: INTERESTS (Interactive Discovery) -->
+        <div class="profile-panel" id="profilePanelInterests" role="tabpanel" aria-labelledby="profileTabInterests" hidden>
+          <div class="interests-pills-wrap" role="radiogroup" aria-label="Professional Interest Areas">
+            <button class="interest-pill-btn is-active" type="button" role="radio" aria-checked="true" data-interest="ops">
+              Operations &amp; Logistics
+            </button>
+            <button class="interest-pill-btn" type="button" role="radio" aria-checked="false" data-interest="supply">
+              Supply Chain
+            </button>
+            <button class="interest-pill-btn" type="button" role="radio" aria-checked="false" data-interest="commercial">
+              Commercial Operations
+            </button>
+            <button class="interest-pill-btn" type="button" role="radio" aria-checked="false" data-interest="process">
+              Process Thinking
+            </button>
+            <button class="interest-pill-btn" type="button" role="radio" aria-checked="false" data-interest="analysis">
+              Business Analysis
+            </button>
+          </div>
+          <div class="interest-explanation-card" id="interestExplanationCard">
+            <div class="interest-card-top">
+              <span class="interest-focus-tag" id="interestFocusTag">INTEREST FOCUS // OPERATIONS &amp; LOGISTICS</span>
             </div>
-            <div class="profile-item">
-              <div class="profile-item-title">B.Tech — Computer Science &amp; Engineering</div>
-              <div class="profile-item-sub">Lovely Professional University · Graduated 2024</div>
+            <h4 class="interest-card-title" id="interestCardTitle">Frictionless Flow from Sourcing to Shelf</h4>
+            <p class="interest-card-desc" id="interestCardDesc">
+              Optimizing the physical flow of goods from import container docks to local neighborhood retail shelves with minimal friction and maximum velocity. Ensuring operational models reflect field reality rather than theoretical assumptions.
+            </p>
+            <div class="interest-practical-note" id="interestPracticalNote">
+              <strong>Grounding:</strong> Informed by direct beat route logistics in Mumbai and import turnaround at Only Solar.
             </div>
           </div>
-
-          <div class="profile-section-block">
-            <h3 class="profile-block-heading">PROFESSIONAL EXPERIENCE</h3>
-            <div class="profile-item">
-              <div class="profile-item-title">Sales Representative</div>
-              <div class="profile-item-sub">CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026</div>
-            </div>
-            <div class="profile-item">
-              <div class="profile-item-title">Co-Founder &amp; Business Head</div>
-              <div class="profile-item-sub">Only Solar (Import &amp; Export) · 2024 – Early 2025</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="profile-interests-block">
-          <h3 class="profile-block-heading">AREAS OF INTEREST</h3>
-          <div class="profile-tags-row">
-            <span class="interest-tag">Operations &amp; Logistics</span>
-            <span class="interest-tag">Supply Chain</span>
-            <span class="interest-tag">Commercial Operations</span>
-            <span class="interest-tag">Process Thinking</span>
-            <span class="interest-tag">Business Analysis</span>
-          </div>
-        </div>
-
-        <div class="profile-card-footer">
-          <a href="#journey" class="btn btn-secondary btn-sm" data-close-dialog="profileDialog">
-            <span>Explore Full Professional Journey</span>
-            <span class="btn-arrow" aria-hidden="true">→</span>
-          </a>
-          <a href="assets/Jayesh-Singh-Resume.pdf" download class="btn btn-primary btn-sm">
-            <span>Download Résumé (PDF)</span>
-            <span class="btn-arrow" aria-hidden="true">↓</span>
-          </a>
         </div>
       </div>
     </div>

@@ -7,17 +7,25 @@
   'use strict';
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const finePointer = !window.matchMedia('(pointer: coarse)').matches;
 
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
-  // Polyfill SVGElement.prototype.click for SVG graphics groups (<g>, <rect>, etc.)
-  if (typeof SVGElement !== 'undefined' && typeof SVGElement.prototype.click !== 'function') {
-    SVGElement.prototype.click = function() {
-      const evt = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
-      this.dispatchEvent(evt);
+  // Polyfill Element, SVGElement & SVGGElement prototype.click for SVG graphics groups (<g>, <rect>, etc.)
+  if (typeof window !== 'undefined') {
+    const polyfillClick = function() {
+      this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
     };
+    if (window.Element && typeof window.Element.prototype.click !== 'function') {
+      window.Element.prototype.click = polyfillClick;
+    }
+    if (window.SVGElement && typeof window.SVGElement.prototype.click !== 'function') {
+      window.SVGElement.prototype.click = polyfillClick;
+    }
+    if (window.SVGGElement && typeof window.SVGGElement.prototype.click !== 'function') {
+      window.SVGGElement.prototype.click = polyfillClick;
+    }
   }
 
   // ==========================================================================
@@ -174,26 +182,44 @@
   });
 
   // ==========================================================================
-  // 5. SMOOTH GPU-ACCELERATED CURSOR FOLLOWER (Zero Choppiness / Native Pointer)
+  // 5. SIGNATURE HOLLOW CIRCULAR CURSOR (Portfolio V27 — Zero Lag)
+  // Direct position tracking batched through requestAnimationFrame
+  // Pure 18–20px hollow circle, locks immediately to pointer, no trailing lag
   // ==========================================================================
   const cursorHalo = $('#cursorHalo');
 
   if (finePointer && !prefersReducedMotion && cursorHalo) {
-    let mouseX = -100;
-    let mouseY = -100;
-    let ringX = -100;
-    let ringY = -100;
+    let latestX = -100;
+    let latestY = -100;
+    let framePending = false;
     let isHovering = false;
+    let isClicking = false;
+    let isOverInput = false;
     let isVisible = false;
 
+    function updateCursorPosition() {
+      if (!isVisible) {
+        framePending = false;
+        return;
+      }
+      const scale = isClicking ? 0.88 : (isHovering ? 1.28 : 1);
+      // Centers the 20px circle on the exact pointer coordinates with translate(-50%, -50%)
+      cursorHalo.style.transform = `translate3d(${latestX}px, ${latestY}px, 0) translate(-50%, -50%) scale(${scale})`;
+      framePending = false;
+    }
+
     window.addEventListener('pointermove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      latestX = e.clientX;
+      latestY = e.clientY;
+
       if (!isVisible) {
         isVisible = true;
         cursorHalo.classList.add('is-active');
-        ringX = mouseX;
-        ringY = mouseY;
+      }
+
+      if (!framePending) {
+        framePending = true;
+        requestAnimationFrame(updateCursorPosition);
       }
     }, { passive: true });
 
@@ -202,32 +228,66 @@
       cursorHalo.classList.remove('is-active');
     });
 
-    const interactiveSelectors = 'a, button, input, textarea, .op-node, .incident-card, .brand-avatar-btn, [role="button"]';
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(interactiveSelectors)) {
-        if (!isHovering) {
-          isHovering = true;
-          cursorHalo.classList.add('is-hovering');
-        }
-      } else {
-        if (isHovering) {
-          isHovering = false;
-          cursorHalo.classList.remove('is-hovering');
-        }
+    document.addEventListener('pointerenter', () => {
+      isVisible = true;
+      cursorHalo.classList.add('is-active');
+    });
+
+    window.addEventListener('pointerdown', () => {
+      isClicking = true;
+      cursorHalo.classList.add('is-clicking');
+      if (!framePending) {
+        framePending = true;
+        requestAnimationFrame(updateCursorPosition);
       }
     }, { passive: true });
 
-    function renderCursor() {
-      // Linear interpolation (lerp) for liquid smoothness without drag or lag
-      ringX += (mouseX - ringX) * 0.22;
-      ringY += (mouseY - ringY) * 0.22;
-      
-      const scale = isHovering ? ' scale(1.45)' : ' scale(1)';
-      cursorHalo.style.transform = `translate3d(${ringX - 16}px, ${ringY - 16}px, 0)${scale}`;
-      requestAnimationFrame(renderCursor);
-    }
+    window.addEventListener('pointerup', () => {
+      isClicking = false;
+      cursorHalo.classList.remove('is-clicking');
+      if (!framePending) {
+        framePending = true;
+        requestAnimationFrame(updateCursorPosition);
+      }
+    }, { passive: true });
 
-    requestAnimationFrame(renderCursor);
+    const interactiveSelectors = 'a, button, [role="button"], .op-node, .incident-card, .brand-avatar-btn, .category-chip, .channel-link-chip, .btn, .btn-channel-action';
+    const inputSelectors = 'input, textarea, select, [contenteditable="true"]';
+
+    document.addEventListener('mouseover', (e) => {
+      const targetEl = e.target && typeof e.target.closest === 'function' ? e.target : null;
+      if (!targetEl) return;
+
+      // Check input elements (preserve native text editing cursor, fade custom ring)
+      if (targetEl.closest(inputSelectors)) {
+        if (!isOverInput) {
+          isOverInput = true;
+          cursorHalo.classList.add('is-input');
+        }
+      } else if (isOverInput) {
+        isOverInput = false;
+        cursorHalo.classList.remove('is-input');
+      }
+
+      // Check interactive elements (hover enlargement)
+      if (targetEl.closest(interactiveSelectors)) {
+        if (!isHovering) {
+          isHovering = true;
+          cursorHalo.classList.add('is-hovering');
+          if (!framePending) {
+            framePending = true;
+            requestAnimationFrame(updateCursorPosition);
+          }
+        }
+      } else if (isHovering) {
+        isHovering = false;
+        cursorHalo.classList.remove('is-hovering');
+        if (!framePending) {
+          framePending = true;
+          requestAnimationFrame(updateCursorPosition);
+        }
+      }
+    }, { passive: true });
   }
 
   // ==========================================================================
@@ -321,13 +381,17 @@
     }
   ];
 
-  // Unified Reactive Pipeline State Model
+  // Unified Reactive Pipeline State Model (Portfolio V25 & V26.1)
+  // Minimal by default: activeStage is null initially; revealed on node click
   const pipelineState = {
-    stage: 0,              // 0: Supplier, 1: Sourcing, 2: Inventory, 3: Warehouse, 4: Distribution, 5: Retail
-    scenario: 'normal',    // 'normal' | 'delay' | 'surge'
-    isReversed: false      // boolean: toggles reverse feedback loop
+    activeStage: null,          // null by default (minimal initial view); 0..5 when stage selected
+    activeScenario: 'normal',   // 'normal' | 'delay' | 'surge'
+    isReversed: false,          // boolean: toggles reverse feedback loop
+    expandedStage: false,       // boolean: "Explore this stage" deeper drawer toggle
+    scenarioDetailsOpen: false  // boolean: "Scenario Details" drawer toggle
   };
 
+  const operationsVisual = $('#operationsVisual');
   const opNodes = $$('.op-node');
   const scenarioBtns = $$('.scenario-btn');
   const forwardPulses = $$('.pipe-pulse:not(.pulse-feedback)');
@@ -336,9 +400,17 @@
   const loopBadgeText = $('#loopBadgeText');
   const feedbackTrack = $('#feedbackPath');
 
+  const statusStripScenarioPill = $('#statusStripScenarioPill');
+  const statusStripHint = $('#statusStripHint');
+  const scenarioDetailsToggleBtn = $('#scenarioDetailsToggleBtn');
+  const scenarioDetailsBtnText = $('#scenarioDetailsBtnText');
+  const scenarioDetailsBox = $('#scenarioDetailsBox');
+  const scenarioDetailsTitle = $('#scenarioDetailsTitle');
+  const scenarioDetailsText = $('#scenarioDetailsText');
+
+  const nodeTelemetry = $('#nodeTelemetry');
   const telemetryStage = $('#telemetryStage');
   const telemetryGrounding = $('#telemetryGrounding');
-  const telemetryScenarioPill = $('#telemetryScenarioPill');
   const telemetryLoopPill = $('#telemetryLoopPill');
   const telemetryTitle = $('#telemetryTitle');
   const telemetryDesc = $('#telemetryDesc');
@@ -346,45 +418,99 @@
   const telemetryFeedbackImpact = $('#telemetryFeedbackImpact');
   const telemetryMetric = $('#telemetryMetric');
   const telemetryContext = $('#telemetryContext');
+  const exploreStageBtn = $('#exploreStageBtn');
+  const exploreStageBtnText = $('#exploreStageBtnText');
+  const exploreStageContent = $('#exploreStageContent');
+
+  let pipelineCollapseTimer = null;
+
+  function isPipelineDefault() {
+    return (
+      pipelineState.activeStage === null &&
+      pipelineState.activeScenario === 'normal' &&
+      !pipelineState.isReversed &&
+      !pipelineState.expandedStage &&
+      !pipelineState.scenarioDetailsOpen
+    );
+  }
+
+  function resetPipelineToDefault() {
+    if (isPipelineDefault()) return;
+
+    if (pipelineCollapseTimer) {
+      clearTimeout(pipelineCollapseTimer);
+      pipelineCollapseTimer = null;
+    }
+
+    pipelineState.activeStage = null;
+    pipelineState.activeScenario = 'normal';
+    pipelineState.isReversed = false;
+    pipelineState.expandedStage = false;
+    pipelineState.scenarioDetailsOpen = false;
+
+    if (nodeTelemetry) {
+      nodeTelemetry.classList.remove('is-revealed', 'is-collapsing');
+    }
+    if (scenarioDetailsBox) {
+      scenarioDetailsBox.classList.remove('is-collapsing');
+      scenarioDetailsBox.style.display = 'none';
+      scenarioDetailsBox.setAttribute('aria-hidden', 'true');
+    }
+    if (exploreStageContent) {
+      exploreStageContent.style.display = 'none';
+      exploreStageContent.setAttribute('aria-hidden', 'true');
+    }
+    if (exploreStageBtn) {
+      exploreStageBtn.setAttribute('aria-expanded', 'false');
+    }
+    if (exploreStageBtnText) {
+      exploreStageBtnText.textContent = 'Explore this stage ↓';
+    }
+    if (scenarioDetailsToggleBtn) {
+      scenarioDetailsToggleBtn.setAttribute('aria-expanded', 'false');
+    }
+    if (scenarioDetailsBtnText) {
+      scenarioDetailsBtnText.textContent = 'Scenario Details ↓';
+    }
+
+    renderPipeline();
+  }
 
   function renderPipeline() {
-    const currentStage = stageData[pipelineState.stage];
-    if (!currentStage) return;
-
     // 1. Update Op-Nodes styling and ARIA attributes
     opNodes.forEach((node, idx) => {
-      const isSelected = idx === pipelineState.stage;
+      const isSelected = pipelineState.activeStage !== null && idx === pipelineState.activeStage;
       node.classList.toggle('is-active', isSelected);
       node.setAttribute('aria-selected', isSelected ? 'true' : 'false');
 
       // Bottleneck on Sourcing (idx 1) when Delay scenario
-      const isBottleneck = pipelineState.scenario === 'delay' && idx === 1;
+      const isBottleneck = pipelineState.activeScenario === 'delay' && idx === 1;
       node.classList.toggle('is-bottleneck', isBottleneck);
 
       // Surge on Distribution (idx 4) & Retail (idx 5) when Surge scenario
-      const isSurge = pipelineState.scenario === 'surge' && (idx === 4 || idx === 5);
+      const isSurge = pipelineState.activeScenario === 'surge' && (idx === 4 || idx === 5);
       node.classList.toggle('is-surge', isSurge);
     });
 
     // 2. Update Scenario Buttons
     scenarioBtns.forEach((btn) => {
-      const isBtnActive = btn.dataset.scenario === pipelineState.scenario;
+      const isBtnActive = btn.dataset.scenario === pipelineState.activeScenario;
       btn.classList.toggle('is-active', isBtnActive);
       btn.setAttribute('aria-pressed', isBtnActive ? 'true' : 'false');
     });
 
     // 3. Update Forward Signal Pulses
-    if (pipelineState.scenario === 'normal') {
+    if (pipelineState.activeScenario === 'normal') {
       forwardPulses.forEach((p) => {
         p.style.animationDuration = '5s';
         p.style.fill = '';
       });
-    } else if (pipelineState.scenario === 'delay') {
+    } else if (pipelineState.activeScenario === 'delay') {
       forwardPulses.forEach((p) => {
         p.style.animationDuration = '10s';
         p.style.fill = 'var(--accent-coral)';
       });
-    } else if (pipelineState.scenario === 'surge') {
+    } else if (pipelineState.activeScenario === 'surge') {
       forwardPulses.forEach((p) => {
         p.style.animationDuration = '2.2s';
         p.style.fill = '#38bdf8';
@@ -410,60 +536,121 @@
     if (feedbackPulse) {
       if (pipelineState.isReversed) {
         feedbackPulse.style.animationDirection = 'reverse';
-        feedbackPulse.style.animationDuration = pipelineState.scenario === 'surge' ? '1.5s' : '2.4s';
+        feedbackPulse.style.animationDuration = pipelineState.activeScenario === 'surge' ? '1.5s' : '2.4s';
         feedbackPulse.style.fill = 'var(--accent-teal)';
       } else {
         feedbackPulse.style.animationDirection = 'normal';
-        feedbackPulse.style.animationDuration = pipelineState.scenario === 'delay' ? '7s' : (pipelineState.scenario === 'surge' ? '2.2s' : '4.5s');
+        feedbackPulse.style.animationDuration = pipelineState.activeScenario === 'delay' ? '7s' : (pipelineState.activeScenario === 'surge' ? '2.2s' : '4.5s');
         feedbackPulse.style.fill = 'var(--accent-coral)';
       }
     }
 
-    // 5. Update Telemetry Panel Content
-    if (telemetryStage) {
-      telemetryStage.textContent = `STAGE ${currentStage.num} // ${currentStage.name}`;
-    }
-    if (telemetryGrounding) {
-      telemetryGrounding.textContent = currentStage.grounding;
-    }
-
-    if (telemetryScenarioPill) {
-      if (pipelineState.scenario === 'normal') {
-        telemetryScenarioPill.className = 'telemetry-banner-pill pill-steady';
-        telemetryScenarioPill.innerHTML = '<i class="status-dot"></i> STEADY STATE // NOMINAL CADENCE';
-      } else if (pipelineState.scenario === 'delay') {
-        telemetryScenarioPill.className = 'telemetry-banner-pill pill-delay';
-        telemetryScenarioPill.innerHTML = '<i class="status-dot status-delay"></i> BOTTLENECK ALERT // PORT CLEARANCE (+12D)';
-      } else if (pipelineState.scenario === 'surge') {
-        telemetryScenarioPill.className = 'telemetry-banner-pill pill-surge';
-        telemetryScenarioPill.innerHTML = '<i class="status-dot status-surge"></i> DEMAND SURGE // +40% CHANNEL VELOCITY';
+    // 5. Update Status Strip (Minimal Default Summary)
+    if (statusStripScenarioPill) {
+      if (pipelineState.activeScenario === 'normal') {
+        statusStripScenarioPill.className = 'status-strip-pill pill-steady';
+        statusStripScenarioPill.innerHTML = '<i class="status-dot"></i> STEADY STATE // NOMINAL CADENCE';
+      } else if (pipelineState.activeScenario === 'delay') {
+        statusStripScenarioPill.className = 'status-strip-pill pill-delay';
+        statusStripScenarioPill.innerHTML = '<i class="status-dot status-delay"></i> BOTTLENECK ALERT // PORT CLEARANCE (+12D)';
+      } else if (pipelineState.activeScenario === 'surge') {
+        statusStripScenarioPill.className = 'status-strip-pill pill-surge';
+        statusStripScenarioPill.innerHTML = '<i class="status-dot status-surge"></i> DEMAND SURGE // +40% CHANNEL VELOCITY';
       }
     }
 
-    if (telemetryLoopPill) {
-      telemetryLoopPill.textContent = pipelineState.isReversed
-        ? 'Demand Loop: Upstream Pull Engaged'
-        : 'Demand Loop: Standard Latency';
-      telemetryLoopPill.classList.toggle('is-engaged', pipelineState.isReversed);
+    if (statusStripHint) {
+      if (pipelineState.activeStage === null) {
+        statusStripHint.textContent = 'Click any stage (01–06) to inspect operational flow →';
+      } else {
+        const cur = stageData[pipelineState.activeStage];
+        statusStripHint.textContent = `Stage ${cur.num} ${cur.name} selected · Details revealed below ↓`;
+      }
     }
 
-    if (telemetryTitle) {
-      telemetryTitle.textContent = currentStage.title;
+    // 6. Update Scenario Details Box (Expandable Drawer)
+    if (scenarioDetailsBox && scenarioDetailsToggleBtn) {
+      if (pipelineState.scenarioDetailsOpen) {
+        scenarioDetailsBox.classList.remove('is-collapsing');
+        scenarioDetailsBox.style.display = 'block';
+        scenarioDetailsBox.setAttribute('aria-hidden', 'false');
+        scenarioDetailsToggleBtn.setAttribute('aria-expanded', 'true');
+        if (scenarioDetailsBtnText) {
+          scenarioDetailsBtnText.textContent = 'Hide Scenario Details ↑';
+        }
+      } else if (!scenarioDetailsBox.classList.contains('is-collapsing')) {
+        scenarioDetailsBox.style.display = 'none';
+        scenarioDetailsBox.setAttribute('aria-hidden', 'true');
+        scenarioDetailsToggleBtn.setAttribute('aria-expanded', 'false');
+        if (scenarioDetailsBtnText) {
+          scenarioDetailsBtnText.textContent = 'Scenario Details ↓';
+        }
+      } else {
+        scenarioDetailsBox.setAttribute('aria-hidden', 'true');
+        scenarioDetailsToggleBtn.setAttribute('aria-expanded', 'false');
+        if (scenarioDetailsBtnText) {
+          scenarioDetailsBtnText.textContent = 'Scenario Details ↓';
+        }
+      }
+
+      if (scenarioDetailsTitle && scenarioDetailsText) {
+        if (pipelineState.activeScenario === 'normal') {
+          scenarioDetailsTitle.textContent = 'Steady State Flow Dynamics';
+          scenarioDetailsText.textContent = 'All six pipeline stages operate at balanced throughput. Overseas production runs match container freight bookings, buffer inventories absorb planned transit variances, and distributor beats fulfill retail orders without stockout bottlenecks.';
+        } else if (pipelineState.activeScenario === 'delay') {
+          scenarioDetailsTitle.textContent = 'Port Clearance Bottleneck Dynamics';
+          scenarioDetailsText.textContent = 'A 12-day customs delay at Stage 02 (Sourcing) halts inbound intake. Downstream depots rely on safety stock buffers; field sales beats ration available inventory across Mumbai counters to protect high-velocity retail accounts.';
+        } else if (pipelineState.activeScenario === 'surge') {
+          scenarioDetailsTitle.textContent = 'High-Velocity Retail Demand Dynamics';
+          scenarioDetailsText.textContent = '+40% retail sell-through accelerates distributor reorders. Depot cross-docking is activated, and beat visit frequencies across Andheri to Bandra are doubled to capture counter demand without shelf stockouts.';
+        }
+      }
     }
-    if (telemetryDesc) {
-      telemetryDesc.textContent = currentStage.desc;
-    }
-    if (telemetryScenarioImpact) {
-      telemetryScenarioImpact.textContent = currentStage.scenarios[pipelineState.scenario];
-    }
-    if (telemetryFeedbackImpact) {
-      telemetryFeedbackImpact.textContent = currentStage.feedback;
-    }
-    if (telemetryMetric) {
-      telemetryMetric.textContent = currentStage.focus;
-    }
-    if (telemetryContext) {
-      telemetryContext.textContent = currentStage.grounding;
+
+    // 7. Update Stage Telemetry Panel (Minimal by default; revealed on stage click)
+    if (nodeTelemetry) {
+      if (pipelineState.activeStage !== null) {
+        const currentStage = stageData[pipelineState.activeStage];
+        nodeTelemetry.classList.remove('is-collapsing');
+        nodeTelemetry.classList.add('is-revealed');
+
+        if (telemetryStage) telemetryStage.textContent = `STAGE ${currentStage.num} // ${currentStage.name}`;
+        if (telemetryGrounding) telemetryGrounding.textContent = currentStage.grounding;
+        if (telemetryTitle) telemetryTitle.textContent = currentStage.title;
+        if (telemetryDesc) telemetryDesc.textContent = currentStage.desc;
+        if (telemetryMetric) telemetryMetric.textContent = currentStage.focus;
+        if (telemetryContext) telemetryContext.textContent = currentStage.grounding;
+        if (telemetryScenarioImpact) telemetryScenarioImpact.textContent = currentStage.scenarios[pipelineState.activeScenario];
+        if (telemetryFeedbackImpact) telemetryFeedbackImpact.textContent = currentStage.feedback;
+
+        if (telemetryLoopPill) {
+          telemetryLoopPill.textContent = pipelineState.isReversed
+            ? 'Demand Loop: Upstream Pull Engaged'
+            : 'Demand Loop: Standard Latency';
+        }
+
+        // Deeper Explore Stage Content Toggle
+        if (exploreStageContent && exploreStageBtn) {
+          exploreStageContent.style.display = pipelineState.expandedStage ? 'block' : 'none';
+          exploreStageContent.setAttribute('aria-hidden', pipelineState.expandedStage ? 'false' : 'true');
+          exploreStageBtn.setAttribute('aria-expanded', pipelineState.expandedStage ? 'true' : 'false');
+          if (exploreStageBtnText) {
+            exploreStageBtnText.textContent = pipelineState.expandedStage ? 'Collapse stage details ↑' : 'Explore this stage ↓';
+          }
+        }
+      } else {
+        nodeTelemetry.classList.remove('is-revealed');
+        if (exploreStageContent) {
+          exploreStageContent.style.display = 'none';
+          exploreStageContent.setAttribute('aria-hidden', 'true');
+        }
+        if (exploreStageBtn) {
+          exploreStageBtn.setAttribute('aria-expanded', 'false');
+        }
+        if (exploreStageBtnText) {
+          exploreStageBtnText.textContent = 'Explore this stage ↓';
+        }
+      }
     }
   }
 
@@ -472,7 +659,13 @@
     const idx = parseInt(node.dataset.stage, 10);
     const selectStage = (e) => {
       if (e) e.preventDefault();
-      pipelineState.stage = idx;
+      if (pipelineCollapseTimer) {
+        clearTimeout(pipelineCollapseTimer);
+        pipelineCollapseTimer = null;
+        if (nodeTelemetry) nodeTelemetry.classList.remove('is-collapsing');
+        if (scenarioDetailsBox) scenarioDetailsBox.classList.remove('is-collapsing');
+      }
+      pipelineState.activeStage = idx;
       renderPipeline();
     };
 
@@ -484,17 +677,26 @@
     node.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        pipelineState.stage = idx;
-        renderPipeline();
+        selectStage(e);
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
-        pipelineState.stage = (idx + 1) % opNodes.length;
-        opNodes[pipelineState.stage].focus();
+        const nextIdx = pipelineState.activeStage === null ? 0 : (pipelineState.activeStage + 1) % opNodes.length;
+        if (pipelineCollapseTimer) {
+          clearTimeout(pipelineCollapseTimer);
+          pipelineCollapseTimer = null;
+        }
+        pipelineState.activeStage = nextIdx;
+        opNodes[nextIdx].focus();
         renderPipeline();
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        pipelineState.stage = (idx - 1 + opNodes.length) % opNodes.length;
-        opNodes[pipelineState.stage].focus();
+        const prevIdx = pipelineState.activeStage === null ? 0 : (pipelineState.activeStage - 1 + opNodes.length) % opNodes.length;
+        if (pipelineCollapseTimer) {
+          clearTimeout(pipelineCollapseTimer);
+          pipelineCollapseTimer = null;
+        }
+        pipelineState.activeStage = prevIdx;
+        opNodes[prevIdx].focus();
         renderPipeline();
       }
     });
@@ -504,8 +706,14 @@
   scenarioBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      if (pipelineCollapseTimer) {
+        clearTimeout(pipelineCollapseTimer);
+        pipelineCollapseTimer = null;
+        if (nodeTelemetry) nodeTelemetry.classList.remove('is-collapsing');
+        if (scenarioDetailsBox) scenarioDetailsBox.classList.remove('is-collapsing');
+      }
       const newScenario = btn.dataset.scenario;
-      pipelineState.scenario = newScenario;
+      pipelineState.activeScenario = newScenario;
       renderPipeline();
 
       const toastLabel = newScenario === 'normal'
@@ -517,10 +725,33 @@
     });
   });
 
+  // Bind Scenario Details Toggle
+  scenarioDetailsToggleBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (pipelineCollapseTimer) {
+      clearTimeout(pipelineCollapseTimer);
+      pipelineCollapseTimer = null;
+      if (scenarioDetailsBox) scenarioDetailsBox.classList.remove('is-collapsing');
+    }
+    pipelineState.scenarioDetailsOpen = !pipelineState.scenarioDetailsOpen;
+    renderPipeline();
+  });
+
+  // Bind Explore Stage Toggle
+  exploreStageBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    pipelineState.expandedStage = !pipelineState.expandedStage;
+    renderPipeline();
+  });
+
   // Bind Interactive Feedback Loop Button
   if (feedbackLoopBtn) {
     const toggleLoop = (e) => {
       if (e) e.preventDefault();
+      if (pipelineCollapseTimer) {
+        clearTimeout(pipelineCollapseTimer);
+        pipelineCollapseTimer = null;
+      }
       pipelineState.isReversed = !pipelineState.isReversed;
       renderPipeline();
 
@@ -543,6 +774,40 @@
 
   // Initial Pipeline Render
   renderPipeline();
+
+  // Clicking empty SVG canvas (outside of nodes and feedback loop) also deselects
+  const pipelineSvg = $('.pipeline-svg');
+  if (pipelineSvg) {
+    pipelineSvg.addEventListener('click', (e) => {
+      if (e.target === pipelineSvg || e.target.classList.contains('pipe-track') || e.target.classList.contains('pipe-track-feedback')) {
+        if (!isPipelineDefault()) {
+          resetPipelineToDefault();
+        }
+      }
+    });
+  }
+
+  // ==========================================================================
+  // OUTSIDE-CLICK / OUTSIDE-POINTER BOUNDARY HANDLER FOR OPERATIONS PIPELINE (V27)
+  // Capture phase touchstart + pointerdown + click ensures immediate interception
+  // before any child element can stop propagation or prevent bubbling.
+  // ==========================================================================
+  function handleOutsidePipelineInteraction(event) {
+    const root = document.querySelector('[data-pipeline-root]') || document.getElementById('operationsVisual');
+    if (!root) return;
+    if (isPipelineDefault()) return;
+
+    const path = (event.composedPath && event.composedPath()) || [];
+    const isInside = root.contains(event.target) || path.includes(root);
+    if (isInside) return;
+
+    resetPipelineToDefault();
+  }
+
+  // Register in capture phase across all touch, pointer, and click input events
+  document.addEventListener('touchstart', handleOutsidePipelineInteraction, { capture: true, passive: true });
+  document.addEventListener('pointerdown', handleOutsidePipelineInteraction, true);
+  document.addEventListener('click', handleOutsidePipelineInteraction, true);
 
   // ==========================================================================
   // 7. PROGRESSIVE DISCLOSURE MODAL DIALOGS
@@ -577,14 +842,8 @@
   // Backdrop click and close buttons
   allDialogs.forEach((dlg) => {
     dlg.addEventListener('click', (e) => {
-      const rect = dlg.getBoundingClientRect();
-      const isInDialog = (
-        rect.top <= e.clientY &&
-        e.clientY <= rect.top + rect.height &&
-        rect.left <= e.clientX &&
-        e.clientX <= rect.left + rect.width
-      );
-      if (!isInDialog) {
+      // In native HTML5 <dialog>, clicking the backdrop targets the dialog element itself
+      if (e.target === dlg) {
         closeDialog(dlg);
       }
     });
@@ -601,15 +860,199 @@
     if (e.key === 'Escape') {
       closeAllModals();
       setMobileMenu(false);
+      resetPipelineToDefault();
     }
   });
 
   // Trigger buttons for standalone modals
-  $('#profilePopupTrigger')?.addEventListener('click', () => openDialog('profileDialog'));
   $('#openLoopBtn')?.addEventListener('click', () => openDialog('loopDialog'));
   $('#openCapabilitiesBtn')?.addEventListener('click', () => openDialog('capabilitiesDialog'));
   $('#openCredentialsBtn')?.addEventListener('click', () => openDialog('credentialsDialog'));
   $('#openLabModalBtn')?.addEventListener('click', () => openDialog('labDialog'));
+
+  // ==========================================================================
+  // 7B. COMPACT DIGITAL IDENTITY CARD CONTROLLER (Portfolio V26)
+  // ==========================================================================
+  const profileDialog = $('#profileDialog');
+  const profileNavBtns = $$('.profile-nav-btn');
+  const profilePanels = $$('.profile-panel');
+
+  function setProfileTab(tabName) {
+    profileNavBtns.forEach((btn) => {
+      const isSelected = btn.dataset.profileTab === tabName;
+      btn.classList.toggle('is-active', isSelected);
+      btn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+    });
+
+    profilePanels.forEach((panel) => {
+      const match = panel.id === `profilePanel${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`;
+      panel.classList.toggle('is-active', match);
+      if (match) {
+        panel.removeAttribute('hidden');
+      } else {
+        panel.setAttribute('hidden', '');
+      }
+    });
+  }
+
+  profileNavBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setProfileTab(btn.dataset.profileTab);
+    });
+  });
+
+  // Keyboard navigation for profile tabs (Left / Right Arrow)
+  const profileNavWrap = $('.profile-id-nav');
+  profileNavWrap?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const currentIdx = profileNavBtns.findIndex((b) => b.classList.contains('is-active'));
+      const nextIdx = e.key === 'ArrowRight'
+        ? (currentIdx + 1) % profileNavBtns.length
+        : (currentIdx - 1 + profileNavBtns.length) % profileNavBtns.length;
+      profileNavBtns[nextIdx].focus();
+      setProfileTab(profileNavBtns[nextIdx].dataset.profileTab);
+    }
+  });
+
+  // Journey Stepper Controller (4 Chapters)
+  const journeyChapters = {
+    cs: {
+      tag: 'CHAPTER 01 // COMPUTER SCIENCE FOUNDATIONS',
+      period: '2020 – 2024',
+      title: 'B.Tech in Computer Science & Engineering — Lovely Professional University',
+      text: 'Built a rigorous foundation in algorithms, relational databases, data structures, and software architecture. This computer science grounding forms the analytical backbone for building modern operational models and automated reporting logic.',
+      metrics: ['Algorithms & Data Structures', 'Relational Database Systems', 'Quantitative Problem-Solving', 'Graduated 2024']
+    },
+    solar: {
+      tag: 'CHAPTER 02 // ENTREPRENEURSHIP & TRADE',
+      period: '2024 – EARLY 2025',
+      title: 'Co-Founder & Business Head — Only Solar (Import & Export)',
+      text: 'Led cross-border commercial sourcing of solar products from overseas manufacturers. Negotiated vendor MOQs, modeled landed unit costs across fluctuating currency exchange rates, managed customs documentation, and scheduled inventory fulfillment to domestic distributors.',
+      metrics: ['Overseas Manufacturer MOQs', 'Landed-Cost Financial Modeling', 'Port Customs Documentation', 'Inventory Buffer Cycles']
+    },
+    cavinkare: {
+      tag: 'CHAPTER 03 // FMCG FRONTLINE FIELD SALES',
+      period: 'OCTOBER 2025 – FEBRUARY 2026',
+      title: 'Sales Representative — CavinKare (Third-Party Payroll)',
+      text: 'Managed frontline General Trade distribution and secondary sales beats across Mumbai (Andheri to Bandra). Maintained 50+ active retail outlets, onboarded 10+ new GT accounts within Month 1, achieved a +20% active retailer-base expansion, and delivered a +30% month-on-month focus-category revenue increase.',
+      metrics: ['50+ Retail Outlets Covered', '10+ GT Accounts M1', '+20% Retailer Expansion', '+30% MoM Focus Category Lift']
+    },
+    mba: {
+      tag: 'CHAPTER 04 // ADVANCED OPERATIONS ARCHITECTURE',
+      period: '2026 – 2028 (PURSUING)',
+      title: 'MBA — Operations & Logistics — Lovely Professional University',
+      text: 'Pursuing graduate specialization connecting quantitative models with commercial execution. Focus areas include multi-echelon inventory optimization, logistics network design, supplier contract structures, and practical operations systems.',
+      metrics: ['Supply Chain Optimization', 'Inventory Theory & Replenishment', 'Logistics Network Design', 'Commercial Systems']
+    }
+  };
+
+  const journeyStepBtns = $$('.journey-step-btn');
+  const journeyChapterTag = $('#journeyChapterTag');
+  const journeyPeriodTag = $('#journeyPeriodTag');
+  const journeyDetailTitle = $('#journeyDetailTitle');
+  const journeyDetailText = $('#journeyDetailText');
+  const journeyDetailMetrics = $('#journeyDetailMetrics');
+
+  function setJourneyChapter(chapterKey) {
+    const chapter = journeyChapters[chapterKey];
+    if (!chapter) return;
+
+    journeyStepBtns.forEach((btn) => {
+      const isSelected = btn.dataset.chapter === chapterKey;
+      btn.classList.toggle('is-active', isSelected);
+      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+    });
+
+    if (journeyChapterTag) journeyChapterTag.textContent = chapter.tag;
+    if (journeyPeriodTag) journeyPeriodTag.textContent = chapter.period;
+    if (journeyDetailTitle) journeyDetailTitle.textContent = chapter.title;
+    if (journeyDetailText) journeyDetailText.textContent = chapter.text;
+
+    if (journeyDetailMetrics) {
+      journeyDetailMetrics.innerHTML = chapter.metrics
+        .map((m) => `<span class="metric-pill">${m}</span>`)
+        .join('');
+    }
+  }
+
+  journeyStepBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setJourneyChapter(btn.dataset.chapter);
+    });
+  });
+
+  // Interests Discovery Controller (5 Topics)
+  const interestTopics = {
+    ops: {
+      tag: 'INTEREST FOCUS // OPERATIONS & LOGISTICS',
+      title: 'Frictionless Flow from Sourcing to Shelf',
+      desc: 'Optimizing the physical flow of goods from import container docks to local neighborhood retail shelves with minimal friction and maximum velocity. Ensuring operational models reflect field reality rather than theoretical assumptions.',
+      note: 'Informed by direct beat route logistics in Mumbai and import turnaround at Only Solar.'
+    },
+    supply: {
+      tag: 'INTEREST FOCUS // SUPPLY CHAIN DYNAMICS',
+      title: 'Resilience, Buffer Stock & Lead-Time Governance',
+      desc: 'Aligning vendor lead times, safety stocks, and replenishment cycles so unexpected transit disruptions or demand spikes do not lead to out-of-stock retail shelves.',
+      note: 'Grounded in overseas shipping cycles, port clearance variance, and regional depot replenishment.'
+    },
+    commercial: {
+      tag: 'INTEREST FOCUS // COMMERCIAL OPERATIONS',
+      title: 'Bridging Warehouse Availability with Beat Sales Pull',
+      desc: 'Connecting warehouse inventory availability with frontline beat sales incentives to drive measurable sell-through and distributor profitability.',
+      note: 'Reflects firsthand FMCG distributor interactions, credit terms, and retailer margin structures.'
+    },
+    process: {
+      tag: 'INTEREST FOCUS // PROCESS THINKING',
+      title: 'Standardized Workflows & Bottleneck Elimination',
+      desc: 'Deconstructing complex commercial workflows into standardized, repeatable steps that eliminate friction, reduce cycle time, and prevent costly operational mistakes.',
+      note: 'Combining Computer Science algorithmic thinking with real-world distribution protocols.'
+    },
+    analysis: {
+      tag: 'INTEREST FOCUS // BUSINESS ANALYSIS',
+      title: 'Translating Ground Signals into Actionable Decisions',
+      desc: 'Translating point-of-sale data, beat coverage metrics, and landed costs into actionable operational decisions rather than static vanity reports.',
+      note: 'Practical focus on metrics that directly impact stock turn, fulfillment rate, and working capital.'
+    }
+  };
+
+  const interestPillBtns = $$('.interest-pill-btn');
+  const interestFocusTag = $('#interestFocusTag');
+  const interestCardTitle = $('#interestCardTitle');
+  const interestCardDesc = $('#interestCardDesc');
+  const interestPracticalNote = $('#interestPracticalNote');
+
+  function setInterestTopic(topicKey) {
+    const topic = interestTopics[topicKey];
+    if (!topic) return;
+
+    interestPillBtns.forEach((btn) => {
+      const isSelected = btn.dataset.interest === topicKey;
+      btn.classList.toggle('is-active', isSelected);
+      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+    });
+
+    if (interestFocusTag) interestFocusTag.textContent = topic.tag;
+    if (interestCardTitle) interestCardTitle.textContent = topic.title;
+    if (interestCardDesc) interestCardDesc.textContent = topic.desc;
+    if (interestPracticalNote) {
+      interestPracticalNote.innerHTML = `<strong>Grounding:</strong> ${topic.note}`;
+    }
+  }
+
+  interestPillBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setInterestTopic(btn.dataset.interest);
+    });
+  });
+
+  // Profile Popup Trigger: reset to default states on open
+  $('#profilePopupTrigger')?.addEventListener('click', () => {
+    setProfileTab('overview');
+    setJourneyChapter('cavinkare');
+    setInterestTopic('ops');
+    openDialog('profileDialog');
+  });
 
   // ==========================================================================
   // 8. CASE STUDY DOSSIER DATA & INJECTION (All 4 Retained & Factually Audited)
@@ -1022,7 +1465,8 @@
 
     incidents.forEach((inc) => {
       const card = document.createElement('div');
-      card.className = `incident-card ${inc.resolved ? 'is-resolved' : ''} ${selectedIncident?.id === inc.id ? 'is-selected' : ''}`;
+      card.className = `incident-card incident-row ${inc.resolved ? 'is-resolved' : ''} ${selectedIncident?.id === inc.id ? 'is-selected' : ''}`;
+      card.dataset.incidentId = inc.id;
       card.innerHTML = `
         <div class="incident-card-top">
           <span class="incident-severity ${inc.sev}">${inc.resolved ? 'RESOLVED ✓' : inc.sevLabel}</span>
@@ -1070,7 +1514,7 @@
 
     inc.options.forEach((opt, idx) => {
       html += `
-        <button class="btn-res-option" data-opt-idx="${idx}" type="button">
+        <button class="btn-res-option btn-sim-action" data-opt-idx="${idx}" type="button">
           ${opt.label}
         </button>
       `;
@@ -1135,15 +1579,29 @@
   const VERIFIED_EMAIL = 'jayeshsingh9b@gmail.com';
 
   function copyEmailToClipboard() {
-    navigator.clipboard.writeText(VERIFIED_EMAIL).then(() => {
-      if (copyBtnText) copyBtnText.textContent = 'Copied ✓';
-      showToast(`Copied ${VERIFIED_EMAIL} to clipboard`);
-      setTimeout(() => {
-        if (copyBtnText) copyBtnText.textContent = 'Copy (⌘C)';
-      }, 2500);
-    }).catch(() => {
-      showToast(`Email: ${VERIFIED_EMAIL}`);
-    });
+    if (copyBtnText) copyBtnText.textContent = 'Email Copied ✓';
+    showToast(`Copied ${VERIFIED_EMAIL} to clipboard`);
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(VERIFIED_EMAIL).catch(() => {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = VERIFIED_EMAIL;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+        } catch (e) {
+          // ignore
+        }
+      });
+    }
+
+    setTimeout(() => {
+      if (copyBtnText) copyBtnText.textContent = 'Copy Email';
+    }, 2500);
   }
 
   copyEmailBtn?.addEventListener('click', copyEmailToClipboard);
@@ -1162,8 +1620,71 @@
   });
 
   // ==========================================================================
-  // 12. CONTACT FORM — GMAIL COMPOSE REDIRECT WORKFLOW (Section 9)
+  // 12. INTERACTIVE CONTACT SECTION & GMAIL REDIRECT WORKFLOW (Portfolio V25)
+  // Conversation Category Chips, Dynamic Subject Prefill, and Direct Compose
   // ==========================================================================
+  const categoryChips = $$('.category-chip');
+  const categoryContextNote = $('#categoryContextNote');
+  const contactFormCard = $('#contactFormCard');
+  const userSubjectInput = $('#userSubject');
+
+  const topicMap = {
+    ops: {
+      subject: 'Operations & Logistics Discussion',
+      note: 'Discussing inventory visibility, beat route productivity, and warehouse fulfillment optimization.',
+      className: 'topic-ops'
+    },
+    supply: {
+      subject: 'Supply Chain & Sourcing Inquiry',
+      note: 'Discussing overseas vendor vetting, landed-cost modeling, and cross-border import logistics.',
+      className: 'topic-supply'
+    },
+    commercial: {
+      subject: 'Commercial & Business Opportunity',
+      note: 'Discussing FMCG territory sales, retailer acquisition, and commercial partnerships.',
+      className: 'topic-commercial'
+    },
+    projects: {
+      subject: 'Project Collaboration & Systems',
+      note: 'Discussing operations consulting, relational database tools, or co-building new systems.',
+      className: 'topic-projects'
+    },
+    general: {
+      subject: 'General Inquiry / Operational Networking',
+      note: 'General questions, professional networking, or discussing ideas across technology and operations.',
+      className: 'topic-general'
+    }
+  };
+
+  categoryChips.forEach((chip) => {
+    chip.addEventListener('click', (e) => {
+      e.preventDefault();
+      const topicKey = chip.dataset.topic;
+      const data = topicMap[topicKey];
+      if (!data) return;
+
+      categoryChips.forEach((c) => {
+        const isCurrent = c === chip;
+        c.classList.toggle('is-selected', isCurrent);
+        c.setAttribute('aria-checked', isCurrent ? 'true' : 'false');
+      });
+
+      if (categoryContextNote) {
+        categoryContextNote.textContent = data.note;
+      }
+
+      if (contactFormCard) {
+        contactFormCard.className = `contact-form-card ${data.className}`;
+      }
+
+      if (userSubjectInput) {
+        userSubjectInput.value = data.subject;
+      }
+
+      showToast(`Topic selected: ${chip.textContent.trim()}`);
+    });
+  });
+
   const inquiryForm = $('#inquiryForm');
   const formFeedback = $('#formFeedback');
   const formFallback = $('#formFallback');
@@ -1197,14 +1718,16 @@
     }
 
     // 3. Prepare message body
-    const bodyText = `Hi Jayesh,\n\n${message}\n\n---\nFrom: ${name}\nSender's Email: ${email}`;
+    const activeChip = $('.category-chip.is-selected');
+    const selectedTopic = activeChip ? activeChip.textContent.trim() : 'Operations & Logistics';
+    const bodyText = `Hi Jayesh,\n\n${message}\n\n---\nDiscussion Topic: ${selectedTopic}\nFrom: ${name}\nSender's Email: ${email}`;
 
     // 4. Construct Gmail URL pattern
     const recipient = VERIFIED_EMAIL;
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
 
     // Prepare mailto fallback
-    const mailtoUrl = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+    const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
     if (fallbackMailtoLink) {
       fallbackMailtoLink.setAttribute('href', mailtoUrl);
     }
@@ -1223,7 +1746,7 @@
     // 6. Appropriate feedback (DO NOT show false "sent" notification)
     if (formFeedback) {
       formFeedback.style.color = 'var(--accent-teal)';
-      formFeedback.textContent = 'Your message is ready in Gmail. Review it and press Send.';
+      formFeedback.textContent = 'Opening Gmail compose window with your prefilled message. Review and send it directly from your Gmail account.';
     }
 
     // 7. Fallback if popup blocked
