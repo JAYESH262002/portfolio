@@ -166,37 +166,62 @@
   });
 
   // ==========================================================================
-  // 5. CUSTOM CURSOR (Desktop fine pointer only)
+  // 5. SMOOTH GPU-ACCELERATED CURSOR FOLLOWER (Zero Choppiness / Native Pointer)
   // ==========================================================================
-  const cursorDot = $('#cursorDot');
-  const cursorRing = $('#cursorRing');
+  const cursorHalo = $('#cursorHalo');
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (finePointer && cursorDot && cursorRing) {
+  if (finePointer && !prefersReduced && cursorHalo) {
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+    let isHovering = false;
+    let isVisible = false;
+
     window.addEventListener('pointermove', (e) => {
-      cursorDot.style.opacity = '1';
-      cursorRing.style.opacity = '1';
-      cursorDot.style.left = `${e.clientX}px`;
-      cursorDot.style.top = `${e.clientY}px`;
-      cursorRing.style.left = `${e.clientX}px`;
-      cursorRing.style.top = `${e.clientY}px`;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!isVisible) {
+        isVisible = true;
+        cursorHalo.classList.add('is-active');
+        ringX = mouseX;
+        ringY = mouseY;
+      }
     }, { passive: true });
 
     document.addEventListener('pointerleave', () => {
-      cursorDot.style.opacity = '0';
-      cursorRing.style.opacity = '0';
+      isVisible = false;
+      cursorHalo.classList.remove('is-active');
     });
 
-    const interactiveSelectors = 'a, button, input, textarea, .op-node, .incident-card';
-    $$(interactiveSelectors).forEach((el) => {
-      el.addEventListener('mouseenter', () => {
-        cursorRing.style.transform = 'translate(-50%, -50%) scale(1.6)';
-        cursorRing.style.borderColor = 'var(--accent-coral)';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
-        cursorRing.style.borderColor = 'var(--accent-lavender)';
-      });
-    });
+    const interactiveSelectors = 'a, button, input, textarea, .op-node, .incident-card, .brand-avatar-btn, [role="button"]';
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(interactiveSelectors)) {
+        if (!isHovering) {
+          isHovering = true;
+          cursorHalo.classList.add('is-hovering');
+        }
+      } else {
+        if (isHovering) {
+          isHovering = false;
+          cursorHalo.classList.remove('is-hovering');
+        }
+      }
+    }, { passive: true });
+
+    function renderCursor() {
+      // Linear interpolation (lerp) for liquid smoothness without drag or lag
+      ringX += (mouseX - ringX) * 0.22;
+      ringY += (mouseY - ringY) * 0.22;
+      
+      const scale = isHovering ? ' scale(1.45)' : ' scale(1)';
+      cursorHalo.style.transform = `translate3d(${ringX - 16}px, ${ringY - 16}px, 0)${scale}`;
+      requestAnimationFrame(renderCursor);
+    }
+
+    requestAnimationFrame(renderCursor);
   }
 
   // ==========================================================================
@@ -380,6 +405,7 @@
   });
 
   // Trigger buttons for standalone modals
+  $('#profilePopupTrigger')?.addEventListener('click', () => openDialog('profileDialog'));
   $('#openLoopBtn')?.addEventListener('click', () => openDialog('loopDialog'));
   $('#openCapabilitiesBtn')?.addEventListener('click', () => openDialog('capabilitiesDialog'));
   $('#openCredentialsBtn')?.addEventListener('click', () => openDialog('credentialsDialog'));

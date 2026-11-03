@@ -26,19 +26,16 @@
        GLOSSY HEADER: iOS Frosted Glass + 1-Second Soft Light Color Drift
        ====================================================================== -->
   <header class="site-header" id="siteHeader">
+    <!-- LEFT: Personal Identity -->
     <div class="header-brand-wrap">
-      <div class="brand-seal" aria-hidden="true">
-        <svg viewBox="0 0 40 40" aria-hidden="true">
-          <path d="M8 25 17 11l7 18 8-14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
-          <circle cx="8" cy="25" r="2.5" fill="currentColor"></circle>
-          <circle cx="17" cy="11" r="2.5" fill="currentColor"></circle>
-          <circle cx="24" cy="29" r="2.5" fill="currentColor"></circle>
-          <circle cx="32" cy="15" r="2.5" fill="currentColor"></circle>
-        </svg>
-        <span class="status-indicator-dot" aria-hidden="true"></span>
-      </div>
+      <button type="button" class="brand-avatar-btn" id="profilePopupTrigger" aria-label="Open Jayesh Singh profile briefing" aria-haspopup="dialog">
+        <div class="brand-avatar-frame">
+          <img src="assets/jayesh-singh.png" alt="Jayesh Singh portrait" class="brand-avatar-img" />
+          <span class="status-indicator-dot" aria-hidden="true"></span>
+        </div>
+      </button>
       <a class="brand-copy" href="#home" aria-label="Jayesh Singh, back to top">
-        <!-- 1-SECOND COLOR CHANGING NAME IN HEADER -->
+        <!-- 1-SECOND COLOR CHANGING NAME IN HEADER + 50% HOVER SCALE -->
         <span class="brand-name" id="headerBrandName">
           <span class="wordmark-first">JAYESH</span>
           <span class="wordmark-last">SINGH</span>
@@ -47,29 +44,32 @@
       </a>
     </div>
 
-    <nav class="desktop-nav" aria-label="Primary navigation">
-      <a class="nav-link is-active" href="#home">Home</a>
-      <a class="nav-link" href="#approach">Approach</a>
-      <a class="nav-link" href="#work">Work</a>
-      <a class="nav-link" href="#journey">Journey</a>
-      <a class="nav-link" href="#lab">Operations Lab</a>
-      <a class="nav-link" href="#contact">Contact</a>
-      <span class="nav-indicator" aria-hidden="true"></span>
-    </nav>
+    <!-- RIGHT: Navigation & Controls -->
+    <div class="header-nav-wrap">
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a class="nav-link is-active" href="#home">Home</a>
+        <a class="nav-link" href="#approach">Approach</a>
+        <a class="nav-link" href="#work">Work</a>
+        <a class="nav-link" href="#journey">Journey</a>
+        <a class="nav-link" href="#lab">Operations Lab</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <span class="nav-indicator" aria-hidden="true"></span>
+      </nav>
 
-    <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark/light theme" title="Toggle theme">
-        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"></path>
-        </svg>
-        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
-      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open mobile navigation">
-        <span></span><span></span>
-      </button>
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"></path>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open mobile navigation">
+          <span></span><span></span>
+        </button>
+      </div>
     </div>
     <span class="header-shine" aria-hidden="true"></span>
   </header>
@@ -96,25 +96,25 @@
     </div>
   </nav>
 
-  <!-- Custom Cursor System -->
-  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursorRing" aria-hidden="true"><span id="cursorLabel"></span></div>
+  <!-- Smooth GPU-Accelerated Cursor Halo (Zero Choppiness) -->
+  <div class="cursor-halo" id="cursorHalo" aria-hidden="true"></div>
 
   <main id="main">
     <!-- ======================================================================
-         SECTION 01: HOME / HERO (Minimalist, Balanced Headline, Operations Visual)
+         SECTION 01: HOME / HERO (Minimalist, Spacious, Signature Operations Visual)
          ====================================================================== -->
     <section class="hero-section" id="home" aria-labelledby="heroHeadline">
       <div class="section-container">
-        <div class="hero-meta-bar">
-          <span class="meta-pill"><i class="status-dot"></i> <span id="liveClock">MUMBAI IST</span></span>
-          <span class="meta-sub">OPERATIONS &amp; LOGISTICS · B.TECH CS (2024)</span>
-          <span class="meta-status">AVAILABLE FOR ROLES</span>
+        <!-- Quiet Single-Line Operational Eyebrow -->
+        <div class="hero-eyebrow-line">
+          <span class="eyebrow-tag">Practical Operations Architecture</span>
+          <span class="eyebrow-divider" aria-hidden="true">/</span>
+          <span class="eyebrow-status"><i class="status-dot"></i> <span id="liveClock">MUMBAI IST</span> · Available for Roles</span>
         </div>
 
         <div class="hero-layout">
+          <!-- SIMPLIFIED LEFT SECTION: 5 Essential Elements -->
           <div class="hero-content">
-            <span class="eyebrow-tag">Practical Operations Architecture</span>
             <h1 class="hero-main-title" id="heroHeadline">
               I make complex operations <em>clearer.</em>
             </h1>
@@ -131,30 +131,6 @@
                 <span>Download Résumé</span>
                 <span class="btn-arrow" aria-hidden="true">↓</span>
               </a>
-            </div>
-
-            <!-- Compact Verified Impact Metrics Bar -->
-            <div class="hero-metrics-grid" aria-label="Key Career Metrics">
-              <div class="metric-block">
-                <span class="metric-num">50+</span>
-                <span class="metric-label">FMCG Retail Outlets Managed</span>
-                <small>CavinKare Mumbai Territory</small>
-              </div>
-              <div class="metric-block">
-                <span class="metric-num">+20%</span>
-                <span class="metric-label">Active GT Base Expansion</span>
-                <small>10+ Accounts in Month 1</small>
-              </div>
-              <div class="metric-block">
-                <span class="metric-num">0 → 1</span>
-                <span class="metric-label">Venture Co-Founder &amp; Head</span>
-                <small>Only Solar Lighting Imports</small>
-              </div>
-              <div class="metric-block">
-                <span class="metric-num">MBA</span>
-                <span class="metric-label">Operations &amp; Logistics</span>
-                <small>LPU (2026–28) · B.Tech CS 2024</small>
-              </div>
             </div>
           </div>
 
@@ -285,15 +261,9 @@
                 <p class="telemetry-desc" id="telemetryDesc">
                   Evaluating overseas manufacturers, negotiating commercial terms, and aligning production lead times with import requirements. Sourcing reliability starts at the manufacturer gate.
                 </p>
-                <div class="telemetry-stats">
-                  <div class="stat-item">
-                    <span class="stat-label">Focus Area</span>
-                    <strong class="stat-val" id="telemetryMetric">Supplier Due Diligence</strong>
-                  </div>
-                  <div class="stat-item">
-                    <span class="stat-label">Professional Grounding</span>
-                    <strong class="stat-val" id="telemetryContext">Only Solar Lighting Sourcing</strong>
-                  </div>
+                <div class="telemetry-meta-row">
+                  <span class="telemetry-pill-mono" id="telemetryMetric">Supplier Due Diligence</span>
+                  <span class="telemetry-pill-context" id="telemetryContext">Only Solar Lighting Sourcing</span>
                 </div>
               </div>
             </div>
@@ -741,6 +711,97 @@
   <!-- ======================================================================
        PROGRESSIVE DISCLOSURE MODAL DIALOGS
        ====================================================================== -->
+
+  <!-- Modal 0: Personal Briefing Profile Card Modal -->
+  <dialog class="app-dialog profile-card-dialog" id="profileDialog" aria-labelledby="profileDialogName" aria-modal="true">
+    <div class="dialog-frame profile-card-frame">
+      <div class="dialog-topbar">
+        <div class="dialog-crumb">
+          <span class="crumb-section">PERSONAL BRIEFING</span>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-id">PROFILE</span>
+        </div>
+        <button class="btn-dialog-close" data-close-dialog="profileDialog" type="button" aria-label="Close profile card">✕</button>
+      </div>
+      <div class="profile-card-body">
+        <div class="profile-card-header">
+          <div class="profile-card-avatar-wrap">
+            <img src="assets/jayesh-singh.png" alt="Jayesh Singh portrait" class="profile-card-avatar" />
+            <span class="profile-card-status-dot" aria-hidden="true"></span>
+          </div>
+          <div class="profile-card-title-group">
+            <h2 class="profile-card-name" id="profileDialogName">
+              <span class="wordmark-first">JAYESH</span>
+              <span class="wordmark-last">SINGH</span>
+            </h2>
+            <p class="profile-card-sub">OPERATIONS / COMMERCIAL SYSTEMS</p>
+            <div class="profile-card-contact-pills">
+              <a href="mailto:jayeshsingh9b@gmail.com" class="profile-mini-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <span>jayeshsingh9b@gmail.com</span>
+              </a>
+              <span class="profile-mini-pill muted">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Mumbai, India</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <p class="profile-card-bio">
+          MBA student specialising in Operations &amp; Logistics, with a Computer Science background, FMCG field-sales experience and entrepreneurial exposure in import-export.
+        </p>
+
+        <div class="profile-card-grid">
+          <div class="profile-section-block">
+            <h3 class="profile-block-heading">EDUCATION</h3>
+            <div class="profile-item">
+              <div class="profile-item-title">MBA — Operations &amp; Logistics</div>
+              <div class="profile-item-sub">Lovely Professional University · 2026–2028 (Pursuing)</div>
+            </div>
+            <div class="profile-item">
+              <div class="profile-item-title">B.Tech — Computer Science &amp; Engineering</div>
+              <div class="profile-item-sub">Lovely Professional University · Graduated 2024</div>
+            </div>
+          </div>
+
+          <div class="profile-section-block">
+            <h3 class="profile-block-heading">PROFESSIONAL EXPERIENCE</h3>
+            <div class="profile-item">
+              <div class="profile-item-title">Sales Representative</div>
+              <div class="profile-item-sub">CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026</div>
+            </div>
+            <div class="profile-item">
+              <div class="profile-item-title">Co-Founder &amp; Business Head</div>
+              <div class="profile-item-sub">Only Solar (Import &amp; Export) · 2024 – Early 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-interests-block">
+          <h3 class="profile-block-heading">AREAS OF INTEREST</h3>
+          <div class="profile-tags-row">
+            <span class="interest-tag">Operations &amp; Logistics</span>
+            <span class="interest-tag">Supply Chain</span>
+            <span class="interest-tag">Commercial Operations</span>
+            <span class="interest-tag">Process Thinking</span>
+            <span class="interest-tag">Business Analysis</span>
+          </div>
+        </div>
+
+        <div class="profile-card-footer">
+          <a href="#journey" class="btn btn-secondary btn-sm" data-close-dialog="profileDialog">
+            <span>Explore Full Professional Journey</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="assets/Jayesh-Singh-Resume.pdf" download class="btn btn-primary btn-sm">
+            <span>Download Résumé (PDF)</span>
+            <span class="btn-arrow" aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <!-- Modal 1: Case Study Dossier Modal -->
   <dialog class="app-dialog" id="caseDialog" aria-labelledby="caseDialogTitle" aria-modal="true">
