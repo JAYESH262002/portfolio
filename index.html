@@ -346,7 +346,7 @@
     </section>
 
     <!-- ======================================================================
-         SECTION 02: APPROACH / THINKING (3 Core Principles + Modal Exploration)
+         SECTION 02: APPROACH / OPERATING PRINCIPLES (The Three Operating Lenses)
          ====================================================================== -->
     <section class="section" id="approach" aria-labelledby="approachHeadline">
       <div class="section-container">
@@ -358,40 +358,248 @@
           </p>
         </div>
 
-        <div class="principles-grid">
-          <div class="principle-card">
-            <span class="principle-num">01</span>
-            <h3 class="principle-title">Walk the Beat First</h3>
-            <p class="principle-text">
-              Real operational insight comes from standing at retail counters or walking the beat with shop owners. Dashboards cannot explain why a reorder stalled if counter credit or shelf placement is blocked.
-            </p>
-            <div class="principle-anchor">
-              <span class="anchor-label">Verified Experience</span>
-              <p>50+ Mumbai General Trade retail stores visited regularly across Andheri to Bandra.</p>
+        <!-- The Three Operating Lenses Selector -->
+        <div class="principles-lenses-bar" role="tablist" aria-label="Operating Principles Lenses">
+          <button class="lens-tab-btn is-active" id="lensBtnBeat" role="tab" aria-selected="true" aria-controls="lensStageViewport" data-lens="beat" type="button">
+            <span class="lens-tab-num">01</span>
+            <span class="lens-tab-title">Walk the Beat First</span>
+            <span class="lens-tab-badge">Field Execution</span>
+          </button>
+          <button class="lens-tab-btn" id="lensBtnLanded" role="tab" aria-selected="false" aria-controls="lensStageViewport" data-lens="landed" type="button">
+            <span class="lens-tab-num">02</span>
+            <span class="lens-tab-title">True Landed Economics</span>
+            <span class="lens-tab-badge">Commercial Grounding</span>
+          </button>
+          <button class="lens-tab-btn" id="lensBtnRelational" role="tab" aria-selected="false" aria-controls="lensStageViewport" data-lens="relational" type="button">
+            <span class="lens-tab-num">03</span>
+            <span class="lens-tab-title">Practical Relational Systems</span>
+            <span class="lens-tab-badge">Engineering Foundation</span>
+          </button>
+        </div>
+
+        <!-- Interactive Operating Stage -->
+        <div class="principles-stage-card" id="lensStageViewport">
+          <!-- Top Meta Bar -->
+          <div class="stage-meta-strip">
+            <div class="stage-lens-pill" id="stageLensPill">
+              <span class="pill-indicator-dot"></span>
+              <span class="pill-text" id="stageLensIndicator">OPERATING LENS 01 // WALK THE BEAT FIRST</span>
+            </div>
+            <div class="stage-grounding-pill" id="stageGroundingPill">
+              <span class="grounding-label">GROUNDING:</span>
+              <span class="grounding-val" id="stageGroundingVal">CavinKare FMCG Field Sales (Mumbai)</span>
             </div>
           </div>
 
-          <div class="principle-card">
-            <span class="principle-num">02</span>
-            <h3 class="principle-title">True Landed Economics</h3>
-            <p class="principle-text">
-              Purchase quotes mean little until customs tariffs, freight volatility, port demurrage buffers, and inland linehaul are factored in. Sourcing decisions must protect viable margins.
-            </p>
-            <div class="principle-anchor">
-              <span class="anchor-label">Verified Experience</span>
-              <p>Import logistics, pricing strategy, and vendor negotiations managed at Only Solar.</p>
-            </div>
-          </div>
+          <!-- Stage Body (Visual + Editorial Detail) -->
+          <div class="principles-stage-body">
+            <!-- Left Column: Interactive Visual Viewport -->
+            <div class="stage-visual-col">
+              <!-- Visual Scene 1: Retail Distribution Route -->
+              <div class="lens-scene is-active" id="sceneBeat" data-scene="beat">
+                <div class="scene-header-strip">
+                  <span class="scene-sub">DISTRIBUTION ROUTE OBSERVATION SCENE</span>
+                  <span class="scene-hint">Select any route checkpoint to reveal field observation</span>
+                </div>
+                <div class="scene-canvas route-canvas-wrap">
+                  <svg class="route-svg" viewBox="0 0 540 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Field sales beat route diagram">
+                    <!-- S-curve Route Path -->
+                    <path class="route-bg-line" d="M 40 120 C 110 30, 180 30, 240 120 C 300 210, 390 210, 500 120" />
+                    <path class="route-active-line" d="M 40 120 C 110 30, 180 30, 240 120 C 300 210, 390 210, 500 120" />
+                    <!-- Animated travelling pulse along path -->
+                    <circle class="route-pulse-dot" r="5" />
+                    
+                    <!-- Checkpoints / Nodes -->
+                    <!-- Node 1: Distributor Depot -->
+                    <g class="route-node is-active" data-node-idx="0" tabindex="0" role="button" aria-label="Distributor Depot">
+                      <circle cx="40" cy="120" r="14" class="node-glow" />
+                      <circle cx="40" cy="120" r="10" class="node-base" />
+                      <circle cx="40" cy="120" r="4" class="node-core" />
+                      <text x="40" y="152" class="node-lbl" text-anchor="middle">Distributor Depot</text>
+                      <text x="40" y="165" class="node-sub" text-anchor="middle">Stock Dispatch</text>
+                    </g>
+                    <!-- Node 2: Andheri Kirana -->
+                    <g class="route-node" data-node-idx="1" tabindex="0" role="button" aria-label="Andheri Kirana Cluster">
+                      <circle cx="150" cy="55" r="14" class="node-glow" />
+                      <circle cx="150" cy="55" r="10" class="node-base" />
+                      <circle cx="150" cy="55" r="4" class="node-core" />
+                      <text x="150" y="32" class="node-lbl" text-anchor="middle">Andheri Kirana Cluster</text>
+                      <text x="150" y="44" class="node-sub" text-anchor="middle">High Density GT</text>
+                    </g>
+                    <!-- Node 3: Linking Road Supermarket -->
+                    <g class="route-node" data-node-idx="2" tabindex="0" role="button" aria-label="Linking Road Supermarket">
+                      <circle cx="270" cy="140" r="14" class="node-glow" />
+                      <circle cx="270" cy="140" r="10" class="node-base" />
+                      <circle cx="270" cy="140" r="4" class="node-core" />
+                      <text x="270" y="172" class="node-lbl" text-anchor="middle">Linking Rd Store</text>
+                      <text x="270" y="185" class="node-sub" text-anchor="middle">Secondary Display</text>
+                    </g>
+                    <!-- Node 4: Bandra General Store -->
+                    <g class="route-node" data-node-idx="3" tabindex="0" role="button" aria-label="Bandra General Store">
+                      <circle cx="390" cy="190" r="14" class="node-glow" />
+                      <circle cx="390" cy="190" r="10" class="node-base" />
+                      <circle cx="390" cy="190" r="4" class="node-core" />
+                      <text x="390" y="218" class="node-lbl" text-anchor="middle">Bandra GT Outlets</text>
+                      <text x="390" y="230" class="node-sub" text-anchor="middle">Credit Reorder</text>
+                    </g>
+                    <!-- Node 5: Market Intelligence Hub -->
+                    <g class="route-node" data-node-idx="4" tabindex="0" role="button" aria-label="Market Feedback Hub">
+                      <circle cx="500" cy="120" r="14" class="node-glow" />
+                      <circle cx="500" cy="120" r="10" class="node-base" />
+                      <circle cx="500" cy="120" r="4" class="node-core" />
+                      <text x="500" y="152" class="node-lbl" text-anchor="middle">Market Hub</text>
+                      <text x="500" y="165" class="node-sub" text-anchor="middle">Demand Loop</text>
+                    </g>
+                  </svg>
+                </div>
+                <!-- Active Route Node Observation Banner -->
+                <div class="scene-active-banner" id="beatNodeObservationBanner">
+                  <span class="banner-tag">ACTIVE CHECKPOINT OBSERVATION:</span>
+                  <span class="banner-text" id="beatObservationText">Distributor Depot: Order booking accuracy directly dictates next-morning van fill rates and eliminates secondary delivery re-trips.</span>
+                </div>
+              </div>
 
-          <div class="principle-card">
-            <span class="principle-num">03</span>
-            <h3 class="principle-title">Practical Relational Systems</h3>
-            <p class="principle-text">
-              Spreadsheet silos lead to duplicate orders and blind stockouts. Clean database schemas and structured workflows link order bookings to inventory thresholds so handoffs do not fail.
-            </p>
-            <div class="principle-anchor">
-              <span class="anchor-label">Verified Foundation</span>
-              <p>Computer Science engineering grounding applied to commercial operations and data modeling.</p>
+              <!-- Visual Scene 2: True Landed Economics Waterfall -->
+              <div class="lens-scene" id="sceneLanded" data-scene="landed">
+                <div class="scene-header-strip">
+                  <span class="scene-sub">LAYERED LANDED COST ARCHITECTURE</span>
+                  <span class="scene-hint">Select any cost tier to inspect margin sensitivity</span>
+                </div>
+                <div class="landed-cost-canvas">
+                  <!-- Stacked Cost Bar Waterfall -->
+                  <div class="cost-bars-stack" role="group" aria-label="Cost Layers Waterfall">
+                    <div class="cost-tier is-active" data-tier-idx="0" tabindex="0" role="button" aria-label="FOB Factory Price: 38%">
+                      <div class="tier-top">
+                        <span class="tier-title">FOB Factory Price</span>
+                        <span class="tier-pct">38%</span>
+                      </div>
+                      <div class="tier-bar-track">
+                        <div class="tier-bar-fill fill-fob" style="width: 38%;"></div>
+                      </div>
+                      <span class="tier-desc">Direct factory baseline unit quote (MOQ sensitive)</span>
+                    </div>
+
+                    <div class="cost-tier" data-tier-idx="1" tabindex="0" role="button" aria-label="Ocean Freight & Port Demurrage: 24%">
+                      <div class="tier-top">
+                        <span class="tier-title">Freight &amp; Demurrage Reserve</span>
+                        <span class="tier-pct">24%</span>
+                      </div>
+                      <div class="tier-bar-track">
+                        <div class="tier-bar-fill fill-freight" style="width: 24%;"></div>
+                      </div>
+                      <span class="tier-desc">Ocean transit rates, container booking &amp; port lag buffers</span>
+                    </div>
+
+                    <div class="cost-tier" data-tier-idx="2" tabindex="0" role="button" aria-label="Customs Duty, IGST & Compliance: 22%">
+                      <div class="tier-top">
+                        <span class="tier-title">Customs, IGST &amp; Port Clearing</span>
+                        <span class="tier-pct">22%</span>
+                      </div>
+                      <div class="tier-bar-track">
+                        <div class="tier-bar-fill fill-customs" style="width: 22%;"></div>
+                      </div>
+                      <span class="tier-desc">HS-code tariff classification, import duties &amp; port demurrage</span>
+                    </div>
+
+                    <div class="cost-tier" data-tier-idx="3" tabindex="0" role="button" aria-label="Inland Linehaul & Storage: 16%">
+                      <div class="tier-top">
+                        <span class="tier-title">Inland Linehaul &amp; Buffer Storage</span>
+                        <span class="tier-pct">16%</span>
+                      </div>
+                      <div class="tier-bar-track">
+                        <div class="tier-bar-fill fill-inland" style="width: 16%;"></div>
+                      </div>
+                      <span class="tier-desc">Port-to-warehouse transport, unboxing QA &amp; buffer holding</span>
+                    </div>
+                  </div>
+
+                  <!-- Synthetic Illustrative Breakdown Pill -->
+                  <div class="synthetic-cost-formula">
+                    <span class="formula-tag">SYNTHETIC ILLUSTRATIVE MODEL:</span>
+                    <span class="formula-text">FOB $100 + $25 Freight + $18 Tariffs + $12 Linehaul = <strong>$155 Landed Unit Cost</strong> (Protects 24% Gross Margin Buffer · Non-Actual)</span>
+                  </div>
+                </div>
+                <!-- Active Landed Tier Callout -->
+                <div class="scene-active-banner" id="landedTierObservationBanner">
+                  <span class="banner-tag">ACTIVE TIER SENSITIVITY:</span>
+                  <span class="banner-text" id="landedObservationText">FOB Baseline: Negotiating a 5% unit discount at the factory means zero if ocean freight surcharges or 4-day port demurrage delays consume the variance.</span>
+                </div>
+              </div>
+
+              <!-- Visual Scene 3: Practical Relational Systems Network -->
+              <div class="lens-scene" id="sceneRelational" data-scene="relational">
+                <div class="scene-header-strip">
+                  <span class="scene-sub">RELATIONAL FLOW &amp; DATA DEPENDENCY NETWORK</span>
+                  <span class="scene-hint">Select any system node to inspect transactional handoff</span>
+                </div>
+                <div class="relational-network-canvas">
+                  <div class="relational-nodes-grid" role="group" aria-label="System Process Nodes">
+                    <!-- Node 1: Retailer Store -->
+                    <div class="rel-node is-active" data-rel-idx="0" tabindex="0" role="button" aria-label="Node 1: Retailer Store Demand">
+                      <div class="rel-node-badge">01 // DEMAND</div>
+                      <h4 class="rel-node-title">Retailer Store</h4>
+                      <p class="rel-node-sub">Footfall velocity &amp; shelf depletion triggers order requirement.</p>
+                      <div class="rel-node-arrow" aria-hidden="true">→</div>
+                    </div>
+
+                    <!-- Node 2: Order Booking -->
+                    <div class="rel-node" data-rel-idx="1" tabindex="0" role="button" aria-label="Node 2: Commercial Order Booking">
+                      <div class="rel-node-badge">02 // TRANSACTION</div>
+                      <h4 class="rel-node-title">Order Booking</h4>
+                      <p class="rel-node-sub">Commercial capture validates retailer credit &amp; promo pricing.</p>
+                      <div class="rel-node-arrow" aria-hidden="true">→</div>
+                    </div>
+
+                    <!-- Node 3: Warehouse Stock -->
+                    <div class="rel-node" data-rel-idx="2" tabindex="0" role="button" aria-label="Node 3: Warehouse Allocation">
+                      <div class="rel-node-badge">03 // INVENTORY</div>
+                      <h4 class="rel-node-title">Warehouse Stock</h4>
+                      <p class="rel-node-sub">Real-time Available-to-Promise batch reservation prevents stockout overselling.</p>
+                      <div class="rel-node-arrow" aria-hidden="true">→</div>
+                    </div>
+
+                    <!-- Node 4: Replenishment Pull -->
+                    <div class="rel-node" data-rel-idx="3" tabindex="0" role="button" aria-label="Node 4: Replenishment Trigger">
+                      <div class="rel-node-badge">04 // REORDER</div>
+                      <h4 class="rel-node-title">Replenishment Pull</h4>
+                      <p class="rel-node-sub">Lead-time safety thresholds automatically trigger supplier batches.</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Active Relational Node Banner -->
+                <div class="scene-active-banner" id="relationalNodeObservationBanner">
+                  <span class="banner-tag">ACTIVE DEPENDENCY ARCHITECTURE:</span>
+                  <span class="banner-text" id="relationalObservationText">Retailer Store ➔ Order Booking: If store order history is captured in static spreadsheets, field reps book blind orders against depleted warehouse batches, creating 72-hour fulfillment rejections.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Editorial Explanation & Bridge Card -->
+            <div class="stage-detail-col" id="lensDetailCard">
+              <div class="detail-lens-meta">
+                <span class="detail-num" id="lensDetailNum">01</span>
+                <span class="detail-lens-badge" id="lensDetailBadge">FIELD EXECUTION LENS</span>
+              </div>
+              <h3 class="detail-title" id="lensDetailTitle">Walk the Beat First</h3>
+              <p class="detail-thesis" id="lensDetailThesis">
+                Real operational insight starts with observing the actual work on the shopfloor, not from an abstracted dashboard. Shopkeeper relationships and shelf friction reveal what reports miss.
+              </p>
+              
+              <div class="detail-grounding-box">
+                <span class="grounding-box-label">Grounded Foundation</span>
+                <p id="lensDetailGrounding">
+                  50+ Mumbai General Trade retail outlets visited regularly across the Andheri–Bandra corridor during FMCG field execution at CavinKare.
+                </p>
+              </div>
+
+              <!-- Bridge to Section 03 -->
+              <div class="detail-bridge-wrap">
+                <span class="bridge-label">HOW I THINK ↘ WHERE I APPLIED IT</span>
+                <a href="#work" class="lens-bridge-link" id="lensBridgeLink" data-bridge-target="cavinkare">
+                  <span class="bridge-action-text" id="lensBridgeText">Explore CavinKare Beat Expansion Case Study</span>
+                  <span class="bridge-arrow" aria-hidden="true">↘</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -406,7 +614,7 @@
     </section>
 
     <!-- ======================================================================
-         SECTION 03: SELECTED WORK (Clean 4-Project Dossier Overviews)
+         SECTION 03: SELECTED WORK (The Interactive Project Exhibition)
          ====================================================================== -->
     <section class="section" id="work" aria-labelledby="workHeadline">
       <div class="section-container">
@@ -414,128 +622,179 @@
           <span class="section-eyebrow">03 // SELECTED WORK</span>
           <h2 class="section-title" id="workHeadline">Commercial systems &amp; field execution.</h2>
           <p class="section-desc">
-            Four projects illustrating how frontline beat execution, cross-border sourcing, and technical database design resolve operational bottlenecks.
+            Four projects demonstrating how frontline beat execution, cross-border sourcing, and technical database design resolve operational bottlenecks.
           </p>
         </div>
 
-        <div class="projects-grid">
-          <!-- Project 01: CavinKare (Professional Experience) -->
-          <article class="project-card" data-project-id="cavinkare">
-            <div class="project-meta">
-              <span class="project-tag">PROFESSIONAL EXPERIENCE // CAVINKARE</span>
-              <span class="project-date">OCT 2025 – FEB 2026 · MUMBAI</span>
-            </div>
-            <h3 class="project-title">Making a Beat Work Harder</h3>
-            <p class="project-problem">
-              <strong>The Problem:</strong> Fragmented General Trade retail coverage and asynchronous order cycles risking stockouts on fast-moving SKUs.
-            </p>
-            <p class="project-action">
-              <strong>What I Did:</strong> Covered 50+ retail outlets across Andheri to Bandra; aligned order booking with distributor closing stock; executed merchandising and trade schemes.
-            </p>
-            <div class="project-impact-box">
-              <div class="impact-stat">
-                <strong>+20%</strong>
-                <span>Active Retail Reach (10+ Month-1)</span>
-              </div>
-              <div class="impact-stat">
-                <strong>+30%</strong>
-                <span>MoM Focus-Category Lift</span>
-              </div>
-            </div>
-            <button class="project-btn-dossier" data-open-case="cavinkare" type="button">
-              <span>View Case Study Dossier</span>
-              <span class="btn-arrow" aria-hidden="true">↗</span>
-            </button>
-          </article>
+        <!-- Category Filter Controls -->
+        <div class="project-filters-wrap" role="toolbar" aria-label="Filter Projects by Category">
+          <button class="project-filter-btn is-active" data-filter="all" type="button">
+            <span class="filter-label">All Work</span>
+            <span class="filter-count">4</span>
+          </button>
+          <button class="project-filter-btn" data-filter="experience" type="button">
+            <span class="filter-label">Professional Experience</span>
+            <span class="filter-count">1</span>
+          </button>
+          <button class="project-filter-btn" data-filter="entrepreneurship" type="button">
+            <span class="filter-label">Entrepreneurship</span>
+            <span class="filter-count">1</span>
+          </button>
+          <button class="project-filter-btn" data-filter="concepts" type="button">
+            <span class="filter-label">Independent Concepts</span>
+            <span class="filter-count">2</span>
+          </button>
+        </div>
 
-          <!-- Project 02: Only Solar (Entrepreneurship) -->
-          <article class="project-card" data-project-id="onlysolar">
-            <div class="project-meta">
-              <span class="project-tag">ENTREPRENEURSHIP // ONLY SOLAR</span>
-              <span class="project-date">2024 – EARLY 2025 · B2B</span>
-            </div>
-            <h3 class="project-title">From Supplier to Shelf</h3>
-            <p class="project-problem">
-              <strong>The Problem:</strong> Establishing reliable international supply, import compliance, and viable pricing for commercial solar and flood lighting hardware.
-            </p>
-            <p class="project-action">
-              <strong>What I Did:</strong> Co-founded venture, evaluated international manufacturers, led vendor negotiations, managed import logistics, developed GTM and pricing plans, and oversaw P&amp;L decisions.
-            </p>
-            <div class="project-impact-box">
-              <div class="impact-stat">
-                <strong>0 → 1</strong>
-                <span>Commercial GTM Launch</span>
+        <!-- Exhibition Grid: Left Index + Right Live Preview -->
+        <div class="project-exhibition-grid">
+          <!-- Left Column: Project Index Directory -->
+          <div class="project-index-col" role="listbox" aria-label="Project Index Directory">
+            <!-- Project 01: CavinKare -->
+            <article class="project-card project-index-entry is-selected" data-project-id="cavinkare" data-category="experience" tabindex="0" role="option" aria-selected="true">
+              <div class="entry-header">
+                <span class="entry-index-num">01</span>
+                <span class="entry-cat-badge">PROFESSIONAL EXPERIENCE</span>
+                <span class="entry-date">Oct 2025 – Feb 2026</span>
               </div>
-              <div class="impact-stat">
-                <strong>End-to-End</strong>
-                <span>Import Logistics &amp; Sourcing</span>
+              <h3 class="entry-title">Making a Beat Work Harder</h3>
+              <p class="entry-desc">FMCG Retail Beat &amp; Territory Expansion across 50+ General Trade outlets in Mumbai.</p>
+              <div class="entry-footer">
+                <span class="entry-metric-pill">+30% MoM Lift · 50+ Outlets</span>
+                <button class="entry-dossier-link" data-open-case="cavinkare" type="button" aria-label="Open CavinKare dossier">
+                  <span>Dossier</span> <span aria-hidden="true">↗</span>
+                </button>
               </div>
-            </div>
-            <button class="project-btn-dossier" data-open-case="onlysolar" type="button">
-              <span>View Case Study Dossier</span>
-              <span class="btn-arrow" aria-hidden="true">↗</span>
-            </button>
-          </article>
+            </article>
 
-          <!-- Project 03: See the Whole Flow (Independent Analytical Concept) -->
-          <article class="project-card" data-project-id="pipeline">
-            <div class="project-meta">
-              <span class="project-tag">INDEPENDENT ANALYTICAL CONCEPT</span>
-              <span class="project-date">2024–2025 · CONCEPTUAL</span>
-            </div>
-            <span class="project-concept-pill">Synthetic Dataset &amp; Conceptual Architecture</span>
-            <h3 class="project-title">See the Whole Flow</h3>
-            <p class="project-problem">
-              <strong>The Problem:</strong> In General Trade distribution, field reps often book orders without visibility into distributor warehouse stock, leading to avoidable stockout gaps.
-            </p>
-            <p class="project-action">
-              <strong>What I Did:</strong> Designed a conceptual third-normal-form relational SQL schema and Power BI dashboard model linking store visits, order bookings, and distributor stock thresholds.
-            </p>
-            <div class="project-impact-box">
-              <div class="impact-stat">
-                <strong>Conceptual</strong>
-                <span>Relational 3NF Architecture</span>
+            <!-- Project 02: Only Solar -->
+            <article class="project-card project-index-entry" data-project-id="onlysolar" data-category="entrepreneurship" tabindex="0" role="option" aria-selected="false">
+              <div class="entry-header">
+                <span class="entry-index-num">02</span>
+                <span class="entry-cat-badge">ENTREPRENEURSHIP</span>
+                <span class="entry-date">2024 – Early 2025</span>
               </div>
-              <div class="impact-stat">
-                <strong>Synthetic</strong>
-                <span>Illustrative Inventory Datasets</span>
+              <h3 class="entry-title">From Supplier to Shelf</h3>
+              <p class="entry-desc">Import sourcing, landed unit economics, supplier negotiations &amp; 0 → 1 commercial launch.</p>
+              <div class="entry-footer">
+                <span class="entry-metric-pill">0 → 1 GTM · Import Logistics</span>
+                <button class="entry-dossier-link" data-open-case="onlysolar" type="button" aria-label="Open Only Solar dossier">
+                  <span>Dossier</span> <span aria-hidden="true">↗</span>
+                </button>
               </div>
-            </div>
-            <button class="project-btn-dossier" data-open-case="pipeline" type="button">
-              <span>View Case Study Dossier</span>
-              <span class="btn-arrow" aria-hidden="true">↗</span>
-            </button>
-          </article>
+            </article>
 
-          <!-- Project 04: Exceptions First (Independent Operations Analytics Concept) -->
-          <article class="project-card" data-project-id="reverse">
-            <div class="project-meta">
-              <span class="project-tag">INDEPENDENT OPERATIONS ANALYTICS CONCEPT</span>
-              <span class="project-date">2024–2025 · CONCEPTUAL</span>
-            </div>
-            <span class="project-concept-pill">Illustrative Scenario &amp; Decision Model</span>
-            <h3 class="project-title">Exceptions First</h3>
-            <p class="project-problem">
-              <strong>The Problem:</strong> Return authorizations and warranty claims sitting in regional distribution depots without structured triage, locking capital and slowing customer resolution.
-            </p>
-            <p class="project-action">
-              <strong>What I Did:</strong> Mapped an illustrative 3-tier diagnostic triage workflow (bench repair, vendor credit reclamation, scrap) with serialized component tracking.
-            </p>
-            <div class="project-impact-box">
-              <div class="impact-stat">
-                <strong>Conceptual</strong>
-                <span>3-Tier Diagnostic Intake</span>
+            <!-- Project 03: See the Whole Flow -->
+            <article class="project-card project-index-entry" data-project-id="pipeline" data-category="concepts" tabindex="0" role="option" aria-selected="false">
+              <div class="entry-header">
+                <span class="entry-index-num">03</span>
+                <span class="entry-cat-badge badge-concept">INDEPENDENT ANALYTICAL CONCEPT</span>
+                <span class="entry-date">2024–2025 · CONCEPTUAL</span>
               </div>
-              <div class="impact-stat">
-                <strong>Illustrative</strong>
-                <span>Turnaround SLA Simulation</span>
+              <span class="project-concept-pill">Synthetic Dataset &amp; Conceptual Architecture</span>
+              <h3 class="entry-title">See the Whole Flow</h3>
+              <p class="entry-desc">Relational 3NF SQL schema and Power BI replenishment dashboard linking store visits to warehouse stock.</p>
+              <div class="entry-footer">
+                <span class="entry-metric-pill">3NF Relational Model · Power BI</span>
+                <button class="entry-dossier-link" data-open-case="pipeline" type="button" aria-label="Open See the Whole Flow dossier">
+                  <span>Dossier</span> <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </article>
+
+            <!-- Project 04: Exceptions First -->
+            <article class="project-card project-index-entry" data-project-id="reverse" data-category="concepts" tabindex="0" role="option" aria-selected="false">
+              <div class="entry-header">
+                <span class="entry-index-num">04</span>
+                <span class="entry-cat-badge badge-concept">INDEPENDENT OPERATIONS CONCEPT</span>
+                <span class="entry-date">2024–2025 · CONCEPTUAL</span>
+              </div>
+              <span class="project-concept-pill">Illustrative Scenario &amp; Decision Model</span>
+              <h3 class="entry-title">Exceptions First</h3>
+              <p class="entry-desc">Reverse logistics and 3-tier diagnostic warranty triage workflow for regional distribution depots.</p>
+              <div class="entry-footer">
+                <span class="entry-metric-pill">3-Tier Triage · Turnaround SLA</span>
+                <button class="entry-dossier-link" data-open-case="reverse" type="button" aria-label="Open Exceptions First dossier">
+                  <span>Dossier</span> <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Right Column: Live Project Preview Viewport -->
+          <div class="project-preview-col">
+            <div class="project-live-preview-card" id="projectLivePreview">
+              <!-- Top Preview Strip -->
+              <div class="preview-top-strip">
+                <div class="preview-status-pill">
+                  <span class="status-dot"></span>
+                  <span class="status-text">LIVE PROJECT PREVIEW</span>
+                </div>
+                <div class="preview-meta-tags">
+                  <span class="preview-cat-tag" id="previewCategory">PROFESSIONAL EXPERIENCE // CAVINKARE</span>
+                  <span class="preview-date-tag" id="previewDate">Oct 2025 – Feb 2026</span>
+                </div>
+              </div>
+
+              <div class="preview-concept-notice" id="previewConceptNotice" style="display: none;">
+                <span class="notice-tag">NOTE:</span>
+                <span class="notice-text" id="previewConceptText">Synthetic Dataset &amp; Conceptual Architecture</span>
+              </div>
+
+              <!-- Main Title -->
+              <h3 class="preview-title" id="previewTitle">Making a Beat Work Harder: FMCG Retail Beat &amp; Territory Expansion in Mumbai</h3>
+
+              <!-- Dynamic Project Visual Stage (SVG Schematic) -->
+              <div class="preview-schematic-stage" id="previewSchematicStage">
+                <!-- Injected via JavaScript based on activeProject -->
+              </div>
+
+              <!-- Problem & Action Brief -->
+              <div class="preview-brief-grid">
+                <div class="brief-item">
+                  <span class="brief-label">THE PROBLEM</span>
+                  <p class="brief-text" id="previewProblem">
+                    Unproductive retailer visits in Mumbai's Andheri–Bandra corridor; high stockout frequency on high-margin lines due to inconsistent reordering cadence and slow retailer onboarding.
+                  </p>
+                </div>
+                <div class="brief-item">
+                  <span class="brief-label">WHAT I DID</span>
+                  <p class="brief-text" id="previewAction">
+                    Restructured daily beat routes covering 50+ retail outlets, onboarded 10+ high-potential General Trade accounts in Month 1, established direct retailer rapport, and aligned order booking with stock availability.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Impact Metrics -->
+              <div class="preview-metrics-row" id="previewMetrics">
+                <div class="metric-card">
+                  <strong class="metric-val">+30%</strong>
+                  <span class="metric-sub">MoM Focus-Category Revenue Growth</span>
+                </div>
+                <div class="metric-card">
+                  <strong class="metric-val">50+</strong>
+                  <span class="metric-sub">Mumbai GT Retail Outlets Covered</span>
+                </div>
+                <div class="metric-card">
+                  <strong class="metric-val">+20%</strong>
+                  <span class="metric-sub">Active Retailer-Base Expansion</span>
+                </div>
+                <div class="metric-card">
+                  <strong class="metric-val">10+</strong>
+                  <span class="metric-sub">GT Accounts Onboarded in Month 1</span>
+                </div>
+              </div>
+
+              <!-- Action Row -->
+              <div class="preview-action-row">
+                <button class="btn btn-primary" id="previewDossierBtn" data-open-case="cavinkare" type="button">
+                  <span>Explore Full Case Study Dossier</span>
+                  <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+                <span class="preview-nav-hint">Select any project on the left or use arrow keys</span>
               </div>
             </div>
-            <button class="project-btn-dossier" data-open-case="reverse" type="button">
-              <span>View Case Study Dossier</span>
-              <span class="btn-arrow" aria-hidden="true">↗</span>
-            </button>
-          </article>
+          </div>
         </div>
       </div>
     </section>
@@ -776,6 +1035,17 @@
                   </a>
                 </div>
               </div>
+            </div>
+
+            <!-- Operational Response Commitment -->
+            <div class="direct-commitment-card">
+              <div class="commitment-head">
+                <span class="commitment-dot"></span>
+                <span class="commitment-title">OPERATIONAL CADENCE &amp; RESPONSE</span>
+              </div>
+              <p class="commitment-text">
+                Direct channels are actively monitored. For commercial logistics inquiries, supply chain discussions, or operational roles, direct response turnaround is within 24 business hours.
+              </p>
             </div>
 
             <!-- Bottom Detail Connecting to the Rest of the Portfolio -->

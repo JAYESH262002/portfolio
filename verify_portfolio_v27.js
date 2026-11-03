@@ -315,17 +315,21 @@ async function run() {
       const cs = window.getComputedStyle(grid);
       const directCard = document.getElementById('contactDirectCard');
       const formCard = document.getElementById('contactFormCard');
+      const r1 = directCard?.getBoundingClientRect();
+      const r2 = formCard?.getBoundingClientRect();
+      const equalHeight = Math.abs((r1?.height || 0) - (r2?.height || 0)) <= 3;
 
       return {
         headline,
         alignItems: cs.alignItems,
+        equalHeight,
         directCardExists: Boolean(directCard),
         formCardExists: Boolean(formCard)
       };
     })()`);
 
     assert(contactLayout.headline?.includes('Start an operational conversation'), 'Contact headline is "Start an operational conversation."');
-    assert(contactLayout.alignItems === 'start', 'Contact grid uses align-items: start (natural content heights, no empty stretched card)');
+    assert(contactLayout.equalHeight === true, 'Contact cards match equal height and balanced size');
     assert(contactLayout.directCardExists && contactLayout.formCardExists, 'Two complementary columns (Direct Directory + Inquiry Form) present');
 
     // 2. Directory Rows

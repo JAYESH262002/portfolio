@@ -453,3 +453,46 @@ python3 -m http.server 8080
 open index.html
 ```
 Visit `http://localhost:8080` in any browser.
+
+---
+
+# Jayesh Singh — Portfolio V28
+## Two-Section Experience Upgrade: Operating Principles × Selected Work
+
+**Scope:** Focused exclusively on Section 02 (Operating Principles) and Section 03 (Selected Work). Retained existing header, hero, profile popup, Operations Pipeline, Journey, Operations Lab, and Contact sections untouched.
+
+### 1. Section 02 // Operating Principles: The Three Operating Lenses
+- **Interaction Architecture:** Replaced static 3-card grid with an interactive editorial exhibition.
+- **Top Lens Selector Tabs:**
+  - `01 // Walk the Beat First` (Field Execution · CavinKare FMCG Mumbai grounding)
+  - `02 // True Landed Economics` (Commercial Sourcing · Only Solar import logistics grounding)
+  - `03 // Practical Relational Systems` (Systems Architecture · B.Tech CS + MBA operations foundation)
+- **Central Dynamic Visual Viewport:**
+  - **Lens 01:** Interactive S-curve retail distribution route with animated traveling pulse and 5 clickable checkpoints (`Distributor Depot`, `Andheri Kirana Cluster`, `Linking Road Store`, `Bandra GT Outlets`, `Market Feedback Hub`).
+  - **Lens 02:** Layered Landed Cost Waterfall with interactive tiers (`FOB Price 38%`, `Ocean Freight & Demurrage Reserve 24%`, `Customs & Clearance 22%`, `Inland Linehaul 16%`) and synthetic calculation model formula.
+  - **Lens 03:** Relational flow network connecting `Retailer Store Demand` ➔ `Commercial Order Booking` ➔ `Warehouse Stock Allocation` ➔ `Replenishment Pull`.
+- **Editorial Detail Column & Bridge Link:** Displays the core thesis, verified grounding, and direct bridge link (`HOW I THINK ↘ WHERE I APPLIED IT`) connecting each lens to its corresponding case study in Section 03 with smooth scrolling and highlight pulse.
+
+### 2. Section 03 // Selected Work: The Interactive Project Exhibition
+- **Exhibition Layout:** Replaced static 2x2 grid with an editorial directory index (left) + sticky dynamic live preview card (right).
+- **Category Filter Tabs:**
+  - `All Work (4)`
+  - `Professional Experience (1)`
+  - `Entrepreneurship (1)`
+  - `Independent Concepts (2)`
+  - Automatic fallback updates live preview if currently active project is filtered out.
+- **Project Index Cards:**
+  1. `Making a Beat Work Harder` (CavinKare: 50+ retail outlets, 10+ GT accounts in M1, +20% active expansion, +30% MoM lift).
+  2. `From Supplier to Shelf` (Only Solar: 0 ➔ 1 commercial GTM, import sourcing & pricing).
+  3. `See the Whole Flow` (Independent concept: 3NF SQL schema & Power BI replenishment dashboard).
+  4. `Exceptions First` (Independent concept: 3-tier diagnostic warranty triage & reverse logistics model).
+- **Live Preview Viewport:** Features domain-tailored SVG schematics (beat routing, landed cost waterfall, 3NF schema ER diagram, 3-tier triage routing), structured problem/action briefs, key metrics, and primary CTA (`#previewDossierBtn`) opening the full case study dossier.
+- **Backwards Compatibility:** Retained `.project-card[data-project-id]` and `[data-open-case]` selectors ensuring 100% test suite compatibility.
+
+### 3. Verification & QA Matrix
+- **`verify_portfolio_v28.js`:** 100% PASSED (Section 02 lenses, Route SVG, Landed waterfall, Relational network, Bridge links, Section 03 exhibition, Filters, Live preview, Dossier modal, 5 responsive viewports 1920, 1440, 1024, 768, 390 with zero overflow).
+- **`audit_portfolio_final.js`:** 63 / 63 PASSED (0 failed).
+- **`verify_portfolio_v27.js`:** 50 / 50 PASSED (0 failed).
+- **`verify_portfolio_v26.js`:** 43 / 43 PASSED (0 failed).
+- **`verify_portfolio_v25.js`:** 67 / 67 PASSED (0 failed).
+- **Total:** Over 223 automated test assertions passing with zero regressions.
