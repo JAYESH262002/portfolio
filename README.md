@@ -496,3 +496,65 @@ Visit `http://localhost:8080` in any browser.
 - **`verify_portfolio_v26.js`:** 43 / 43 PASSED (0 failed).
 - **`verify_portfolio_v25.js`:** 67 / 67 PASSED (0 failed).
 - **Total:** Over 223 automated test assertions passing with zero regressions.
+
+---
+
+# Jayesh Singh — Portfolio V29
+## Design Simplification, Spacious Editorial Layout & Refined Interactions
+
+**Primary Objective:** Restore the portfolio's core design philosophy: minimalist, modern, professional, artistic, spacious, and effortless to explore — answering the guiding brief: **"LESS UI. MORE DESIGN."**
+
+### 1. Section 02 // Operating Principles: Spacious Typographic Entries
+- **Problem Solved:** Eliminated dense, dashboard-like cards, multi-checkpoint route maps, nested cost tier bars, and enclosed control panels that made the section feel like an enterprise management system.
+- **Editorial Typography & Hierarchy:**
+  - Three spacious, editorial entries separated by subtle hairline dividers:
+    - `01 — Walk the Beat First` (Field Execution · Grounded in CavinKare FMCG Mumbai beat expansion)
+    - `02 — True Landed Economics` (Commercial Sourcing · Grounded in Only Solar cross-border sourcing)
+    - `03 — Practical Relational Systems` (Systems Architecture · Grounded in B.Tech CS + MBA operations foundation)
+  - Generous vertical whitespace (`clamp(5.5rem, 9vw, 8.5rem)` section padding, `clamp(2rem, 3.5vw, 2.75rem)` row padding).
+  - Display numbers (`01`, `02`, `03`) styled with muted terracotta accents.
+  - Progressive disclosure via clean toggle indicators (`+` / `−`), expanding into a restrained, elegant layout with subtle schematics (S-curve distribution flow, Landed cost stack bar, Relational data chain).
+  - Preserved contextual bridge links (`Explore Field Grounding ↗`, `Explore Sourcing Grounding ↗`, `Explore Relational System ↗`) that smoothly scroll to and highlight the corresponding project row in Section 03.
+  - Outside-click reset: Clicking anywhere outside Section 02 automatically collapses expanded principles back to the minimal default state.
+  - Retained `#openLoopBtn` trigger for the full operational methodology modal.
+
+### 2. Section 03 // Selected Work: Spacious Typographic Project Index
+- **Problem Solved:** Removed the permanent split-screen live-preview dashboard, 4-stat metric clusters, and prominent category filter tabs that produced visual clutter and heavy cognitive load.
+- **Typographic Index Architecture:**
+  - Four clean, balanced project rows with generous padding:
+    1. `01 Making a Beat Work Harder` (CavinKare: 50+ retail outlets, 10+ GT accounts in M1, +20% active expansion, +30% MoM lift)
+    2. `02 From Supplier to Shelf` (Only Solar: 0 ➔ 1 commercial GTM, cross-border sourcing & landed cost modeling)
+    3. `03 See the Whole Flow` (Independent conceptual model: multi-echelon inventory pipeline & 3NF analytical schema)
+    4. `04 Exceptions First` (Independent conceptual model: reverse logistics & 3-tier warranty triage protocol)
+  - Direct interaction: Clicking any project row or its dedicated `View Case Study Dossier ↗` action button opens the comprehensive `#caseDialog`.
+  - Preserved `.project-card[data-project-id]` and `[data-open-case]` selectors for complete backward compatibility.
+
+### 3. Deep Research & Editorial Refinements (Polished Beyond Average)
+- **Expressive Editorial Typography:**
+  - Headings across all core sections now feature high-contrast `Instrument Serif` italic accents (`operations.`, `field execution.`, `operations leadership.`, `conversation.`) paired with bold modern geometric display letterforms (`Manrope` / `DM Sans`), creating an immediate, bespoke editorial voice.
+  - Section headers include structured monospace indexing mastheads (`[ 02 ] OPERATING PRINCIPLES / ...`, `[ 03 ] SELECTED WORK / ...`).
+- **Tactile Materiality & Atmosphere:**
+  - High-performance archival SVG paper grain overlay (`body::before`) providing physical materiality without performance cost.
+  - Delicate ambient radial warmth washes behind Section 02 and Section 03.
+  - Layered card borders with subtle inner light reflections (`inset 0 1px 0 rgba(255,255,255,0.9)`), delivering tangible depth.
+- **Bespoke Architectural Schematics in Operating Principles:**
+  - **Principle 01 (Beat Execution):** Animated FMCG transit route schematic with S-curve curve, pulsating transit beacon (`@keyframes pulseFlow`), and 4 labeled territory checkpoints (`Depot Dispatch`, `Kirana Cluster`, `Bandra Stores`, `Market Hub`).
+  - **Principle 02 (True Landed Economics):** 4-tier commercial cost waterfall stack (`Factory FOB 38%`, `Ocean Freight 24%`, `Customs 22%`, `Inland Linehaul 16%`) with explanatory annotations and landed-cost margin callout.
+  - **Principle 03 (Practical Relational Systems):** Normalized 4-entity relational schema graph (`STORES`, `ORDERS`, `ALLOCATION`, `TRIGGER`) linking demand to automated stock replenishment constraints.
+  - **Authentic Metric Ledgers:** Inset archival field notes with verified numbers (`50+ Outlets Audited`, `+30% MoM Lift`, `10+ Accounts M1`).
+- **Embedded Blueprint Miniatures in Selected Work:**
+  - Each project row features an embedded, illuminated architectural miniature (Mumbai Beat Route, Landed Waterfall, 3NF Schema Graph, 3-Tier Triage Fork) with silky hover elevation.
+
+### 4. Signature Cursor & Contact Experience
+- **Fluid Zero-Lag Cursor:** Driven by `requestAnimationFrame` and GPU `translate3d(x, y, 0)` for immediate response.
+- **Chromatic Contact Animation:** Smooth `@keyframes cursorMultiColor` and `scale(1.85)` (~38px) hover expansion when interacting with clickable elements.
+- **Balanced Contact Layout:** Equal-height columns for Direct Directory and Compose a Direct Message with verified contact channels and zero public phone numbers.
+
+### 5. Comprehensive Quality Assurance Matrix
+- **`verify_portfolio_v29.js`:** 100% PASSED (Editorial principles initial state, toggle expansion, bridge link, 4-row project index, case study modal trigger, and zero horizontal overflow across 1920, 1440, 1024, 768, 390 viewports).
+- **`audit_portfolio_final.js`:** 63 / 63 PASSED (0 failed).
+- **`verify_portfolio_v27.js`:** 50 / 50 PASSED (0 failed).
+- **`verify_portfolio_v26.js`:** 43 / 43 PASSED (0 failed).
+- **`verify_portfolio_v25.js`:** 67 / 67 PASSED (0 failed).
+- **Total Test Suite:** 223+ automated test assertions passing with zero regressions.
+

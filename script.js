@@ -1061,496 +1061,129 @@
 
 
   // ==========================================================================
-  // 7C. SECTION 02: THE THREE OPERATING LENSES CONTROLLER (Portfolio V28)
+  // 7C. SECTION 02: EDITORIAL OPERATING PRINCIPLES CONTROLLER (Portfolio V29)
+  // Minimalist, spacious, three typographic principles with subtle expansion
   // ==========================================================================
-  const lensData = {
-    beat: {
-      num: '01',
-      indicator: 'OPERATING LENS 01 // WALK THE BEAT FIRST',
-      groundingPill: 'CavinKare FMCG Field Sales (Mumbai)',
-      badge: 'FIELD EXECUTION LENS',
-      title: 'Walk the Beat First',
-      thesis: 'Real operational insight starts with observing the actual work on the shopfloor, not from an abstracted dashboard. Shopkeeper relationships and shelf friction reveal what reports miss.',
-      grounding: '50+ Mumbai General Trade retail outlets visited regularly across the Andheri–Bandra corridor during FMCG field execution at CavinKare.',
-      bridgeText: 'Explore CavinKare Beat Expansion Case Study',
-      bridgeTarget: 'cavinkare',
-      observations: [
-        'Distributor Depot: Order booking accuracy directly dictates next-morning van fill rates and eliminates secondary delivery re-trips.',
-        'Andheri Kirana Cluster: Shelf space is fiercely contested; secondary SKU placements stall if shopkeeper cash-flow cycle is tight.',
-        'Linking Road Supermarket: Modern Trade shelf facings require weekly audits; eye-level placement drives a 2.4x velocity lift.',
-        'Bandra General Store: Personal rapport and on-time replacement of damaged units unlocks reorders for newly introduced SKUs.',
-        'Market Feedback Hub: Retailer feedback gathered directly from counters feeds back into distributor SKU allocations before regional stockouts occur.'
-      ]
-    },
-    landed: {
-      num: '02',
-      indicator: 'OPERATING LENS 02 // TRUE LANDED ECONOMICS',
-      groundingPill: 'Only Solar Cross-Border Sourcing & Import Logistics',
-      badge: 'COMMERCIAL SOURCING LENS',
-      title: 'True Landed Economics',
-      thesis: 'A supplier quotation is only one part of a commercial decision. Sourcing decisions must factor in ocean freight volatility, port demurrage buffers, and inland linehaul to protect viable margins.',
-      grounding: 'Managed end-to-end import logistics, vendor negotiations, pricing strategy, and landed cost models at Only Solar.',
-      bridgeText: 'Explore Only Solar Sourcing & Landed Economics Case Study',
-      bridgeTarget: 'onlysolar',
-      observations: [
-        'FOB Baseline (38%): Negotiating a 5% unit discount at the factory means zero if ocean freight surcharges or 4-day port demurrage delays consume the variance.',
-        'Freight & Demurrage Reserve (24%): Ocean container swings require dynamic booking buffers; holding space reserves costs less than missing departure windows.',
-        'Customs, IGST & Port Clearing (22%): Accurate HS-code classification and pre-arrival bill-of-entry filing eliminate warehouse demurrage fees.',
-        'Inland Linehaul & Storage (16%): Multimodal linehaul scheduling ensures regional depots maintain 14-day safety buffers without holding excess deadstock.'
-      ]
-    },
-    relational: {
-      num: '03',
-      indicator: 'OPERATING LENS 03 // PRACTICAL RELATIONAL SYSTEMS',
-      groundingPill: 'B.Tech Computer Science Grounding + MBA Operations',
-      badge: 'SYSTEMS ARCHITECTURE LENS',
-      title: 'Practical Relational Systems',
-      thesis: 'Execution fails when information is trapped in spreadsheets and functional silos. Clean relational schemas link demand captures to inventory thresholds so handoffs do not fail.',
-      grounding: 'Computer Science engineering foundation applied to enterprise commercial data models, relational schemas, and operations management.',
-      bridgeText: 'Explore Relational Architecture Case Study',
-      bridgeTarget: 'pipeline',
-      observations: [
-        'Retailer Store ➔ Order Booking: If store order history is captured in static spreadsheets, field reps book blind orders against depleted warehouse batches, creating 72-hour fulfillment rejections.',
-        'Commercial Order Booking ➔ Validation: Relational validation against active retailer credit limits prevents shipping unauthorized batches that get rejected at delivery.',
-        'Warehouse Stock ➔ Allocation: Real-time Available-to-Promise batch reservation prevents stockout overselling across competing sales beats.',
-        'Replenishment Pull ➔ Supplier Lead-Time: Automated reorder point calculation based on historical lead times triggers supplier batches before safety stocks breach critical red-lines.'
-      ]
+  const principleItems = $$('.editorial-principle-item');
+
+  function togglePrinciple(targetItem) {
+    if (!targetItem) return;
+    const isCurrentlyActive = targetItem.classList.contains('is-active');
+
+    // Close all items
+    principleItems.forEach((item) => {
+      item.classList.remove('is-active');
+      item.setAttribute('aria-selected', 'false');
+      const ind = item.querySelector('.principle-toggle-indicator');
+      if (ind) ind.textContent = '+';
+    });
+
+    // If it wasn't already active, open it
+    if (!isCurrentlyActive) {
+      targetItem.classList.add('is-active');
+      targetItem.setAttribute('aria-selected', 'true');
+      const ind = targetItem.querySelector('.principle-toggle-indicator');
+      if (ind) ind.textContent = '−';
     }
-  };
-
-  let activeLens = 'beat';
-  const lensTabBtns = $$('.lens-tab-btn');
-  const lensScenes = $$('.lens-scene');
-  const stageLensIndicator = $('#stageLensIndicator');
-  const stageGroundingVal = $('#stageGroundingVal');
-  const lensDetailNum = $('#lensDetailNum');
-  const lensDetailBadge = $('#lensDetailBadge');
-  const lensDetailTitle = $('#lensDetailTitle');
-  const lensDetailThesis = $('#lensDetailThesis');
-  const lensDetailGrounding = $('#lensDetailGrounding');
-  const lensBridgeText = $('#lensBridgeText');
-  const lensBridgeLink = $('#lensBridgeLink');
-
-  function setOperatingLens(lensKey) {
-    if (!lensData[lensKey]) return;
-    activeLens = lensKey;
-    const data = lensData[lensKey];
-
-    // Update Tab Buttons
-    lensTabBtns.forEach((btn) => {
-      const isSel = btn.dataset.lens === lensKey;
-      btn.classList.toggle('is-active', isSel);
-      btn.setAttribute('aria-selected', isSel ? 'true' : 'false');
-    });
-
-    // Update Active Scene
-    lensScenes.forEach((scene) => {
-      scene.classList.toggle('is-active', scene.dataset.scene === lensKey);
-    });
-
-    // Update Meta Strip
-    if (stageLensIndicator) stageLensIndicator.textContent = data.indicator;
-    if (stageGroundingVal) stageGroundingVal.textContent = data.groundingPill;
-
-    // Update Right Detail Card
-    if (lensDetailNum) lensDetailNum.textContent = data.num;
-    if (lensDetailBadge) lensDetailBadge.textContent = data.badge;
-    if (lensDetailTitle) lensDetailTitle.textContent = data.title;
-    if (lensDetailThesis) lensDetailThesis.textContent = data.thesis;
-    if (lensDetailGrounding) lensDetailGrounding.textContent = data.grounding;
-    if (lensBridgeText) lensBridgeText.textContent = data.bridgeText;
-    if (lensBridgeLink) lensBridgeLink.dataset.bridgeTarget = data.bridgeTarget;
   }
 
-  // Lens Tab Click & Keyboard Navigation
-  lensTabBtns.forEach((btn, idx) => {
-    btn.addEventListener('click', () => setOperatingLens(btn.dataset.lens));
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        const next = lensTabBtns[(idx + 1) % lensTabBtns.length];
-        next.focus();
-        next.click();
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        const prev = lensTabBtns[(idx - 1 + lensTabBtns.length) % lensTabBtns.length];
-        prev.focus();
-        prev.click();
-      }
+  principleItems.forEach((item, idx) => {
+    const summaryRow = item.querySelector('.principle-summary-row');
+    summaryRow?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      togglePrinciple(item);
     });
-  });
 
-  // Scene 1: Route Node Interactions
-  const routeNodes = $$('.route-node');
-  const beatObservationText = $('#beatObservationText');
-  routeNodes.forEach((node) => {
-    function activateNode() {
-      routeNodes.forEach((n) => n.classList.remove('is-active'));
-      node.classList.add('is-active');
-      const idx = parseInt(node.dataset.nodeIdx, 10);
-      if (beatObservationText && lensData.beat.observations[idx]) {
-        beatObservationText.textContent = lensData.beat.observations[idx];
-      }
-    }
-    node.addEventListener('click', activateNode);
-    node.addEventListener('mouseenter', activateNode);
-    node.addEventListener('keydown', (e) => {
+    item.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        activateNode();
-      }
-    });
-  });
-
-  // Scene 2: Landed Cost Tier Interactions
-  const costTiers = $$('.cost-tier');
-  const landedObservationText = $('#landedObservationText');
-  costTiers.forEach((tier) => {
-    function activateTier() {
-      costTiers.forEach((t) => t.classList.remove('is-active'));
-      tier.classList.add('is-active');
-      const idx = parseInt(tier.dataset.tierIdx, 10);
-      if (landedObservationText && lensData.landed.observations[idx]) {
-        landedObservationText.textContent = lensData.landed.observations[idx];
-      }
-    }
-    tier.addEventListener('click', activateTier);
-    tier.addEventListener('mouseenter', activateTier);
-    tier.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activateTier();
-      }
-    });
-  });
-
-  // Scene 3: Relational Node Interactions
-  const relNodes = $$('.rel-node');
-  const relationalObservationText = $('#relationalObservationText');
-  relNodes.forEach((node) => {
-    function activateRelNode() {
-      relNodes.forEach((n) => n.classList.remove('is-active'));
-      node.classList.add('is-active');
-      const idx = parseInt(node.dataset.relIdx, 10);
-      if (relationalObservationText && lensData.relational.observations[idx]) {
-        relationalObservationText.textContent = lensData.relational.observations[idx];
-      }
-    }
-    node.addEventListener('click', activateRelNode);
-    node.addEventListener('mouseenter', activateRelNode);
-    node.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activateRelNode();
-      }
-    });
-  });
-
-  // Bridge Link Click to Smoothly Navigate to Section 03 & Select Project
-  if (lensBridgeLink) {
-    lensBridgeLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetProject = lensBridgeLink.dataset.bridgeTarget;
-      const workSec = document.getElementById('work');
-      if (workSec) {
-        workSec.scrollIntoView({ behavior: 'smooth' });
-      }
-      setProjectFilter('all');
-      selectProject(targetProject);
-      const targetCard = document.querySelector(`.project-index-entry[data-project-id="${targetProject}"]`);
-      if (targetCard) {
-        targetCard.classList.remove('is-highlighted');
-        void targetCard.offsetWidth; // re-trigger animation
-        targetCard.classList.add('is-highlighted');
-      }
-    });
-  }
-
-  // ==========================================================================
-  // 7D. SECTION 03: SELECTED WORK EXHIBITION CONTROLLER (Portfolio V28)
-  // ==========================================================================
-  const projectsData = {
-    cavinkare: {
-      category: 'PROFESSIONAL EXPERIENCE // CAVINKARE',
-      date: 'Oct 2025 – Feb 2026',
-      isConcept: false,
-      title: 'Making a Beat Work Harder: FMCG Retail Beat & Territory Expansion in Mumbai',
-      problem: "Unproductive retailer visits in Mumbai's Andheri–Bandra corridor; high stockout frequency on high-margin lines due to inconsistent reordering cadence and slow retailer onboarding.",
-      action: 'Restructured daily beat routes covering 50+ retail outlets, onboarded 10+ high-potential General Trade accounts in Month 1, established direct retailer rapport, and aligned order booking with stock availability.',
-      metrics: [
-        { val: '+30%', label: 'MoM Focus-Category Revenue Lift' },
-        { val: '50+', label: 'Mumbai GT Retail Outlets Covered' },
-        { val: '+20%', label: 'Active Retailer-Base Expansion' },
-        { val: '10+', label: 'GT Accounts Onboarded in Month 1' }
-      ],
-      schematicSvg: `<svg class="schematic-svg" viewBox="0 0 540 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Beat routing schematic">
-        <rect x="10" y="25" width="130" height="50" rx="8" fill="#FBF8F3" stroke="#E2DCD5" stroke-width="1.5" />
-        <text x="75" y="48" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11" fill="#1C1A17" text-anchor="middle">Distributor Depot</text>
-        <text x="75" y="62" font-family="JetBrains Mono, monospace" font-size="9" fill="#E05A47" text-anchor="middle">Stock Dispatch</text>
-
-        <path d="M 140 50 L 190 50" stroke="#E05A47" stroke-width="2" stroke-dasharray="4 4" />
-        <polygon points="190,46 198,50 190,54" fill="#E05A47" />
-
-        <rect x="200" y="20" width="150" height="60" rx="8" fill="#FFF" stroke="#E05A47" stroke-width="1.5" />
-        <text x="275" y="45" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="12" fill="#1C1A17" text-anchor="middle">50+ Retail Outlets</text>
-        <text x="275" y="59" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#5A554E" text-anchor="middle">Andheri–Bandra Beat</text>
-        <text x="275" y="72" font-family="JetBrains Mono, monospace" font-size="9" fill="#1D7C6B" text-anchor="middle">+20% Active Accounts</text>
-
-        <path d="M 350 50 L 400 50" stroke="#1D7C6B" stroke-width="2" />
-        <polygon points="400,46 408,50 400,54" fill="#1D7C6B" />
-
-        <rect x="410" y="25" width="120" height="50" rx="8" fill="#FBF8F3" stroke="#1D7C6B" stroke-width="1.5" />
-        <text x="470" y="46" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="13" fill="#1D7C6B" text-anchor="middle">+30% MoM Lift</text>
-        <text x="470" y="62" font-family="JetBrains Mono, monospace" font-size="9" fill="#5A554E" text-anchor="middle">Focus Category</text>
-      </svg>`
-    },
-    onlysolar: {
-      category: 'ENTREPRENEURSHIP // ONLY SOLAR',
-      date: '2024 – Early 2025',
-      isConcept: false,
-      title: 'From Supplier to Shelf: Import Sourcing, Landed Cost Modeling & Commercial GTM',
-      problem: 'Unpredictable international supply lead times and volatile shipping rates threatening gross margin viability on commercial solar imports without unified landed cost models.',
-      action: 'Co-founded venture, evaluated international manufacturers, led vendor negotiations, managed import logistics, developed GTM and pricing plans, and oversaw P&L decisions.',
-      metrics: [
-        { val: '0 → 1', label: 'Commercial GTM Venture Launch' },
-        { val: 'End-to-End', label: 'Import Logistics & Sourcing' },
-        { val: 'Multi-Tier', label: 'Landed Unit Cost Modeling' },
-        { val: 'Direct MOQs', label: 'Manufacturer Negotiations' }
-      ],
-      schematicSvg: `<svg class="schematic-svg" viewBox="0 0 540 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sourcing and landed economics schematic">
-        <rect x="8" y="25" width="105" height="50" rx="8" fill="#FBF8F3" stroke="#E2DCD5" stroke-width="1.5" />
-        <text x="60" y="47" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11" fill="#1C1A17" text-anchor="middle">Factory FOB</text>
-        <text x="60" y="61" font-family="JetBrains Mono, monospace" font-size="9" fill="#E05A47" text-anchor="middle">Baseline: 38%</text>
-
-        <path d="M 113 50 L 138 50" stroke="#8B7FB8" stroke-width="2" />
-        <polygon points="138,46 144,50 138,54" fill="#8B7FB8" />
-
-        <rect x="145" y="25" width="115" height="50" rx="8" fill="#FBF8F3" stroke="#E2DCD5" stroke-width="1.5" />
-        <text x="202" y="47" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11" fill="#1C1A17" text-anchor="middle">Ocean Freight</text>
-        <text x="202" y="61" font-family="JetBrains Mono, monospace" font-size="9" fill="#8B7FB8" text-anchor="middle">Transit & Demurrage</text>
-
-        <path d="M 260 50 L 285 50" stroke="#D98A36" stroke-width="2" />
-        <polygon points="285,46 291,50 285,54" fill="#D98A36" />
-
-        <rect x="292" y="25" width="115" height="50" rx="8" fill="#FBF8F3" stroke="#E2DCD5" stroke-width="1.5" />
-        <text x="349" y="47" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11" fill="#1C1A17" text-anchor="middle">Customs / Port</text>
-        <text x="349" y="61" font-family="JetBrains Mono, monospace" font-size="9" fill="#D98A36" text-anchor="middle">Tariff & Clearance</text>
-
-        <path d="M 407 50 L 432 50" stroke="#1D7C6B" stroke-width="2" />
-        <polygon points="432,46 438,50 432,54" fill="#1D7C6B" />
-
-        <rect x="439" y="20" width="95" height="60" rx="8" fill="#FFF" stroke="#1D7C6B" stroke-width="1.5" />
-        <text x="486" y="44" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="12" fill="#1D7C6B" text-anchor="middle">Landed Cost</text>
-        <text x="486" y="58" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#5A554E" text-anchor="middle">Margin Protection</text>
-        <text x="486" y="70" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#1D7C6B" text-anchor="middle">0 → 1 GTM Model</text>
-      </svg>`
-    },
-    pipeline: {
-      category: 'INDEPENDENT ANALYTICAL CONCEPT',
-      date: '2024–2025 · CONCEPTUAL',
-      isConcept: true,
-      conceptPill: 'Synthetic Dataset & Conceptual Architecture',
-      title: 'See the Whole Flow: Relational Distribution Schema & Replenishment Dashboard',
-      problem: 'In General Trade distribution, field reps often book orders without visibility into distributor warehouse stock, leading to avoidable stockout gaps.',
-      action: 'Designed a conceptual third-normal-form relational SQL schema and Power BI dashboard model linking store visits, order bookings, and distributor stock thresholds.',
-      metrics: [
-        { val: '3NF', label: 'Normalized SQL Relational Schema' },
-        { val: 'Power BI', label: 'Store Replenishment Model' },
-        { val: 'Synthetic', label: 'Simulated Order & Stock Datasets' },
-        { val: 'Concept', label: 'End-to-End Distribution Model' }
-      ],
-      schematicSvg: `<svg class="schematic-svg" viewBox="0 0 540 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Relational schema architecture diagram">
-        <rect x="10" y="20" width="125" height="60" rx="8" fill="#FBF8F3" stroke="#8B7FB8" stroke-width="1.5" />
-        <text x="72" y="42" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11" fill="#1C1A17" text-anchor="middle">STORE_VISITS</text>
-        <text x="72" y="56" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#5A554E" text-anchor="middle">store_id (PK) · beat_id</text>
-        <text x="72" y="69" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#8B7FB8" text-anchor="middle">visit_timestamp · rep_id</text>
-
-        <path d="M 135 50 L 175 50" stroke="#8B7FB8" stroke-width="2" />
-        <text x="155" y="44" font-family="JetBrains Mono, monospace" font-size="8" fill="#8B7FB8" text-anchor="middle">1:N</text>
-        <polygon points="175,46 181,50 175,54" fill="#8B7FB8" />
-
-        <rect x="183" y="20" width="145" height="60" rx="8" fill="#FFF" stroke="#8B7FB8" stroke-width="1.5" />
-        <text x="255" y="42" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11" fill="#1C1A17" text-anchor="middle">ORDER_BOOKINGS</text>
-        <text x="255" y="56" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#5A554E" text-anchor="middle">order_id (PK) · store_id (FK)</text>
-        <text x="255" y="69" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#8B7FB8" text-anchor="middle">sku_code · qty · status</text>
-
-        <path d="M 328 50 L 368 50" stroke="#8B7FB8" stroke-width="2" />
-        <text x="348" y="44" font-family="JetBrains Mono, monospace" font-size="8" fill="#8B7FB8" text-anchor="middle">N:1</text>
-        <polygon points="368,46 374,50 368,54" fill="#8B7FB8" />
-
-        <rect x="376" y="20" width="154" height="60" rx="8" fill="#FBF8F3" stroke="#8B7FB8" stroke-width="1.5" />
-        <text x="453" y="42" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11" fill="#1C1A17" text-anchor="middle">DISTRIBUTOR_STOCK</text>
-        <text x="453" y="56" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#5A554E" text-anchor="middle">sku_code (PK) · on_hand</text>
-        <text x="453" y="69" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#1D7C6B" text-anchor="middle">reorder_lvl · lead_days</text>
-      </svg>`
-    },
-    reverse: {
-      category: 'INDEPENDENT OPERATIONS ANALYTICS CONCEPT',
-      date: '2024–2025 · CONCEPTUAL',
-      isConcept: true,
-      conceptPill: 'Illustrative Scenario & Decision Model',
-      title: 'Exceptions First: Reverse Logistics & Warranty Triage Decision Model',
-      problem: 'Return authorizations and warranty claims sitting in regional distribution depots without structured triage, locking capital and slowing customer resolution.',
-      action: 'Mapped an illustrative 3-tier diagnostic triage workflow (bench repair, vendor credit reclamation, scrap) with serialized component tracking.',
-      metrics: [
-        { val: '3-Tier', label: 'Diagnostic Intake Triage Routing' },
-        { val: 'Illustrative', label: 'Turnaround SLA Simulation' },
-        { val: 'Serialized', label: 'Component Return Tracking Model' },
-        { val: 'Concept', label: 'Reverse Logistics Framework' }
-      ],
-      schematicSvg: `<svg class="schematic-svg" viewBox="0 0 540 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Warranty triage flow schematic">
-        <rect x="10" y="25" width="115" height="50" rx="8" fill="#FBF8F3" stroke="#E2DCD5" stroke-width="1.5" />
-        <text x="67" y="46" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11" fill="#1C1A17" text-anchor="middle">Depot Return Intake</text>
-        <text x="67" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#8B7FB8" text-anchor="middle">Serialized RMA Tag</text>
-
-        <path d="M 125 50 L 165 50" stroke="#8B7FB8" stroke-width="2" />
-        <polygon points="165,46 171,50 165,54" fill="#8B7FB8" />
-
-        <rect x="173" y="20" width="130" height="60" rx="8" fill="#FFF" stroke="#8B7FB8" stroke-width="1.5" />
-        <text x="238" y="44" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="11.5" fill="#1C1A17" text-anchor="middle">3-Tier Triage Router</text>
-        <text x="238" y="58" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#5A554E" text-anchor="middle">Diagnostic Testing</text>
-        <text x="238" y="70" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#8B7FB8" text-anchor="middle">SLA Decision Tree</text>
-
-        <path d="M 303 35 L 345 25" stroke="#1D7C6B" stroke-width="1.5" />
-        <polygon points="345,22 352,25 345,28" fill="#1D7C6B" />
-        <rect x="355" y="10" width="175" height="25" rx="5" fill="#FBF8F3" stroke="#1D7C6B" stroke-width="1" />
-        <text x="442" y="26" font-family="JetBrains Mono, monospace" font-size="9" fill="#1D7C6B" text-anchor="middle">Tier 1: Bench Repair / Refurb</text>
-
-        <path d="M 303 50 L 345 50" stroke="#D98A36" stroke-width="1.5" />
-        <polygon points="345,47 352,50 345,53" fill="#D98A36" />
-        <rect x="355" y="38" width="175" height="25" rx="5" fill="#FBF8F3" stroke="#D98A36" stroke-width="1" />
-        <text x="442" y="54" font-family="JetBrains Mono, monospace" font-size="9" fill="#D98A36" text-anchor="middle">Tier 2: Vendor Credit Claim</text>
-
-        <path d="M 303 65 L 345 75" stroke="#E05A47" stroke-width="1.5" />
-        <polygon points="345,72 352,75 345,78" fill="#E05A47" />
-        <rect x="355" y="65" width="175" height="25" rx="5" fill="#FBF8F3" stroke="#E05A47" stroke-width="1" />
-        <text x="442" y="81" font-family="JetBrains Mono, monospace" font-size="9" fill="#E05A47" text-anchor="middle">Tier 3: Salvage Raw Scrap</text>
-      </svg>`
-    }
-  };
-
-  let activeProject = 'cavinkare';
-  let activeFilter = 'all';
-
-  const projectFilterBtns = $$('.project-filter-btn');
-  const projectEntries = $$('.project-index-entry');
-  const previewCategory = $('#previewCategory');
-  const previewDate = $('#previewDate');
-  const previewConceptNotice = $('#previewConceptNotice');
-  const previewConceptText = $('#previewConceptText');
-  const previewTitle = $('#previewTitle');
-  const previewSchematicStage = $('#previewSchematicStage');
-  const previewProblem = $('#previewProblem');
-  const previewAction = $('#previewAction');
-  const previewMetrics = $('#previewMetrics');
-  const previewDossierBtn = $('#previewDossierBtn');
-
-  function renderProjectPreview(projectId) {
-    if (!projectsData[projectId]) return;
-    const p = projectsData[projectId];
-
-    if (previewCategory) previewCategory.textContent = p.category;
-    if (previewDate) previewDate.textContent = p.date;
-
-    if (previewConceptNotice) {
-      if (p.isConcept) {
-        previewConceptNotice.style.display = 'block';
-        if (previewConceptText) previewConceptText.textContent = p.conceptPill || 'Synthetic Dataset & Conceptual Architecture';
-      } else {
-        previewConceptNotice.style.display = 'none';
-      }
-    }
-
-    if (previewTitle) previewTitle.textContent = p.title;
-    if (previewSchematicStage) previewSchematicStage.innerHTML = p.schematicSvg;
-    if (previewProblem) previewProblem.textContent = p.problem;
-    if (previewAction) previewAction.textContent = p.action;
-
-    if (previewMetrics && p.metrics) {
-      previewMetrics.innerHTML = p.metrics.map(m => `
-        <div class="metric-card">
-          <strong class="metric-val">${m.val}</strong>
-          <span class="metric-sub">${m.label}</span>
-        </div>
-      `).join('');
-    }
-
-    if (previewDossierBtn) {
-      previewDossierBtn.dataset.openCase = projectId;
-    }
-  }
-
-  function selectProject(projectId) {
-    if (!projectsData[projectId]) return;
-    activeProject = projectId;
-
-    projectEntries.forEach((entry) => {
-      const isSel = entry.dataset.projectId === projectId;
-      entry.classList.toggle('is-selected', isSel);
-      entry.setAttribute('aria-selected', isSel ? 'true' : 'false');
-    });
-
-    renderProjectPreview(projectId);
-  }
-
-  function setProjectFilter(filterKey) {
-    activeFilter = filterKey;
-
-    projectFilterBtns.forEach((btn) => {
-      const isSel = btn.dataset.filter === filterKey;
-      btn.classList.toggle('is-active', isSel);
-    });
-
-    let visibleCards = [];
-    projectEntries.forEach((entry) => {
-      const cat = entry.dataset.category;
-      const isVisible = filterKey === 'all' || cat === filterKey;
-      entry.style.display = isVisible ? 'flex' : 'none';
-      if (isVisible) visibleCards.push(entry);
-    });
-
-    // If currently active project is hidden by filter, select first visible project
-    const currentEntry = document.querySelector(`.project-index-entry[data-project-id="${activeProject}"]`);
-    if (currentEntry && currentEntry.style.display === 'none' && visibleCards.length > 0) {
-      selectProject(visibleCards[0].dataset.projectId);
-    }
-  }
-
-  // Filter Button Clicks
-  projectFilterBtns.forEach((btn) => {
-    btn.addEventListener('click', () => setProjectFilter(btn.dataset.filter));
-  });
-
-  // Project Entry Hover, Click & Keyboard Navigation
-  projectEntries.forEach((entry, idx) => {
-    entry.addEventListener('click', () => selectProject(entry.dataset.projectId));
-    entry.addEventListener('mouseenter', () => selectProject(entry.dataset.projectId));
-    entry.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        selectProject(entry.dataset.projectId);
+        togglePrinciple(item);
       } else if (e.key === 'ArrowDown') {
         e.preventDefault();
-        const visibleEntries = Array.from(projectEntries).filter(el => el.style.display !== 'none');
-        const curIdx = visibleEntries.indexOf(entry);
-        if (curIdx >= 0 && curIdx < visibleEntries.length - 1) {
-          visibleEntries[curIdx + 1].focus();
-          selectProject(visibleEntries[curIdx + 1].dataset.projectId);
-        }
+        const next = principleItems[(idx + 1) % principleItems.length];
+        next.focus();
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        const visibleEntries = Array.from(projectEntries).filter(el => el.style.display !== 'none');
-        const curIdx = visibleEntries.indexOf(entry);
-        if (curIdx > 0) {
-          visibleEntries[curIdx - 1].focus();
-          selectProject(visibleEntries[curIdx - 1].dataset.projectId);
-        }
+        const prev = principleItems[(idx - 1 + principleItems.length) % principleItems.length];
+        prev.focus();
       }
     });
   });
 
-  // Initial render of preview
-  renderProjectPreview(activeProject);
+  // Clicking outside principles list resets to compact state
+  document.addEventListener('pointerdown', (e) => {
+    const principlesList = document.querySelector('.editorial-principles-list');
+    if (principlesList && !principlesList.contains(e.target)) {
+      principleItems.forEach((item) => {
+        item.classList.remove('is-active');
+        item.setAttribute('aria-selected', 'false');
+        const ind = item.querySelector('.principle-toggle-indicator');
+        if (ind) ind.textContent = '+';
+      });
+      // Set principle 01 as default active
+      const first = principleItems[0];
+      if (first) {
+        first.classList.add('is-active');
+        first.setAttribute('aria-selected', 'true');
+        const ind = first.querySelector('.principle-toggle-indicator');
+        if (ind) ind.textContent = '−';
+      }
+    }
+  });
+
+  // Bridge Links from Section 02 to Section 03
+  $$('.principle-bridge-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.dataset.bridgeTo;
+      const targetRow = document.querySelector(`.editorial-project-row[data-project-id="${targetId}"]`);
+      const workSection = document.getElementById('work');
+      if (workSection) {
+        workSection.scrollIntoView({ behavior: 'smooth' });
+      }
+      if (targetRow) {
+        targetRow.classList.remove('is-highlighted');
+        void targetRow.offsetWidth;
+        targetRow.classList.add('is-highlighted');
+        targetRow.focus();
+      }
+    });
+  });
+
+  // ==========================================================================
+  // 7D. SECTION 03: EDITORIAL PROJECT INDEX CONTROLLER (Portfolio V29)
+  // Spacious typographic index with click-to-open case study dossiers
+  // ==========================================================================
+  const projectRows = $$('.editorial-project-row');
+
+  projectRows.forEach((row, idx) => {
+    // Clicking anywhere on row opens case study dossier
+    row.addEventListener('click', (e) => {
+      if (e.target.closest('[data-open-case]')) return;
+      const projectId = row.dataset.projectId;
+      if (projectId && typeof openCaseDossierById === 'function') {
+        openCaseDossierById(projectId);
+      }
+    });
+
+    row.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const projectId = row.dataset.projectId;
+        if (projectId && typeof openCaseDossierById === 'function') {
+          openCaseDossierById(projectId);
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = projectRows[(idx + 1) % projectRows.length];
+        next.focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = projectRows[(idx - 1 + projectRows.length) % projectRows.length];
+        prev.focus();
+      }
+    });
+  });
 
   // ==========================================================================
   // 8. CASE STUDY DOSSIER DATA & INJECTION (All 4 Retained & Factually Audited)
@@ -1666,38 +1299,44 @@
   const caseDialogCategory = $('#caseDialogCategory');
   const caseDialogBody = $('#caseDialogBody');
 
-  $$('[data-open-case]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const caseId = btn.dataset.openCase;
-      const data = caseDossiers[caseId];
-      if (!data) return;
+  function openCaseDossierById(caseId) {
+    const data = caseDossiers[caseId];
+    if (!data) return;
 
-      if (caseDialogCategory) caseDialogCategory.textContent = data.category;
-      if (caseDialogBody) {
-        let html = `<h3 class="dialog-title">${data.title}</h3>`;
-        html += '<div class="dossier-body">';
-        data.sections.forEach((sec) => {
-          html += `
-            <div class="dossier-section">
-              <h4>${sec.heading}</h4>
-              <p>${sec.body}</p>
-            </div>
-          `;
-        });
-        if (data.takeaways) {
-          html += `
-            <div class="dossier-takeaways">
-              <strong>${data.takeaways.title}</strong>
-              <p>${data.takeaways.text}</p>
-            </div>
-          `;
-        }
-        html += '</div>';
-        caseDialogBody.innerHTML = html;
+    if (caseDialogCategory) caseDialogCategory.textContent = data.category;
+    if (caseDialogBody) {
+      let html = `<h3 class="dialog-title">${data.title}</h3>`;
+      html += '<div class="dossier-body">';
+      data.sections.forEach((sec) => {
+        html += `
+          <div class="dossier-section">
+            <h4>${sec.heading}</h4>
+            <p>${sec.body}</p>
+          </div>
+        `;
+      });
+      if (data.takeaways) {
+        html += `
+          <div class="dossier-takeaways">
+            <strong>${data.takeaways.title}</strong>
+            <p>${data.takeaways.text}</p>
+          </div>
+        `;
       }
+      html += '</div>';
+      caseDialogBody.innerHTML = html;
+    }
 
-      openDialog('caseDialog');
-    });
+    openDialog('caseDialog');
+  }
+
+  // Delegated click listener for any [data-open-case]
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-open-case]');
+    if (btn) {
+      e.stopPropagation();
+      openCaseDossierById(btn.dataset.openCase);
+    }
   });
 
   // ==========================================================================
