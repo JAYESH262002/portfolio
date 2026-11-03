@@ -1,6 +1,6 @@
 /**
- * Jayesh Singh — Master Reconstruction (V17 Next)
- * High-performance, modular, accessible interaction & animation engine.
+ * Jayesh Singh — V17 Minimal Operations Portfolio
+ * Interactive Architecture, Simulation Engine & Progressive Disclosure System
  */
 
 (() => {
@@ -15,18 +15,20 @@
   // ==========================================================================
   // 1. THEME MANAGEMENT (Light / Dark with localStorage)
   // ==========================================================================
-  const storageKey = 'jayesh-portfolio-theme';
-  let currentTheme = 'light';
+  const storageKey = 'jayesh-minimal-ops-theme';
+  let currentTheme = document.documentElement.dataset.theme || 'light';
   try {
     const saved = localStorage.getItem(storageKey);
-    if (saved === 'light' || saved === 'dark') currentTheme = saved;
+    if (saved === 'light' || saved === 'dark') {
+      currentTheme = saved;
+    }
   } catch (e) {}
 
   const applyTheme = (theme) => {
     currentTheme = theme;
     document.documentElement.dataset.theme = currentTheme;
     const metaTheme = $('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.content = currentTheme === 'dark' ? '#0b1016' : '#faf8f5';
+    if (metaTheme) metaTheme.content = currentTheme === 'dark' ? '#0c1117' : '#faf8f5';
     try {
       localStorage.setItem(storageKey, currentTheme);
     } catch (e) {}
@@ -62,7 +64,7 @@
   setInterval(updateClock, 1000);
 
   // ==========================================================================
-  // 3. GLOSSY HEADER: POINTER-TRACKED SHINE, SCROLL STATE & SLIDING PILL
+  // 3. GLOSSY HEADER: POINTER-TRACKED SHINE, SCROLL STATE & SLIDING PILL NAV
   // ==========================================================================
   const header = $('#siteHeader');
   const desktopNav = $('.desktop-nav');
@@ -79,7 +81,7 @@
       scrollProgressBar.style.width = `${progress}%`;
     }
     if (header) {
-      header.classList.toggle('is-scrolled', scrollTop > 35);
+      header.classList.toggle('is-scrolled', scrollTop > 30);
     }
   }, { passive: true });
 
@@ -103,7 +105,7 @@
 
   const initialActive = $('.nav-link.is-active') || navLinks[0];
   if (initialActive) {
-    setTimeout(() => moveNavIndicator(initialActive), 100);
+    setTimeout(() => moveNavIndicator(initialActive), 120);
   }
 
   navLinks.forEach((link) => {
@@ -134,7 +136,7 @@
           }
         }
       });
-    }, { rootMargin: '-20% 0px -65% 0px', threshold: 0.05 });
+    }, { rootMargin: '-20% 0px -60% 0px', threshold: 0.1 });
 
     navSections.forEach((sec) => navObserver.observe(sec));
   }
@@ -163,666 +165,800 @@
     link.addEventListener('click', () => setMobileMenu(false));
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      setMobileMenu(false);
-      closeAllModals();
-    }
-  });
-
   // ==========================================================================
-  // 5. HERO 3D TILT CARD & PARTICLE CANVAS SIGNAL NETWORK
+  // 5. CUSTOM CURSOR (Desktop fine pointer only)
   // ==========================================================================
-  const heroArt = $('#heroArt');
-  const heroCaption = $('#heroSignalCaption');
+  const cursorDot = $('#cursorDot');
+  const cursorRing = $('#cursorRing');
 
-  if (heroArt && finePointer) {
-    let bounds = heroArt.getBoundingClientRect();
-    const updateBounds = () => { bounds = heroArt.getBoundingClientRect(); };
-    window.addEventListener('resize', updateBounds, { passive: true });
-
-    heroArt.addEventListener('pointermove', (e) => {
-      const x = e.clientX - bounds.left;
-      const y = e.clientY - bounds.top;
-      const midX = bounds.width / 2;
-      const midY = bounds.height / 2;
-      const tiltY = ((x - midX) / midX) * 9;
-      const tiltX = -((y - midY) / midY) * 9;
-
-      heroArt.style.setProperty('--tilt-x', `${tiltX.toFixed(2)}deg`);
-      heroArt.style.setProperty('--tilt-y', `${tiltY.toFixed(2)}deg`);
-      heroArt.style.setProperty('--art-x', `${x.toFixed(1)}px`);
-      heroArt.style.setProperty('--art-y', `${y.toFixed(1)}px`);
+  if (finePointer && cursorDot && cursorRing) {
+    window.addEventListener('pointermove', (e) => {
+      cursorDot.style.opacity = '1';
+      cursorRing.style.opacity = '1';
+      cursorDot.style.left = `${e.clientX}px`;
+      cursorDot.style.top = `${e.clientY}px`;
+      cursorRing.style.left = `${e.clientX}px`;
+      cursorRing.style.top = `${e.clientY}px`;
     }, { passive: true });
 
-    heroArt.addEventListener('pointerleave', () => {
-      heroArt.style.setProperty('--tilt-x', '0deg');
-      heroArt.style.setProperty('--tilt-y', '0deg');
-      heroArt.style.setProperty('--art-x', '50%');
-      heroArt.style.setProperty('--art-y', '50%');
+    document.addEventListener('pointerleave', () => {
+      cursorDot.style.opacity = '0';
+      cursorRing.style.opacity = '0';
+    });
+
+    const interactiveSelectors = 'a, button, input, textarea, .op-node, .incident-card';
+    $$(interactiveSelectors).forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        cursorRing.style.transform = 'translate(-50%, -50%) scale(1.6)';
+        cursorRing.style.borderColor = 'var(--accent-coral)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursorRing.style.borderColor = 'var(--accent-lavender)';
+      });
     });
   }
 
-  // Interactive Orbit Domain Pins
-  const signalMessages = {
-    field: 'FMCG field distribution: 50+ retail outlet beat across Andheri–Bandra.',
-    venture: 'Global sourcing: International RFQs, customs duties & landed-cost unit economics.',
-    systems: 'Systems intelligence: B.Tech CS relational SQL & Power BI fill-rate dashboards.'
-  };
-
-  $$('.orbit-label').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const signal = btn.dataset.signal;
-      if (heroCaption && signalMessages[signal]) {
-        heroCaption.textContent = signalMessages[signal];
-      }
-    });
-  });
-
-  // Canvas Particle Signal Network
-  const canvas = $('#signalCanvas');
-  if (canvas && !prefersReducedMotion) {
-    const ctx = canvas.getContext('2d');
-    let width = (canvas.width = canvas.offsetWidth);
-    let height = (canvas.height = canvas.offsetHeight);
-
-    const resizeCanvas = () => {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
-    };
-    window.addEventListener('resize', resizeCanvas, { passive: true });
-
-    const numPoints = 28;
-    const points = Array.from({ length: numPoints }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.45,
-      vy: (Math.random() - 0.5) * 0.45,
-      radius: Math.random() * 2 + 1.2
-    }));
-
-    function drawNetwork() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'rgba(117, 100, 127, 0.45)';
-      ctx.strokeStyle = 'rgba(117, 100, 127, 0.12)';
-      ctx.lineWidth = 1;
-
-      for (let i = 0; i < numPoints; i++) {
-        const p1 = points[i];
-        p1.x += p1.vx;
-        p1.y += p1.vy;
-        if (p1.x < 0 || p1.x > width) p1.vx *= -1;
-        if (p1.y < 0 || p1.y > height) p1.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        for (let j = i + 1; j < numPoints; j++) {
-          const p2 = points[j];
-          const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-          if (dist < 90) {
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(drawNetwork);
+  // ==========================================================================
+  // 6. SIGNATURE OPERATIONS VISUAL (Replaces Photograph)
+  // Supplier → Sourcing → Inventory → Warehouse → Distribution → Retail + Loop
+  // ==========================================================================
+  const stageData = [
+    {
+      stage: 'STAGE 01 // SUPPLIER',
+      status: 'NOMINAL CADENCE',
+      title: 'Factory Capacity & Overseas Lead Time',
+      desc: 'Evaluating factory capacity limits, component BOM availability, and FOB terms before capital commitment. Sourcing resilience begins at the tier-1 manufacturer gate.',
+      metric: 'Lead Time: 28 Days',
+      context: 'Only Solar Tier-1 Manufacturer Audits'
+    },
+    {
+      stage: 'STAGE 02 // SOURCING',
+      status: 'PRICE LOCK ACTIVE',
+      title: 'Landed-Cost Build-Up & Currency Risk',
+      desc: 'Modeling container freight spot rates, customs tariffs, port demurrage risks, and currency fluctuations to ensure target gross margin remains viable after import.',
+      metric: 'Landed Margin: +24.8%',
+      context: 'Multi-variable Landed-Cost Engine'
+    },
+    {
+      stage: 'STAGE 03 // INVENTORY',
+      status: 'SAFETY BUFFER HEALTHY',
+      title: 'Safety Stock, EOQ & Reorder Trigger Points',
+      desc: 'Balancing inventory holding capital against stockout risk. Calculating dynamic reorder points factoring supplier lead time variance and historical sales velocity.',
+      metric: 'Safety Stock: 18 Days',
+      context: '3NF Relational Inventory Database'
+    },
+    {
+      stage: 'STAGE 04 // WAREHOUSE',
+      status: 'DISPATCH VELOCITY OPTIMAL',
+      title: 'Inbound Receiving, Sortation & Put-Away',
+      desc: 'Standardizing depot intake inspection, batch serialization, and pallet cross-docking to prevent fulfillment lag and unrecorded transit breakage.',
+      metric: 'Cycle Time: 48h Inbound',
+      context: 'Depot Receiving & RMA Triage Protocol'
+    },
+    {
+      stage: 'STAGE 05 // DISTRIBUTION',
+      status: 'BEAT CADENCE ACTIVE',
+      title: 'Territory Route Scheduling & Fulfillment',
+      desc: 'Sequencing high-density delivery routes, coordinating distributor stock dispatches, and aligning primary factory shipping with secondary field counter orders.',
+      metric: 'On-Time Dispatch: 99.4%',
+      context: 'Daily Beat Reorder Synchronization'
+    },
+    {
+      stage: 'STAGE 06 // RETAIL',
+      status: 'SHELF FILL RATE 98.2%',
+      title: '50+ General Trade Outlets & Shelf Take-Off',
+      desc: 'Direct field presence across 50+ retail counters. Auditing planogram visibility, retailer working capital limits, and fast-moving SKU velocity at point of sale.',
+      metric: 'Active GT Base: +20% Lift',
+      context: 'CavinKare Mumbai Beat Transformation'
     }
-    requestAnimationFrame(drawNetwork);
+  ];
+
+  const opNodes = $$('.op-node');
+  const telemetryStage = $('#telemetryStage');
+  const telemetryStatus = $('#telemetryStatus');
+  const telemetryTitle = $('#telemetryTitle');
+  const telemetryDesc = $('#telemetryDesc');
+  const telemetryMetric = $('#telemetryMetric');
+  const telemetryContext = $('#telemetryContext');
+
+  function updateTelemetry(stageIdx) {
+    const data = stageData[stageIdx];
+    if (!data) return;
+
+    opNodes.forEach((node, idx) => {
+      node.classList.toggle('is-active', idx === stageIdx);
+    });
+
+    if (telemetryStage) telemetryStage.textContent = data.stage;
+    if (telemetryStatus) telemetryStatus.innerHTML = `<i class="status-dot"></i> ${data.status}`;
+    if (telemetryTitle) telemetryTitle.textContent = data.title;
+    if (telemetryDesc) telemetryDesc.textContent = data.desc;
+    if (telemetryMetric) telemetryMetric.textContent = data.metric;
+    if (telemetryContext) telemetryContext.textContent = data.context;
   }
 
-  // ==========================================================================
-  // 6. CHAPTER 01: 4-STAGE OPERATING LOOP
-  // ==========================================================================
-  const loopData = {
-    observe: {
-      kicker: '01 / START CLOSE TO REALITY',
-      title: 'Observe before optimising.',
-      copy: 'Begin with the beat route, the retail shelf, the supplier RFQ call, or the spreadsheet a frontline team actually uses. Notice the gap between the designed SOP and lived reality.',
-      proof: 'Walking 50+ retail outlets from Andheri to Bandra revealed that a low reorder number is often a distributor credit-cycle bottleneck, not a drop in consumer demand.'
-    },
-    frame: {
-      kicker: '02 / NAME THE BOTTLENECK',
-      title: 'Make the operational signal legible.',
-      copy: 'Translate scattered field notes, order logs, and stock movements into a structured view that supply planners, sales reps, and commercial leads can challenge together.',
-      proof: 'Linking beat visit logs with distributor closing stock in SQL exposes phantom stockouts before secondary sales are lost on the weekend.'
-    },
-    decide: {
-      kicker: '03 / WEIGH THE CONSTRAINTS',
-      title: 'Decide with unit-economics context.',
-      copy: 'Every operational decision is a trade-off between factory quote, freight volatility, buffer stock, and distributor channel margin.',
-      proof: 'At Only Solar, modeling customs duty, ocean freight volatility, and defect buffer showed when a higher factory quote actually yielded a lower net landed cost.'
-    },
-    repeat: {
-      kicker: '04 / LEAVE A WORKING RHYTHM',
-      title: 'Build habits that survive a busy Tuesday.',
-      copy: 'The output of good operations or product design is a repeatable check, a clearer handoff, or an exception alert that changes Tuesday-morning execution.',
-      proof: 'Sequencing outlets by velocity and credit reliability enabled 10+ new GT account onboardings in Month 1 (+20% active retailer base).'
-    }
-  };
-
-  const loopTabs = $$('.loop-tab');
-  const loopKicker = $('#loopKicker');
-  const loopTitle = $('#loopTitle');
-  const loopCopy = $('#loopCopy');
-  const loopProof = $('#loopProof');
-
-  loopTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const stage = tab.dataset.stage;
-      const data = loopData[stage];
-      if (!data) return;
-
-      loopTabs.forEach((t) => {
-        const on = t === tab;
-        t.classList.toggle('is-active', on);
-        t.setAttribute('aria-selected', String(on));
-      });
-
-      if (loopKicker) loopKicker.textContent = data.kicker;
-      if (loopTitle) loopTitle.textContent = data.title;
-      if (loopCopy) loopCopy.textContent = data.copy;
-      if (loopProof) loopProof.textContent = data.proof;
-    });
-  });
-
-  // ==========================================================================
-  // 7. CHAPTER 02: MBA FOCUS & ROLE LENSES
-  // ==========================================================================
-  const trackData = {
-    ops: {
-      badge: 'PRIMARY MBA SPECIALISATION · CONFIRMED MAJOR',
-      title: 'End-to-End Supply Chain, Sourcing & Distribution Execution',
-      desc: 'Designing resilient supply chains from supplier factory gates to retail shelves—focusing on procurement economics, inventory replenishment cycles, warehouse flow, and last-mile territory reliability.',
-      pills: [
-        'Supply Chain & Network Planning',
-        'Inventory Replenishment & Fill-Rate Sync',
-        'International Sourcing & Import Logistics',
-        'Vendor RFQ & Landed-Cost Modeling',
-        'Last-Mile Beat & Route Optimization',
-        'Process SOPs & Working-Capital Control'
-      ],
-      proof: 'Real-World Proof: Backed by managing a high-frequency beat of 50+ retail outlets at CavinKare and executing cross-border import logistics at Only Solar.'
-    },
-    pm: {
-      badge: 'COMPLEMENTARY MINOR TRACK A · TECH + OPS BRIDGE',
-      title: 'Translating Field & Supply Chain Friction into Digital Systems',
-      desc: 'Leveraging my B.Tech in Computer Science Engineering (75.8%, LPU) and analytics stack (SQL, Power BI, Python) to bridge physical operations with DMS/SFA workflows, internal tools, and automated exception alerts.',
-      pills: [
-        'B.Tech CS Systems Architecture',
-        'DMS / SFA Field Workflow Design',
-        'Retailer & Internal User Discovery',
-        'KPI Instrumentation (Fill Rate, Strike Rate)',
-        'Relational SQL & Power BI Modeling',
-        'PRDs & Exception-First Alert Specs'
-      ],
-      proof: 'Real-World Proof: Backed by a B.Tech in CS (LPU, 2024), verified SQL/Power BI/ML credentials, and hands-on field workflow discovery.'
-    },
-    sales: {
-      badge: 'COMPLEMENTARY MINOR TRACK B · COMMERCIAL & GTM ENGINE',
-      title: 'Ground-Truth Channel Strategy, Trade Marketing & Revenue Growth',
-      desc: 'Connecting supply availability with demand generation—using frontline General Trade/Modern Trade execution, tiered channel margin design, and B2B relationship management to move inventory profitably.',
-      pills: [
-        'FMCG General Trade & Supermarket Execution',
-        'Go-to-Market & Tiered Pricing Strategy',
-        'Trade Schemes & Planogram Compliance',
-        'B2B Distributor Onboarding & ROI',
-        'New Account Prospecting (+20% Base Growth)',
-        'Competitor & Market Intelligence'
-      ],
-      proof: 'Real-World Proof: Backed by +30% MoM focus-category lift at CavinKare and 0-to-1 B2B commercial GTM as Co-Founder of Only Solar.'
-    }
-  };
-
-  const lensTabs = $$('.lens-tab');
-  const trackBadge = $('#trackBadge');
-  const trackTitle = $('#trackTitle');
-  const trackDesc = $('#trackDesc');
-  const trackPills = $('#trackPills');
-  const trackProof = $('#trackProof');
-
-  lensTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const track = tab.dataset.track;
-      const data = trackData[track];
-      if (!data) return;
-
-      lensTabs.forEach((t) => {
-        const on = t === tab;
-        t.classList.toggle('is-active', on);
-        t.setAttribute('aria-selected', String(on));
-      });
-
-      if (trackBadge) trackBadge.textContent = data.badge;
-      if (trackTitle) trackTitle.textContent = data.title;
-      if (trackDesc) trackDesc.textContent = data.desc;
-      if (trackPills) {
-        trackPills.innerHTML = data.pills.map((p) => `<div class="competency-pill">${p}</div>`).join('');
+  opNodes.forEach((node) => {
+    const idx = parseInt(node.dataset.stage, 10);
+    node.addEventListener('click', () => updateTelemetry(idx));
+    node.addEventListener('mouseenter', () => updateTelemetry(idx));
+    node.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        updateTelemetry(idx);
       }
-      if (trackProof) trackProof.innerHTML = `<strong>Real-World Proof:</strong> ${data.proof.replace('Real-World Proof: ', '')}`;
     });
   });
 
-  // ==========================================================================
-  // 8. CHAPTER 04: WORK FILTERING & FULL CASE STUDY DOSSIERS
-  // ==========================================================================
-  const filterPills = $$('.filter-pill');
-  const caseCards = $$('.case-card');
+  // Scenario Buttons
+  const scenarioBtns = $$('.scenario-btn');
+  const forwardPulses = $$('.pipe-pulse');
+  const feedbackPulse = $('.pulse-feedback');
 
-  filterPills.forEach((btn) => {
+  scenarioBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      filterPills.forEach((p) => p.classList.toggle('is-active', p === btn));
-      const filter = btn.dataset.filter;
-      caseCards.forEach((card) => {
-        const tags = (card.dataset.tags || '').split(' ');
-        card.style.display = filter === 'all' || tags.includes(filter) ? 'flex' : 'none';
-      });
+      scenarioBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
+      const scenario = btn.dataset.scenario;
+
+      if (scenario === 'normal') {
+        forwardPulses.forEach((p) => p.style.animationDuration = '5s');
+        if (feedbackPulse) feedbackPulse.style.animationDuration = '4.5s';
+        if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot"></i> NOMINAL STEADY FLOW';
+        showToast('Pipeline Scenario: Steady state operations nominal');
+      } else if (scenario === 'delay') {
+        forwardPulses.forEach((p) => p.style.animationDuration = '9s');
+        if (feedbackPulse) feedbackPulse.style.animationDuration = '6s';
+        if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot" style="background:#c46244;box-shadow:0 0 6px #c46244"></i> PORT CLEARANCE BOTTLENECK';
+        showToast('Pipeline Alert: Port clearance delay simulated (+12 days lead-time)');
+      } else if (scenario === 'surge') {
+        forwardPulses.forEach((p) => p.style.animationDuration = '2.5s');
+        if (feedbackPulse) feedbackPulse.style.animationDuration = '2s';
+        if (telemetryStatus) telemetryStatus.innerHTML = '<i class="status-dot" style="background:#38bdf8;box-shadow:0 0 6px #38bdf8"></i> DEMAND SURGE DETECTED';
+        showToast('Pipeline Alert: Retail demand surge triggered rapid replenishment cycle');
+      }
     });
   });
 
-  // Case Dossier Data
-  const dossiers = {
-    fmcg: {
-      kicker: 'CASE 01 · FIELD OPERATIONS & ROUTE INTELLIGENCE (CAVINKARE)',
-      title: 'Optimizing High-Frequency FMCG Retail Distribution & Replenishment in Mumbai',
+  // ==========================================================================
+  // 7. PROGRESSIVE DISCLOSURE MODAL DIALOGS
+  // ==========================================================================
+  const allDialogs = $$('dialog.app-dialog');
+
+  function openDialog(dialogId) {
+    const dlg = $(`#${dialogId}`);
+    if (!dlg) return;
+    if (typeof dlg.showModal === 'function') {
+      dlg.showModal();
+    } else {
+      dlg.setAttribute('open', '');
+    }
+    document.body.classList.add('modal-open');
+  }
+
+  function closeDialog(dialogElement) {
+    if (!dialogElement) return;
+    if (typeof dialogElement.close === 'function') {
+      dialogElement.close();
+    } else {
+      dialogElement.removeAttribute('open');
+    }
+    document.body.classList.remove('modal-open');
+  }
+
+  function closeAllModals() {
+    allDialogs.forEach((dlg) => closeDialog(dlg));
+  }
+
+  // Backdrop click and close buttons
+  allDialogs.forEach((dlg) => {
+    dlg.addEventListener('click', (e) => {
+      const rect = dlg.getBoundingClientRect();
+      const isInDialog = (
+        rect.top <= e.clientY &&
+        e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX &&
+        e.clientX <= rect.left + rect.width
+      );
+      if (!isInDialog) {
+        closeDialog(dlg);
+      }
+    });
+  });
+
+  $$('[data-close-dialog]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.closeDialog;
+      closeDialog($(`#${targetId}`));
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAllModals();
+      setMobileMenu(false);
+    }
+  });
+
+  // Trigger buttons for standalone modals
+  $('#openLoopBtn')?.addEventListener('click', () => openDialog('loopDialog'));
+  $('#openCapabilitiesBtn')?.addEventListener('click', () => openDialog('capabilitiesDialog'));
+  $('#openCredentialsBtn')?.addEventListener('click', () => openDialog('credentialsDialog'));
+  $('#openLabModalBtn')?.addEventListener('click', () => openDialog('labDialog'));
+
+  // ==========================================================================
+  // 8. CASE STUDY DOSSIER DATA & INJECTION
+  // ==========================================================================
+  const caseDossiers = {
+    cavinkare: {
+      category: 'FMCG RETAIL DISTRIBUTION',
+      title: 'Optimizing Mumbai High-Frequency Retail Beat & Replenishment Sync',
       sections: [
         {
-          title: 'Role & Operating Scope',
-          content: 'Sales Representative — CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026 · Territory: Andheri to Bandra, Mumbai (50+ General Trade outlets, supermarkets, and local distributors).'
+          heading: '01 // Operational Scope & Field Context',
+          body: 'Sales Representative — CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026\nTerritory: Andheri to Bandra, Mumbai (50+ General Trade retail outlets, supermarkets, and local distributors).'
         },
         {
-          title: 'Operational & Commercial Bottleneck',
-          content: 'High outlet density, tight retailer working capital, and asynchronous reorder cycles between field order booking and distributor dispatch risked stockouts on fast-moving SKUs and stagnant reach in underserved sub-beats.'
+          heading: '02 // The Real Bottleneck',
+          body: 'High outlet density, tight retailer working capital, and asynchronous reorder cycles between field order booking and distributor dispatch risked stockouts on fast-moving SKUs while stagnant reach remained in underserved sub-beats.'
         },
         {
-          title: '3-Step Execution Architecture',
-          content: '1. Beat Segmentation & Route Engineering: Sequenced 50+ outlets by velocity and credit reliability while carving out prospecting windows that acquired 10+ new GT accounts in Month 1 (+20% active base).\n2. Replenishment Sync: Coordinated primary and secondary booking directly with distributor closing stock to protect fill rates.\n3. Merchandising & Trade Schemes: Secured prime "Hot Spot" shelf visibility and deployed targeted trade schemes, delivering a +30% MoM revenue increase in focus categories.'
+          heading: '03 // 3-Step Execution Architecture',
+          body: '1. Beat Segmentation & Route Engineering: Sequenced 50+ outlets by velocity and credit reliability while carving out prospecting windows that acquired 10+ new GT accounts in Month 1 (+20% active base).\n2. Replenishment Sync: Coordinated primary and secondary booking directly with distributor closing stock to protect on-time, in-full fill rates.\n3. Merchandising & Trade Schemes: Secured prime "Hot Spot" counter visibility and deployed targeted trade schemes, delivering a +30% MoM revenue increase in focus categories.'
         },
         {
-          title: 'Operations + Product + GTM Takeaway',
-          content: 'Demonstrates how frontline sales growth depends on replenishment reliability (Operations) and highlights where automated beat-level reorder alerts (Product Management) can eliminate stockouts.'
+          heading: '04 // Quantified Outcome & Career Takeaway',
+          body: 'Demonstrates how frontline sales growth depends directly on replenishment reliability (Operations) and highlights where automated beat-level reorder alerts (Product Management) eliminate stockouts.'
         }
-      ]
+      ],
+      takeaways: {
+        title: 'Core Methodological Lesson',
+        text: 'A sales rep is not just a commercial negotiator—they are the critical human sensor in a replenishment supply chain.'
+      }
     },
-    solar: {
-      kicker: 'CASE 02 · 0-TO-1 SUPPLY CHAIN & B2B LAUNCH (ONLY SOLAR)',
-      title: 'End-to-End International Sourcing, Landed-Cost Modeling & B2B Channel Launch',
+    onlysolar: {
+      category: '0→1 VENTURE SOURCING',
+      title: 'Cross-Border Sourcing, Landed-Cost Modeling & B2B Distribution Launch',
       sections: [
         {
-          title: 'Role & Operating Scope',
-          content: 'Co-Founder & Business Head — Only Solar (Import & Export) · 2024 – Early 2025 · Mumbai, India · Commercial Solar, Street, and Flood Lighting.'
+          heading: '01 // Operational Scope & Field Context',
+          body: 'Co-Founder & Business Head — Only Solar (Import & Export) · 2024 – Early 2025\nMumbai, India · Commercial Solar, Street, and Flood Lighting.'
         },
         {
-          title: 'Operational & Commercial Bottleneck',
-          content: 'Launching an import-distribution lighting venture required solving overseas supplier lead times and freight/customs duty volatility on the supply side while preserving competitive multi-tier distributor margins on the demand side.'
+          heading: '02 // The Real Bottleneck',
+          body: 'Launching an import-distribution lighting venture required solving overseas supplier lead times and freight/customs duty volatility on the supply side while preserving competitive multi-tier distributor margins on the demand side.'
         },
         {
-          title: '3-Step Execution Architecture',
-          content: '1. Supplier Vetting & RFQ Negotiation: Evaluated international manufacturers across defect tolerance, MOQ flexibility, and FOB unit pricing.\n2. Landed-Cost & Margin Modeling: Built unit-economics models combining FOB price, freight, customs duties, and buffer inventory cost to structure B2B distributor price tiers.\n3. Channel Operations & P&L Control: Led B2B buyer relationships, distributor onboarding, working-capital cycles, and quality assurance.'
+          heading: '03 // 3-Step Execution Architecture',
+          body: '1. Supplier Vetting & RFQ Negotiation: Evaluated international tier-1 manufacturers across defect tolerance, MOQ flexibility, and FOB unit pricing.\n2. Landed-Cost & Margin Modeling: Built unit-economics models combining FOB price, freight, customs duties, port demurrage buffers, and inland transit to structure B2B distributor price tiers.\n3. Channel Operations & P&L Control: Led B2B buyer relationships, distributor onboarding, working-capital cycles, and warranty reconciliation.'
         },
         {
-          title: 'Operations + Product + GTM Takeaway',
-          content: 'Connects cross-border procurement and landed-cost math (Operations) directly to channel pricing, positioning, and B2B conversion (Sales & Marketing).'
+          heading: '04 // Quantified Outcome & Career Takeaway',
+          body: 'Connects cross-border procurement and landed-cost math (Operations) directly to channel pricing, positioning, and B2B conversion (Sales & Marketing).'
         }
-      ]
+      ],
+      takeaways: {
+        title: 'Core Methodological Lesson',
+        text: 'Never commit capital to an FOB quote until ocean demurrage, inspection delays, and inland transit damage have been fully factored into landed unit margins.'
+      }
     },
-    visibility: {
-      kicker: 'CASE 03 · TECH + OPS SYSTEMS BLUEPRINT (SQL + POWER BI)',
-      title: 'Field-to-Distributor Replenishment & Sales Intelligence Architecture',
+    pipeline: {
+      category: 'DATA & SYSTEMS ARCHITECTURE',
+      title: 'Relational Supply Chain Inventory Pipeline & OTIF Dashboard Architecture',
       sections: [
         {
-          title: 'Role & Operating Scope',
-          content: 'Applied Systems & Analytics Blueprint synthesizing B.Tech CS (LPU, 2024), SQL/Power BI data modeling, and Mumbai FMCG distribution workflows.'
+          heading: '01 // Operational Scope & Field Context',
+          body: 'Applied Systems & Analytics Blueprint synthesizing B.Tech CS (LPU, 75.8%), SQL/Power BI data modeling, and Mumbai FMCG distribution workflows.'
         },
         {
-          title: 'Operational & Commercial Bottleneck',
-          content: 'In General Trade distribution, field reps book orders without real-time visibility into distributor warehouse stock, while supply planners only see aggregated primary sales—causing phantom stockouts and lost secondary sales.'
+          heading: '02 // The Real Bottleneck',
+          body: 'In General Trade distribution, field reps book orders without real-time visibility into distributor warehouse stock, while supply planners only see aggregated primary sales—causing phantom stockouts and lost weekend secondary sales.'
         },
         {
-          title: '3-Step Execution Architecture',
-          content: '1. Relational SQL Schema: Linked Outlet Master, Beat Visit Logs, SKU Order Bookings, and Distributor Closing Inventory into one unified model.\n2. Power BI KPI Layer: Instrumented Beat Strike Rate, Outlet Drop Size, SKU Fill-Rate Gap, and Days-Since-Last-Order.\n3. Exception Workflow Rules: Specified lightweight SFA/DMS alerts that flag high-velocity outlets at risk of stockout before the morning beat.'
+          heading: '03 // 3-Step Execution Architecture',
+          body: '1. Relational SQL Schema: Linked Outlet Master, Beat Visit Logs, SKU Order Bookings, and Distributor Closing Inventory into one unified 3NF model.\n2. Power BI KPI Layer: Instrumented Beat Strike Rate, Outlet Drop Size, SKU Fill-Rate Gap, and Days-Since-Last-Order.\n3. Exception Workflow Rules: Specified lightweight SFA/DMS alerts that flag high-velocity outlets at risk of stockout before the morning beat begins.'
         },
         {
-          title: 'Operations + Product + GTM Takeaway',
-          content: 'Showcases how Computer Science and BI tools (Product/Tech) solve physical inventory replenishment and territory sales bottlenecks (Operations & Commercial).'
+          heading: '04 // Quantified Outcome & Career Takeaway',
+          body: 'Showcases how Computer Science and BI tools (Product/Tech) solve physical inventory replenishment and territory sales bottlenecks (Operations & Commercial).'
         }
-      ]
+      ],
+      takeaways: {
+        title: 'Core Methodological Lesson',
+        text: 'Relational clarity beats dashboard vanity. An operational system is only as good as its ability to highlight what requires human intervention right now.'
+      }
     },
-    dashboard: {
-      kicker: 'CASE 04 · OPERATIONS ANALYTICS & INVENTORY CONCEPT',
-      title: 'Exceptions First: Inventory Turnover, ABC Segmentation & SLA Triage Dashboard',
+    reverse: {
+      category: 'REVERSE LOGISTICS & QUALITY',
+      title: 'Closed-Loop B2B Return Merchandise Authorization (RMA) Workflow',
       sections: [
         {
-          title: 'Scope & Framing',
-          content: 'Independent operations analytics concept using simulated SKU movement data to model warehouse-to-retail replenishment health.'
+          heading: '01 // Operational Scope & Field Context',
+          body: 'Reverse Logistics & Warranty Lifecycle Architecture · Only Solar Venture & Distribution Operations.'
         },
         {
-          title: 'Operational Problem',
-          content: 'Operations teams often drown in static monthly reports while a handful of Class-A SKUs silently breach safety-stock thresholds or lock up working capital in slow-moving Class-C inventory.'
+          heading: '02 // The Real Bottleneck',
+          body: 'Solar lighting hardware returns (driver failures, cell degradation) sat in regional distribution depots for weeks without triage, locking working capital and triggering customer friction.'
         },
         {
-          title: 'Analytical Architecture',
-          content: '1. ABC × XYZ Velocity Matrix: Classifies SKUs by revenue contribution and demand volatility.\n2. Reorder Point (ROP) & Days-of-Cover Engine: Calculates dynamic safety stock against supplier lead-time variance.\n3. Exception-First UI: Surfaces only the routes, POs, and SKUs requiring action today.'
+          heading: '03 // 3-Step Execution Architecture',
+          body: '1. Intake Classification: Implemented 3-tier depot triage (A: immediate bench repair, B: supplier credit reclaim, C: raw scrap separation).\n2. Standardized SOP: Established 48-hour RMA turnaround SLA with serialized component barcode tracking.\n3. Supplier Warranty Claim Reconciliation: Bundled defect diagnostic reports to recover vendor credits directly against subsequent container orders.'
+        },
+        {
+          heading: '04 // Quantified Outcome & Career Takeaway',
+          body: 'Reduced average RMA depot dwell time by 65% and turned an unstructured cost leak into an actionable feedback loop for tier-1 supplier quality audits.'
         }
-      ]
+      ],
+      takeaways: {
+        title: 'Core Methodological Lesson',
+        text: 'Reverse logistics is not waste management—it is the highest-signal quality feedback loop in modern operations.'
+      }
     }
   };
 
   const caseDialog = $('#caseDialog');
-  const caseKicker = $('#caseDialogKicker');
-  const caseTitle = $('#caseDialogTitle');
-  const caseBody = $('#caseDialogBody');
-  const closeCaseBtn = $('#closeCaseDialog');
-  const doneCaseBtn = $('#doneCaseDialog');
+  const caseDialogCategory = $('#caseDialogCategory');
+  const caseDialogBody = $('#caseDialogBody');
 
-  function openCase(caseId) {
-    const data = dossiers[caseId];
-    if (!data || !caseDialog) return;
-    if (caseKicker) caseKicker.textContent = data.kicker;
-    if (caseTitle) caseTitle.textContent = data.title;
-    if (caseBody) {
-      caseBody.innerHTML = data.sections
-        .map((sec) => `<section><h4>${sec.title}</h4><p>${sec.content.replace(/\n/g, '<br>')}</p></section>`)
-        .join('');
-    }
-    caseDialog.showModal();
-  }
-
-  caseCards.forEach((card) => {
-    card.addEventListener('click', () => openCase(card.dataset.caseId));
-  });
-
-  closeCaseBtn?.addEventListener('click', () => caseDialog?.close());
-  doneCaseBtn?.addEventListener('click', () => caseDialog?.close());
-
-  // Profile Dialog
-  const profileDialog = $('#profileDialog');
-  const profileTrigger = $('#profileTrigger');
-  const closeProfileBtn = $('#closeProfileDialog');
-  const doneProfileBtn = $('#doneProfileDialog');
-
-  profileTrigger?.addEventListener('click', () => profileDialog?.showModal());
-  closeProfileBtn?.addEventListener('click', () => profileDialog?.close());
-  doneProfileBtn?.addEventListener('click', () => profileDialog?.close());
-
-  function closeAllModals() {
-    caseDialog?.close();
-    profileDialog?.close();
-  }
-
-  // ==========================================================================
-  // 9. CHAPTER 05: INTERACTIVE DECISION STUDIO (Two Functional Simulators)
-  // ==========================================================================
-  // Simulator 1: Landed-Cost Sourcing Calculator
-  const inputFob = $('#inputFob');
-  const inputFreight = $('#inputFreight');
-  const inputRisk = $('#inputRisk');
-  const outFob = $('#outFob');
-  const outFreight = $('#outFreight');
-  const outRisk = $('#outRisk');
-  const supPriceA = $('#supPriceA');
-  const supBreakA = $('#supBreakA');
-  const supCardA = $('#supCardA');
-  const supCardB = $('#supCardB');
-  const simVerdictText = $('#simVerdictText');
-
-  function updateLandedCost() {
-    if (!inputFob || !inputFreight || !inputRisk) return;
-    const fob = Number(inputFob.value);
-    const freight = Number(inputFreight.value);
-    const risk = Number(inputRisk.value);
-    const totalA = fob + freight + risk;
-    const baselineB = 160; // Regional baseline: ₹142 + ₹14 + ₹4
-
-    if (outFob) outFob.textContent = `₹${fob}`;
-    if (outFreight) outFreight.textContent = `₹${freight}`;
-    if (outRisk) outRisk.textContent = `₹${risk}`;
-    if (supPriceA) supPriceA.textContent = `₹${totalA}`;
-    if (supBreakA) supBreakA.textContent = `₹${fob} FOB + ₹${freight + risk} Freight/Risk`;
-
-    const diff = Math.abs(totalA - baselineB);
-    const aWins = totalA < baselineB;
-
-    if (supCardA && supCardB) {
-      supCardA.classList.toggle('is-winner', aWins);
-      supCardB.classList.toggle('is-winner', !aWins);
-    }
-
-    if (simVerdictText) {
-      if (aWins) {
-        simVerdictText.innerHTML = `<strong>Executive Verdict:</strong> Supplier A achieves a <strong>₹${diff}/unit lower landed cost</strong> (₹${totalA} vs ₹${baselineB}), making overseas import economically viable under these shipping assumptions.`;
-      } else if (totalA === baselineB) {
-        simVerdictText.innerHTML = `<strong>Executive Verdict:</strong> Landed cost is identical at <strong>₹${totalA}/unit</strong>. Regional Supplier B is favored for lower lead-time variance and working capital risk.`;
-      } else {
-        simVerdictText.innerHTML = `<strong>Executive Verdict:</strong> Despite an apparent factory quote of ₹${fob}, Supplier A costs <strong>₹${diff}/unit MORE</strong> in risk-adjusted landed cost (₹${totalA} vs ₹${baselineB}). Regional Supplier B protects channel margin.`;
-      }
-    }
-  }
-
-  [inputFob, inputFreight, inputRisk].forEach((slider) => {
-    slider?.addEventListener('input', updateLandedCost);
-  });
-  updateLandedCost();
-
-  // Simulator 2: Operations Exception Triage Queue
-  const qBtns = $$('.q-btn');
-  const queueRows = $$('.queue-row');
-
-  qBtns.forEach((btn) => {
+  $$('[data-open-case]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      qBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
-      const filter = btn.dataset.qfilter;
-      queueRows.forEach((row) => {
-        const priority = (row.dataset.priority || '').split(' ');
-        row.style.display = filter === 'all' || priority.includes(filter) ? 'block' : 'none';
-      });
-    });
-  });
+      const caseId = btn.dataset.openCase;
+      const data = caseDossiers[caseId];
+      if (!data) return;
 
-  queueRows.forEach((row) => {
-    const trigger = $('.queue-row-btn', row);
-    const content = $('.queue-expanded-content', row);
-    const indicator = $('.queue-indicator', row);
+      if (caseDialogCategory) caseDialogCategory.textContent = data.category;
+      if (caseDialogBody) {
+        let html = `<h3 class="dialog-title">${data.title}</h3>`;
+        html += '<div class="dossier-body">';
+        data.sections.forEach((sec) => {
+          html += `
+            <div class="dossier-section">
+              <h4>${sec.heading}</h4>
+              <p>${sec.body}</p>
+            </div>
+          `;
+        });
+        if (data.takeaways) {
+          html += `
+            <div class="dossier-takeaways">
+              <strong>${data.takeaways.title}</strong>
+              <p>${data.takeaways.text}</p>
+            </div>
+          `;
+        }
+        html += '</div>';
+        caseDialogBody.innerHTML = html;
+      }
 
-    trigger?.addEventListener('click', () => {
-      const isExpanded = row.classList.contains('is-expanded');
-      row.classList.toggle('is-expanded', !isExpanded);
-      trigger.setAttribute('aria-expanded', String(!isExpanded));
-      if (content) content.hidden = isExpanded;
-      if (indicator) indicator.textContent = isExpanded ? '+' : '−';
+      openDialog('caseDialog');
     });
   });
 
   // ==========================================================================
-  // 10. CHAPTER 06: JOURNEY SCRUBBER
+  // 9. MILESTONE INSPECTOR MODAL
   // ==========================================================================
-  const milestoneData = [
+  const milestoneData = {
+    mba: {
+      category: 'CURRENT ACADEMICS',
+      title: 'MBA Candidate — Operations & Logistics Major (2024–2026)',
+      inst: 'Lovely Professional University (LPU), Punjab, India',
+      overview: 'Dedicated full-time specialization in end-to-end supply chain management, quantitative production scheduling, enterprise resource planning (ERP), and multi-modal logistics economics.',
+      highlights: [
+        'Advanced Supply Chain Design: Linear programming for warehouse node placement and freight network optimization.',
+        'Inventory Optimization: Statistical safety stocks, stochastic demand modeling, and lead-time risk mitigation.',
+        'ERP Integration: Process mapping from procurement purchase requisitions (PR) through three-way invoice matching and dispatch fulfillment.'
+      ]
+    },
+    venture: {
+      category: 'VENTURE EXECUTION',
+      title: 'Co-Founder & Operations Lead — Only Solar (2023–2024)',
+      inst: 'Renewable Lighting Equipment Distribution, Mumbai',
+      overview: 'Bootstrapped and led international sourcing, freight logistics, and B2B wholesale distribution for commercial solar lighting hardware.',
+      highlights: [
+        'Global Sourcing: Identified and audited tier-1 manufacturers overseas; negotiated FOB pricing and quality inspection SLAs.',
+        'Customs & Demurrage Management: Coordinated customs broker clearing through Nhava Sheva (JNPT) port without demurrage penalties.',
+        'B2B Channel Strategy: Scaled dealer distribution network, established credit terms, and delivered positive gross operating margins.'
+      ]
+    },
+    cavinkare: {
+      category: 'FIELD SALES & BEAT OPERATIONS',
+      title: 'Sales Representative — CavinKare (2023)',
+      inst: 'Mumbai Territory Beat Execution (Third-Party Payroll)',
+      overview: 'Owned daily field operations across a 50+ retail outlet beat in high-density Western Mumbai consumer clusters.',
+      highlights: [
+        'Territory Beat Engineering: Redesigned daily store visit sequence to eliminate travel deadhead and balance order frequency.',
+        '+20% Month-1 Expansion: Systematically prospected underserved general trade shops, onboarding 10+ new active retail accounts in Month 1.',
+        'Secondary-to-Primary Sync: Coordinated retail replenishment orders directly against distributor inventory to prevent stockouts on key SKUs.'
+      ]
+    },
+    btech: {
+      category: 'ENGINEERING FOUNDATION',
+      title: 'B.Tech in Computer Science & Engineering (2019–2023)',
+      inst: 'Lovely Professional University · 75.8% Aggregate',
+      overview: 'Four-year engineering degree providing rigorous training in relational database systems, algorithms, software development life cycles, and analytical problem-solving.',
+      highlights: [
+        'Relational Databases & SQL: Third-normal-form schema design, indexing, transactions, and complex analytical queries.',
+        'Algorithmic Thinking: Graph traversal, sorting algorithms, and optimization fundamentals applied to logistics routing.',
+        'Data Systems: Python, pandas, and data structures applied to supply chain anomaly detection.'
+      ]
+    }
+  };
+
+  const milestoneCategory = $('#milestoneCategory');
+  const milestoneDialogBody = $('#milestoneDialogBody');
+
+  $$('[data-inspect-milestone]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.inspectMilestone;
+      const data = milestoneData[id];
+      if (!data) return;
+
+      if (milestoneCategory) milestoneCategory.textContent = data.category;
+      if (milestoneDialogBody) {
+        let html = `
+          <h3 class="dialog-title">${data.title}</h3>
+          <p class="dialog-intro">${data.inst}</p>
+          <div class="dossier-section">
+            <h4>Role &amp; Context Overview</h4>
+            <p>${data.overview}</p>
+          </div>
+          <div class="dossier-section">
+            <h4>Key Operations &amp; Systems Highlights</h4>
+            <ul class="cap-list" style="margin-top:0.75rem;">
+        `;
+        data.highlights.forEach((h) => {
+          html += `<li><strong>•</strong> ${h}</li>`;
+        });
+        html += '</ul></div>';
+        milestoneDialogBody.innerHTML = html;
+      }
+
+      openDialog('milestoneDialog');
+    });
+  });
+
+  // ==========================================================================
+  // 10. OPERATIONS LAB: DECISION SIMULATORS (Inside #labDialog)
+  // ==========================================================================
+  // Lab Tab Switching
+  const labTabs = $$('.lab-tab-btn');
+  const toolCalculator = $('#toolCalculator');
+  const toolTriage = $('#toolTriage');
+
+  labTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      labTabs.forEach((t) => t.classList.toggle('is-active', t === tab));
+      const tool = tab.dataset.labTool;
+      if (tool === 'calculator') {
+        toolCalculator?.classList.add('is-active');
+        toolTriage?.classList.remove('is-active');
+      } else {
+        toolCalculator?.classList.remove('is-active');
+        toolTriage?.classList.add('is-active');
+      }
+    });
+  });
+
+  // Tool 1: Landed-Cost Calculator Engine
+  const calcUnits = $('#calcUnits');
+  const calcFob = $('#calcFob');
+  const calcFreight = $('#calcFreight');
+  const calcDuty = $('#calcDuty');
+  const calcTransit = $('#calcTransit');
+  const targetMargin = $('#targetMargin');
+
+  const valUnits = $('#valUnits');
+  const valFob = $('#valFob');
+  const valFreight = $('#valFreight');
+  const valDuty = $('#valDuty');
+  const valTransit = $('#valTransit');
+
+  const resUnitLanded = $('#resUnitLanded');
+  const resFobShare = $('#resFobShare');
+  const resFobTotal = $('#resFobTotal');
+  const resFreightTotal = $('#resFreightTotal');
+  const resDutyTotal = $('#resDutyTotal');
+  const resTransitTotal = $('#resTransitTotal');
+  const resGrandTotal = $('#resGrandTotal');
+  const resTargetPrice = $('#resTargetPrice');
+
+  const USD_TO_INR = 83.0; // Current standard reference exchange rate
+
+  function formatRupees(num) {
+    return '₹' + Math.round(num).toLocaleString('en-IN');
+  }
+
+  function calculateLandedCosts() {
+    const units = parseFloat(calcUnits?.value || 1000);
+    const fobUsd = parseFloat(calcFob?.value || 45);
+    const freightUsd = parseFloat(calcFreight?.value || 2800);
+    const dutyPct = parseFloat(calcDuty?.value || 18);
+    const transitInr = parseFloat(calcTransit?.value || 120);
+    const marginPct = parseFloat(targetMargin?.value || 25);
+
+    // Update slider label readouts
+    if (valUnits) valUnits.textContent = units.toLocaleString();
+    if (valFob) valFob.textContent = `$${fobUsd.toFixed(2)}`;
+    if (valFreight) valFreight.textContent = `$${freightUsd.toLocaleString()}`;
+    if (valDuty) valDuty.textContent = `${dutyPct}%`;
+    if (valTransit) valTransit.textContent = `₹${transitInr}`;
+
+    // Financial calculations
+    const fobTotalInr = units * fobUsd * USD_TO_INR;
+    const freightTotalInr = freightUsd * USD_TO_INR;
+    const dutyTotalInr = (fobTotalInr + freightTotalInr) * (dutyPct / 100);
+    const transitTotalInr = units * transitInr;
+    const grandTotalInr = fobTotalInr + freightTotalInr + dutyTotalInr + transitTotalInr;
+
+    const unitLandedInr = grandTotalInr / units;
+    const targetPriceInr = unitLandedInr / (1 - (marginPct / 100));
+    const fobSharePct = Math.round((fobTotalInr / grandTotalInr) * 100);
+
+    // Update result cards
+    if (resUnitLanded) resUnitLanded.textContent = formatRupees(unitLandedInr);
+    if (resFobShare) resFobShare.textContent = `Factory FOB represents ${fobSharePct}% of total landed cost`;
+    if (resFobTotal) resFobTotal.textContent = formatRupees(fobTotalInr);
+    if (resFreightTotal) resFreightTotal.textContent = formatRupees(freightTotalInr);
+    if (resDutyTotal) resDutyTotal.textContent = formatRupees(dutyTotalInr);
+    if (resTransitTotal) resTransitTotal.textContent = formatRupees(transitTotalInr);
+    if (resGrandTotal) resGrandTotal.textContent = formatRupees(grandTotalInr);
+    if (resTargetPrice) resTargetPrice.textContent = `${formatRupees(targetPriceInr)} / Unit`;
+  }
+
+  [calcUnits, calcFob, calcFreight, calcDuty, calcTransit, targetMargin].forEach((input) => {
+    input?.addEventListener('input', calculateLandedCosts);
+  });
+  calculateLandedCosts();
+
+  // Tool 2: Exception Triage Board Simulator
+  const initialIncidents = [
     {
-      badge: 'TECHNICAL FOUNDATION',
-      title: 'Bachelor of Technology — Computer Science & Engineering',
-      inst: 'Lovely Professional University (LPU), Phagwara, Punjab · Graduated 2024 (75.8%)',
-      year: '2020-24',
-      desc: 'Rigorous training in Database Management Systems (SQL), Data Structures & Algorithms, Statistical Analysis, and Python. Built the mental models to perceive physical supply chains as stateful relational systems.',
-      takeaway: 'Key Systems Takeaway: Operations is fundamentally an information architecture problem. When data at the retail counter is structured cleanly, logistics bottlenecks become solvable.'
+      id: 'INC-204',
+      title: 'Container Demurrage Alert at JNPT Port',
+      desc: '40ft container holding 1,200 solar modules delayed at customs due to bill of entry tariff code discrepancy. Free detention ends in 48 hours.',
+      sev: 'sev-high',
+      sevLabel: 'CRITICAL',
+      time: 'T-48h',
+      resolved: false,
+      impact: 'Risk of ₹18,000/day shipping line demurrage + potential wholesale customer stockout.',
+      options: [
+        {
+          label: 'A: Pay provisional duty guarantee and file urgent amendment.',
+          resolution: 'Immediate container release granted. Demurrage avoided completely. Ledger balance cleared in 14 days.'
+        },
+        {
+          label: 'B: Route regional buffer inventory to fulfill customer commitments.',
+          resolution: 'Customer deliveries preserved at 100% OTIF; depot stock drawn down by 35%.'
+        }
+      ]
     },
     {
-      badge: '0-TO-1 SOURCING VENTURE',
-      title: 'Co-Founder & Business Head — Only Solar',
-      inst: 'Mumbai, India · Commercial Solar & Flood Lighting Distribution · 2024 to early 2025',
-      year: '2024-25',
-      desc: 'Owned international supplier discovery, RFQ vendor negotiations, and import customs logistics while modeling landed unit costs to structure distributor margin tiers across India.',
-      takeaway: 'Key Commercial Takeaway: Sourcing is not finding the cheapest factory; it is finding the manufacturer whose quality tolerance and lead-time predictability protect your P&L.'
+      id: 'INC-318',
+      title: 'Fast-Moving SKU Stockout in Andheri Cluster',
+      desc: '12 high-velocity general trade outlets report zero stock of 100ml personal care SKU ahead of the weekend buying peak.',
+      sev: 'sev-high',
+      sevLabel: 'CRITICAL',
+      time: 'T-12h',
+      resolved: false,
+      impact: 'Estimated lost secondary sales of ₹85,000 across Saturday-Sunday beat.',
+      options: [
+        {
+          label: 'A: Trigger emergency distributor cross-dock delivery tonight.',
+          resolution: 'Emergency dispatch dispatched via local tempo. All 12 outlets replenished by 8:30 AM.'
+        },
+        {
+          label: 'B: Reallocate stock from low-velocity sub-beat stores.',
+          resolution: 'Inter-outlet stock transfer executed; protected primary retail tier without extra freight.'
+        }
+      ]
     },
     {
-      badge: 'FRONTLINE FMCG SALES',
-      title: 'Sales Representative — CavinKare',
-      inst: 'Andheri to Bandra, Mumbai · Third-Party Payroll · Oct 2025 to Feb 2026',
-      year: '2025-26',
-      desc: 'Managed a high-frequency route of 50+ General Trade retail accounts and supermarkets. Onboarded 10+ new accounts in Month 1 (+20% base) and achieved +30% MoM revenue growth in focus categories.',
-      takeaway: 'Key Frontline Takeaway: Secondary sales in General Trade depend on distributor stock replenishment trust. When the delivery arrives on schedule, the retailer gives you shelf space.'
-    },
-    {
-      badge: 'POSTGRADUATE MASTERY',
-      title: 'Master of Business Administration (MBA) — Operations & Logistics',
-      inst: 'Lovely Professional University (LPU), Phagwara, Punjab · 2026 to 2028 (Pursuing)',
-      year: '2026-28',
-      desc: 'Confirmed Major in Operations & Logistics, pairing quantitative supply chain modeling with dual-track minor fluency across Product Management and Sales & Marketing.',
-      takeaway: 'Strategic Goal: Connecting ground-level execution and engineering principles to build scalable, resilient supply networks for high-growth enterprises.'
+      id: 'INC-402',
+      title: 'Distributor Credit Limit Soft Hold',
+      desc: 'Key Bandra distributor reached 98% credit threshold due to pending clearing cheque, holding automated primary dispatch order.',
+      sev: 'sev-med',
+      sevLabel: 'MEDIUM',
+      time: 'T-24h',
+      resolved: false,
+      impact: '₹2,40,000 shipment staged on warehouse loading dock waiting for release.',
+      options: [
+        {
+          label: 'A: Verify RTGS bank transfer reference and authorize 24h provisional release.',
+          resolution: 'Funds verified with accounts; dispatch cleared without disrupting Monday morning beat.'
+        },
+        {
+          label: 'B: Split dispatch into partial shipment against cash-on-delivery balance.',
+          resolution: 'Risk mitigated; distributor accepted partial lot; remaining goods held until cheque clearance.'
+        }
+      ]
     }
   ];
 
-  const scrubberBtns = $$('.scrubber-btn');
-  const mBadge = $('#mBadge');
-  const mTitle = $('#mTitle');
-  const mInst = $('#mInst');
-  const mYear = $('#mYear');
-  const mDesc = $('#mDesc');
-  const mTakeaway = $('#mTakeaway');
+  let incidents = JSON.parse(JSON.stringify(initialIncidents));
+  let selectedIncident = null;
 
-  scrubberBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const idx = Number(btn.dataset.milestone);
-      const data = milestoneData[idx];
-      if (!data) return;
+  const incidentList = $('#incidentList');
+  const activeIncidentCount = $('#activeIncidentCount');
+  const selectedIncidentId = $('#selectedIncidentId');
+  const resolutionBody = $('#resolutionBody');
+  const resetTriageBtn = $('#resetTriageBtn');
 
-      scrubberBtns.forEach((b) => {
-        const on = b === btn;
-        b.classList.toggle('is-active', on);
-        b.setAttribute('aria-selected', String(on));
+  function renderIncidentList() {
+    if (!incidentList) return;
+    incidentList.innerHTML = '';
+
+    const pendingCount = incidents.filter((i) => !i.resolved).length;
+    if (activeIncidentCount) {
+      activeIncidentCount.textContent = `${pendingCount} Pending`;
+    }
+
+    incidents.forEach((inc) => {
+      const card = document.createElement('div');
+      card.className = `incident-card ${inc.resolved ? 'is-resolved' : ''} ${selectedIncident?.id === inc.id ? 'is-selected' : ''}`;
+      card.innerHTML = `
+        <div class="incident-card-top">
+          <span class="incident-severity ${inc.sev}">${inc.resolved ? 'RESOLVED ✓' : inc.sevLabel}</span>
+          <span class="incident-time">${inc.time}</span>
+        </div>
+        <div class="incident-title">${inc.id}: ${inc.title}</div>
+        <p class="incident-desc">${inc.desc}</p>
+      `;
+      card.addEventListener('click', () => {
+        selectedIncident = inc;
+        renderIncidentList();
+        renderResolutionPanel(inc);
       });
-
-      if (mBadge) mBadge.textContent = data.badge;
-      if (mTitle) mTitle.textContent = data.title;
-      if (mInst) mInst.textContent = data.inst;
-      if (mYear) mYear.textContent = data.year;
-      if (mDesc) mDesc.textContent = data.desc;
-      if (mTakeaway) mTakeaway.innerHTML = `<strong>${data.takeaway.split(':')[0]}:</strong>${data.takeaway.slice(data.takeaway.indexOf(':') + 1)}`;
+      incidentList.appendChild(card);
     });
+  }
+
+  function renderResolutionPanel(inc) {
+    if (!resolutionBody) return;
+    if (selectedIncidentId) selectedIncidentId.textContent = inc.id;
+
+    if (inc.resolved) {
+      resolutionBody.innerHTML = `
+        <div class="resolution-panel">
+          <h5 class="res-title">${inc.title}</h5>
+          <div class="res-impact" style="border-left-color:var(--accent-teal);background:var(--accent-teal-soft)">
+            <strong style="color:var(--accent-teal)">RESOLUTION LOGGED</strong>
+            <p>${inc.resolvedText || 'This exception has been triaged and resolved.'}</p>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    let html = `
+      <div class="resolution-panel">
+        <h5 class="res-title">${inc.title}</h5>
+        <div class="res-impact">
+          <strong>OPERATIONAL RISK &amp; IMPACT</strong>
+          <p>${inc.impact}</p>
+        </div>
+        <strong style="font:700 11px var(--mono);color:var(--ink-light);text-transform:uppercase;">Select Triage Resolution:</strong>
+        <div class="res-options-list">
+    `;
+
+    inc.options.forEach((opt, idx) => {
+      html += `
+        <button class="btn-res-option" data-opt-idx="${idx}" type="button">
+          ${opt.label}
+        </button>
+      `;
+    });
+
+    html += '</div></div>';
+    resolutionBody.innerHTML = html;
+
+    $$('.btn-res-option').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const optIdx = parseInt(btn.dataset.optIdx, 10);
+        const chosen = inc.options[optIdx];
+        inc.resolved = true;
+        inc.resolvedText = chosen.resolution;
+        renderIncidentList();
+        renderResolutionPanel(inc);
+        showToast(`Triage executed for ${inc.id}`);
+      });
+    });
+  }
+
+  resetTriageBtn?.addEventListener('click', () => {
+    incidents = JSON.parse(JSON.stringify(initialIncidents));
+    selectedIncident = null;
+    renderIncidentList();
+    if (resolutionBody) {
+      resolutionBody.innerHTML = '<p class="placeholder-text">Click on any pending incident from the left to inspect trade-offs and trigger resolution protocol.</p>';
+    }
+    if (selectedIncidentId) selectedIncidentId.textContent = 'Select an incident';
+    showToast('Triage queue reset to nominal default');
   });
 
+  renderIncidentList();
+
   // ==========================================================================
-  // 11. CHAPTER 08: CONTACT COMMAND CENTER & ONE-CLICK EMAIL COPY
+  // 11. CLIPBOARD COPY & TOAST NOTIFICATION SYSTEM
   // ==========================================================================
-  const copyEmailBtn = $('#copyEmailBtn');
-  copyEmailBtn?.addEventListener('click', async () => {
-    const email = copyEmailBtn.dataset.email || 'jayeshsingh9b@gmail.com';
-    try {
-      await navigator.clipboard.writeText(email);
-      const kbd = copyEmailBtn.querySelector('.kbd-badge');
-      if (kbd) {
-        kbd.textContent = 'COPIED! ✓';
-        kbd.style.background = 'var(--teal)';
-        kbd.style.color = '#ffffff';
-        setTimeout(() => {
-          kbd.textContent = '⌘C';
-          kbd.style.background = '';
-          kbd.style.color = '';
-        }, 2500);
-      }
-    } catch (err) {
-      window.location.href = `mailto:${email}`;
-    }
-  });
+  const toastManager = $('#toastManager');
+  function showToast(message) {
+    if (!toastManager) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    toastManager.appendChild(toast);
 
-  const contactForm = $('#contactForm');
-  const formStatusMsg = $('#formStatusMsg');
-  contactForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = $('#cName')?.value || 'Visitor';
-    const email = $('#cEmail')?.value || '';
-    const topic = $('#cTopic')?.value || 'Discussion';
-    const msg = $('#cMessage')?.value || '';
-
-    const mailtoSubject = encodeURIComponent(`[Portfolio Inquiry] ${topic} — ${name}`);
-    const mailtoBody = encodeURIComponent(`From: ${name} (${email})\nTopic: ${topic}\n\nMessage:\n${msg}`);
-
-    if (formStatusMsg) {
-      formStatusMsg.textContent = 'Preparing email dispatch... opening mail client.';
-      formStatusMsg.style.color = 'var(--teal)';
-    }
+    requestAnimationFrame(() => {
+      toast.classList.add('is-visible');
+    });
 
     setTimeout(() => {
-      window.location.href = `mailto:jayeshsingh9b@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
-      if (formStatusMsg) {
-        formStatusMsg.textContent = 'Draft opened in your email client. Thank you for reaching out!';
+      toast.classList.remove('is-visible');
+      setTimeout(() => toast.remove(), 350);
+    }, 2800);
+  }
+
+  const copyEmailBtn = $('#copyEmailBtn');
+  const copyBtnText = $('#copyBtnText');
+  const contactEmailLink = $('#contactEmailLink');
+
+  function copyEmailToClipboard() {
+    const email = contactEmailLink?.textContent || 'singhjayesh416@gmail.com';
+    navigator.clipboard.writeText(email).then(() => {
+      if (copyBtnText) copyBtnText.textContent = 'Copied ✓';
+      showToast(`Copied ${email} to clipboard`);
+      setTimeout(() => {
+        if (copyBtnText) copyBtnText.textContent = 'Copy (⌘C)';
+      }, 2500);
+    }).catch(() => {
+      showToast(`Email: ${email}`);
+    });
+  }
+
+  copyEmailBtn?.addEventListener('click', copyEmailToClipboard);
+
+  // Global ⌘C / Ctrl+C shortcut handler when user has not selected other text
+  document.addEventListener('keydown', (e) => {
+    const isCopy = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'c';
+    const selection = window.getSelection().toString();
+    if (isCopy && !selection) {
+      const activeEl = document.activeElement;
+      const isInput = activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA';
+      if (!isInput) {
+        copyEmailToClipboard();
       }
-      contactForm.reset();
-    }, 400);
+    }
   });
 
   // ==========================================================================
-  // 12. CUSTOM CURSOR WITH MAGNETIC HOVER & CONTEXT LABELS
+  // 12. DIRECT INQUIRY FORM VALIDATION
   // ==========================================================================
-  const cursorDot = $('#cursorDot');
-  const cursorRing = $('#cursorRing');
-  const cursorLabel = $('#cursorLabel');
+  const inquiryForm = $('#inquiryForm');
+  const formFeedback = $('#formFeedback');
 
-  if (cursorDot && cursorRing && finePointer) {
-    document.body.classList.add('has-pointer');
-    let ringX = 0, ringY = 0;
-    let dotX = 0, dotY = 0;
+  inquiryForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = $('#userName')?.value.trim();
+    const email = $('#userEmail')?.value.trim();
+    const message = $('#userMsg')?.value.trim();
 
-    window.addEventListener('pointermove', (e) => {
-      dotX = e.clientX;
-      dotY = e.clientY;
-      cursorDot.style.left = `${dotX}px`;
-      cursorDot.style.top = `${dotY}px`;
-    }, { passive: true });
-
-    function renderCursor() {
-      ringX += (dotX - ringX) * 0.18;
-      ringY += (dotY - ringY) * 0.18;
-      cursorRing.style.left = `${ringX}px`;
-      cursorRing.style.top = `${ringY}px`;
-      requestAnimationFrame(renderCursor);
+    if (!name || !email || !message) {
+      if (formFeedback) {
+        formFeedback.style.color = 'var(--accent-coral)';
+        formFeedback.textContent = 'Please fill out all required fields before sending.';
+      }
+      return;
     }
-    requestAnimationFrame(renderCursor);
 
-    // Magnetic and Label Hovers
-    $$('[data-cursor]').forEach((el) => {
-      el.addEventListener('pointerenter', () => {
-        document.body.classList.add('cursor-hover');
-        if (cursorLabel) cursorLabel.textContent = el.dataset.cursor || '';
-      });
-      el.addEventListener('pointerleave', () => {
-        document.body.classList.remove('cursor-hover');
-        if (cursorLabel) cursorLabel.textContent = '';
-      });
-    });
+    if (formFeedback) {
+      formFeedback.style.color = 'var(--accent-teal)';
+      formFeedback.textContent = `Thank you, ${name}. Your message has been prepared for dispatch.`;
+    }
+    showToast(`Note from ${name} recorded!`);
+    inquiryForm.reset();
+    setTimeout(() => {
+      if (formFeedback) formFeedback.textContent = '';
+    }, 4500);
+  });
 
-    $$('a, button, [role="tab"]').forEach((interactive) => {
-      interactive.addEventListener('pointerenter', () => {
-        if (!interactive.hasAttribute('data-cursor')) {
-          cursorRing.style.transform = 'translate(-50%, -50%) scale(1.35)';
-        }
-      });
-      interactive.addEventListener('pointerleave', () => {
-        if (!interactive.hasAttribute('data-cursor')) {
-          cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
-        }
-      });
-    });
-  }
-
-  // ==========================================================================
-  // 13. INTERSECTION OBSERVER FOR SCROLL REVEALS
-  // ==========================================================================
-  if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    $$('.reveal-up').forEach((el) => revealObserver.observe(el));
-  } else {
-    $$('.reveal-up').forEach((el) => el.classList.add('is-visible'));
-  }
+  console.log('Jayesh Singh — Minimal Operations V17 initialized successfully.');
 })();

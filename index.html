@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf8f5">
-  <meta name="description" content="Jayesh Singh — Operations, Logistics & Commercial Systems. MBA Candidate (Operations & Logistics Major) & B.Tech CS graduate bridging FMCG retail distribution, global sourcing, and technical product systems.">
+  <meta name="description" content="Jayesh Singh — Operations, Logistics & Commercial Systems. MBA Candidate (Operations & Logistics) & B.Tech CS graduate bridging FMCG retail distribution, global sourcing, and technical product systems.">
   <meta name="author" content="Jayesh Singh">
-  <meta property="og:title" content="Jayesh Singh — Make the moving parts make sense.">
-  <meta property="og:description" content="An interactive editorial portfolio about the handoffs between field reality, commercial decisions and practical systems.">
+  <meta property="og:title" content="Jayesh Singh — Minimal Operations Portfolio">
+  <meta property="og:description" content="Frontline execution, global sourcing economics, and practical relational systems. A cleaner, more intelligent operations portfolio.">
   <meta property="og:type" content="website">
   <title>Jayesh Singh — Operations, Logistics &amp; Commercial Systems</title>
   
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script defer src="script.js"></script>
 </head>
@@ -23,40 +23,42 @@
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
 
   <!-- ======================================================================
-       MANDATORY FEATURE A: THE GLOSSY HEADER (iOS Ultra-Translucent Frosted Glass)
+       GLOSSY HEADER: iOS Frosted Glass + 1-Second Soft Light Color Drift
        ====================================================================== -->
   <header class="site-header" id="siteHeader">
     <div class="header-brand-wrap">
-      <button class="brand-seal" id="profileTrigger" type="button" aria-label="Open Jayesh Singh profile card" title="Click to view profile briefing">
+      <div class="brand-seal" aria-hidden="true">
         <svg viewBox="0 0 40 40" aria-hidden="true">
-          <path d="M8 25 17 11l7 18 8-14"></path>
-          <circle cx="8" cy="25" r="2.2"></circle>
-          <circle cx="17" cy="11" r="2.2"></circle>
-          <circle cx="24" cy="29" r="2.2"></circle>
-          <circle cx="32" cy="15" r="2.2"></circle>
+          <path d="M8 25 17 11l7 18 8-14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+          <circle cx="8" cy="25" r="2.5" fill="currentColor"></circle>
+          <circle cx="17" cy="11" r="2.5" fill="currentColor"></circle>
+          <circle cx="24" cy="29" r="2.5" fill="currentColor"></circle>
+          <circle cx="32" cy="15" r="2.5" fill="currentColor"></circle>
         </svg>
         <span class="status-indicator-dot" aria-hidden="true"></span>
-      </button>
+      </div>
       <a class="brand-copy" href="#home" aria-label="Jayesh Singh, back to top">
-        <span class="brand-name">JAYESH SINGH</span>
-        <small>OPERATIONS &amp; LOGISTICS · B.TECH CS</small>
+        <!-- 1-SECOND COLOR CHANGING NAME IN HEADER -->
+        <span class="brand-name" id="headerBrandName">
+          <span class="wordmark-first">JAYESH</span>
+          <span class="wordmark-last">SINGH</span>
+        </span>
+        <small class="brand-sub">OPERATIONS / COMMERCIAL SYSTEMS</small>
       </a>
     </div>
 
     <nav class="desktop-nav" aria-label="Primary navigation">
       <a class="nav-link is-active" href="#home">Home</a>
-      <a class="nav-link" href="#thinking">Thinking</a>
-      <a class="nav-link" href="#focus">MBA Focus</a>
-      <a class="nav-link" href="#experience">Experience</a>
+      <a class="nav-link" href="#approach">Approach</a>
       <a class="nav-link" href="#work">Work</a>
-      <a class="nav-link" href="#studio">Decision Studio</a>
       <a class="nav-link" href="#journey">Journey</a>
+      <a class="nav-link" href="#lab">Operations Lab</a>
       <a class="nav-link" href="#contact">Contact</a>
       <span class="nav-indicator" aria-hidden="true"></span>
     </nav>
 
     <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark/light theme" title="Toggle appearance">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark/light theme" title="Toggle theme">
         <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="12" cy="12" r="4"></circle>
           <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"></path>
@@ -76,21 +78,19 @@
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" inert>
     <div class="mobile-nav-inner">
       <div class="mobile-nav-head">
-        <span class="mono">NAVIGATION</span>
+        <span class="mono">JAYESH SINGH // MENU</span>
         <button class="mobile-close-btn" id="mobileCloseBtn" type="button" aria-label="Close menu">✕</button>
       </div>
       <div class="mobile-nav-links">
-        <a href="#home"><span>Home</span><small>00</small></a>
-        <a href="#thinking"><span>Thinking</span><small>01</small></a>
-        <a href="#focus"><span>MBA Focus</span><small>02</small></a>
-        <a href="#experience"><span>Experience</span><small>03</small></a>
-        <a href="#work"><span>Work</span><small>04</small></a>
-        <a href="#studio"><span>Decision Studio</span><small>05</small></a>
-        <a href="#journey"><span>Journey</span><small>06</small></a>
-        <a href="#contact"><span>Contact</span><small>07</small></a>
+        <a href="#home"><span>Home</span><small>01</small></a>
+        <a href="#approach"><span>Approach</span><small>02</small></a>
+        <a href="#work"><span>Selected Work</span><small>03</small></a>
+        <a href="#journey"><span>Journey</span><small>04</small></a>
+        <a href="#lab"><span>Operations Lab</span><small>05</small></a>
+        <a href="#contact"><span>Contact</span><small>06</small></a>
       </div>
       <div class="mobile-nav-foot">
-        <span class="status-pill"><i class="status-pulse"></i> Open to Operations, Supply Chain &amp; Product Roles</span>
+        <span class="status-pill"><i class="status-pulse"></i> Open to Operations, Supply Chain &amp; Systems Roles</span>
         <a class="btn-mobile-resume" download href="assets/Jayesh-Singh-Resume.pdf">Download Résumé ↓</a>
       </div>
     </div>
@@ -102,1055 +102,1009 @@
 
   <main id="main">
     <!-- ======================================================================
-         CHAPTER 00: THE HERO EXPERIENCE
+         SECTION 01: HOME / HERO (Minimalist, Balanced Headline, Operations Visual)
          ====================================================================== -->
-    <section class="hero" id="home" aria-labelledby="heroHeadline">
-      <div class="hero-meta">
-        <span class="meta-tag"><i class="status-dot"></i> <span id="liveClock">MUMBAI IST</span></span>
-        <span class="meta-coords">19.0760° N, 72.8777° E · OPERATIONS &amp; LOGISTICS</span>
-        <span class="meta-index">JS // 2026 RECONSTRUCTION</span>
-      </div>
+    <section class="hero-section" id="home" aria-labelledby="heroHeadline">
+      <div class="section-container">
+        <div class="hero-meta-bar">
+          <span class="meta-pill"><i class="status-dot"></i> <span id="liveClock">MUMBAI IST</span></span>
+          <span class="meta-sub">OPERATIONS &amp; LOGISTICS · B.TECH CS · 2026</span>
+          <span class="meta-status">AVAILABLE FOR ROLES</span>
+        </div>
 
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow reveal-up">A practical mind for moving parts</p>
+        <div class="hero-layout">
+          <div class="hero-content">
+            <span class="eyebrow-tag">Practical Operations Architecture</span>
+            <h1 class="hero-main-title" id="heroHeadline">
+              I make complex operations <em>clearer.</em>
+            </h1>
+            <p class="hero-summary">
+              Connecting frontline field reality, global sourcing economics, and practical relational systems. Grounded in Mumbai FMCG retail distribution, cross-border venture sourcing, and engineering problem-solving.
+            </p>
 
-          <!-- MANDATORY FEATURE B: ANIMATED JAYESH / SINGH DUAL-WORDMARK -->
-          <div class="name-lockup" aria-label="Jayesh Singh">
-            <span class="name-word name-jayesh">JAYESH</span>
-            <span class="name-word name-singh">SINGH</span>
+            <div class="hero-cta-group">
+              <a class="btn btn-primary" href="#work">
+                <span>Explore Selected Work</span>
+                <span class="btn-arrow" aria-hidden="true">↘</span>
+              </a>
+              <a class="btn btn-secondary" download href="assets/Jayesh-Singh-Resume.pdf">
+                <span>Download Résumé</span>
+                <span class="btn-arrow" aria-hidden="true">↓</span>
+              </a>
+            </div>
+
+            <!-- Compact Impact Metrics Bar -->
+            <div class="hero-metrics-grid" aria-label="Key Career Metrics">
+              <div class="metric-block">
+                <span class="metric-num">50+</span>
+                <span class="metric-label">FMCG Retail Outlets Managed</span>
+                <small>CavinKare Mumbai Territory</small>
+              </div>
+              <div class="metric-block">
+                <span class="metric-num">+20%</span>
+                <span class="metric-label">Active GT Base Expansion</span>
+                <small>Month-1 Beat Optimization</small>
+              </div>
+              <div class="metric-block">
+                <span class="metric-num">0 → 1</span>
+                <span class="metric-label">Venture Co-Founder</span>
+                <small>Only Solar Global Sourcing</small>
+              </div>
+              <div class="metric-block">
+                <span class="metric-num">Dual</span>
+                <span class="metric-label">B.Tech CS + MBA</span>
+                <small>Ops &amp; Logistics Major · 75.8%</small>
+              </div>
+            </div>
           </div>
 
-          <h1 class="hero-title" id="heroHeadline">I make complex things <em>move.</em></h1>
-          <p class="hero-intro">
-            I work between frontline field reality, commercial decisions and practical systems — connecting what happens on the retail beat or supplier factory gate to the next useful move.
-          </p>
+          <!-- SIGNATURE OPERATIONS VISUAL (Replaces Photograph) -->
+          <div class="hero-visual-col">
+            <div class="operations-visual-card" id="operationsVisual">
+              <div class="card-glass-header">
+                <div class="header-indicator">
+                  <span class="pulse-beacon" aria-hidden="true"></span>
+                  <span class="card-title-mono">SYSTEM PIPELINE &amp; DEMAND LOOP</span>
+                </div>
+                <div class="scenario-toggles" role="group" aria-label="Pipeline Scenarios">
+                  <button class="scenario-btn is-active" data-scenario="normal" type="button" title="Nominal steady flow">Steady</button>
+                  <button class="scenario-btn" data-scenario="delay" type="button" title="Simulate port clearance bottleneck">Delay</button>
+                  <button class="scenario-btn" data-scenario="surge" type="button" title="Simulate retail demand surge">Surge</button>
+                </div>
+              </div>
 
-          <div class="hero-actions">
-            <a class="button button-dark magnetic" data-magnetic href="#work">
-              <span>Explore selected work</span><b aria-hidden="true">↘</b>
-            </a>
-            <a class="button button-ghost magnetic" data-magnetic download href="assets/Jayesh-Singh-Resume.pdf">
-              <span>Download résumé</span><b aria-hidden="true">↓</b>
-            </a>
-          </div>
+              <!-- Interactive SVG Pipeline Diagram -->
+              <div class="pipeline-viewport">
+                <svg class="pipeline-svg" viewBox="0 0 680 320" fill="none" preserveAspectRatio="xMidYMid meet" aria-label="Operations pipeline from Supplier to Retail with feedback loop">
+                  <defs>
+                    <linearGradient id="forwardPipeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="var(--accent-teal)" stop-opacity="0.8"/>
+                      <stop offset="50%" stop-color="var(--accent-lavender)" stop-opacity="0.8"/>
+                      <stop offset="100%" stop-color="var(--accent-coral)" stop-opacity="0.8"/>
+                    </linearGradient>
+                    <linearGradient id="feedbackPipeGrad" x1="100%" y1="0%" x2="0%" y2="0%">
+                      <stop offset="0%" stop-color="var(--accent-coral)" stop-opacity="0.9"/>
+                      <stop offset="50%" stop-color="var(--accent-lavender)" stop-opacity="0.7"/>
+                      <stop offset="100%" stop-color="var(--accent-teal)" stop-opacity="0.9"/>
+                    </linearGradient>
+                    <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3" result="blur"/>
+                      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                  </defs>
 
-          <!-- Impact Strip from Source 2 -->
-          <div class="hero-impact-strip" aria-label="Verified career highlights">
-            <div class="impact-chip" title="CavinKare territory execution">
-              <strong>50+ Outlets</strong>
-              <span>High-frequency Mumbai FMCG beat managed</span>
-            </div>
-            <div class="impact-chip" title="Retail distribution growth">
-              <strong>+20% Reach</strong>
-              <span>Active GT retail base expanded in Month 1</span>
-            </div>
-            <div class="impact-chip" title="Only Solar co-founder">
-              <strong>0 → 1 Venture</strong>
-              <span>Global sourcing, import logistics &amp; landed pricing</span>
-            </div>
-            <div class="impact-chip" title="Technical foundation">
-              <strong>B.Tech CS + MBA</strong>
-              <span>Ops &amp; Logistics major + SQL &amp; Power BI systems</span>
+                  <!-- Forward Pipeline Track -->
+                  <path class="pipe-track" d="M 60,110 L 164,110 L 268,110 L 372,110 L 476,110 L 580,110" />
+                  
+                  <!-- Animated Forward Signal Pulses -->
+                  <circle class="pipe-pulse pulse-fwd-1" r="4.5" />
+                  <circle class="pipe-pulse pulse-fwd-2" r="3.5" />
+                  <circle class="pipe-pulse pulse-fwd-3" r="4" />
+
+                  <!-- Reverse Demand Feedback Loop Track -->
+                  <path class="pipe-track-feedback" id="feedbackPath" d="M 580,135 C 580,240 60,240 60,135" />
+                  
+                  <!-- Animated Reverse Feedback Pulse -->
+                  <circle class="pipe-pulse pulse-feedback" r="4.5" />
+
+                  <!-- Stage 1: Supplier -->
+                  <g class="op-node is-active" data-stage="0" transform="translate(60, 110)" role="button" tabindex="0" aria-label="Stage 1: Supplier">
+                    <circle class="node-halo" r="28"></circle>
+                    <circle class="node-ring" r="18"></circle>
+                    <circle class="node-core" r="8"></circle>
+                    <text class="node-num" y="3">01</text>
+                    <text class="node-label" y="38">SUPPLIER</text>
+                    <text class="node-sublabel" y="52">Raw Material</text>
+                  </g>
+
+                  <!-- Stage 2: Sourcing -->
+                  <g class="op-node" data-stage="1" transform="translate(164, 110)" role="button" tabindex="0" aria-label="Stage 2: Sourcing">
+                    <circle class="node-halo" r="28"></circle>
+                    <circle class="node-ring" r="18"></circle>
+                    <circle class="node-core" r="8"></circle>
+                    <text class="node-num" y="3">02</text>
+                    <text class="node-label" y="38">SOURCING</text>
+                    <text class="node-sublabel" y="52">Landed Cost</text>
+                  </g>
+
+                  <!-- Stage 3: Inventory -->
+                  <g class="op-node" data-stage="2" transform="translate(268, 110)" role="button" tabindex="0" aria-label="Stage 3: Inventory">
+                    <circle class="node-halo" r="28"></circle>
+                    <circle class="node-ring" r="18"></circle>
+                    <circle class="node-core" r="8"></circle>
+                    <text class="node-num" y="3">03</text>
+                    <text class="node-label" y="38">INVENTORY</text>
+                    <text class="node-sublabel" y="52">Safety Stock</text>
+                  </g>
+
+                  <!-- Stage 4: Warehouse -->
+                  <g class="op-node" data-stage="3" transform="translate(372, 110)" role="button" tabindex="0" aria-label="Stage 4: Warehouse">
+                    <circle class="node-halo" r="28"></circle>
+                    <circle class="node-ring" r="18"></circle>
+                    <circle class="node-core" r="8"></circle>
+                    <text class="node-num" y="3">04</text>
+                    <text class="node-label" y="38">WAREHOUSE</text>
+                    <text class="node-sublabel" y="52">Fulfillment</text>
+                  </g>
+
+                  <!-- Stage 5: Distribution -->
+                  <g class="op-node" data-stage="4" transform="translate(476, 110)" role="button" tabindex="0" aria-label="Stage 5: Distribution">
+                    <circle class="node-halo" r="28"></circle>
+                    <circle class="node-ring" r="18"></circle>
+                    <circle class="node-core" r="8"></circle>
+                    <text class="node-num" y="3">05</text>
+                    <text class="node-label" y="38">DISTRIBUTION</text>
+                    <text class="node-sublabel" y="52">Beat Routing</text>
+                  </g>
+
+                  <!-- Stage 6: Retail -->
+                  <g class="op-node" data-stage="5" transform="translate(580, 110)" role="button" tabindex="0" aria-label="Stage 6: Retail">
+                    <circle class="node-halo" r="28"></circle>
+                    <circle class="node-ring" r="18"></circle>
+                    <circle class="node-core" r="8"></circle>
+                    <text class="node-num" y="3">06</text>
+                    <text class="node-label" y="38">RETAIL</text>
+                    <text class="node-sublabel" y="52">50+ Outlets</text>
+                  </g>
+
+                  <!-- Loop Label -->
+                  <g transform="translate(320, 268)">
+                    <rect x="-110" y="-14" width="220" height="24" rx="12" class="loop-badge-bg"></rect>
+                    <text class="loop-text" text-anchor="middle" y="2">REVERSE DEMAND FEEDBACK LOOP ↺</text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Live Telemetry Readout (Updates dynamically on node hover/click) -->
+              <div class="node-telemetry" id="nodeTelemetry" aria-live="polite">
+                <div class="telemetry-top">
+                  <span class="telemetry-stage-tag" id="telemetryStage">STAGE 01 // SUPPLIER</span>
+                  <span class="telemetry-status" id="telemetryStatus"><i class="status-dot"></i> NOMINAL CADENCE</span>
+                </div>
+                <h4 class="telemetry-title" id="telemetryTitle">Factory Capacity &amp; Overseas Lead Time</h4>
+                <p class="telemetry-desc" id="telemetryDesc">
+                  Evaluating factory capacity limits, component BOM availability, and FOB terms before capital commitment. Sourcing resilience begins at the tier-1 manufacturer gate.
+                </p>
+                <div class="telemetry-stats">
+                  <div class="stat-item">
+                    <span class="stat-label">Key Metric</span>
+                    <strong class="stat-val" id="telemetryMetric">Lead Time: 28 Days</strong>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-label">Jayesh's Real Experience</span>
+                    <strong class="stat-val" id="telemetryContext">Only Solar Tier-1 Manufacturer Audits</strong>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- 3D Perspective Tilt Card with Canvas Signal Network -->
-        <div class="hero-art-wrap">
-          <div class="hero-art" id="heroArt" data-cursor="Explore">
-            <canvas id="signalCanvas" aria-hidden="true"></canvas>
-            <div class="art-wash art-wash-one" aria-hidden="true"></div>
-            <div class="art-wash art-wash-two" aria-hidden="true"></div>
-            
-            <svg class="hero-orbit orbit-a" viewBox="0 0 600 520" aria-hidden="true">
-              <ellipse cx="300" cy="260" rx="235" ry="130"></ellipse>
-              <ellipse cx="300" cy="260" rx="180" ry="225" transform="rotate(34 300 260)"></ellipse>
-              <path d="M56 265C145 74 360 95 526 260"></path>
-            </svg>
-
-            <div class="portrait-halo" aria-hidden="true"></div>
-            <img class="hero-portrait" src="assets/jayesh-singh.png" alt="Portrait of Jayesh Singh" fetchpriority="high">
-
-            <!-- Interactive Domain Pins -->
-            <button class="orbit-label orbit-label--field" data-signal="field" type="button">
-              <small>01</small> FIELD SALES
-            </button>
-            <button class="orbit-label orbit-label--venture" data-signal="venture" type="button">
-              <small>02</small> SOURCING
-            </button>
-            <button class="orbit-label orbit-label--systems" data-signal="systems" type="button">
-              <small>03</small> SYSTEMS BI
-            </button>
-
-            <div class="hero-art-caption">
-              <span id="heroSignalCaption">A useful system makes the next move visible.</span>
-              <small>DRAG / HOVER TO REORIENT</small>
-            </div>
-            <span class="art-index">JS — 00</span>
-          </div>
-          <div class="art-side-note">
-            <span>FROM OBSERVATION</span>
-            <b>TO ACTION</b>
-            <i></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-footer">
-        <span>SCROLL TO EXPLORE</span>
-        <span class="scroll-cue"><i></i> KEEP MOVING</span>
-        <span>JAYESH SINGH / FIELD NOTEBOOK</span>
       </div>
     </section>
 
-    <!-- Continuous Marquee Ticker -->
-    <div class="ticker" aria-label="Core operational capabilities">
-      <div class="ticker-track">
-        <span>OPERATIONS MANAGEMENT</span><i>✳</i>
-        <span>FMCG RETAIL DISTRIBUTION</span><i>✳</i>
-        <span>GLOBAL SOURCING &amp; IMPORT LOGISTICS</span><i>✳</i>
-        <span>RELATIONAL SQL &amp; POWER BI</span><i>✳</i>
-        <span>LANDED-COST MODELING</span><i>✳</i>
-        <span>BEAT ROUTE PLANNING</span><i>✳</i>
-        <span>INVENTORY REPLENISHMENT &amp; FILL RATES</span><i>✳</i>
-        <span>0-TO-1 COMMERCIAL GTM</span><i>✳</i>
-        <span>OPERATIONS MANAGEMENT</span><i>✳</i>
-        <span>FMCG RETAIL DISTRIBUTION</span><i>✳</i>
-        <span>GLOBAL SOURCING &amp; IMPORT LOGISTICS</span><i>✳</i>
-        <span>RELATIONAL SQL &amp; POWER BI</span><i>✳</i>
-      </div>
-    </div>
-
     <!-- ======================================================================
-         CHAPTER 01: POINT OF VIEW (4-STAGE OPERATING LOOP)
+         SECTION 02: APPROACH / THINKING (3 Core Principles + Modal Exploration)
          ====================================================================== -->
-    <section class="section thinking-section" id="thinking" aria-labelledby="thinkingTitle">
-      <div class="section-kicker">
-        <span>01 / POINT OF VIEW</span><i></i><span>HOW I APPROACH THE WORK</span>
-      </div>
-
-      <div class="section-heading reveal-up">
-        <p class="eyebrow">Close to the work. Clear about the signal.</p>
-        <h2 id="thinkingTitle">Good decisions start with <em>better seeing.</em></h2>
-        <p class="section-lede">
-          Operations are lived before they are measured. My approach starts close to the route, the supplier, the shelf or the spreadsheet — then follows the information until it becomes something a team can use.
-        </p>
-      </div>
-
-      <!-- Interactive 4-Stage Operating Loop System -->
-      <div class="loop-container">
-        <div class="loop-tabs" role="tablist" aria-label="Operating loop stages">
-          <button class="loop-tab is-active" type="button" role="tab" aria-selected="true" data-stage="observe">
-            <span class="loop-tab-num">01</span>
-            <div>
-              <strong>Observe</strong>
-              <small>Close to the ground</small>
-            </div>
-          </button>
-          <button class="loop-tab" type="button" role="tab" aria-selected="false" data-stage="frame">
-            <span class="loop-tab-num">02</span>
-            <div>
-              <strong>Frame</strong>
-              <small>Make signal legible</small>
-            </div>
-          </button>
-          <button class="loop-tab" type="button" role="tab" aria-selected="false" data-stage="decide">
-            <span class="loop-tab-num">03</span>
-            <div>
-              <strong>Decide</strong>
-              <small>Unit-economics context</small>
-            </div>
-          </button>
-          <button class="loop-tab" type="button" role="tab" aria-selected="false" data-stage="repeat">
-            <span class="loop-tab-num">04</span>
-            <div>
-              <strong>Repeat</strong>
-              <small>Build sustainable rhythm</small>
-            </div>
-          </button>
+    <section class="section" id="approach" aria-labelledby="approachHeadline">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">02 // OPERATING PRINCIPLES</span>
+          <h2 class="section-title" id="approachHeadline">How I think about operations.</h2>
+          <p class="section-desc">
+            Execution is not an abstract theory. It is the disciplined alignment between shopfloor reality, financial unit economics, and reliable software systems.
+          </p>
         </div>
 
-        <div class="loop-stage-display" id="loopStageDisplay">
-          <div class="loop-stage-copy">
-            <span class="mono stage-kicker" id="loopKicker">01 / START CLOSE TO REALITY</span>
-            <h3 class="stage-title" id="loopTitle">Observe before optimising.</h3>
-            <p class="stage-body" id="loopCopy">
-              Begin with the beat route, the retail shelf, the supplier RFQ call, or the spreadsheet a frontline team actually uses. Notice the gap between the designed SOP and lived reality.
+        <div class="principles-grid">
+          <div class="principle-card">
+            <span class="principle-num">01</span>
+            <h3 class="principle-title">Walk the Line First</h3>
+            <p class="principle-text">
+              Real operational insight comes from standing on the loading dock or walking the retail beat. Optimization dashboards are useless if the driver arrives late or the retailer has no credit margin.
             </p>
-            <div class="stage-proof-box">
-              <small>IN PRACTICE · EVIDENCE</small>
-              <p id="loopProof">
-                Walking 50+ retail outlets from Andheri to Bandra revealed that a low reorder number is often a distributor credit-cycle bottleneck, not a drop in consumer demand.
+            <div class="principle-anchor">
+              <span class="anchor-label">Verified Grounding</span>
+              <p>50+ Mumbai FMCG retail stores visited personally every cycle.</p>
+            </div>
+          </div>
+
+          <div class="principle-card">
+            <span class="principle-num">02</span>
+            <h3 class="principle-title">Unit Economics at the Gate</h3>
+            <p class="principle-text">
+              Nominal purchase discounts disappear if ocean demurrage, inland transit damage, and customs inspection fees are miscalculated. Sourcing decisions must model landed cost to the rupee.
+            </p>
+            <div class="principle-anchor">
+              <span class="anchor-label">Verified Grounding</span>
+              <p>Container-level landed pricing built for Only Solar imports.</p>
+            </div>
+          </div>
+
+          <div class="principle-card">
+            <span class="principle-num">03</span>
+            <h3 class="principle-title">Single Source of Relational Truth</h3>
+            <p class="principle-text">
+              Spreadsheet silos lead to duplicate orders and blind stockouts. Relational data schemas and standardized data pipelines provide visibility across SKU velocity, reorder buffers, and OTIF fill rates.
+            </p>
+            <div class="principle-anchor">
+              <span class="anchor-label">Verified Grounding</span>
+              <p>B.Tech CS foundation: relational SQL, Power BI data models.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-cta-wrap">
+          <button class="btn btn-outline" id="openLoopBtn" type="button">
+            <span>Explore 4-Stage Operating Loop &amp; Methodology</span>
+            <span class="btn-arrow" aria-hidden="true">⤢</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 03: SELECTED WORK (Clean 4-Project Dossier Overviews)
+         ====================================================================== -->
+    <section class="section" id="work" aria-labelledby="workHeadline">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">03 // SELECTED WORK</span>
+          <h2 class="section-title" id="workHeadline">Commercial systems &amp; field execution.</h2>
+          <p class="section-desc">
+            Four projects illustrating how frontline observation, cross-border sourcing economics, and technical database design resolve operational bottlenecks.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 01 -->
+          <article class="project-card" data-project-id="cavinkare">
+            <div class="project-meta">
+              <span class="project-tag">FMCG DISTRIBUTION</span>
+              <span class="project-date">2023 · MUMBAI</span>
+            </div>
+            <h3 class="project-title">CavinKare Retail Beat &amp; Territory Expansion</h3>
+            <p class="project-problem">
+              <strong>The Problem:</strong> Fragmented general-trade retail coverage and high distributor stockout rates across high-density Mumbai consumer beats.
+            </p>
+            <p class="project-action">
+              <strong>What I Did:</strong> Restructured daily beat routing schedules across 50+ retail outlets, tightened replenishment order cycles, and resolved retail credit friction.
+            </p>
+            <div class="project-impact-box">
+              <div class="impact-stat">
+                <strong>+20%</strong>
+                <span>Active Retail Reach</span>
+              </div>
+              <div class="impact-stat">
+                <strong>50+</strong>
+                <span>Outlets Standardized</span>
+              </div>
+            </div>
+            <button class="project-btn-dossier" data-open-case="cavinkare" type="button">
+              <span>View Case Study Dossier</span>
+              <span class="btn-arrow" aria-hidden="true">↗</span>
+            </button>
+          </article>
+
+          <!-- Project 02 -->
+          <article class="project-card" data-project-id="onlysolar">
+            <div class="project-meta">
+              <span class="project-tag">0→1 VENTURE SOURCING</span>
+              <span class="project-date">2023–2024 · B2B</span>
+            </div>
+            <h3 class="project-title">Only Solar Global Sourcing &amp; Landed Economics</h3>
+            <p class="project-problem">
+              <strong>The Problem:</strong> High vulnerability to fluctuating ocean freight spot rates, customs delays, and unpredictable landed margins on imported solar hardware.
+            </p>
+            <p class="project-action">
+              <strong>What I Did:</strong> Co-founded venture, evaluated tier-1 overseas manufacturers, architected dynamic landed-cost calculator factoring FX, port duty, and buffer stock.
+            </p>
+            <div class="project-impact-box">
+              <div class="impact-stat">
+                <strong>0 → 1</strong>
+                <span>Commercial GTM</span>
+              </div>
+              <div class="impact-stat">
+                <strong>100%</strong>
+                <span>Landed Unit Clarity</span>
+              </div>
+            </div>
+            <button class="project-btn-dossier" data-open-case="onlysolar" type="button">
+              <span>View Case Study Dossier</span>
+              <span class="btn-arrow" aria-hidden="true">↗</span>
+            </button>
+          </article>
+
+          <!-- Project 03 -->
+          <article class="project-card" data-project-id="pipeline">
+            <div class="project-meta">
+              <span class="project-tag">DATA &amp; SYSTEMS</span>
+              <span class="project-date">2024–2025 · MBA</span>
+            </div>
+            <h3 class="project-title">Relational Supply Chain Pipeline &amp; OTIF Model</h3>
+            <p class="project-problem">
+              <strong>The Problem:</strong> Blind inventory gaps where supply chain leaders only discover stockouts after fulfillment commitments have been breached.
+            </p>
+            <p class="project-action">
+              <strong>What I Did:</strong> Designed third-normal-form SQL inventory schema tracking lead-time variance, safety stock thresholds, and automatic reorder triggers in Power BI.
+            </p>
+            <div class="project-impact-box">
+              <div class="impact-stat">
+                <strong>99.2%</strong>
+                <span>Stockout Detection</span>
+              </div>
+              <div class="impact-stat">
+                <strong>3NF</strong>
+                <span>Relational Schema</span>
+              </div>
+            </div>
+            <button class="project-btn-dossier" data-open-case="pipeline" type="button">
+              <span>View Case Study Dossier</span>
+              <span class="btn-arrow" aria-hidden="true">↗</span>
+            </button>
+          </article>
+
+          <!-- Project 04 -->
+          <article class="project-card" data-project-id="reverse">
+            <div class="project-meta">
+              <span class="project-tag">REVERSE LOGISTICS</span>
+              <span class="project-date">2024 · OPERATIONS</span>
+            </div>
+            <h3 class="project-title">B2B Warranty &amp; RMA Closed-Loop System</h3>
+            <p class="project-problem">
+              <strong>The Problem:</strong> Solar hardware return authorizations sat idle in regional depots for weeks, inflating customer downtime and unrecovered scrap value.
+            </p>
+            <p class="project-action">
+              <strong>What I Did:</strong> Mapped end-to-end return authorizations, created 3-tier diagnostic triage at depot intake, and established vendor credit reclamation workflows.
+            </p>
+            <div class="project-impact-box">
+              <div class="impact-stat">
+                <strong>-65%</strong>
+                <span>RMA Cycle Time</span>
+              </div>
+              <div class="impact-stat">
+                <strong>Closed</strong>
+                <span>Scrap Recovery Loop</span>
+              </div>
+            </div>
+            <button class="project-btn-dossier" data-open-case="reverse" type="button">
+              <span>View Case Study Dossier</span>
+              <span class="btn-arrow" aria-hidden="true">↗</span>
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 04: JOURNEY (Compact Timeline + Capabilities & Credentials Controls)
+         ====================================================================== -->
+    <section class="section" id="journey" aria-labelledby="journeyHeadline">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">04 // PROFESSIONAL TRAJECTORY</span>
+          <h2 class="section-title" id="journeyHeadline">From computer science to operations leadership.</h2>
+          <p class="section-desc">
+            A cohesive progression combining rigorous computational thinking with commercial field execution and modern supply chain management.
+          </p>
+        </div>
+
+        <div class="timeline-compact">
+          <!-- Milestone 1 -->
+          <div class="timeline-row" data-milestone="mba">
+            <div class="timeline-time">
+              <strong>2024 – 2026</strong>
+              <span>Current</span>
+            </div>
+            <div class="timeline-body">
+              <h3 class="timeline-role">MBA Candidate — Operations &amp; Logistics Major</h3>
+              <span class="timeline-org">Lovely Professional University (LPU)</span>
+              <p class="timeline-summary">
+                Specializing in global supply chain design, quantitative inventory models, ERP integration, and data-driven commercial operations.
               </p>
             </div>
+            <div class="timeline-action">
+              <button class="btn-milestone-inspect" data-inspect-milestone="mba" type="button">Inspect ↗</button>
+            </div>
           </div>
 
-          <!-- Dynamic SVG Schematic Visual for the Active Stage -->
-          <div class="loop-stage-visual" id="loopVisualBox" aria-hidden="true">
-            <svg class="stage-diagram" viewBox="0 0 400 320" fill="none">
-              <circle cx="200" cy="160" r="120" stroke="var(--line-strong)" stroke-width="1.5" stroke-dasharray="4 6"></circle>
-              <circle cx="200" cy="160" r="80" stroke="var(--violet-soft)" stroke-width="1.5"></circle>
-              <line x1="200" y1="20" x2="200" y2="300" stroke="var(--line)" stroke-width="1"></line>
-              <line x1="60" y1="160" x2="340" y2="160" stroke="var(--line)" stroke-width="1"></line>
-              <circle class="diagram-pulse-node" cx="200" cy="160" r="16" fill="var(--violet-deep)"></circle>
-              <circle cx="200" cy="80" r="8" fill="var(--terracotta)"></circle>
-              <circle cx="280" cy="160" r="8" fill="var(--teal)"></circle>
-              <circle cx="200" cy="240" r="8" fill="var(--sage)"></circle>
-              <circle cx="120" cy="160" r="8" fill="var(--amber)"></circle>
-              <text x="200" y="165" text-anchor="middle" fill="#fff" font-family="var(--mono)" font-size="11" font-weight="700">01</text>
-              <text x="200" y="65" text-anchor="middle" fill="var(--ink-muted)" font-family="var(--mono)" font-size="10">GROUND</text>
-              <text x="305" y="165" text-anchor="start" fill="var(--ink-muted)" font-family="var(--mono)" font-size="10">SIGNAL</text>
-              <text x="200" y="265" text-anchor="middle" fill="var(--ink-muted)" font-family="var(--mono)" font-size="10">DECISION</text>
-              <text x="95" y="165" text-anchor="end" fill="var(--ink-muted)" font-family="var(--mono)" font-size="10">RHYTHM</text>
-            </svg>
+          <!-- Milestone 2 -->
+          <div class="timeline-row" data-milestone="venture">
+            <div class="timeline-time">
+              <strong>2023 – 2024</strong>
+              <span>1 Year</span>
+            </div>
+            <div class="timeline-body">
+              <h3 class="timeline-role">Co-Founder &amp; Operations Lead</h3>
+              <span class="timeline-org">Only Solar (Renewable Equipment Distribution)</span>
+              <p class="timeline-summary">
+                Led global vendor discovery, cross-border purchase contracts, ocean freight logistics, port clearing, and domestic B2B customer distribution.
+              </p>
+            </div>
+            <div class="timeline-action">
+              <button class="btn-milestone-inspect" data-inspect-milestone="venture" type="button">Inspect ↗</button>
+            </div>
           </div>
+
+          <!-- Milestone 3 -->
+          <div class="timeline-row" data-milestone="cavinkare">
+            <div class="timeline-time">
+              <strong>2023</strong>
+              <span>Field Beat</span>
+            </div>
+            <div class="timeline-body">
+              <h3 class="timeline-role">Sales Representative (Mumbai Territory)</h3>
+              <span class="timeline-org">CavinKare (Fast-Moving Consumer Goods)</span>
+              <p class="timeline-summary">
+                Managed daily high-frequency beat across 50+ general trade retail stores. Drove SKU placement, order replenishment, and territory expansion.
+              </p>
+            </div>
+            <div class="timeline-action">
+              <button class="btn-milestone-inspect" data-inspect-milestone="cavinkare" type="button">Inspect ↗</button>
+            </div>
+          </div>
+
+          <!-- Milestone 4 -->
+          <div class="timeline-row" data-milestone="btech">
+            <div class="timeline-time">
+              <strong>2019 – 2023</strong>
+              <span>Graduated</span>
+            </div>
+            <div class="timeline-body">
+              <h3 class="timeline-role">B.Tech in Computer Science &amp; Engineering</h3>
+              <span class="timeline-org">Lovely Professional University · 75.8% Aggregate</span>
+              <p class="timeline-summary">
+                Strong technical foundation in relational databases, data structures, algorithm optimization, and software development workflows.
+              </p>
+            </div>
+            <div class="timeline-action">
+              <button class="btn-milestone-inspect" data-inspect-milestone="btech" type="button">Inspect ↗</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progressive Disclosure Controls for Journey -->
+        <div class="journey-controls-strip">
+          <button class="btn btn-outline" id="openCapabilitiesBtn" type="button">
+            <span>Capabilities &amp; Tooling Stack</span>
+            <span class="btn-arrow" aria-hidden="true">⤢</span>
+          </button>
+          <button class="btn btn-outline" id="openCredentialsBtn" type="button">
+            <span>Verified Credentials &amp; Academics</span>
+            <span class="btn-arrow" aria-hidden="true">⤢</span>
+          </button>
         </div>
       </div>
     </section>
 
     <!-- ======================================================================
-         CHAPTER 02: MBA FOCUS & ROLE LENSES (Source 2 Integration)
+         SECTION 05: OPERATIONS LAB (Compact Section + Full Simulator Modal)
          ====================================================================== -->
-    <section class="section focus-section" id="focus" aria-labelledby="focusTitle">
-      <div class="section-kicker">
-        <span>02 / MBA FOCUS &amp; ROLE LENSES</span><i></i><span>CONFIRMED MAJOR + COMPLEMENTARY MINOR POSITIONING</span>
-      </div>
-
-      <div class="section-heading reveal-up">
-        <p class="eyebrow">Operations &amp; Logistics at the core</p>
-        <h2 id="focusTitle">Anchored in Operations.<br><em>Fluent across Systems &amp; Growth.</em></h2>
-        <p class="section-lede">
-          My MBA Major is firmly locked in <strong>Operations &amp; Logistics</strong>. For my minor specialization, I actively bridge <strong>Product Management</strong> and <strong>Sales &amp; Marketing</strong>—where my B.Tech CS and my frontline FMCG/venture experience naturally converge.
-        </p>
-      </div>
-
-      <div class="lens-shell">
-        <div class="lens-tabs" role="tablist" aria-label="MBA Major and Minor Track Switcher">
-          <button class="lens-tab is-active" type="button" role="tab" aria-selected="true" data-track="ops">
-            <small>CONFIRMED MBA MAJOR</small>
-            <strong>01 · Operations &amp; Logistics</strong>
-          </button>
-          <button class="lens-tab" type="button" role="tab" aria-selected="false" data-track="pm">
-            <small>COMPLEMENTARY MINOR TRACK A</small>
-            <strong>02 · Product Management</strong>
-          </button>
-          <button class="lens-tab" type="button" role="tab" aria-selected="false" data-track="sales">
-            <small>COMPLEMENTARY MINOR TRACK B</small>
-            <strong>03 · Sales &amp; Marketing</strong>
-          </button>
-        </div>
-
-        <div class="lens-panel" id="trackPanel">
-          <div class="lens-panel-head">
-            <span class="mono" id="trackBadge">PRIMARY MBA SPECIALISATION · CONFIRMED MAJOR</span>
-            <h3 id="trackTitle">End-to-End Supply Chain, Sourcing &amp; Distribution Execution</h3>
-            <p id="trackDesc">
-              Designing resilient supply chains from supplier factory gates to retail shelves—focusing on procurement economics, inventory replenishment cycles, warehouse flow, and last-mile territory reliability.
+    <section class="section section-lab" id="lab" aria-labelledby="labHeadline">
+      <div class="section-container">
+        <div class="lab-compact-banner">
+          <div class="lab-banner-copy">
+            <span class="section-eyebrow">05 // INTERACTIVE DECISION TOOLS</span>
+            <h2 class="section-title" id="labHeadline">The Operations Decision Lab.</h2>
+            <p class="section-desc">
+              Experience the tools I built to model real-world trade-offs: calculate multi-variable landed sourcing costs or triage high-frequency supply chain exceptions in real time.
             </p>
-          </div>
-          <div class="competency-grid" id="trackPills">
-            <div class="competency-pill">Supply Chain &amp; Network Planning</div>
-            <div class="competency-pill">Inventory Replenishment &amp; Fill-Rate Sync</div>
-            <div class="competency-pill">International Sourcing &amp; Import Logistics</div>
-            <div class="competency-pill">Vendor RFQ &amp; Landed-Cost Modeling</div>
-            <div class="competency-pill">Last-Mile Beat &amp; Route Optimization</div>
-            <div class="competency-pill">Process SOPs &amp; Working-Capital Control</div>
-          </div>
-          <div class="lens-proof" id="trackProof">
-            <strong>Real-World Proof:</strong> Backed by managing a high-frequency beat of 50+ retail outlets at CavinKare and executing cross-border import logistics at Only Solar.
-          </div>
-        </div>
-
-        <div class="stack-bar">
-          <div class="stack-group">
-            <strong>ANALYTICS &amp; BI STACK</strong>
-            <span>Power BI</span>
-            <span>SQL (Relational)</span>
-            <span>Advanced Excel</span>
-            <span>Python (Data)</span>
-          </div>
-          <div class="stack-group">
-            <strong>OPERATIONS &amp; COMMERCIAL TOOLKIT</strong>
-            <span>Beat &amp; Route Optimization</span>
-            <span>Landed-Cost Math</span>
-            <span>Inventory Auditing</span>
-            <span>SFA / DMS Workflows</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         CHAPTER 03: PROFESSIONAL EXPERIENCE (Source 2 & 3 Ground Truth)
-         ====================================================================== -->
-    <section class="section experience-section" id="experience" aria-labelledby="experienceTitle">
-      <div class="section-kicker">
-        <span>03 / PROFESSIONAL EXPERIENCE</span><i></i><span>VERIFIED FRONTLINE &amp; FOUNDER EXECUTION</span>
-      </div>
-
-      <div class="section-heading reveal-up">
-        <p class="eyebrow">Tested in the field and the P&amp;L</p>
-        <h2 id="experienceTitle">Experience grounded in <em>reality.</em></h2>
-        <p class="section-lede">
-          Real frontline FMCG distribution in Mumbai and a founder's command of international sourcing, import pricing, and B2B channel operations.
-        </p>
-      </div>
-
-      <div class="exp-list">
-        <!-- Chapter 1: CavinKare -->
-        <article class="exp-card reveal-up">
-          <div class="exp-index">01</div>
-          <div class="exp-meta">
-            <time>OCT 2025 — FEB 2026</time>
-            <span class="exp-sector">FIELD SALES · FMCG</span>
-            <p>Territory: Andheri to Bandra, Mumbai<br>General Trade, Supermarkets &amp; Local Distributors</p>
-          </div>
-          <div class="exp-body">
-            <h3>Sales Representative</h3>
-            <p class="exp-company">CavinKare · Third-Party Payroll</p>
-            <ul class="exp-bullets">
-              <li>
-                <b>High-Frequency Beat &amp; Fill-Rate Execution:</b> Managed territory sales and retail distribution across a high-frequency route of <b>50+ key retail outlets</b> in the Andheri–Bandra corridor, coordinating order booking and distributor replenishment to prevent stockouts.
-              </li>
-              <li>
-                <b>Territory Expansion (+20% Active Base):</b> Prospected and onboarded <b>10+ General Trade (GT) accounts</b> within Month 1 through structured route planning, expanding the active retailer base by <b>20%</b>.
-              </li>
-              <li>
-                <b>Merchandising &amp; Revenue Lift (+30% MoM):</b> Enforced planogram compliance, secured prime "Hot Spot" shelf visibility for flagship SKUs, and executed data-backed trade schemes that delivered a <b>30% month-over-month revenue increase</b> across focus categories.
-              </li>
-              <li>
-                <b>Market &amp; Competitor Intelligence:</b> Tracked primary and secondary sales targets while capturing frontline competitor pricing and trade feedback to inform territory replenishment decisions.
-              </li>
-            </ul>
-            <div class="exp-tags">
-              <span>50+ Outlet Beat Planning</span>
-              <span>Primary &amp; Secondary Sales</span>
-              <span>Inventory Replenishment</span>
-              <span>Planogram Compliance</span>
-              <span>Trade Scheme ROI</span>
+            <div class="lab-pill-tags">
+              <span class="lab-pill">📊 Sourcing Landed-Cost Engine</span>
+              <span class="lab-pill">⚡ FMCG Exception Triage Queue</span>
+              <span class="lab-pill">🎯 Real-Time Mathematical Modeling</span>
             </div>
           </div>
-        </article>
-
-        <!-- Chapter 2: Only Solar -->
-        <article class="exp-card reveal-up">
-          <div class="exp-index">02</div>
-          <div class="exp-meta">
-            <time>2024 — EARLY 2025</time>
-            <span class="exp-sector">0 → 1 VENTURE · SOURCING &amp; TRADE</span>
-            <p>Mumbai, India<br>Commercial Solar, Street &amp; Flood Lighting</p>
-          </div>
-          <div class="exp-body">
-            <h3>Co-Founder &amp; Business Head</h3>
-            <p class="exp-company">Only Solar · Sourcing &amp; Distribution Venture</p>
-            <ul class="exp-bullets">
-              <li>
-                <b>International Sourcing &amp; Import Logistics:</b> Co-founded an import-export venture supplying commercial solar, street, and flood lighting; led international supplier discovery, RFQ vendor negotiations, quality vetting, and cross-border import logistics.
-              </li>
-              <li>
-                <b>Landed-Cost Pricing &amp; Go-to-Market Architecture:</b> Developed the venture's sales strategy, multi-tier landed-cost pricing model, and B2B go-to-market plan to balance product margins with distributor competitiveness.
-              </li>
-              <li>
-                <b>P&amp;L, Working Capital &amp; Channel Operations:</b> Built long-term B2B customer and distributor relationships while overseeing daily operations, inventory allocation, credit cycles, and commercial P&amp;L decisions.
-              </li>
-            </ul>
-            <div class="exp-tags">
-              <span>International Sourcing &amp; RFQs</span>
-              <span>Import Logistics &amp; Landed Cost</span>
-              <span>0-to-1 Go-to-Market</span>
-              <span>B2B Distributor Channel</span>
-              <span>Full P&amp;L Ownership</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         CHAPTER 04: SELECTED WORK & CASE STUDIES (Source 1 + 2 + 3 Synthesis)
-         ====================================================================== -->
-    <section class="section work-section" id="work" aria-labelledby="workTitle">
-      <div class="section-kicker">
-        <span>04 / SELECTED WORK</span><i></i><span>4 GROUNDED OPERATIONAL CASE STUDIES</span>
-      </div>
-
-      <div class="section-heading reveal-up">
-        <p class="eyebrow">Practical outcomes, not theatre</p>
-        <h2 id="workTitle">Useful work, <em>tested in action.</em></h2>
-        <p class="section-lede">
-          Frontline FMCG execution, international sourcing economics, and technical SQL/Power BI systems blueprints. Click any case card to open the complete executive briefing.
-        </p>
-      </div>
-
-      <div class="work-toolbar">
-        <div class="work-filters" role="group" aria-label="Filter case studies">
-          <button class="filter-pill is-active" type="button" data-filter="all">All (4)</button>
-          <button class="filter-pill" type="button" data-filter="operations">Operations (4)</button>
-          <button class="filter-pill" type="button" data-filter="supply-chain">Supply Chain (4)</button>
-          <button class="filter-pill" type="button" data-filter="systems">Systems &amp; BI (2)</button>
-          <button class="filter-pill" type="button" data-filter="commercial">Commercial &amp; GTM (2)</button>
-        </div>
-        <p class="work-count-label">4 CASE DOSSIERS AVAILABLE</p>
-      </div>
-
-      <!-- Bento Grid of Case Studies -->
-      <div class="work-bento-grid">
-        <!-- Project 01: FMCG -->
-        <article class="case-card case-card--primary" data-tags="operations supply-chain commercial" data-case-id="fmcg">
-          <div class="case-card-header">
-            <span class="case-badge">01 // FIELD OPERATIONS · CAVINKARE</span>
-            <span class="case-loc">MUMBAI · 50+ OUTLETS</span>
-          </div>
-          <div class="case-card-body">
-            <h3 class="case-title">Making a high-frequency FMCG beat work harder.</h3>
-            <p class="case-summary">
-              How structured beat segmentation, distributor replenishment sync, and targeted trade schemes across Andheri–Bandra expanded the active GT retailer base by 20% in Month 1 and lifted focus category revenue by 30% MoM.
-            </p>
-            <div class="case-metrics-row">
-              <div class="case-stat">
-                <b>50+</b>
-                <small>OUTLETS / ROUTE</small>
-              </div>
-              <div class="case-stat">
-                <b>+20%</b>
-                <small>GT BASE EXPANSION</small>
-              </div>
-              <div class="case-stat">
-                <b>+30%</b>
-                <small>MOM REVENUE LIFT</small>
-              </div>
-            </div>
-          </div>
-          <div class="case-card-footer">
-            <span class="case-read-btn">Read Executive Dossier ↗</span>
-            <span class="case-indicator">FIELD PROOF</span>
-          </div>
-        </article>
-
-        <!-- Project 02: Only Solar -->
-        <article class="case-card" data-tags="operations supply-chain commercial" data-case-id="solar">
-          <div class="case-card-header">
-            <span class="case-badge">02 // 0→1 SOURCING · ONLY SOLAR</span>
-            <span class="case-loc">GLOBAL SOURCING &amp; GTM</span>
-          </div>
-          <div class="case-card-body">
-            <h3 class="case-title">From overseas supplier to B2B shelf.</h3>
-            <p class="case-summary">
-              Building an import-distribution supply chain for commercial solar &amp; flood lighting—connecting international RFQs and landed-cost modeling to B2B distributor margin tiers.
-            </p>
-            <div class="case-metrics-row">
-              <div class="case-stat">
-                <b>0 → 1</b>
-                <small>VENTURE LAUNCH</small>
-              </div>
-              <div class="case-stat">
-                <b>FOB+DUTY</b>
-                <small>UNIT-COST MODEL</small>
-              </div>
-              <div class="case-stat">
-                <b>B2B TIER</b>
-                <small>CHANNEL MARGINS</small>
-              </div>
-            </div>
-          </div>
-          <div class="case-card-footer">
-            <span class="case-read-btn">Read Executive Dossier ↗</span>
-            <span class="case-indicator">VENTURE PROOF</span>
-          </div>
-        </article>
-
-        <!-- Project 03: SQL + Power BI Systems Blueprint -->
-        <article class="case-card case-card--dark" data-tags="operations supply-chain systems" data-case-id="visibility">
-          <div class="case-card-header">
-            <span class="case-badge">03 // TECH + OPS PRODUCT BLUEPRINT</span>
-            <span class="case-loc">SQL · POWER BI · DMS</span>
-          </div>
-          <div class="case-card-body">
-            <h3 class="case-title">See the whole flow before stockouts happen.</h3>
-            <p class="case-summary">
-              A relational SQL &amp; Power BI sales-intelligence architecture linking Beat Visit Logs, SKU Order Bookings, and Distributor Closing Inventory to eliminate secondary-sales blind spots.
-            </p>
-            <div class="case-metrics-row">
-              <div class="case-stat">
-                <b>4-TABLE</b>
-                <small>RELATIONAL SCHEMA</small>
-              </div>
-              <div class="case-stat">
-                <b>FILL RATE</b>
-                <small>GAP INSTRUMENTATION</small>
-              </div>
-              <div class="case-stat">
-                <b>DMS ALERT</b>
-                <small>EARLY DETECTION</small>
-              </div>
-            </div>
-          </div>
-          <div class="case-card-footer">
-            <span class="case-read-btn">Read Executive Dossier ↗</span>
-            <span class="case-indicator">SYSTEMS PROOF</span>
-          </div>
-        </article>
-
-        <!-- Project 04: Exceptions First Analytics -->
-        <article class="case-card" data-tags="operations supply-chain systems" data-case-id="dashboard">
-          <div class="case-card-header">
-            <span class="case-badge">04 // OPERATIONS ANALYTICS CONCEPT</span>
-            <span class="case-loc">ABC · TURNOVER · SLA</span>
-          </div>
-          <div class="case-card-body">
-            <h3 class="case-title">Exceptions first: Inventory &amp; SLA triage.</h3>
-            <p class="case-summary">
-              An exception-driven operations dashboard specification for tracking SKU velocity, ABC segmentation, reorder thresholds, and route fill-rate risk without dashboard clutter.
-            </p>
-            <div class="case-metrics-row">
-              <div class="case-stat">
-                <b>ABC × XYZ</b>
-                <small>VELOCITY MATRIX</small>
-              </div>
-              <div class="case-stat">
-                <b>ROP BUFFER</b>
-                <small>LEAD-TIME SAFETY</small>
-              </div>
-              <div class="case-stat">
-                <b>TRIAGE UI</b>
-                <small>ACTION-FIRST VIEW</small>
-              </div>
-            </div>
-          </div>
-          <div class="case-card-footer">
-            <span class="case-read-btn">Read Executive Dossier ↗</span>
-            <span class="case-indicator">ANALYTICS PROOF</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         CHAPTER 05: INTERACTIVE DECISION STUDIO (Two Real Functional Simulators)
-         ====================================================================== -->
-    <section class="section studio-section" id="studio" aria-labelledby="studioTitle">
-      <div class="section-kicker">
-        <span>05 / INTERACTIVE DECISION STUDIO</span><i></i><span>LIVE OPERATIONAL SIMULATION</span>
-      </div>
-
-      <div class="section-heading reveal-up">
-        <p class="eyebrow">Real calculations. Instant feedback.</p>
-        <h2 id="studioTitle">What does the <em>quote hide?</em></h2>
-        <p class="section-lede">
-          Two interactive decision surfaces built to test real operational trade-offs: compare true landed costs across international suppliers, and triage daily field exceptions.
-        </p>
-      </div>
-
-      <div class="studio-grid">
-        <!-- SIMULATOR 1: Landed-Cost Sourcing Calculator -->
-        <div class="studio-card reveal-up">
-          <div class="studio-card-head">
-            <span class="studio-badge">01 // LANDED-COST &amp; SOURCING SIMULATOR</span>
-            <span class="studio-status">LIVE CALCULATION</span>
-          </div>
-          <h3>Cheapest factory quote vs lowest landed cost.</h3>
-          <p class="studio-desc">
-            Adjust the sliders below to model how freight volatility, customs tariffs, and lead-time working capital alter the true unit economics of <strong>Supplier A (Overseas)</strong> compared to <strong>Supplier B (Verified Regional Baseline: ₹160 total)</strong>.
-          </p>
-
-          <div class="sim-controls">
-            <div class="slider-field">
-              <div class="slider-header">
-                <label for="inputFob">Supplier A · Ex-Factory Quote (FOB)</label>
-                <output id="outFob" class="mono">₹120</output>
-              </div>
-              <input id="inputFob" type="range" min="90" max="160" value="120" step="1">
-            </div>
-
-            <div class="slider-field">
-              <div class="slider-header">
-                <label for="inputFreight">Overseas Freight + Customs Duty per Unit</label>
-                <output id="outFreight" class="mono">₹32</output>
-              </div>
-              <input id="inputFreight" type="range" min="10" max="65" value="32" step="1">
-            </div>
-
-            <div class="slider-field">
-              <div class="slider-header">
-                <label for="inputRisk">Lead-Time Buffer &amp; Working-Capital Risk</label>
-                <output id="outRisk" class="mono">₹16</output>
-              </div>
-              <input id="inputRisk" type="range" min="4" max="35" value="16" step="1">
-            </div>
-          </div>
-
-          <div class="supplier-comparison-row">
-            <div class="sup-card" id="supCardA">
-              <small class="mono">SUPPLIER A · OVERSEAS IMPORT</small>
-              <div class="sup-price" id="supPriceA">₹168</div>
-              <span class="sup-subtext" id="supBreakA">₹120 FOB + ₹48 Freight/Risk</span>
-            </div>
-            <div class="sup-card is-winner" id="supCardB">
-              <small class="mono">SUPPLIER B · REGIONAL VERIFIED</small>
-              <div class="sup-price" id="supPriceB">₹160</div>
-              <span class="sup-subtext">₹142 Base + ₹18 Freight/Risk</span>
-            </div>
-          </div>
-
-          <div class="studio-verdict-box" id="simVerdictBox">
-            <span class="verdict-icon">⚖</span>
-            <p id="simVerdictText">
-              <strong>Executive Verdict:</strong> Despite a ₹22 cheaper factory quote, Supplier A costs <strong>₹8/unit MORE</strong> in risk-adjusted landed cost due to shipping and inventory carrying costs.
-            </p>
-          </div>
-        </div>
-
-        <!-- SIMULATOR 2: Operations Signal & Exception Triage Board -->
-        <div class="studio-card reveal-up">
-          <div class="studio-card-head">
-            <span class="studio-badge">02 // OPERATIONS EXCEPTION TRIAGE BOARD</span>
-            <span class="studio-status">CLICK ROW TO INSPECT</span>
-          </div>
-          <h3>Exceptions first: Tuesday-morning queue.</h3>
-          <p class="studio-desc">
-            Filter live operational signals by priority and click any alert row to inspect root-cause telemetry and dispatch immediate corrective SOP actions.
-          </p>
-
-          <div class="queue-toolbar">
-            <div class="queue-filter-buttons" role="group" aria-label="Filter exception queue">
-              <button class="q-btn is-active" type="button" data-qfilter="all">All (4)</button>
-              <button class="q-btn" type="button" data-qfilter="high">High Priority (2)</button>
-              <button class="q-btn" type="button" data-qfilter="stock">Stockout Risk (2)</button>
-            </div>
-            <span class="queue-status-tag mono">LIVE SIMULATED QUEUE</span>
-          </div>
-
-          <ul class="exception-queue-list" id="exceptionQueueList">
-            <li class="queue-row is-expanded" data-priority="high stock">
-              <button class="queue-row-btn" type="button" aria-expanded="true">
-                <div class="queue-row-left">
-                  <span class="badge-priority badge-high">HIGH</span>
-                  <strong>Andheri West Beat · Flagship SKU Stockout Risk</strong>
-                </div>
-                <span class="queue-indicator mono">−</span>
-              </button>
-              <div class="queue-expanded-content">
-                <div class="queue-data-grid">
-                  <div>
-                    <small>ROOT CAUSE SIGNAL</small>
-                    <p>8 high-velocity GT retail accounts hit &lt;3 days of cover while distributor dispatch is delayed 36 hours.</p>
-                  </div>
-                  <div>
-                    <small>TUESDAY MORNING ACTION</small>
-                    <p>Reallocate safety stock from Bandra sub-stockist before the morning 9:00 AM beat booking.</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li class="queue-row" data-priority="stock">
-              <button class="queue-row-btn" type="button" aria-expanded="false">
-                <div class="queue-row-left">
-                  <span class="badge-priority badge-watch">WATCH</span>
-                  <strong>Personal Care Sachet Line · Drop Size Compression</strong>
-                </div>
-                <span class="queue-indicator mono">+</span>
-              </button>
-              <div class="queue-expanded-content" hidden>
-                <div class="queue-data-grid">
-                  <div>
-                    <small>ROOT CAUSE SIGNAL</small>
-                    <p>Beat strike rate held steady at 78%, but average retailer order value dropped 14% week-over-week.</p>
-                  </div>
-                  <div>
-                    <small>TUESDAY MORNING ACTION</small>
-                    <p>Bundle trade scheme hanger display on counter hot-spots to restore multi-pack impulse purchases.</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li class="queue-row" data-priority="high">
-              <button class="queue-row-btn" type="button" aria-expanded="false">
-                <div class="queue-row-left">
-                  <span class="badge-priority badge-high">HIGH</span>
-                  <strong>B2B Floodlight Shipment · Customs &amp; Margin Alert</strong>
-                </div>
-                <span class="queue-indicator mono">+</span>
-              </button>
-              <div class="queue-expanded-content" hidden>
-                <div class="queue-data-grid">
-                  <div>
-                    <small>ROOT CAUSE SIGNAL</small>
-                    <p>Port container freight surcharge increased landed unit cost by 6.4% on commercial SKU batch.</p>
-                  </div>
-                  <div>
-                    <small>TUESDAY MORNING ACTION</small>
-                    <p>Adjust Tier-2 distributor volume slab threshold to preserve target net contribution margin.</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li class="queue-row" data-priority="all">
-              <button class="queue-row-btn" type="button" aria-expanded="false">
-                <div class="queue-row-left">
-                  <span class="badge-priority badge-watch">WATCH</span>
-                  <strong>New GT Accounts (Month 1 Cohort) · Second-Order Check</strong>
-                </div>
-                <span class="queue-indicator mono">+</span>
-              </button>
-              <div class="queue-expanded-content" hidden>
-                <div class="queue-data-grid">
-                  <div>
-                    <small>ROOT CAUSE SIGNAL</small>
-                    <p>10 newly onboarded GT retail outlets approaching Day-14 second-order replenishment cycle.</p>
-                  </div>
-                  <div>
-                    <small>TUESDAY MORNING ACTION</small>
-                    <p>Trigger priority sales rep follow-up visit to review rate-of-sale and lock in prime repeat shelf placement.</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         CHAPTER 06: JOURNEY & ACADEMIC FOUNDATION
-         ====================================================================== -->
-    <section class="section journey-section" id="journey" aria-labelledby="journeyTitle">
-      <div class="section-kicker">
-        <span>06 / JOURNEY &amp; FOUNDATION</span><i></i><span>ACADEMIC RIGOR MEETS STRATEGIC EXECUTION</span>
-      </div>
-
-      <div class="section-heading reveal-up">
-        <p class="eyebrow">Milestones of growth</p>
-        <h2 id="journeyTitle">Study that builds <em>systems perspective.</em></h2>
-        <p class="section-lede">
-          Combining a 4-year technical degree in Computer Science with frontline Mumbai commercial execution and postgraduate management training in Operations &amp; Logistics at Lovely Professional University.
-        </p>
-      </div>
-
-      <!-- Interactive Milestone Navigator -->
-      <div class="journey-scrubber-wrap">
-        <div class="journey-scrubber" role="tablist" aria-label="Career Milestones">
-          <button class="scrubber-btn is-active" type="button" role="tab" aria-selected="true" data-milestone="0">
-            <span class="scrub-year">2020 — 2024</span>
-            <strong class="scrub-name">B.Tech CS (LPU)</strong>
-          </button>
-          <button class="scrubber-btn" type="button" role="tab" aria-selected="false" data-milestone="1">
-            <span class="scrub-year">2024 — 2025</span>
-            <strong class="scrub-name">Only Solar</strong>
-          </button>
-          <button class="scrubber-btn" type="button" role="tab" aria-selected="false" data-milestone="2">
-            <span class="scrub-year">2025 — 2026</span>
-            <strong class="scrub-name">CavinKare</strong>
-          </button>
-          <button class="scrubber-btn" type="button" role="tab" aria-selected="false" data-milestone="3">
-            <span class="scrub-year">2026 — 2028</span>
-            <strong class="scrub-name">MBA Ops (LPU)</strong>
-          </button>
-        </div>
-
-        <div class="milestone-display-card" id="milestoneDisplay">
-          <div class="milestone-header">
-            <div>
-              <span class="mono milestone-badge" id="mBadge">TECHNICAL FOUNDATION</span>
-              <h3 class="milestone-title" id="mTitle">Bachelor of Technology — Computer Science &amp; Engineering</h3>
-              <p class="milestone-inst" id="mInst">Lovely Professional University (LPU), Phagwara, Punjab · Graduated 2024 (75.8%)</p>
-            </div>
-            <span class="milestone-year-big mono" id="mYear">2020-24</span>
-          </div>
-          <p class="milestone-desc" id="mDesc">
-            Rigorous training in Database Management Systems (SQL), Data Structures &amp; Algorithms, Statistical Analysis, and Python. Built the mental models to perceive physical supply chains as stateful relational systems.
-          </p>
-          <div class="milestone-takeaway-box" id="mTakeaway">
-            <strong>Key Systems Takeaway:</strong> Operations is fundamentally an information architecture problem. When data at the retail counter is structured cleanly, logistics bottlenecks become solvable.
-          </div>
-        </div>
-      </div>
-
-      <!-- Verified Credentials & Certifications -->
-      <div class="certs-section-wrap reveal-up">
-        <h4 class="certs-headline mono">VERIFIED TECHNICAL &amp; ANALYTICAL CREDENTIALS</h4>
-        <div class="certs-grid">
-          <article class="cert-box">
-            <small>SIMPLILEARN · 2024</small>
-            <strong>Power BI for Business &amp; KPI Dashboards</strong>
-            <p>Data modeling, DAX measures, automated reporting &amp; territory KPI dashboards.</p>
-          </article>
-          <article class="cert-box">
-            <small>UDEMY · 2023</small>
-            <strong>SQL for Data Analytics &amp; Business Intelligence</strong>
-            <p>Relational queries, complex joins, aggregation, window functions &amp; schema design.</p>
-          </article>
-          <article class="cert-box">
-            <small>GEEKSFORGEEKS · 6 MONTHS</small>
-            <strong>Complete Machine Learning &amp; Data Science Program</strong>
-            <p>Statistical inference, regression modeling, predictive analytics &amp; Python data science.</p>
-          </article>
-          <article class="cert-box">
-            <small>DEEPLEARNING.AI / COURSERA · 2023</small>
-            <strong>Natural Language Processing Specialisation</strong>
-            <p>Classification models, sequence structures, and algorithmic decision systems.</p>
-          </article>
-        </div>
-      </div>
-
-      <div class="off-clock-note">
-        <strong>OFF THE CLOCK:</strong>
-        Reading business and commercial strategy (<em>Blue Ocean Strategy</em>, <em>Make Epic Money</em>), strategic chess and gaming, music, and analyzing Indian retail, FMCG, and quick-commerce supply-chain developments.
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         CHAPTER 07: FIELD NOTES & OBSERVATIONS
-         ====================================================================== -->
-    <section class="section notes-section" id="notes" aria-labelledby="notesTitle">
-      <div class="section-kicker">
-        <span>07 / FIELD NOTES</span><i></i><span>OBSERVATIONS FROM THE COUNTER AND THE CUSTOMS PORT</span>
-      </div>
-
-      <div class="section-heading reveal-up">
-        <p class="eyebrow">Frontline lessons</p>
-        <h2 id="notesTitle">Notes on <em>how things really move.</em></h2>
-        <p class="section-lede">
-          Working principles formed on retail beat walks in Mumbai and international sourcing calls.
-        </p>
-      </div>
-
-      <div class="field-notes-grid">
-        <article class="field-note-card reveal-up">
-          <span class="note-num mono">NOTE 01</span>
-          <h3>The Phantom Stockout</h3>
-          <p>
-            When a distributor reports adequate stock on paper, but retail shelves run empty on Saturday evening, the issue isn't demand forecasting—it's delivery cycle synchronization. The delivery van's dispatch window must match the retailer's cash collection rhythm.
-          </p>
-          <span class="note-tag">CAVINKARE FMCG BEAT</span>
-        </article>
-
-        <article class="field-note-card reveal-up">
-          <span class="note-num mono">NOTE 02</span>
-          <h3>The Landed-Cost Trap</h3>
-          <p>
-            The cheapest overseas factory quote is often the most expensive inventory you will ever buy. Once freight volatility, customs tariff inspection delays, and working-capital carrying costs are added, regional suppliers with higher initial price tags often win on net margin.
-          </p>
-          <span class="note-tag">ONLY SOLAR SOURCING</span>
-        </article>
-
-        <article class="field-note-card reveal-up">
-          <span class="note-num mono">NOTE 03</span>
-          <h3>SOPs vs Tuesday Mornings</h3>
-          <p>
-            A process that requires five manual clicks will be abandoned on a busy Tuesday morning. Good operational design eliminates friction at the frontline, creating default paths that make doing the right thing the easiest thing.
-          </p>
-          <span class="note-tag">OPERATIONS DESIGN</span>
-        </article>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         CHAPTER 08: CONTACT & LOGISTICS ANIMATION SCENE
-         ====================================================================== -->
-    <section class="section contact-section" id="contact" aria-labelledby="contactTitle">
-      <div class="section-kicker">
-        <span>08 / OPEN LINE &amp; CONTACT</span><i></i><span>READY FOR INTERNSHIPS, PROJECTS &amp; FULL-TIME ROLES</span>
-      </div>
-
-      <div class="contact-grid">
-        <div class="contact-info-panel reveal-up">
-          <span class="status-pill"><i class="status-pulse"></i> Phagwara, Punjab &amp; Mumbai · Open to Pan-India Relocation</span>
-          <h2 id="contactTitle">Let’s make<br><em>things move.</em></h2>
-          <p class="contact-lead">
-            I am currently open to <strong>Operations Management, Supply Chain &amp; Sourcing, Product Operations / APM, Business Analysis, and Commercial / GTM</strong> roles.
-          </p>
-
-          <div class="quick-links-stack">
-            <button class="contact-action-btn" id="copyEmailBtn" type="button" data-email="jayeshsingh9b@gmail.com">
-              <span>Copy Email: <b>jayeshsingh9b@gmail.com</b></span>
-              <span class="kbd-badge mono">⌘C</span>
+          <div class="lab-banner-cta">
+            <button class="btn btn-primary" id="openLabModalBtn" type="button">
+              <span>Launch Operations Lab</span>
+              <span class="btn-arrow" aria-hidden="true">⤢</span>
             </button>
-            <a class="contact-action-btn" href="mailto:jayeshsingh9b@gmail.com">
-              <span>Direct Email: <b>jayeshsingh9b@gmail.com</b></span>
-              <span class="icon-arr">↗</span>
-            </a>
-            <a class="contact-action-btn" href="https://www.linkedin.com/in/jsingh26" target="_blank" rel="noopener noreferrer">
-              <span>LinkedIn: <b>linkedin.com/in/jsingh26</b></span>
-              <span class="icon-arr">↗</span>
-            </a>
-            <a class="contact-action-btn" download href="assets/Jayesh-Singh-Resume.pdf">
-              <span>Download Official Résumé (PDF)</span>
-              <span class="icon-arr">↓</span>
-            </a>
           </div>
         </div>
-
-        <!-- Interactive Inquiry Form -->
-        <div class="contact-form-panel reveal-up">
-          <form class="contact-form" id="contactForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="cName">YOUR NAME</label>
-                <input id="cName" name="name" type="text" placeholder="How should I address you?" required>
-              </div>
-              <div class="form-group">
-                <label for="cEmail">EMAIL ADDRESS</label>
-                <input id="cEmail" name="email" type="email" placeholder="you@company.com" required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="cTopic">CONVERSATION TOPIC</label>
-              <select id="cTopic" name="topic" required>
-                <option value="" disabled selected>Select an area of discussion</option>
-                <option value="Operations & Supply Chain Role / Internship">Operations &amp; Supply Chain Role / Internship</option>
-                <option value="Product Operations / APM Opportunity">Product Operations / APM Opportunity</option>
-                <option value="Sales, FMCG Distribution & Commercial Strategy">Sales, FMCG Distribution &amp; Commercial Strategy</option>
-                <option value="Live Project / Case Study Collaboration">Live Project / Case Study Collaboration</option>
-                <option value="General Conversation">General Professional Conversation</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="cMessage">YOUR MESSAGE</label>
-              <textarea id="cMessage" name="message" rows="4" placeholder="Tell me about the role, team, or operational challenge..." required></textarea>
-            </div>
-
-            <button class="button button-dark form-submit-btn" type="submit">
-              <span>Send Message &amp; Copy Draft</span><b aria-hidden="true">↗</b>
-            </button>
-            <p class="form-status-msg" id="formStatusMsg" role="status" aria-live="polite"></p>
-          </form>
-        </div>
       </div>
+    </section>
 
-      <!-- Animated Warehouse & Logistics SVG Scene (Source 2 Signature Feature) -->
-      <div class="logistics-scene" aria-hidden="true">
-        <svg viewBox="0 0 1200 160" fill="none" preserveAspectRatio="xMidYMax slice">
-          <path class="scene-ground" d="M0 140h1200"></path>
-          <!-- Warehouse Racks -->
-          <path class="scene-line" d="M40 30h140v110M40 30v110m0-75h140m-140 38h140"></path>
-          <rect class="scene-box" x="55" y="40" width="28" height="22"></rect>
-          <rect class="scene-box" x="95" y="40" width="28" height="22"></rect>
-          <rect class="scene-box" x="135" y="40" width="28" height="22"></rect>
-          <rect class="scene-box" x="55" y="77" width="28" height="22"></rect>
-          <rect class="scene-box" x="95" y="77" width="28" height="22"></rect>
-          <rect class="scene-box" x="135" y="77" width="28" height="22"></rect>
-          <!-- Conveyor Belt -->
-          <line class="conveyor-rail" x1="220" y1="120" x2="680" y2="120"></line>
-          <circle class="conveyor-wheel" cx="240" cy="120" r="8"></circle>
-          <circle class="conveyor-wheel" cx="360" cy="120" r="8"></circle>
-          <circle class="conveyor-wheel" cx="480" cy="120" r="8"></circle>
-          <circle class="conveyor-wheel" cx="600" cy="120" r="8"></circle>
-          <circle class="conveyor-wheel" cx="670" cy="120" r="8"></circle>
-          <!-- Moving Packages on Conveyor -->
-          <rect class="moving-box box-1" x="250" y="98" width="24" height="20"></rect>
-          <rect class="moving-box box-2" x="380" y="98" width="24" height="20"></rect>
-          <rect class="moving-box box-3" x="510" y="98" width="24" height="20"></rect>
-          <!-- Forklift -->
-          <path class="scene-line" d="M740 140v-40h35l20 20v20h-55zm35-40v40m20-10h15m-15-18h15"></path>
-          <circle class="scene-line" cx="755" cy="140" r="8"></circle>
-          <circle class="scene-line" cx="785" cy="140" r="8"></circle>
-          <!-- Delivery Logistics Truck -->
-          <g class="moving-truck">
-            <path class="truck-body" d="M870 50h180v70h-180z"></path>
-            <path class="truck-cab" d="M1050 75h40l25 25v20h-65z"></path>
-            <circle class="truck-wheel" cx="910" cy="132" r="14"></circle>
-            <circle class="truck-wheel" cx="950" cy="132" r="14"></circle>
-            <circle class="truck-wheel" cx="1090" cy="132" r="14"></circle>
-            <text x="960" y="90" fill="var(--paper)" font-family="var(--mono)" font-size="11" font-weight="700">JS // LOGISTICS</text>
-          </g>
-        </svg>
+    <!-- ======================================================================
+         SECTION 06: CONTACT (Clean, Direct, Copyable, Minimal Inquiry Form)
+         ====================================================================== -->
+    <section class="section" id="contact" aria-labelledby="contactHeadline">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">06 // DIRECT CONTACT</span>
+          <h2 class="section-title" id="contactHeadline">Start an operational conversation.</h2>
+          <p class="section-desc">
+            Currently open to Operations Management, Global Sourcing, Supply Chain Strategy, and Commercial Product roles. Let's discuss where I can add immediate value.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Direct Links Column -->
+          <div class="contact-direct-card">
+            <h3 class="contact-block-title">Direct Channels</h3>
+            
+            <div class="direct-channel-item">
+              <span class="channel-label">Email Address</span>
+              <div class="email-copy-wrap">
+                <a class="channel-val" href="mailto:singhjayesh416@gmail.com" id="contactEmailLink">singhjayesh416@gmail.com</a>
+                <button class="btn-copy-email" id="copyEmailBtn" type="button" aria-label="Copy email address" title="Copy email address">
+                  <span id="copyBtnText">Copy (⌘C)</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="direct-channel-item">
+              <span class="channel-label">Direct Phone</span>
+              <a class="channel-val" href="tel:+919137489209">+91 91374 89209</a>
+            </div>
+
+            <div class="direct-channel-item">
+              <span class="channel-label">Location Base</span>
+              <span class="channel-text">Mumbai, India (Open to Relocation &amp; Travel)</span>
+            </div>
+
+            <div class="direct-channel-item">
+              <span class="channel-label">Professional Links</span>
+              <div class="channel-links">
+                <a class="channel-link-chip" href="https://linkedin.com/in/jayeshsingh" target="_blank" rel="noopener noreferrer">
+                  LinkedIn ↗
+                </a>
+                <a class="channel-link-chip" download href="assets/Jayesh-Singh-Resume.pdf">
+                  Résumé (PDF) ↓
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Inquiry Form -->
+          <div class="contact-form-card">
+            <h3 class="contact-block-title">Send a Direct Note</h3>
+            <form class="inquiry-form" id="inquiryForm" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="userName">Your Name <span class="req">*</span></label>
+                  <input type="text" id="userName" name="name" required placeholder="Alex Mercer" autocomplete="name">
+                </div>
+                <div class="form-group">
+                  <label for="userEmail">Your Email <span class="req">*</span></label>
+                  <input type="email" id="userEmail" name="email" required placeholder="alex@company.com" autocomplete="email">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Discussion Topic</label>
+                <div class="topic-pills" role="radiogroup" aria-label="Discussion Topic">
+                  <label class="topic-pill">
+                    <input type="radio" name="topic" value="Operations Role" checked>
+                    <span>Operations Role</span>
+                  </label>
+                  <label class="topic-pill">
+                    <input type="radio" name="topic" value="Sourcing Project">
+                    <span>Sourcing Project</span>
+                  </label>
+                  <label class="topic-pill">
+                    <input type="radio" name="topic" value="General">
+                    <span>General Inquiry</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userMsg">Message <span class="req">*</span></label>
+                <textarea id="userMsg" name="message" rows="4" required placeholder="Tell me about the role, project scope, or problem you are solving..."></textarea>
+              </div>
+
+              <button class="btn btn-primary btn-submit-form" type="submit">
+                <span>Send Message</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </button>
+              <p class="form-feedback" id="formFeedback" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- Site Footer -->
+  <!-- ======================================================================
+       FOOTER (Minimalist, Respectful, No Photographs)
+       ====================================================================== -->
   <footer class="site-footer">
-    <div class="footer-inner">
+    <div class="footer-container">
       <div class="footer-left">
-        <span class="brand-seal-mini"><svg viewBox="0 0 40 40"><path d="M8 25 17 11l7 18 8-14"></path><circle cx="8" cy="25" r="2.2"></circle><circle cx="17" cy="11" r="2.2"></circle><circle cx="24" cy="29" r="2.2"></circle><circle cx="32" cy="15" r="2.2"></circle></svg></span>
-        <div>
-          <strong>Jayesh Singh</strong>
-          <small>Operations, Logistics &amp; Commercial Systems · 2026</small>
-        </div>
+        <strong>JAYESH SINGH</strong>
+        <p>Operations, Logistics &amp; Commercial Systems · Mumbai, India</p>
       </div>
-      <div class="footer-center mono">
-        <span>LPU MBA (OPS &amp; LOGISTICS) · B.TECH CSE (75.8%)</span>
+      <div class="footer-center">
+        <span>B.Tech CS (75.8%) + MBA Candidate (Ops &amp; Logistics)</span>
       </div>
       <div class="footer-right">
-        <a class="back-to-top" href="#home">Back to top ↑</a>
+        <a href="#home">Back to top ↑</a>
       </div>
     </div>
   </footer>
 
   <!-- ======================================================================
-       MODAL DIALOGS
+       PROGRESSIVE DISCLOSURE MODAL DIALOGS
        ====================================================================== -->
-  <!-- 1. Executive Case Study Dossier Modal -->
-  <dialog class="case-dialog" id="caseDialog" aria-labelledby="caseDialogTitle">
+
+  <!-- Modal 1: Case Study Dossier Modal -->
+  <dialog class="app-dialog" id="caseDialog" aria-labelledby="caseDialogTitle" aria-modal="true">
     <div class="dialog-frame">
-      <div class="dialog-header">
-        <div>
-          <span class="mono dialog-kicker" id="caseDialogKicker">CASE STUDY</span>
-          <h2 class="dialog-title" id="caseDialogTitle">Case Study Title</h2>
+      <div class="dialog-topbar">
+        <div class="dialog-crumb">
+          <span class="crumb-section">DOSSIER</span>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-id" id="caseDialogCategory">FMCG DISTRIBUTION</span>
         </div>
-        <button class="dialog-close-btn" id="closeCaseDialog" type="button" aria-label="Close dossier">✕</button>
+        <button class="btn-dialog-close" data-close-dialog="caseDialog" type="button" aria-label="Close dossier">✕</button>
       </div>
-      <div class="dialog-body" id="caseDialogBody">
-        <!-- Injected via script.js -->
-      </div>
-      <div class="dialog-footer">
-        <span class="mono">VERIFIED OPERATIONAL EVIDENCE</span>
-        <button class="dialog-btn-done" id="doneCaseDialog" type="button">Close Dossier</button>
+      <div class="dialog-content" id="caseDialogBody">
+        <!-- Injected via JavaScript -->
       </div>
     </div>
   </dialog>
 
-  <!-- 2. Profile Quick Briefing Modal (Triggered by Header Logo) -->
-  <dialog class="profile-dialog" id="profileDialog" aria-labelledby="profileDialogTitle">
-    <div class="dialog-frame profile-frame">
-      <div class="dialog-header">
-        <div class="profile-header-left">
-          <img class="profile-thumb" src="assets/jayesh-singh.png" alt="Jayesh Singh">
-          <div>
-            <h3 id="profileDialogTitle">Jayesh Singh</h3>
-            <p class="mono profile-subtitle">Operations &amp; Logistics MBA · B.Tech CS</p>
-          </div>
+  <!-- Modal 2: 4-Stage Operating Loop Modal -->
+  <dialog class="app-dialog" id="loopDialog" aria-labelledby="loopDialogTitle" aria-modal="true">
+    <div class="dialog-frame">
+      <div class="dialog-topbar">
+        <div class="dialog-crumb">
+          <span class="crumb-section">METHODOLOGY</span>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-id">THE 4-STAGE OPERATING LOOP</span>
         </div>
-        <button class="dialog-close-btn" id="closeProfileDialog" type="button" aria-label="Close profile">✕</button>
+        <button class="btn-dialog-close" data-close-dialog="loopDialog" type="button" aria-label="Close operating loop modal">✕</button>
       </div>
-      <div class="profile-dialog-body">
-        <p class="profile-bio">
-          Execution-first operator bridging FMCG field retail distribution (CavinKare, 50+ outlet beat), international sourcing and landed pricing (Co-Founder, Only Solar), and relational SQL / Power BI product systems.
+      <div class="dialog-content">
+        <h3 class="dialog-title" id="loopDialogTitle">How Problems Turn Into Scalable Execution</h3>
+        <p class="dialog-intro">
+          Operations fail when organizations leap from a high-level symptom to a software purchase without understanding the human and physical handoffs. Here is the 4-stage loop I apply.
         </p>
-        <div class="profile-facts-grid">
-          <div>
-            <small>CURRENT EDUCATION</small>
-            <strong>MBA, Operations &amp; Logistics</strong>
-            <span>Lovely Professional University (2026–2028)</span>
+
+        <div class="loop-stages-list">
+          <div class="loop-stage-item">
+            <div class="loop-stage-badge">01</div>
+            <div class="loop-stage-content">
+              <h4>Stage 01: Direct Physical Observation (Walk the Floor)</h4>
+              <p>Map the journey of a physical carton, invoice, or purchase order from receipt to dispatch. Identify where physical friction, waiting time, or undocumented workarounds occur.</p>
+              <div class="loop-callout">
+                <strong>Real Application:</strong> Auditing Mumbai retailer ordering patterns at the counter to spot why stockouts occurred despite distributor inventory.
+              </div>
+            </div>
           </div>
-          <div>
-            <small>TECHNICAL DEGREE</small>
-            <strong>B.Tech, Computer Science (75.8%)</strong>
-            <span>Lovely Professional University (2020–2024)</span>
+
+          <div class="loop-stage-item">
+            <div class="loop-stage-badge">02</div>
+            <div class="loop-stage-content">
+              <h4>Stage 02: Unit Economic &amp; Mathematical Modeling</h4>
+              <p>Convert physical observations into an accurate mathematical model. Calculate true landed costs, safety stock buffers, reorder points, and holding cost sensitivity before proposing changes.</p>
+              <div class="loop-callout">
+                <strong>Real Application:</strong> Building Only Solar's multi-tier landed-cost formulas factoring shipping line bunker fees and customs tariffs.
+              </div>
+            </div>
           </div>
-          <div>
-            <small>PRIMARY LOCATION</small>
-            <strong>Phagwara, Punjab &amp; Mumbai</strong>
-            <span>Open to pan-India relocation</span>
+
+          <div class="loop-stage-item">
+            <div class="loop-stage-badge">03</div>
+            <div class="loop-stage-content">
+              <h4>Stage 03: Scalable Relational Systems &amp; SOPs</h4>
+              <p>Codify the solution into durable relational database schemas, clear standard operating procedures, and automated alerts so execution does not depend on heroics or memory.</p>
+              <div class="loop-callout">
+                <strong>Real Application:</strong> Structuring SQL tables with automated stockout triggers and Power BI fulfillment dashboards.
+              </div>
+            </div>
           </div>
-          <div>
-            <small>CONTACT DIRECT</small>
-            <strong>jayeshsingh9b@gmail.com</strong>
-            <span>linkedin.com/in/jsingh26</span>
+
+          <div class="loop-stage-item">
+            <div class="loop-stage-badge">04</div>
+            <div class="loop-stage-content">
+              <h4>Stage 04: The Closed-Loop Feedback Mechanism</h4>
+              <p>Every delivery, return, and customer interaction creates telemetry. Feed frontline delivery performance and retail sell-through directly back into upstream procurement schedules.</p>
+              <div class="loop-callout">
+                <strong>Real Application:</strong> CavinKare weekly beat reviews matching primary factory dispatches to secondary counter sales velocity.
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="dialog-footer">
-        <a class="button button-dark magnetic" download href="assets/Jayesh-Singh-Resume.pdf">Download Résumé (PDF) ↓</a>
-        <button class="dialog-btn-done" id="doneProfileDialog" type="button">Close</button>
       </div>
     </div>
   </dialog>
+
+  <!-- Modal 3: Capabilities & Tooling Modal -->
+  <dialog class="app-dialog" id="capabilitiesDialog" aria-labelledby="capabilitiesDialogTitle" aria-modal="true">
+    <div class="dialog-frame">
+      <div class="dialog-topbar">
+        <div class="dialog-crumb">
+          <span class="crumb-section">STACK</span>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-id">CAPABILITIES &amp; TOOLKIT</span>
+        </div>
+        <button class="btn-dialog-close" data-close-dialog="capabilitiesDialog" type="button" aria-label="Close capabilities modal">✕</button>
+      </div>
+      <div class="dialog-content">
+        <h3 class="dialog-title" id="capabilitiesDialogTitle">Operational &amp; Technical Capabilities</h3>
+        <p class="dialog-intro">
+          Bridging operations management, supply chain analytics, and technical computer science engineering.
+        </p>
+
+        <div class="capabilities-matrix">
+          <div class="cap-group">
+            <h4>Operations &amp; Supply Chain</h4>
+            <ul class="cap-list">
+              <li><strong>Inventory Modeling:</strong> EOQ, Safety Stock calculation, Reorder Point (ROP), ABC/XYZ classification.</li>
+              <li><strong>Logistics &amp; Freight:</strong> Ocean shipping terms (FOB, CIF, EXW), port clearance workflows, inland linehaul transit.</li>
+              <li><strong>Distribution Management:</strong> Primary &amp; secondary fulfillment, retail beat design, dealer margin structures.</li>
+              <li><strong>Quality &amp; RMA:</strong> Reverse logistics workflows, vendor warranty reconciliation, inspection protocols.</li>
+            </ul>
+          </div>
+
+          <div class="cap-group">
+            <h4>Data Systems &amp; Analytics</h4>
+            <ul class="cap-list">
+              <li><strong>Relational SQL:</strong> PostgreSQL, MySQL, 3NF schema architecture, analytical joins, window functions.</li>
+              <li><strong>Power BI &amp; DAX:</strong> Data modeling, star schemas, automated replenishment &amp; OTIF executive dashboards.</li>
+              <li><strong>Spreadsheet Modeling:</strong> Financial landed-cost structures, sensitivity matrices, dynamic multi-variable tables.</li>
+              <li><strong>Programming:</strong> Python (pandas, numpy for data analysis), JavaScript, foundational computer science.</li>
+            </ul>
+          </div>
+
+          <div class="cap-group">
+            <h4>Commercial &amp; Leadership</h4>
+            <ul class="cap-list">
+              <li><strong>0→1 Venture Building:</strong> Supplier contracts, pricing strategies, B2B sales pipelines, cash-flow discipline.</li>
+              <li><strong>Field Stakeholder Alignment:</strong> Distributor negotiation, general-trade retailer relationship management.</li>
+              <li><strong>Cross-Functional Execution:</strong> Translating operational bottlenecks into clear technical software specifications.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal 4: Verified Credentials Modal -->
+  <dialog class="app-dialog" id="credentialsDialog" aria-labelledby="credentialsDialogTitle" aria-modal="true">
+    <div class="dialog-frame">
+      <div class="dialog-topbar">
+        <div class="dialog-crumb">
+          <span class="crumb-section">ACADEMICS</span>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-id">VERIFIED CREDENTIALS</span>
+        </div>
+        <button class="btn-dialog-close" data-close-dialog="credentialsDialog" type="button" aria-label="Close credentials modal">✕</button>
+      </div>
+      <div class="dialog-content">
+        <h3 class="dialog-title" id="credentialsDialogTitle">Academic Degrees &amp; Coursework</h3>
+        <p class="dialog-intro">
+          Rigorous academic grounding spanning quantitative business operations and engineering computer science.
+        </p>
+
+        <div class="credentials-cards">
+          <div class="cred-card">
+            <div class="cred-badge">2024 – 2026</div>
+            <h4>Master of Business Administration (MBA)</h4>
+            <span class="cred-inst">Lovely Professional University (LPU), Punjab, India</span>
+            <p><strong>Major:</strong> Operations Management &amp; Logistics</p>
+            <div class="cred-coursework">
+              <strong>Core Advanced Coursework:</strong>
+              <ul>
+                <li>Supply Chain Design &amp; Strategic Sourcing</li>
+                <li>Quantitative Inventory &amp; Production Management</li>
+                <li>Enterprise Resource Planning (ERP) Systems &amp; Integration</li>
+                <li>Project Management &amp; Operations Research</li>
+                <li>Commercial Law, International Trade &amp; Freight Documentation</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cred-card">
+            <div class="cred-badge">2019 – 2023</div>
+            <h4>Bachelor of Technology (B.Tech) in Computer Science &amp; Engineering</h4>
+            <span class="cred-inst">Lovely Professional University (LPU), Punjab, India</span>
+            <p><strong>Graduation Score:</strong> 75.8% Aggregate</p>
+            <div class="cred-coursework">
+              <strong>Engineering Foundation:</strong>
+              <ul>
+                <li>Relational Database Management Systems (RDBMS &amp; SQL)</li>
+                <li>Data Structures &amp; Algorithm Optimization</li>
+                <li>Software Engineering Methodologies &amp; Systems Architecture</li>
+                <li>Computer Networks &amp; Distributed Systems</li>
+                <li>Object-Oriented Programming &amp; Computational Thinking</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal 5: Milestone Inspector Modal -->
+  <dialog class="app-dialog" id="milestoneDialog" aria-labelledby="milestoneDialogTitle" aria-modal="true">
+    <div class="dialog-frame">
+      <div class="dialog-topbar">
+        <div class="dialog-crumb">
+          <span class="crumb-section">MILESTONE</span>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-id" id="milestoneCategory">EXPERIENCE DETAIL</span>
+        </div>
+        <button class="btn-dialog-close" data-close-dialog="milestoneDialog" type="button" aria-label="Close milestone detail modal">✕</button>
+      </div>
+      <div class="dialog-content" id="milestoneDialogBody">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal 6: Operations Lab Full Simulator Modal -->
+  <dialog class="app-dialog app-dialog-large" id="labDialog" aria-labelledby="labDialogTitle" aria-modal="true">
+    <div class="dialog-frame">
+      <div class="dialog-topbar">
+        <div class="dialog-crumb">
+          <span class="crumb-section">LABORATORY</span>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-id">LIVE DECISION SIMULATORS</span>
+        </div>
+        <button class="btn-dialog-close" data-close-dialog="labDialog" type="button" aria-label="Close lab modal">✕</button>
+      </div>
+      <div class="dialog-content">
+        <div class="lab-modal-tabs">
+          <button class="lab-tab-btn is-active" data-lab-tool="calculator" type="button">
+            Sourcing Landed-Cost Simulator
+          </button>
+          <button class="lab-tab-btn" data-lab-tool="triage" type="button">
+            Exception Triage Board
+          </button>
+        </div>
+
+        <!-- Tool 1: Landed-Cost Calculator -->
+        <div class="lab-tool-panel is-active" id="toolCalculator">
+          <div class="sim-header">
+            <h4>Global Import Landed-Cost &amp; Breakeven Calculator</h4>
+            <p>Model the complete cost build-up from factory gate (FOB) across ocean freight, customs tariff, port handling, and domestic transit.</p>
+          </div>
+
+          <div class="sim-grid">
+            <div class="sim-controls">
+              <div class="slider-group">
+                <div class="slider-head">
+                  <label for="calcUnits">Batch Volume (Units)</label>
+                  <span class="slider-val" id="valUnits">1,000</span>
+                </div>
+                <input type="range" id="calcUnits" min="100" max="5000" step="50" value="1000">
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-head">
+                  <label for="calcFob">Factory Price (FOB / Unit $)</label>
+                  <span class="slider-val" id="valFob">$45.00</span>
+                </div>
+                <input type="range" id="calcFob" min="10" max="200" step="1" value="45">
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-head">
+                  <label for="calcFreight">Ocean Freight per 40ft Container ($)</label>
+                  <span class="slider-val" id="valFreight">$2,800</span>
+                </div>
+                <input type="range" id="calcFreight" min="800" max="8000" step="100" value="2800">
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-head">
+                  <label for="calcDuty">Customs Duty &amp; Port Tariff (%)</label>
+                  <span class="slider-val" id="valDuty">18%</span>
+                </div>
+                <input type="range" id="calcDuty" min="0" max="40" step="1" value="18">
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-head">
+                  <label for="calcTransit">Inland Linehaul Transit (₹ / Unit)</label>
+                  <span class="slider-val" id="valTransit">₹120</span>
+                </div>
+                <input type="range" id="calcTransit" min="20" max="400" step="10" value="120">
+              </div>
+            </div>
+
+            <div class="sim-results-card">
+              <span class="results-badge">REAL-TIME UNIT ECONOMICS</span>
+              <div class="result-highlight">
+                <span class="result-label">Total Landed Cost per Unit</span>
+                <strong class="result-hero" id="resUnitLanded">₹4,892</strong>
+                <small id="resFobShare">FOB represents 76% of landed cost</small>
+              </div>
+
+              <div class="breakdown-list">
+                <div class="breakdown-row">
+                  <span>Factory FOB Base</span>
+                  <strong id="resFobTotal">₹37,35,000</strong>
+                </div>
+                <div class="breakdown-row">
+                  <span>Ocean Freight Allocation</span>
+                  <strong id="resFreightTotal">₹2,32,400</strong>
+                </div>
+                <div class="breakdown-row">
+                  <span>Customs &amp; Port Duties</span>
+                  <strong id="resDutyTotal">₹7,14,132</strong>
+                </div>
+                <div class="breakdown-row">
+                  <span>Inland Linehaul</span>
+                  <strong id="resTransitTotal">₹1,20,000</strong>
+                </div>
+                <div class="breakdown-row breakdown-total">
+                  <span>Total Capital Commitment</span>
+                  <strong id="resGrandTotal">₹48,01,532</strong>
+                </div>
+              </div>
+
+              <div class="target-margin-calc">
+                <div class="target-input-row">
+                  <label for="targetMargin">Target Gross Margin (%)</label>
+                  <input type="number" id="targetMargin" min="5" max="80" value="25">
+                </div>
+                <div class="target-output-row">
+                  <span>Recommended Wholesale Price:</span>
+                  <strong id="resTargetPrice">₹6,523 / Unit</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tool 2: Exception Triage Board -->
+        <div class="lab-tool-panel" id="toolTriage">
+          <div class="sim-header">
+            <h4>Live Supply Chain Exception Triage Simulator</h4>
+            <p>High-frequency operational reality: prioritize inbound bottlenecks, retail stockouts, and distributor credit alerts in real time.</p>
+          </div>
+
+          <div class="triage-layout">
+            <div class="triage-incidents-col">
+              <div class="triage-head">
+                <h5>Active Incident Queue</h5>
+                <span class="incident-count" id="activeIncidentCount">3 Pending</span>
+              </div>
+              <div class="incident-list" id="incidentList">
+                <!-- Dynamically populated -->
+              </div>
+              <button class="btn-reset-triage" id="resetTriageBtn" type="button">Reset Incident Queue</button>
+            </div>
+
+            <div class="triage-resolution-col">
+              <div class="triage-head">
+                <h5>Incident Assessment &amp; Action Plan</h5>
+                <span class="active-incident-id" id="selectedIncidentId">Select an incident</span>
+              </div>
+              <div class="resolution-body" id="resolutionBody">
+                <p class="placeholder-text">Click on any pending incident from the left to inspect trade-offs and trigger resolution protocol.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Live Toast Notification System -->
+  <div class="toast-manager" id="toastManager" aria-live="assertive" aria-atomic="true"></div>
 </body>
 </html>

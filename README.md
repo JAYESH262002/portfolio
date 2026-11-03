@@ -1,75 +1,85 @@
-# Jayesh Singh — Executive Portfolio (V17 Next Reconstruction)
-## Minimalism × Modern Interaction × Artistic Storytelling
+# Jayesh Singh — Portfolio V17: Minimal Operations
+## A Simpler, More Intelligent Professional Experience
 
-A ground-up reconstruction synthesizing the three reference portfolios in `/Users/rajput/Documents/main decision/`:
-1. `google`
-2. `jayesh_singh_portfolio_repo`
-3. `jayesh-portfolio-final`
-
----
-
-## 1. Synthesis Matrix: Three Sources into One Unified Architecture
-
-| Area | Source 1 (`google`) | Source 2 (`jayesh_singh_portfolio_repo`) | Source 3 (`jayesh-portfolio-final`) | Master Synthesis Decision (`jayesh-portfolio-next`) |
-|---|---|---|---|---|
-| **Hero Experience** | Editorial serif headline, IST clock, canvas particle network, author snippet. | Executive title "Operations that make complex things move", verified impact strip, supply chain orbit. | Bold headline "I make complex things *move.*", 3D perspective portrait card, orbit signal pins. | **Best Synthesis**: Bold editorial headline "I make complex things *move.*" paired with the mandatory animated **JAYESH / SINGH** dual-wordmark, the 3D interactive portrait card with live canvas network, orbit pins (Field, Sourcing, Systems), live Mumbai IST clock, and verified domain impact pills. |
-| **Typography** | *Instrument Serif* + *DM Sans* / *Manrope* + *DM Mono*. | *Manrope* + *Instrument Serif* + *Caveat* + *DM Mono*. | *Manrope* + *Instrument Serif* + *DM Mono* + *DM Sans*. | **Best Synthesis**: High-contrast editorial hierarchy: *Manrope* (structural display & UI), *Instrument Serif* (editorial italics), *DM Mono* (technical coordinates, metrics & badges), and *Caveat* (handcrafted field marginalia notes). |
-| **Header & Nav (Mandatory A)** | Floating glassmorphic bar, active indicator, pointer shine. | Glass header, profile photo trigger + modal, animated name drift, theme toggle. | Ultra-translucent iOS glass (`blur(36px) saturate(220%)`), top specular rim, pointer shine, sheen sweep, segmented pill. | **Best Synthesis**: Ultra-translucent iOS frosted glass bar with top specular bevel, ambient crystal sheen sweep, pointer shine, smooth sliding segmented pill indicator, pearlescent logo badge with profile modal trigger, and theme toggle (Light / Dark mode). |
-| **Name Animation (Mandatory B)** | Gradient color drift. | Continuous 3-color gradient sweep on `.wordmark__name`. | Asynchronous 320% spectrum keyframes on `<span class="name-jayesh">JAYESH</span>` and `<span class="name-singh">SINGH</span>`. | **Best Synthesis**: Full restoration of the **JAYESH / SINGH** separate typographic lockup in the hero with continuous asynchronous mineral spectrum animations (terracotta/amber/violet and sage/teal/copper) + header brand wordmark color drift. |
-| **Visual Identity** | Warm ivory and cream paper, mineral accents. | Dark/light theme, deep midnight vs clean white. | Warm paper (`#f7f5f0`), soft lilac, sage, rust, violet. | **Best Synthesis**: Warm, tactile editorial paper aesthetic (`#faf8f5` / `#f2eee7`) with light/dark theme toggle, deep ink typography, and restrained mineral accents (terracotta, sage, teal, lilac, violet). |
-| **Interactions** | Canvas particle field, tabs, slider calculators, triage queue. | Info pills with popovers, 4-stage operating loop tabs, MBA major/minor lens switcher, modal dossiers. | 3D tilt portrait, canvas signal physics, interactive coordinates, capability wheel, journey scrubber. | **Best Synthesis**: Unrivaled interactive suite: 3D tilt portrait, canvas signal network, 4-stage operating loop, MBA focus lens switcher, interactive case dossiers, Decision Studio landed-cost calculator, Operations Signal triage board, Journey milestone navigator, and capability radar. |
-| **Project Presentation** | 4 projects with tags and modal detail views. | Bento grid with tag filtering and full case study modals. | Visual cards with SVG schematics, tags, and full case dossiers. | **Best Synthesis**: Bento layout with category filters (All, Operations, Supply Chain, Systems, Commercial), visual schematics, key metric callouts, and full-screen accessible modal dossiers with complete context, bottleneck, 3-step execution, and takeaways. |
-| **Decision Studio & Tools** | Landed-cost calculator + exception queue. | Side-by-side supplier landed-cost calculator + exception triage queue. | Formula-driven landed-cost calculator + priority exception queue with action notes. | **Best Synthesis**: Two complete, fully working simulators: 1) Interactive Landed-Cost Sourcing Simulator with real-time sliders for FOB, Freight, Customs Duty, and Risk Buffer calculating unit costs, break-even, and margin variance; 2) Operations Signal & Exception Triage Board with priority filtering (High, Stockout, Freight, New Outlets) and Tuesday-morning action checklists. |
-| **Storytelling & Depth** | 8 connected chapters (Thinking, Process, Work, Studio, Journey, Capabilities, Notes, Contact). | Tri-modal operator positioning, CavinKare & Only Solar deep dives, MBA focus track. | The Handoff Field concept: observe -> decide -> act, field notes, verified credentials. | **Best Synthesis**: Comprehensive 10-chapter editorial journey connecting frontline FMCG distribution, import entrepreneurship, B.Tech CS systems, MBA Operations & Logistics, verified credentials, and interactive tools. |
+**Location:** `/Users/rajput/Documents/main decision/jayesh-portfolio-next/`  
+**Identity:** Operations, Logistics & Commercial Systems  
+**Core Thesis:** *Show less initially. Reveal more when someone is interested.*
 
 ---
 
-## 2. Two Mandatory Core Features (Verified & Fully Working)
+## 1. Key Design Transformations in V17
 
-### Mandatory Feature A: The Glossy Header (iOS Ultra-Translucent Frosted Glass)
-- **Glassmorphism**: Built with `-webkit-backdrop-filter: blur(36px) saturate(220%) contrast(102%)` and a multi-stop chromatic frosted gradient.
-- **Specular Rim Highlight**: Micro-specular top edge hairline (`inset 0 1.5px 1.5px rgba(255, 255, 255, 1)`) and beveled light filament (`.site-header::before`).
-- **Dynamic Pointer Shine**: Live CSS custom variables `--shine-x` and `--shine-y` updating a radial gradient reflection as the cursor moves over the glass bar.
-- **Ambient Crystal Sheen Sweep**: `@keyframes headerSheenSweep` gliding across the pill bar every 9 seconds.
-- **Segmented Indicator**: Tactile frosted pill sliding smoothly beneath navigation links.
-- **Pearlescent Brand Seal**: Micro-interaction circular badge with quick-profile modal trigger.
-- **Dark / Light Mode**: Interactive theme toggle with system memory in `localStorage`.
-
-### Mandatory Feature B: Animated JAYESH / SINGH Dual-Wordmark
-- **Separate Elements**: `<span class="name-word name-jayesh">JAYESH</span> <span class="name-word name-singh">SINGH</span>`.
-- **Continuous Mineral Spectrum**:
-  - `JAYESH`: flows continuously through warm terracotta (`#c46244`), amber bronze (`#c48a3b`), amethyst violet (`#75647f`), and rose rust (`#b3486a`).
-  - `SINGH`: flows asynchronously through sage olive (`#4f735b`), ocean teal (`#2b998a`), indigo slate (`#54445f`), and burnished copper (`#b6673e`).
-- **Smoothness**: 320% background-size gradient sweeps with `@keyframes` that run continuously without flicker, and respond with pointer glow and micro-lift on hover.
+| Requirement | Implementation in V17 | Verification |
+|---|---|---|
+| **Remove Profile Photograph** | **100% Removed** across the entire website. Zero portraits in hero, profile card, modals, footer, or assets. | Checked via regex & visual audit: 0 photo tags or portrait images. |
+| **Signature Operations Visual** | **Replaced photograph** with an interactive SVG Operations Pipeline: `Supplier → Sourcing → Inventory → Warehouse → Distribution → Retail` + `Reverse Demand Feedback Loop ↺`. Includes animated pulses, 3 scenario selectors (`Steady`, `Delay`, `Surge`), and dynamic telemetry readout. | Fully interactive in hero column. |
+| **Remove Oversized Hero Name** | Removed giant `JAYESH / SINGH` block. Replaced with a balanced, elegant editorial headline: `I make complex operations clearer.` paired with clear value proposition and 4 verified metric chips (`50+ Outlets`, `+20% Reach`, `0 → 1 Venture`, `Dual B.Tech CS + MBA`). | Balanced, spacious typography. |
+| **1-Second Soft Light Name in Header** | `JAYESH SINGH` rendered in the glossy header with continuous 1-second color shifting across 7 soft mineral pastel tones: soft sage (`#7da68f`), muted blue-grey (`#85a3b2`), muted lavender (`#a89bb8`), dusty rose (`#c98a96`), light terracotta (`#c98370`), warm champagne (`#d9be9b`), and soft olive (`#8c9b78`). | Smooth, non-aggressive, harmonic transition. |
+| **Preserve Glossy Header** | iOS frosted glass (`backdrop-filter: blur(34px) saturate(210%)`), top specular highlight, dynamic pointer specular glow, ambient crystal sheen sweep, and sliding segmented indicator. | Fully preserved and optimized. |
+| **Progressive Disclosure Architecture** | Simplified visible page into 6 focused sections with 6 deep modal dialogs for technical dossiers, operating methodology, capabilities stack, academic records, and live simulators. | Minimal surface, rich interactive depth. |
 
 ---
 
-## 3. Verified Career Data (Strictly Grounded in Résumé)
+## 2. Page & Progressive Disclosure Architecture
 
-- **B.Tech — Computer Science & Engineering**: Lovely Professional University, 2020–2024, Graduated with **75.8%**.
-- **Co-Founder & Business Head — Only Solar**: 2024 to early 2025. International sourcing, supplier RFQ negotiation, import logistics, landed-cost unit modeling, B2B distributor network, and commercial P&L ownership.
-- **Sales Representative — CavinKare**: October 2025 to February 2026 (Third-party payroll). FMCG retail distribution across 50+ retail outlets in Andheri to Bandra, Mumbai; onboarded 10+ new GT accounts (+20% active base) in Month 1; delivered +30% MoM revenue growth in focus categories.
-- **MBA — Operations & Logistics**: Lovely Professional University, 2026–2028 (Pursuing). Minor specialization bridging Product Management and Sales & Marketing.
-- **Verified Credentials**: Simplilearn Power BI (2024), Udemy SQL (2023), GeeksforGeeks Machine Learning & Data Science, DeepLearning.AI NLP (2023).
-- **Direct Contacts**: `jayeshsingh9b@gmail.com` | `linkedin.com/in/jsingh26`.
+### Surface Level (6 Concise Sections)
+1. **01 // Home (Hero)**:
+   - Live Mumbai IST clock + availability badge.
+   - Balanced editorial headline: `I make complex operations clearer.`
+   - Value proposition bridging field FMCG, venture sourcing, and relational systems.
+   - 2 primary CTAs (`Explore Selected Work ↘`, `Download Résumé ↓`).
+   - Verified 4-metric strip.
+   - Signature Interactive Operations Pipeline Visual.
+2. **02 // Approach**:
+   - 3 core operating principles (Walk the Line First, Unit Economics at the Gate, Single Source of Truth).
+   - Control: `Explore 4-Stage Operating Loop & Methodology ⤢`.
+3. **03 // Selected Work**:
+   - 4 clean case study overviews with problem, action, and quantified impact.
+   - Controls: `View Case Study Dossier ↗` on each card.
+4. **04 // Journey & Trajectory**:
+   - Compact 4-milestone timeline (MBA Candidate, Only Solar Co-Founder, CavinKare Sales Rep, B.Tech CS 75.8%).
+   - Controls: `Capabilities & Tooling Stack ⤢` and `Verified Credentials & Academics ⤢`.
+5. **05 // Operations Lab**:
+   - Compact banner introducing Jayesh's mathematical tools.
+   - Control: `Launch Operations Lab ⤢`.
+6. **06 // Direct Contact**:
+   - 1-click email copy button with toast notification + `⌘C` shortcut.
+   - Direct phone, Mumbai location, LinkedIn, Résumé PDF download.
+   - Validated inquiry note form with topic pills.
+
+### Deep Level (6 Accessible `<dialog>` Modals)
+- `#caseDialog`: Full-screen case dossiers for CavinKare, Only Solar, Relational Pipeline, and Reverse Logistics.
+- `#loopDialog`: 4-stage operating loop breakdown (Observe → Model → Systematize → Feedback).
+- `#capabilitiesDialog`: Tri-modal operational, analytical, and commercial toolkit.
+- `#credentialsDialog`: Verified degrees (MBA Operations, B.Tech CS 75.8%) and technical coursework.
+- `#milestoneDialog`: Milestone inspector with role context and highlights.
+- `#labDialog`: Operations Laboratory with:
+  1. **Sourcing Landed-Cost Simulator**: Real-time multi-variable sliders (Volume, FOB, Ocean Freight, Customs Duty, Inland Transit, Margin) calculating unit landed costs and breakeven pricing.
+  2. **Exception Triage Board**: Live triage of port customs holds, FMCG beat stockouts, and distributor credit alerts.
+
+---
+
+## 3. Verified Career Foundation
+
+- **Education**:
+  - MBA Candidate (Operations & Logistics Major), Lovely Professional University (LPU), 2024–2026.
+  - B.Tech in Computer Science & Engineering, Lovely Professional University (LPU), 2019–2023, **75.8% aggregate**.
+- **Field & Commercial Experience**:
+  - Co-Founder & Operations Lead, Only Solar (2023–2024): Cross-border sourcing, tier-1 vendor audits, container customs clearance, landed-cost modeling, and domestic B2B distribution.
+  - Sales Representative, CavinKare (2023, Mumbai): 50+ General Trade retail outlets managed; expanded active retail base by +20% (10+ accounts) in Month 1; delivered +30% MoM focus category lift.
+- **Contact**: `singhjayesh416@gmail.com` | `+91 91374 89209` | Mumbai, India.
 
 ---
 
 ## 4. How to Run Locally
 
-You can run the portfolio locally using any static HTTP server:
-
 ```bash
 cd "/Users/rajput/Documents/main decision/jayesh-portfolio-next"
 
-# Option 1: Python 3
+# Option 1: Python HTTP Server
 python3 -m http.server 8080
 
-# Option 2: Node npx serve
-npx serve .
-
-# Option 3: Direct browser opening
+# Option 2: Direct browser opening
 open index.html
 ```
-
-Then visit `http://localhost:8080` in your browser.
+Visit `http://localhost:8080` in any modern browser.
