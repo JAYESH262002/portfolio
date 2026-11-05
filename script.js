@@ -1,1896 +1,3126 @@
 /**
- * Jayesh Singh — Portfolio V21
- * Content Accuracy, Gmail Compose Workflow & Progressive Disclosure Engine
+ * JAYESH SINGH — EXECUTIVE PORTFOLIO ENGINE
+ * Inspired by therishithakor.com
+ * Features:
+ * - Liquid Canvas & Particle Aura Profile Feature with 3D Parallax Tilt
+ * - Profile Ability Card (#holo) Trigger via Portrait & Avatar
+ * - Mechanical Desk Flip-Calendar with Dynamic Spiral Rings & Holes
+ * - Verlet Physics Pull-Cord Light/Dark Switch
+ * - 3D Architectural Doorways with Spring Swing & Chamber Modal
+ * - Interactive Cross-Border Landed Cost Simulator
+ * - FMCG Beat Exception Queue Resolver
+ * - Scroll-Linked Rotating Clock Tunnel Canvas
+ * - Rolling Mechanical Digit Year & Vertical Rail Dot Tracker
+ * - Screen-Filling Edge-to-Edge Fluid Name Footer
+ * - Navigation Scroll Spy & Copy Toast
  */
 
-(() => {
+(function () {
   'use strict';
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = !window.matchMedia('(pointer: coarse)').matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const root = document.documentElement;
+  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const $ = (selector, scope = document) => scope.querySelector(selector);
-  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+  /* ==========================================================================
+     CUSTOM FOLLOWER CURSOR (MINIMALIST PURPLE/SLATE CIRCULAR RING)
+     ========================================================================== */
+  const cursorRing = $('#cursorRing');
+  const cursorLabel = $('#cursorLabel');
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
 
-  // Polyfill Element, SVGElement & SVGGElement prototype.click for SVG graphics groups (<g>, <rect>, etc.)
-  if (typeof window !== 'undefined') {
-    const polyfillClick = function() {
-      this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-    };
-    if (window.Element && typeof window.Element.prototype.click !== 'function') {
-      window.Element.prototype.click = polyfillClick;
-    }
-    if (window.SVGElement && typeof window.SVGElement.prototype.click !== 'function') {
-      window.SVGElement.prototype.click = polyfillClick;
-    }
-    if (window.SVGGElement && typeof window.SVGGElement.prototype.click !== 'function') {
-      window.SVGGElement.prototype.click = polyfillClick;
-    }
-  }
-
-  // ==========================================================================
-  // 1. THEME MANAGEMENT (Light / Dark with localStorage)
-  // ==========================================================================
-  const storageKey = 'jayesh-minimal-ops-theme';
-  let currentTheme = document.documentElement.dataset.theme || 'light';
-  try {
-    const saved = localStorage.getItem(storageKey);
-    if (saved === 'light' || saved === 'dark') {
-      currentTheme = saved;
-    }
-  } catch (e) {}
-
-  const applyTheme = (theme) => {
-    currentTheme = theme;
-    document.documentElement.dataset.theme = currentTheme;
-    const metaTheme = $('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.content = currentTheme === 'dark' ? '#0c1117' : '#faf8f5';
-    try {
-      localStorage.setItem(storageKey, currentTheme);
-    } catch (e) {}
-  };
-  applyTheme(currentTheme);
-
-  const themeToggle = $('#themeToggle');
-  themeToggle?.addEventListener('click', () => {
-    applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
-  });
-
-  // ==========================================================================
-  // 2. LIVE MUMBAI IST CLOCK
-  // ==========================================================================
-  const liveClock = $('#liveClock');
-  function updateClock() {
-    if (!liveClock) return;
-    try {
-      const now = new Date();
-      const istTime = now.toLocaleTimeString('en-US', {
-        timeZone: 'Asia/Kolkata',
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-      liveClock.textContent = `MUMBAI ${istTime} IST`;
-    } catch (e) {
-      liveClock.textContent = 'MUMBAI IST';
-    }
-  }
-  updateClock();
-  setInterval(updateClock, 1000);
-
-  // ==========================================================================
-  // 3. GLOSSY HEADER: POINTER-TRACKED SHINE, SCROLL STATE & SLIDING PILL NAV
-  // ==========================================================================
-  const header = $('#siteHeader');
-  const desktopNav = $('.desktop-nav');
-  const navIndicator = $('.nav-indicator');
-  const navLinks = $$('.nav-link');
-  const scrollProgressBar = $('#scrollProgress');
-
-  // Scroll Progress and Header Compression
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (scrollProgressBar && docHeight > 0) {
-      const progress = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
-      scrollProgressBar.style.width = `${progress}%`;
-    }
-    if (header) {
-      header.classList.toggle('is-scrolled', scrollTop > 30);
-    }
-  }, { passive: true });
-
-  // Pointer-tracked glass specular shine
-  if (header && finePointer) {
-    header.addEventListener('pointermove', (e) => {
-      const rect = header.getBoundingClientRect();
-      header.style.setProperty('--shine-x', `${e.clientX - rect.left}px`);
-      header.style.setProperty('--shine-y', `${e.clientY - rect.top}px`);
-    }, { passive: true });
-  }
-
-  // Active navigation indicator
-  function moveNavIndicator(target) {
-    if (!target || !desktopNav || !navIndicator) return;
-    const navBox = desktopNav.getBoundingClientRect();
-    const linkBox = target.getBoundingClientRect();
-    navIndicator.style.width = `${linkBox.width}px`;
-    navIndicator.style.transform = `translate(${linkBox.left - navBox.left}px, -50%)`;
-  }
-
-  const initialActive = $('.nav-link.is-active') || navLinks[0];
-  if (initialActive) {
-    setTimeout(() => moveNavIndicator(initialActive), 120);
-  }
-
-  navLinks.forEach((link) => {
-    link.addEventListener('mouseenter', () => moveNavIndicator(link));
-    link.addEventListener('focus', () => moveNavIndicator(link));
-    link.addEventListener('click', () => {
-      navLinks.forEach((item) => item.classList.toggle('is-active', item === link));
-      moveNavIndicator(link);
-    });
-  });
-
-  desktopNav?.addEventListener('mouseleave', () => {
-    moveNavIndicator($('.nav-link.is-active') || navLinks[0]);
-  });
-
-  // Section Observer for updating active nav pill on scroll
-  const navSections = $$('section[id]');
-  if ('IntersectionObserver' in window && navSections.length) {
-    const navObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
-          const targetLink = $(`a.nav-link[href="#${id}"]`);
-          if (targetLink) {
-            navLinks.forEach((l) => l.classList.remove('is-active'));
-            targetLink.classList.add('is-active');
-            moveNavIndicator(targetLink);
-          }
-        }
-      });
-    }, { rootMargin: '-20% 0px -60% 0px', threshold: 0.1 });
-
-    navSections.forEach((sec) => navObserver.observe(sec));
-  }
-
-  // ==========================================================================
-  // 4. MOBILE NAVIGATION DRAWER
-  // ==========================================================================
-  const menuToggle = $('#menuToggle');
-  const mobileNav = $('#mobileNav');
-  const mobileCloseBtn = $('#mobileCloseBtn');
-
-  function setMobileMenu(open) {
-    if (!menuToggle || !mobileNav) return;
-    menuToggle.setAttribute('aria-expanded', String(open));
-    mobileNav.classList.toggle('is-open', open);
-    mobileNav.inert = !open;
-    document.body.classList.toggle('menu-open', open);
-  }
-
-  menuToggle?.addEventListener('click', () => setMobileMenu(true));
-  mobileCloseBtn?.addEventListener('click', () => setMobileMenu(false));
-  mobileNav?.addEventListener('click', (e) => {
-    if (e.target === mobileNav) setMobileMenu(false);
-  });
-  $$('.mobile-nav-links a').forEach((link) => {
-    link.addEventListener('click', () => setMobileMenu(false));
-  });
-
-  // ==========================================================================
-  // 5. SIGNATURE HOLLOW CIRCULAR CURSOR (Portfolio V27 — Zero Lag)
-  // Direct position tracking batched through requestAnimationFrame
-  // Pure 18–20px hollow circle, locks immediately to pointer, no trailing lag
-  // ==========================================================================
-  const cursorHalo = $('#cursorHalo');
-
-  if (finePointer && !prefersReducedMotion && cursorHalo) {
-    let latestX = -100;
-    let latestY = -100;
-    let framePending = false;
-    let isHovering = false;
-    let isClicking = false;
-    let isOverInput = false;
+  if (finePointer && !isReduced && cursorRing) {
+    document.body.classList.add('has-pointer');
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+    let ringX = pointerX;
+    let ringY = pointerY;
     let isVisible = false;
 
-    function updateCursorPosition() {
-      if (!isVisible) {
-        framePending = false;
-        return;
-      }
-      const scale = isClicking ? (isHovering ? 1.4 : 0.88) : (isHovering ? 1.85 : 1);
-      // Centers the 20px circle on the exact pointer coordinates with translate(-50%, -50%)
-      cursorHalo.style.transform = `translate3d(${latestX}px, ${latestY}px, 0) translate(-50%, -50%) scale(${scale})`;
-      framePending = false;
-    }
-
-    window.addEventListener('pointermove', (e) => {
-      latestX = e.clientX;
-      latestY = e.clientY;
-
+    window.addEventListener('pointermove', e => {
+      pointerX = e.clientX;
+      pointerY = e.clientY;
       if (!isVisible) {
         isVisible = true;
-        cursorHalo.classList.add('is-active');
-      }
-
-      if (!framePending) {
-        framePending = true;
-        requestAnimationFrame(updateCursorPosition);
+        cursorRing.style.opacity = '1';
       }
     }, { passive: true });
 
-    document.addEventListener('pointerleave', () => {
+    window.addEventListener('pointerleave', () => {
       isVisible = false;
-      cursorHalo.classList.remove('is-active');
+      cursorRing.style.opacity = '0';
     });
 
-    document.addEventListener('pointerenter', () => {
-      isVisible = true;
-      cursorHalo.classList.add('is-active');
-    });
+    const animateCursor = () => {
+      // Snappy, agile 0.48 lerp rate for instant feather-light tracking
+      ringX += (pointerX - ringX) * 0.48;
+      ringY += (pointerY - ringY) * 0.48;
+      cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(animateCursor);
+    };
+    requestAnimationFrame(animateCursor);
 
-    window.addEventListener('pointerdown', () => {
-      isClicking = true;
-      cursorHalo.classList.add('is-clicking');
-      if (!framePending) {
-        framePending = true;
-        requestAnimationFrame(updateCursorPosition);
+    // Hover triggers for interactive elements
+    const hoverSelectors = 'a, button, .doorway, .kpi-chip, .pill, [role="tab"], [role="button"], .tab-btn, .fig, .cord__hit, .unit, .chrono__dial-circle, .chrono__pill';
+    $$(hoverSelectors).forEach(el => {
+      el.addEventListener('pointerenter', () => {
+        document.body.classList.add('cursor-hover');
+        if (cursorLabel) {
+          const custom = el.dataset.cursor || (el.classList.contains('chrono__dial-circle') ? 'Scrub' : (el.classList.contains('chrono__pill') ? 'Seek' : (el.classList.contains('doorway') ? 'Open' : (el.tagName === 'A' ? 'Visit' : ''))));
+          cursorLabel.textContent = custom;
+        }
+      });
+      el.addEventListener('pointerleave', () => {
+        document.body.classList.remove('cursor-hover');
+        if (cursorLabel) cursorLabel.textContent = '';
+      });
+    });
+  }
+
+  /* ==========================================================================
+     TACTILE AUDIO SYNTHESIZER (ZERO-DEPENDENCY WEB AUDIO API)
+     ========================================================================== */
+  let audioCtx = null;
+  let soundMuted = false;
+  try {
+    soundMuted = localStorage.getItem('jayesh-sound-mute') === 'true';
+  } catch(e) {}
+
+  const sndToggle = $('#sndToggle');
+  function updateSoundUI() {
+    if (!sndToggle) return;
+    sndToggle.classList.toggle('muted', soundMuted);
+    sndToggle.title = soundMuted ? 'Unmute tactile sound effects' : 'Mute tactile sound effects';
+    const onIcon = sndToggle.querySelector('.snd-on');
+    const offIcon = sndToggle.querySelector('.snd-off');
+    if (onIcon) onIcon.hidden = soundMuted;
+    if (offIcon) offIcon.hidden = !soundMuted;
+  }
+  updateSoundUI();
+
+  if (sndToggle) {
+    sndToggle.addEventListener('click', () => {
+      soundMuted = !soundMuted;
+      try { localStorage.setItem('jayesh-sound-mute', soundMuted); } catch(e) {}
+      updateSoundUI();
+      if (!soundMuted) playSound('click');
+    });
+  }
+
+  function getAudioContext() {
+    if (soundMuted) return null;
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) audioCtx = new AudioContext();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {});
+    }
+    return audioCtx;
+  }
+
+  function playSound(type) {
+    if (soundMuted || isReduced) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+
+      if (type === 'tick') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1400, t);
+        osc.frequency.exponentialRampToValueAtTime(800, t + 0.03);
+        gain.gain.setValueAtTime(0.04, t);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.035);
+      } else if (type === 'switch') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320, t);
+        osc.frequency.exponentialRampToValueAtTime(90, t + 0.07);
+        gain.gain.setValueAtTime(0.12, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.08);
+      } else if (type === 'flip') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(450, t);
+        osc.frequency.exponentialRampToValueAtTime(220, t + 0.1);
+        gain.gain.setValueAtTime(0.06, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.11);
+      } else if (type === 'door') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(540, t);
+        osc.frequency.exponentialRampToValueAtTime(440, t + 0.28);
+        gain.gain.setValueAtTime(0.08, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.3);
+      } else if (type === 'click') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(900, t);
+        osc.frequency.exponentialRampToValueAtTime(350, t + 0.035);
+        gain.gain.setValueAtTime(0.05, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.04);
       }
-    }, { passive: true });
+    } catch (e) {}
+  }
+
+  /* ==========================================================================
+     01. REAL-TIME CLOCK (IST / MUMBAI) & FOOTER YEAR
+     ========================================================================== */
+  function updateTime() {
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    let h = ist.getHours();
+    const m = String(ist.getMinutes()).padStart(2, '0');
+    const ampm = h >= 12 ? 'pm' : 'am';
+    h = h % 12 || 12;
+    const timeStr = `${h}:${m}${ampm}`;
+
+    $$('[data-ftime]').forEach(el => el.textContent = timeStr);
+    $$('[data-fyear]').forEach(el => el.textContent = now.getFullYear());
+  }
+  updateTime();
+  setInterval(updateTime, 20000);
+
+  /* ==========================================================================
+     02. PAGE LOADER PROGRESS
+     ========================================================================== */
+  const loader = $('#loader');
+  const ldFill = $('#ldFill');
+  const ldCount = $('#ldCount');
+
+  function runLoader() {
+    const start = performance.now();
+    const duration = 3000; // Exact 3-second authentic loading sequence
+
+    function frame(now) {
+      const elapsed = now - start;
+      const rawProgress = Math.min(1, elapsed / duration);
+
+      // Organic operational pacing curve: smooth start, steady domain loading, clean arrival at 100%
+      let progress;
+      if (rawProgress < 0.6) {
+        progress = (rawProgress / 0.6) * 0.58;
+      } else if (rawProgress < 0.85) {
+        progress = 0.58 + ((rawProgress - 0.6) / 0.25) * 0.32;
+      } else {
+        progress = 0.90 + ((rawProgress - 0.85) / 0.15) * 0.10;
+      }
+      progress = Math.min(1, Math.max(0, progress));
+
+      const loadPct = Math.min(100, Math.round(progress * 100));
+
+      if (ldFill) ldFill.style.width = `${loadPct}%`;
+      if (ldCount) ldCount.textContent = `${loadPct}%`;
+
+      if (rawProgress < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        if (ldFill) ldFill.style.width = '100%';
+        if (ldCount) ldCount.textContent = '100%';
+
+        setTimeout(() => {
+          if (loader) {
+            loader.classList.add('out');
+            setTimeout(() => {
+              loader.style.display = 'none';
+              try { loader.remove(); } catch (e) {}
+            }, 600);
+          }
+          document.body.classList.add('ready');
+          fitFooterWord();
+        }, 150);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Failsafe: Ensure loader lifts even if tab was backgrounded or inactive
+  setTimeout(() => {
+    if (loader && loader.parentNode) {
+      loader.classList.add('out');
+      setTimeout(() => {
+        loader.style.display = 'none';
+        try { loader.remove(); } catch (e) {}
+      }, 600);
+    }
+    document.body.classList.add('ready');
+    fitFooterWord();
+  }, 4200);
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', runLoader);
+  } else {
+    runLoader();
+  }
+
+  /* ==========================================================================
+     03. PULL CORD: VERLET ROPE PHYSICS & LIGHT/DARK SWITCH
+     ========================================================================== */
+  const cord = $('#cord');
+  const cv = cord ? cord.querySelector('.cord__cv') : null;
+  const hit = $('#cordHit');
+  const themeToggleBtn = $('#themeToggleBtn');
+  const MODE_KEY = 'jayesh-theme';
+
+  function updateThemeUI(mode) {
+    const isDark = mode === 'dark';
+    if (hit) hit.setAttribute('aria-checked', String(isDark));
+    if (themeToggleBtn) {
+      const sun = themeToggleBtn.querySelector('.theme-sun');
+      const moon = themeToggleBtn.querySelector('.theme-moon');
+      if (sun) {
+        if (isDark) sun.removeAttribute('hidden');
+        else sun.setAttribute('hidden', '');
+      }
+      if (moon) {
+        if (isDark) moon.setAttribute('hidden', '');
+        else moon.removeAttribute('hidden');
+      }
+      themeToggleBtn.setAttribute('aria-label', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+      themeToggleBtn.removeAttribute('title');
+    }
+  }
+
+  function getTheme() {
+    try {
+      const saved = localStorage.getItem(MODE_KEY);
+      if (saved) return saved;
+    } catch (e) {}
+    return root.dataset.mode || 'light';
+  }
+
+  function setTheme(mode) {
+    root.dataset.mode = mode;
+    updateThemeUI(mode);
+    try { localStorage.setItem(MODE_KEY, mode); } catch (e) {}
+
+    document.body.classList.remove('theme-switch-anim');
+    void document.body.offsetWidth;
+    document.body.classList.add('theme-switch-anim');
+  }
+
+  let lastToggleTime = 0;
+  function toggleTheme() {
+    const now = performance.now();
+    if (now - lastToggleTime < 300) return;
+    lastToggleTime = now;
+    const current = root.dataset.mode === 'dark' ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    playSound('switch');
+  }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      toggleTheme();
+    });
+  }
+  updateThemeUI(root.dataset.mode || 'light');
+
+  if (cv && hit) {
+    const ctx = cv.getContext('2d');
+    const N = 28;
+    const G = 4200;
+    let W = window.innerWidth, H = window.innerHeight, dpr = 1;
+    let L = 210, HIDDEN = 80, seg = 10, ax = W - 80;
+    let pts = [];
+    let ext = 0, extV = 0;
+    let dragging = false;
+    let target = { x: 0, y: 0 };
+    let toggledThisPull = false;
+    let startTipY = 0;
+
+    function resizeCord() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const rem = parseFloat(getComputedStyle(root).fontSize) || 16;
+      // Position inward so it's comfortably reachable away from screen edges & scrollbars
+      let offset = Math.max(4.2 * rem, Math.min(6.2 * rem, vw * 0.065));
+      L = Math.min(220, Math.max(160, vh * 0.22));
+      W = vw;
+      H = vh;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+
+      ax = W - offset;
+      const total = L + HIDDEN;
+      seg = total / N;
+
+      if (pts.length === 0) {
+        pts = [];
+        for (let i = 0; i <= N; i++) {
+          const x = ax, y = -HIDDEN + i * seg;
+          pts.push({ x, y, px: x, py: y, w: i === 0 ? 0 : i === N ? 0.2 : 1 });
+        }
+      } else {
+        pts[0].x = ax;
+      }
+    }
+    resizeCord();
+    window.addEventListener('resize', resizeCord);
+
+    function stepCord(dt) {
+      if (!dragging) {
+        const K = 440, C = 16;
+        extV += (-K * ext - C * extV) * dt;
+        ext += extV * dt;
+        if (Math.abs(ext) < 0.2 && Math.abs(extV) < 0.2) { ext = 0; extV = 0; }
+      }
+
+      pts[0].x = ax;
+      pts[0].y = -HIDDEN + ext;
+
+      for (let i = 1; i <= N; i++) {
+        const p = pts[i];
+        if (i === N && dragging) {
+          p.x = target.x;
+          p.y = target.y;
+          continue;
+        }
+        const vx = (p.x - p.px) * 0.965;
+        const vy = (p.y - p.py) * 0.98 + G * dt * dt;
+        p.px = p.x; p.py = p.y;
+        p.x += vx; p.y += vy;
+      }
+
+      // Elastic dynamic segment length: allows unlimited flexible dragging across screen!
+      let curSeg = seg;
+      if (dragging) {
+        const dragDist = Math.hypot(target.x - pts[0].x, target.y - pts[0].y);
+        // Expand segment distance smoothly when pulled far so the rope stretches elastically
+        curSeg = Math.max(seg, (dragDist * 1.01) / N);
+      }
+
+      for (let k = 0; k < 14; k++) {
+        for (let i = 0; i < N; i++) {
+          const a = pts[i], b = pts[i + 1];
+          const dx = b.x - a.x, dy = b.y - a.y;
+          const dist = Math.hypot(dx, dy) || 1e-4;
+          const diff = (dist - curSeg) / dist;
+          const wa = a.w / (a.w + b.w + 1e-5);
+          const wb = b.w / (a.w + b.w + 1e-5);
+          if (a.w > 0) { a.x += dx * diff * wa; a.y += dy * diff * wa; }
+          if (b.w > 0 && !(i + 1 === N && dragging)) { b.x -= dx * diff * wb; b.y -= dy * diff * wb; }
+        }
+      }
+
+      // Trigger switch mid-drag if pulled past comfortable threshold
+      if (dragging && !toggledThisPull) {
+        const pullDistY = pts[N].y - startTipY;
+        const pullDistTotal = Math.hypot(pts[N].x - ax, pts[N].y - startTipY);
+        if (pullDistY > 38 || pullDistTotal > 50) {
+          toggleTheme();
+          toggledThisPull = true;
+          if (navigator.vibrate) navigator.vibrate(25);
+        }
+      }
+
+      const tip = pts[N];
+      hit.style.transform = `translate3d(${tip.x}px, ${tip.y}px, 0)`;
+    }
+
+    function drawCord() {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+
+      const isDark = root.dataset.mode === 'dark';
+      const cordColor = isDark ? '#D5CDCA' : '#5A4E4E';
+      const knobColor = isDark ? '#E8E4E0' : '#2A2424';
+
+      // Drop shadow path (+4, +4 offset)
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x + 4, pts[0].y + 4);
+      for (let i = 1; i < pts.length - 1; i++) {
+        const xc = (pts[i].x + pts[i + 1].x) / 2 + 4;
+        const yc = (pts[i].y + pts[i + 1].y) / 2 + 4;
+        ctx.quadraticCurveTo(pts[i].x + 4, pts[i].y + 4, xc, yc);
+      }
+      ctx.lineTo(pts[N].x + 4, pts[N].y + 4);
+      ctx.strokeStyle = isDark ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.14)';
+      ctx.lineWidth = 3.5;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Main cord line (smooth quadratic curve through points)
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length - 1; i++) {
+        const xc = (pts[i].x + pts[i + 1].x) / 2;
+        const yc = (pts[i].y + pts[i + 1].y) / 2;
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+      }
+      ctx.lineTo(pts[N].x, pts[N].y);
+      ctx.strokeStyle = cordColor;
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      const tip = pts[N];
+      const prev = pts[N - 1];
+      const angle = Math.atan2(tip.y - prev.y, tip.x - prev.x);
+
+      // Draw matching drop shadow for knob aligned with cord shadow (+4, +4)
+      ctx.save();
+      ctx.translate(tip.x + 4, tip.y + 4);
+      ctx.rotate(angle - Math.PI / 2);
+      ctx.beginPath();
+      ctx.ellipse(0, 14, 11, 18, 0, 0, Math.PI * 2);
+      ctx.fillStyle = isDark ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.14)';
+      ctx.fill();
+      ctx.restore();
+
+      // Draw enlarged, tactile teardrop knob
+      ctx.save();
+      ctx.translate(tip.x, tip.y);
+      ctx.rotate(angle - Math.PI / 2);
+
+      // Metallic connector collar / ferrule at top junction
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(-4.5, -1, 9, 5, 2);
+      } else {
+        ctx.rect(-4.5, -1, 9, 5);
+      }
+      ctx.fillStyle = isDark ? '#B3ABA6' : '#6A5E5E';
+      ctx.fill();
+
+      // Main enlarged teardrop knob body (11px x 18px)
+      ctx.beginPath();
+      ctx.ellipse(0, 14, 11, 18, 0, 0, Math.PI * 2);
+      ctx.fillStyle = knobColor;
+      ctx.fill();
+
+      // Primary specular 3D highlight (curved reflection)
+      ctx.beginPath();
+      ctx.ellipse(-3.5, 12, 3, 11, -0.1, 0, Math.PI * 2);
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.32)';
+      ctx.fill();
+
+      // Subtle ambient rim highlight on right
+      ctx.beginPath();
+      ctx.ellipse(4, 15, 1.5, 9, 0.1, 0, Math.PI * 2);
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.12)';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    let lastTime = performance.now();
+    function loopCord(now) {
+      const dt = Math.min(0.033, (now - lastTime) / 1000);
+      lastTime = now;
+      stepCord(dt);
+      drawCord();
+      requestAnimationFrame(loopCord);
+    }
+    requestAnimationFrame(loopCord);
+
+    let startX = 0, startY = 0;
+    let didDrag = false;
+    let lastPointerTime = 0;
+
+    function onPointerDown(e) {
+      lastPointerTime = performance.now();
+      dragging = true;
+      didDrag = false;
+      toggledThisPull = false;
+      startX = e.clientX;
+      startY = e.clientY;
+      startTipY = pts[N].y;
+      cord.classList.add('dragging');
+      target.x = e.clientX;
+      target.y = e.clientY;
+      try {
+        hit.setPointerCapture(e.pointerId);
+      } catch (err) {}
+      window.addEventListener('pointermove', onPointerMove, { passive: false });
+      window.addEventListener('pointerup', onPointerUp);
+      window.addEventListener('pointercancel', onPointerUp);
+    }
+
+    function onPointerMove(e) {
+      if (!dragging) return;
+      const dx = Math.abs(e.clientX - startX);
+      const dy = Math.abs(e.clientY - startY);
+      if (dx > 4 || dy > 4) didDrag = true;
+      // Allow unrestricted dragging across the entire screen!
+      target.x = Math.max(10, Math.min(W - 10, e.clientX));
+      target.y = Math.max(10, Math.min(H - 10, e.clientY));
+    }
+
+    function onPointerUp(e) {
+      lastPointerTime = performance.now();
+      cord.classList.remove('dragging');
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerUp);
+      try {
+        hit.releasePointerCapture(e.pointerId);
+      } catch (err) {}
+      dragging = false;
+
+      const pullDistTotal = Math.hypot(pts[N].x - ax, pts[N].y - startTipY);
+
+      // If theme did not trigger mid-drag (e.g. quick click, tap, or short pull), trigger once now!
+      if (!toggledThisPull) {
+        toggleTheme();
+        extV = 320;
+      } else {
+        // High-elasticity snap back into position after long pull (already toggled mid-drag!)
+        ext = Math.min(50, pullDistTotal * 0.25);
+        extV = -400;
+        pts[N].py = pts[N].y + 25;
+      }
+      toggledThisPull = false;
+    }
+
+    hit.addEventListener('pointerdown', onPointerDown);
+    hit.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      // If triggered by a synthetic .click() call without pointerdown, toggle cleanly
+      if (performance.now() - lastPointerTime > 600) {
+        toggleTheme();
+        extV = 320;
+      }
+    });
+    hit.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleTheme();
+        extV = 320;
+      }
+    });
+  }
+
+  /* ==========================================================================
+     04. RE-ANIMATED PROFILE FEATURE (PORTRAIT AURA & 3D PARALLAX TILT)
+     ========================================================================== */
+  function initProfileFeature() {
+    const fig = $('#fig');
+    const figCanvas = $('#figCanvas');
+    const figBase = $('#figBase');
+    if (!fig || !figCanvas || !figBase) return;
+
+    const ctx = figCanvas.getContext('2d');
+    let W = 0, H = 0, dpr = 1;
+    let particles = [];
+    let sparks = [];
+    let mouse = { x: -1000, y: -1000, isHover: false };
+
+    function resizeFigCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = fig.getBoundingClientRect();
+      W = rect.width;
+      H = rect.height;
+      figCanvas.width = Math.round(W * dpr);
+      figCanvas.height = Math.round(H * dpr);
+
+      // Create ambient particles around silhouette
+      particles = [];
+      const count = W < 400 ? 24 : 45;
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          r: 1.2 + Math.random() * 2,
+          alpha: 0.15 + Math.random() * 0.45
+        });
+      }
+    }
+
+    resizeFigCanvas();
+    window.addEventListener('resize', resizeFigCanvas);
+    figBase.addEventListener('load', resizeFigCanvas);
+
+    // Mouse tracking on fig with 3D perspective tilt & cursor spotlight
+    fig.addEventListener('pointerenter', () => {
+      mouse.isHover = true;
+      fig.classList.add('tilting');
+    });
+    fig.addEventListener('pointerleave', () => {
+      mouse.isHover = false;
+      mouse.x = -1000;
+      mouse.y = -1000;
+      fig.classList.remove('tilting');
+      fig.style.transform = '';
+      fig.style.setProperty('--mx', '-500px');
+      fig.style.setProperty('--my', '-500px');
+    });
+
+    fig.addEventListener('pointermove', e => {
+      mouse.isHover = true;
+      fig.classList.add('tilting');
+      const rect = fig.getBoundingClientRect();
+      const scaleX = rect.width ? (W / rect.width) : 1;
+      const scaleY = rect.height ? (H / rect.height) : 1;
+      mouse.x = (e.clientX - rect.left) * scaleX;
+      mouse.y = (e.clientY - rect.top) * scaleY;
+
+      // Update cursor spotlight position so only hovered area lights up!
+      fig.style.setProperty('--mx', `${mouse.x.toFixed(1)}px`);
+      fig.style.setProperty('--my', `${mouse.y.toFixed(1)}px`);
+
+      // 3D Parallax subtle tilt on hover
+      if (!isReduced) {
+        const normX = (mouse.x / W - 0.5) * 2;
+        const normY = (mouse.y / H - 0.5) * 2;
+        const rotY = normX * 8;
+        const rotX = -normY * 6;
+        fig.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`;
+      } else {
+        fig.style.transform = 'scale(1.02)';
+      }
+
+      // Add sparks at cursor
+      if (sparks.length < 35) {
+        sparks.push({
+          x: mouse.x,
+          y: mouse.y,
+          vx: (Math.random() - 0.5) * 2.5,
+          vy: (Math.random() - 0.5) * 2.5 - 0.8,
+          r: 1.8 + Math.random() * 2.2,
+          life: 1.0,
+          decay: 0.025 + Math.random() * 0.03
+        });
+      }
+    });
+
+    // Animate canvas aura and particles
+    function renderAura() {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+
+      const isDark = root.dataset.mode === 'dark';
+      const particleColor = isDark ? '224, 122, 95' : '139, 69, 19';
+
+      // 1. Ambient particles & subtle constellation connections (soft edge-fading to ensure zero visible boundaries)
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Bounce within bounds
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+
+        // Interaction with mouse
+        if (mouse.isHover) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 90) {
+            const angle = Math.atan2(dy, dx);
+            p.x += Math.cos(angle) * 1.5;
+            p.y += Math.sin(angle) * 1.5;
+          }
+        }
+
+        const distFromEdge = Math.min(p.x, p.y, W - p.x, H - p.y);
+        const edgeFade = Math.max(0, Math.min(1, distFromEdge / 35));
+        const effectiveAlpha = p.alpha * edgeFade;
+
+        if (effectiveAlpha > 0.01) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${particleColor}, ${effectiveAlpha})`;
+          ctx.fill();
+
+          // Connect nearby particles
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const d = Math.hypot(p.x - p2.x, p.y - p2.y);
+            if (d < 65) {
+              const p2Dist = Math.min(p2.x, p2.y, W - p2.x, H - p2.y);
+              const p2Fade = Math.max(0, Math.min(1, p2Dist / 35));
+              const lineAlpha = (1 - d / 65) * 0.15 * Math.min(edgeFade, p2Fade);
+              if (lineAlpha > 0.01) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = `rgba(${particleColor}, ${lineAlpha})`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+              }
+            }
+          }
+        }
+      }
+
+      // 3. Render sparks
+      for (let k = sparks.length - 1; k >= 0; k--) {
+        const sp = sparks[k];
+        sp.x += sp.vx;
+        sp.y += sp.vy;
+        sp.life -= sp.decay;
+
+        if (sp.life <= 0) {
+          sparks.splice(k, 1);
+          continue;
+        }
+
+        ctx.beginPath();
+        ctx.arc(sp.x, sp.y, sp.r * sp.life, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${particleColor}, ${sp.life * 0.8})`;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(renderAura);
+    }
+    requestAnimationFrame(renderAura);
+
+    // Clicking portrait opens Ability Card
+    fig.addEventListener('click', e => {
+      // If click was on or inside the button itself, holoOpen's own handler will trigger
+      openHoloCard();
+    });
+  }
+  initProfileFeature();
+
+  // Header avatar trigger -> Operator Profile Summary Card
+  const profileTrigger = $('#profileTrigger');
+  const profileDialog = $('#profileDialog');
+  const profileDialogClose = $('#profileDialogClose');
+  const profileCardContact = $('#profileCardContact');
+  const profileCardHolo = $('#profileCardHolo');
+
+  function openProfileSummary() {
+    if (!profileDialog) return;
+    playSound('door');
+    profileDialog.showModal();
+  }
+
+  function closeProfileSummary() {
+    if (!profileDialog || !profileDialog.open) return;
+    profileDialog.close();
+  }
+
+  if (profileTrigger) profileTrigger.addEventListener('click', openProfileSummary);
+  if (profileDialogClose) profileDialogClose.addEventListener('click', closeProfileSummary);
+  if (profileDialog) {
+    profileDialog.addEventListener('click', e => {
+      if (e.target === profileDialog) closeProfileSummary();
+    });
+  }
+
+  if (profileCardContact) {
+    profileCardContact.addEventListener('click', () => {
+      closeProfileSummary();
+      openContactModal();
+    });
+  }
+
+  if (profileCardHolo) {
+    profileCardHolo.addEventListener('click', () => {
+      closeProfileSummary();
+      openHoloCard();
+    });
+  }
+
+  /* ==========================================================================
+     05a. HERO CONSTELLATION PLAYGROUND (INTERACTIVE BACKGROUND GAME)
+     ========================================================================== */
+  function initHeroGame() {
+    const hero = $('#home');
+    const canvas = $('#heroGameCanvas');
+    const blastCounter = $('#gameBlastCounter');
+    const comboEl = $('#gameCombo');
+    if (!hero || !canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0, dpr = 1;
+    let particles = [];
+    let shockwaves = [];
+    let embers = [];
+    let blastCount = 0;
+    let comboStreak = 0;
+    let lastBlastTime = 0;
+    let comboTimer = null;
+    let heroInView = true;
+
+    const mouse = {
+      x: -1000,
+      y: -1000,
+      active: false,
+      down: false,
+      wellRadius: 0
+    };
+
+    function resizeCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = hero.getBoundingClientRect();
+      W = rect.width;
+      H = rect.height;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+
+      // Re-init particles with density matching screen width
+      const targetCount = Math.min(95, Math.max(50, Math.floor(W / 15)));
+      particles = [];
+      for (let i = 0; i < targetCount; i++) {
+        const speed = 0.35 + Math.random() * 0.45;
+        const angle = Math.random() * Math.PI * 2;
+        particles.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          baseVx: Math.cos(angle) * speed,
+          baseVy: Math.sin(angle) * speed,
+          radius: 1.8 + Math.random() * 2.2,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: 0.02 + Math.random() * 0.03,
+          tier: Math.random() > 0.8 ? 'accent' : (Math.random() > 0.5 ? 'secondary' : 'neutral'),
+          mass: 0.8 + Math.random() * 0.6
+        });
+      }
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Track hero visibility so loop uses 0% CPU when scrolled past
+    if ('IntersectionObserver' in window) {
+      const heroObserver = new IntersectionObserver((entries) => {
+        heroInView = entries[0].isIntersecting;
+      }, { threshold: 0.05 });
+      heroObserver.observe(hero);
+    }
+
+    // Pointer events on hero
+    function updateMousePos(e) {
+      const rect = hero.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+      mouse.active = true;
+    }
+
+    hero.addEventListener('pointerenter', updateMousePos);
+    hero.addEventListener('pointermove', updateMousePos);
+
+    hero.addEventListener('pointerleave', () => {
+      mouse.active = false;
+      mouse.down = false;
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    hero.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('a, button, [role="button"], input, select, .fig__card, .kpi-chip, .typer__badge, .typer__skip')) return;
+      updateMousePos(e);
+      mouse.down = true;
+    });
 
     window.addEventListener('pointerup', () => {
-      isClicking = false;
-      cursorHalo.classList.remove('is-clicking');
-      if (!framePending) {
-        framePending = true;
-        requestAnimationFrame(updateCursorPosition);
-      }
-    }, { passive: true });
-
-    const interactiveSelectors = 'a, button, [role="button"], [role="tab"], [role="option"], .op-node, .incident-card, .brand-avatar-btn, .category-chip, .channel-link-chip, .btn, .btn-channel-action, .lens-tab-btn, .project-filter-btn, .project-index-entry, .cost-tier, .rel-node, .route-node, .scenario-btn, .timeline-row, .entry-dossier-link, .lens-bridge-link, summary';
-    const inputSelectors = 'input, textarea, select, [contenteditable="true"]';
-
-    document.addEventListener('mouseover', (e) => {
-      const targetEl = e.target && typeof e.target.closest === 'function' ? e.target : null;
-      if (!targetEl) return;
-
-      // Check input elements (preserve native text editing cursor, fade custom ring)
-      if (targetEl.closest(inputSelectors)) {
-        if (!isOverInput) {
-          isOverInput = true;
-          cursorHalo.classList.add('is-input');
-        }
-      } else if (isOverInput) {
-        isOverInput = false;
-        cursorHalo.classList.remove('is-input');
-      }
-
-      // Check interactive elements (hover enlargement + multi-colour effect)
-      const isInteractiveTarget = Boolean(
-        targetEl.closest(interactiveSelectors) ||
-        (window.getComputedStyle(targetEl).cursor === 'pointer' && !targetEl.closest(inputSelectors))
-      );
-
-      if (isInteractiveTarget) {
-        if (!isHovering) {
-          isHovering = true;
-          cursorHalo.classList.add('is-hovering');
-          if (!framePending) {
-            framePending = true;
-            requestAnimationFrame(updateCursorPosition);
-          }
-        }
-      } else if (isHovering) {
-        isHovering = false;
-        cursorHalo.classList.remove('is-hovering');
-        if (!framePending) {
-          framePending = true;
-          requestAnimationFrame(updateCursorPosition);
-        }
-      }
-    }, { passive: true });
-  }
-
-  // ==========================================================================
-  // 6. SIGNATURE OPERATIONS VISUAL & INTERACTIVE PIPELINE SYSTEM
-  // Supplier → Sourcing → Inventory → Warehouse → Distribution → Retail + Loop
-  // ==========================================================================
-  const stageData = [
-    {
-      num: '01',
-      name: 'SUPPLIER',
-      title: 'Supplier Sourcing & Negotiations',
-      focus: 'Supplier Relationships & Vendor Negotiations',
-      grounding: 'GROUNDING: ONLY SOLAR SOURCING',
-      desc: 'Evaluating overseas manufacturers, negotiating commercial MOQs and unit economics, and aligning production schedules with import cycles. Sourcing reliability starts at vendor contract rigor.',
-      scenarios: {
-        normal: 'Factory cadence nominal. Production schedules aligned with planned shipping windows and baseline stock buffers.',
-        delay: 'Upstream buffer queued. Factory holds completed product runs until port customs backlog eases.',
-        surge: 'Factory lead-times expedited. Requires early MOQ renegotiation and production capacity reservations with overseas vendors.'
-      },
-      feedback: 'Real-time retail sell-through signals pull upstream production batches before regional safety stocks reach reorder red-lines.'
-    },
-    {
-      num: '02',
-      name: 'SOURCING',
-      title: 'Import Logistics & Landed-Cost Modeling',
-      focus: 'Supplier Selection & Landed-Cost Analysis',
-      grounding: 'GROUNDING: ONLY SOLAR IMPORT LOGISTICS',
-      desc: 'Managing cross-border container freight, customs duties, and landed-cost modeling to preserve viable wholesale and distributor margin structures across fluctuating import tariffs.',
-      scenarios: {
-        normal: 'Container shipping and port clearance tracking within standard transit windows (18–24 days).',
-        delay: 'PRIMARY BOTTLENECK: Port customs documentation hold introduces +12 days transit delay, freezing downstream depot intake.',
-        surge: 'Container dispatch velocity accelerated; priority freight lanes evaluated for high-velocity SKUs.'
-      },
-      feedback: 'Distributor reorder velocity directly dictates container booking schedules, preventing demurrage fees and over-ordering.'
-    },
-    {
-      num: '03',
-      name: 'INVENTORY',
-      title: 'Safety Stock & Replenishment Planning',
-      focus: 'Stock Availability & Buffer Modeling',
-      grounding: 'GROUNDING: ANALYTICAL OPERATIONS MODEL',
-      desc: 'Balancing working capital investment against stockout risks. Calculating reorder points and safety stock levels to absorb upstream transit variations.',
-      scenarios: {
-        normal: 'Buffer inventory operating at nominal 21-day cover. Reorder cycles synchronized with depot consumption.',
-        delay: 'Safety stock absorbing upstream port hold. Buffer drawn down to 7 days; automated alerts flag critical SKUs.',
-        surge: 'Stock depletion velocity doubles. Emergency safety stock allocations released to meet retail demand spikes.'
-      },
-      feedback: 'Secondary sales velocity triggers automated replenishment thresholds, preventing bullwhip demand amplification.'
-    },
-    {
-      num: '04',
-      name: 'WAREHOUSE',
-      title: 'Depot Storage & Product Availability Flow',
-      focus: 'Depot Handling & Availability Within Flow',
-      grounding: 'GROUNDING: ANALYTICAL OPERATIONS MODEL',
-      desc: 'Coordinating depot intake, batch serialization, and order staging to ensure seamless stock availability for downstream regional distribution beats.',
-      scenarios: {
-        normal: 'Inbound staging and outbound dispatch synchronized. Order pick-and-pack operating on standard 24-hour cycle.',
-        delay: 'Outbound dispatch constrained by inbound delays. Warehouse teams prioritize high-turnover SKUs for immediate staging.',
-        surge: 'Depot cross-docking activated. Primary shipments routed directly to fulfillment bays to maintain dispatch velocity.'
-      },
-      feedback: 'Field distributor bookings dictate staging order priorities at the warehouse loading dock.'
-    },
-    {
-      num: '05',
-      name: 'DISTRIBUTION',
-      title: 'Territory Beat Routing & Fulfillment',
-      focus: 'Channel Movement & Territory Beat Coverage',
-      grounding: 'GROUNDING: CAVINKARE BEAT ROUTING',
-      desc: 'Structuring high-frequency retail beat routes across Andheri to Bandra, Mumbai. Balancing store visit frequency with order booking to maximize daily fulfillment productivity.',
-      scenarios: {
-        normal: 'Standard daily beat schedule active. 50+ retail counters serviced on structured weekly visit cycles.',
-        delay: 'Beat routes adjusted to ration available inventory across key counters, protecting high-velocity accounts.',
-        surge: 'Daily beat frequency intensified. Same-day distributor re-dispatch mobilized to fulfill surge volume.'
-      },
-      feedback: 'Daily sales beat reports feed ground-level retailer demand and counter sentiments directly back to distribution managers.'
-    },
-    {
-      num: '06',
-      name: 'RETAIL',
-      title: 'Retail Availability & General Trade Execution',
-      focus: 'Shelf Availability, Account Acquisition & Feedback',
-      grounding: 'GROUNDING: CAVINKARE GT SALES EXECUTION',
-      desc: 'Direct counter execution across 50+ General Trade retail outlets in Mumbai. Onboarded 10+ new accounts in Month 1, expanded active retailer base by +20%, and achieved +30% MoM focus category lift.',
-      scenarios: {
-        normal: '50+ counters fully merchandised. Trade schemes, counter visibility, and replenishment operating steadily.',
-        delay: 'Counter stock tightens. Field representatives deploy alternative SKUs and trade allowances to protect counter share.',
-        surge: 'High retail sell-through. Counter stock turnover accelerates, translating footfall into +30% MoM focus category growth.'
-      },
-      feedback: 'Point-of-sale customer demand and retail counter reorders initiate the reverse feedback signal upstream through distribution to procurement.'
-    }
-  ];
-
-  // Unified Reactive Pipeline State Model (Portfolio V25 & V26.1)
-  // Minimal by default: activeStage is null initially; revealed on node click
-  const pipelineState = {
-    activeStage: null,          // null by default (minimal initial view); 0..5 when stage selected
-    activeScenario: 'normal',   // 'normal' | 'delay' | 'surge'
-    isReversed: false,          // boolean: toggles reverse feedback loop
-    expandedStage: false,       // boolean: "Explore this stage" deeper drawer toggle
-    scenarioDetailsOpen: false  // boolean: "Scenario Details" drawer toggle
-  };
-
-  const operationsVisual = $('#operationsVisual');
-  const opNodes = $$('.op-node');
-  const scenarioBtns = $$('.scenario-btn');
-  const forwardPulses = $$('.pipe-pulse:not(.pulse-feedback)');
-  const feedbackPulse = $('.pulse-feedback');
-  const feedbackLoopBtn = $('#feedbackLoopBtn');
-  const loopBadgeText = $('#loopBadgeText');
-  const feedbackTrack = $('#feedbackPath');
-
-  const statusStripScenarioPill = $('#statusStripScenarioPill');
-  const statusStripHint = $('#statusStripHint');
-  const scenarioDetailsToggleBtn = $('#scenarioDetailsToggleBtn');
-  const scenarioDetailsBtnText = $('#scenarioDetailsBtnText');
-  const scenarioDetailsBox = $('#scenarioDetailsBox');
-  const scenarioDetailsTitle = $('#scenarioDetailsTitle');
-  const scenarioDetailsText = $('#scenarioDetailsText');
-
-  const nodeTelemetry = $('#nodeTelemetry');
-  const telemetryStage = $('#telemetryStage');
-  const telemetryGrounding = $('#telemetryGrounding');
-  const telemetryLoopPill = $('#telemetryLoopPill');
-  const telemetryTitle = $('#telemetryTitle');
-  const telemetryDesc = $('#telemetryDesc');
-  const telemetryScenarioImpact = $('#telemetryScenarioImpact');
-  const telemetryFeedbackImpact = $('#telemetryFeedbackImpact');
-  const telemetryMetric = $('#telemetryMetric');
-  const telemetryContext = $('#telemetryContext');
-  const exploreStageBtn = $('#exploreStageBtn');
-  const exploreStageBtnText = $('#exploreStageBtnText');
-  const exploreStageContent = $('#exploreStageContent');
-
-  let pipelineCollapseTimer = null;
-
-  function isPipelineDefault() {
-    return (
-      pipelineState.activeStage === null &&
-      pipelineState.activeScenario === 'normal' &&
-      !pipelineState.isReversed &&
-      !pipelineState.expandedStage &&
-      !pipelineState.scenarioDetailsOpen
-    );
-  }
-
-  function resetPipelineToDefault() {
-    if (isPipelineDefault()) return;
-
-    if (pipelineCollapseTimer) {
-      clearTimeout(pipelineCollapseTimer);
-      pipelineCollapseTimer = null;
-    }
-
-    pipelineState.activeStage = null;
-    pipelineState.activeScenario = 'normal';
-    pipelineState.isReversed = false;
-    pipelineState.expandedStage = false;
-    pipelineState.scenarioDetailsOpen = false;
-
-    if (nodeTelemetry) {
-      nodeTelemetry.classList.remove('is-revealed', 'is-collapsing');
-    }
-    if (scenarioDetailsBox) {
-      scenarioDetailsBox.classList.remove('is-collapsing');
-      scenarioDetailsBox.style.display = 'none';
-      scenarioDetailsBox.setAttribute('aria-hidden', 'true');
-    }
-    if (exploreStageContent) {
-      exploreStageContent.style.display = 'none';
-      exploreStageContent.setAttribute('aria-hidden', 'true');
-    }
-    if (exploreStageBtn) {
-      exploreStageBtn.setAttribute('aria-expanded', 'false');
-    }
-    if (exploreStageBtnText) {
-      exploreStageBtnText.textContent = 'Explore this stage ↓';
-    }
-    if (scenarioDetailsToggleBtn) {
-      scenarioDetailsToggleBtn.setAttribute('aria-expanded', 'false');
-    }
-    if (scenarioDetailsBtnText) {
-      scenarioDetailsBtnText.textContent = 'Scenario Details ↓';
-    }
-
-    renderPipeline();
-  }
-
-  function renderPipeline() {
-    // 1. Update Op-Nodes styling and ARIA attributes
-    opNodes.forEach((node, idx) => {
-      const isSelected = pipelineState.activeStage !== null && idx === pipelineState.activeStage;
-      node.classList.toggle('is-active', isSelected);
-      node.setAttribute('aria-selected', isSelected ? 'true' : 'false');
-
-      // Bottleneck on Sourcing (idx 1) when Delay scenario
-      const isBottleneck = pipelineState.activeScenario === 'delay' && idx === 1;
-      node.classList.toggle('is-bottleneck', isBottleneck);
-
-      // Surge on Distribution (idx 4) & Retail (idx 5) when Surge scenario
-      const isSurge = pipelineState.activeScenario === 'surge' && (idx === 4 || idx === 5);
-      node.classList.toggle('is-surge', isSurge);
+      mouse.down = false;
     });
 
-    // 2. Update Scenario Buttons
-    scenarioBtns.forEach((btn) => {
-      const isBtnActive = btn.dataset.scenario === pipelineState.activeScenario;
-      btn.classList.toggle('is-active', isBtnActive);
-      btn.setAttribute('aria-pressed', isBtnActive ? 'true' : 'false');
-    });
+    function triggerBlast(x, y) {
+      blastCount++;
+      if (blastCounter) blastCounter.textContent = `${blastCount} Blast${blastCount === 1 ? '' : 's'}`;
 
-    // 3. Update Forward Signal Pulses
-    if (pipelineState.activeScenario === 'normal') {
-      forwardPulses.forEach((p) => {
-        p.style.animationDuration = '5s';
-        p.style.fill = '';
-      });
-    } else if (pipelineState.activeScenario === 'delay') {
-      forwardPulses.forEach((p) => {
-        p.style.animationDuration = '10s';
-        p.style.fill = 'var(--accent-coral)';
-      });
-    } else if (pipelineState.activeScenario === 'surge') {
-      forwardPulses.forEach((p) => {
-        p.style.animationDuration = '2.2s';
-        p.style.fill = '#38bdf8';
-      });
-    }
-
-    // 4. Update Feedback Loop Button & Signal
-    if (feedbackLoopBtn) {
-      feedbackLoopBtn.classList.toggle('is-active', pipelineState.isReversed);
-      feedbackLoopBtn.setAttribute('aria-pressed', pipelineState.isReversed ? 'true' : 'false');
-    }
-
-    if (loopBadgeText) {
-      loopBadgeText.textContent = pipelineState.isReversed
-        ? '↺ DEMAND PULL ACTIVE // UPSTREAM SIGNAL ON'
-        : 'REVERSE DEMAND FEEDBACK LOOP ↺';
-    }
-
-    if (feedbackTrack) {
-      feedbackTrack.classList.toggle('is-active', pipelineState.isReversed);
-    }
-
-    if (feedbackPulse) {
-      if (pipelineState.isReversed) {
-        feedbackPulse.style.animationDirection = 'reverse';
-        feedbackPulse.style.animationDuration = pipelineState.activeScenario === 'surge' ? '1.5s' : '2.4s';
-        feedbackPulse.style.fill = 'var(--accent-teal)';
+      const now = performance.now();
+      if (now - lastBlastTime < 1300) {
+        comboStreak++;
       } else {
-        feedbackPulse.style.animationDirection = 'normal';
-        feedbackPulse.style.animationDuration = pipelineState.activeScenario === 'delay' ? '7s' : (pipelineState.activeScenario === 'surge' ? '2.2s' : '4.5s');
-        feedbackPulse.style.fill = 'var(--accent-coral)';
+        comboStreak = 1;
       }
-    }
+      lastBlastTime = now;
 
-    // 5. Update Status Strip (Minimal Default Summary)
-    if (statusStripScenarioPill) {
-      if (pipelineState.activeScenario === 'normal') {
-        statusStripScenarioPill.className = 'status-strip-pill pill-steady';
-        statusStripScenarioPill.innerHTML = '<i class="status-dot"></i> STEADY STATE // NOMINAL CADENCE';
-      } else if (pipelineState.activeScenario === 'delay') {
-        statusStripScenarioPill.className = 'status-strip-pill pill-delay';
-        statusStripScenarioPill.innerHTML = '<i class="status-dot status-delay"></i> BOTTLENECK ALERT // PORT CLEARANCE (+12D)';
-      } else if (pipelineState.activeScenario === 'surge') {
-        statusStripScenarioPill.className = 'status-strip-pill pill-surge';
-        statusStripScenarioPill.innerHTML = '<i class="status-dot status-surge"></i> DEMAND SURGE // +40% CHANNEL VELOCITY';
-      }
-    }
-
-    if (statusStripHint) {
-      if (pipelineState.activeStage === null) {
-        statusStripHint.textContent = 'Click any stage (01–06) to inspect operational flow →';
-      } else {
-        const cur = stageData[pipelineState.activeStage];
-        statusStripHint.textContent = `Stage ${cur.num} ${cur.name} selected · Details revealed below ↓`;
-      }
-    }
-
-    // 6. Update Scenario Details Box (Expandable Drawer)
-    if (scenarioDetailsBox && scenarioDetailsToggleBtn) {
-      if (pipelineState.scenarioDetailsOpen) {
-        scenarioDetailsBox.classList.remove('is-collapsing');
-        scenarioDetailsBox.style.display = 'block';
-        scenarioDetailsBox.setAttribute('aria-hidden', 'false');
-        scenarioDetailsToggleBtn.setAttribute('aria-expanded', 'true');
-        if (scenarioDetailsBtnText) {
-          scenarioDetailsBtnText.textContent = 'Hide Scenario Details ↑';
-        }
-      } else if (!scenarioDetailsBox.classList.contains('is-collapsing')) {
-        scenarioDetailsBox.style.display = 'none';
-        scenarioDetailsBox.setAttribute('aria-hidden', 'true');
-        scenarioDetailsToggleBtn.setAttribute('aria-expanded', 'false');
-        if (scenarioDetailsBtnText) {
-          scenarioDetailsBtnText.textContent = 'Scenario Details ↓';
-        }
-      } else {
-        scenarioDetailsBox.setAttribute('aria-hidden', 'true');
-        scenarioDetailsToggleBtn.setAttribute('aria-expanded', 'false');
-        if (scenarioDetailsBtnText) {
-          scenarioDetailsBtnText.textContent = 'Scenario Details ↓';
-        }
+      // Update combo badge
+      if (comboEl && comboStreak >= 2) {
+        clearTimeout(comboTimer);
+        const titles = ['', '', '💥 2x Blast!', '⚡ 3x Quantum Surge!', '🌟 4x Supernova!', '🔥 5x Hyperdrive!'];
+        const title = titles[Math.min(comboStreak, titles.length - 1)] || `🚀 ${comboStreak}x Megablast!`;
+        comboEl.textContent = title;
+        comboEl.classList.remove('active');
+        void comboEl.offsetWidth; // re-trigger animation
+        comboEl.classList.add('active');
+        comboTimer = setTimeout(() => {
+          comboEl.classList.remove('active');
+        }, 1600);
       }
 
-      if (scenarioDetailsTitle && scenarioDetailsText) {
-        if (pipelineState.activeScenario === 'normal') {
-          scenarioDetailsTitle.textContent = 'Steady State Flow Dynamics';
-          scenarioDetailsText.textContent = 'All six pipeline stages operate at balanced throughput. Overseas production runs match container freight bookings, buffer inventories absorb planned transit variances, and distributor beats fulfill retail orders without stockout bottlenecks.';
-        } else if (pipelineState.activeScenario === 'delay') {
-          scenarioDetailsTitle.textContent = 'Port Clearance Bottleneck Dynamics';
-          scenarioDetailsText.textContent = 'A 12-day customs delay at Stage 02 (Sourcing) halts inbound intake. Downstream depots rely on safety stock buffers; field sales beats ration available inventory across Mumbai counters to protect high-velocity retail accounts.';
-        } else if (pipelineState.activeScenario === 'surge') {
-          scenarioDetailsTitle.textContent = 'High-Velocity Retail Demand Dynamics';
-          scenarioDetailsText.textContent = '+40% retail sell-through accelerates distributor reorders. Depot cross-docking is activated, and beat visit frequencies across Andheri to Bandra are doubled to capture counter demand without shelf stockouts.';
-        }
-      }
-    }
-
-    // 7. Update Stage Telemetry Panel (Minimal by default; revealed on stage click)
-    if (nodeTelemetry) {
-      if (pipelineState.activeStage !== null) {
-        const currentStage = stageData[pipelineState.activeStage];
-        nodeTelemetry.classList.remove('is-collapsing');
-        nodeTelemetry.classList.add('is-revealed');
-
-        if (telemetryStage) telemetryStage.textContent = `STAGE ${currentStage.num} // ${currentStage.name}`;
-        if (telemetryGrounding) telemetryGrounding.textContent = currentStage.grounding;
-        if (telemetryTitle) telemetryTitle.textContent = currentStage.title;
-        if (telemetryDesc) telemetryDesc.textContent = currentStage.desc;
-        if (telemetryMetric) telemetryMetric.textContent = currentStage.focus;
-        if (telemetryContext) telemetryContext.textContent = currentStage.grounding;
-        if (telemetryScenarioImpact) telemetryScenarioImpact.textContent = currentStage.scenarios[pipelineState.activeScenario];
-        if (telemetryFeedbackImpact) telemetryFeedbackImpact.textContent = currentStage.feedback;
-
-        if (telemetryLoopPill) {
-          telemetryLoopPill.textContent = pipelineState.isReversed
-            ? 'Demand Loop: Upstream Pull Engaged'
-            : 'Demand Loop: Standard Latency';
-        }
-
-        // Deeper Explore Stage Content Toggle
-        if (exploreStageContent && exploreStageBtn) {
-          exploreStageContent.style.display = pipelineState.expandedStage ? 'block' : 'none';
-          exploreStageContent.setAttribute('aria-hidden', pipelineState.expandedStage ? 'false' : 'true');
-          exploreStageBtn.setAttribute('aria-expanded', pipelineState.expandedStage ? 'true' : 'false');
-          if (exploreStageBtnText) {
-            exploreStageBtnText.textContent = pipelineState.expandedStage ? 'Collapse stage details ↑' : 'Explore this stage ↓';
-          }
-        }
-      } else {
-        nodeTelemetry.classList.remove('is-revealed');
-        if (exploreStageContent) {
-          exploreStageContent.style.display = 'none';
-          exploreStageContent.setAttribute('aria-hidden', 'true');
-        }
-        if (exploreStageBtn) {
-          exploreStageBtn.setAttribute('aria-expanded', 'false');
-        }
-        if (exploreStageBtnText) {
-          exploreStageBtnText.textContent = 'Explore this stage ↓';
-        }
-      }
-    }
-  }
-
-  // Bind Op-Nodes (Click, Touch, Keyboard)
-  opNodes.forEach((node) => {
-    const idx = parseInt(node.dataset.stage, 10);
-    const selectStage = (e) => {
-      if (e) e.preventDefault();
-      if (pipelineCollapseTimer) {
-        clearTimeout(pipelineCollapseTimer);
-        pipelineCollapseTimer = null;
-        if (nodeTelemetry) nodeTelemetry.classList.remove('is-collapsing');
-        if (scenarioDetailsBox) scenarioDetailsBox.classList.remove('is-collapsing');
-      }
-      pipelineState.activeStage = idx;
-      renderPipeline();
-    };
-
-    node.addEventListener('click', selectStage);
-    node.addEventListener('pointerup', (e) => {
-      if (e.pointerType === 'touch') selectStage(e);
-    });
-
-    node.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        selectStage(e);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        const nextIdx = pipelineState.activeStage === null ? 0 : (pipelineState.activeStage + 1) % opNodes.length;
-        if (pipelineCollapseTimer) {
-          clearTimeout(pipelineCollapseTimer);
-          pipelineCollapseTimer = null;
-        }
-        pipelineState.activeStage = nextIdx;
-        opNodes[nextIdx].focus();
-        renderPipeline();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        const prevIdx = pipelineState.activeStage === null ? 0 : (pipelineState.activeStage - 1 + opNodes.length) % opNodes.length;
-        if (pipelineCollapseTimer) {
-          clearTimeout(pipelineCollapseTimer);
-          pipelineCollapseTimer = null;
-        }
-        pipelineState.activeStage = prevIdx;
-        opNodes[prevIdx].focus();
-        renderPipeline();
-      }
-    });
-  });
-
-  // Bind Scenario Buttons
-  scenarioBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (pipelineCollapseTimer) {
-        clearTimeout(pipelineCollapseTimer);
-        pipelineCollapseTimer = null;
-        if (nodeTelemetry) nodeTelemetry.classList.remove('is-collapsing');
-        if (scenarioDetailsBox) scenarioDetailsBox.classList.remove('is-collapsing');
-      }
-      const newScenario = btn.dataset.scenario;
-      pipelineState.activeScenario = newScenario;
-      renderPipeline();
-
-      const toastLabel = newScenario === 'normal'
-        ? 'Pipeline Scenario: Steady state operations nominal'
-        : newScenario === 'delay'
-        ? 'Pipeline Simulation: Port clearance delay (+12 days lead-time bottleneck)'
-        : 'Pipeline Simulation: Retail demand surge (+40% channel velocity)';
-      showToast(toastLabel);
-    });
-  });
-
-  // Bind Scenario Details Toggle
-  scenarioDetailsToggleBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (pipelineCollapseTimer) {
-      clearTimeout(pipelineCollapseTimer);
-      pipelineCollapseTimer = null;
-      if (scenarioDetailsBox) scenarioDetailsBox.classList.remove('is-collapsing');
-    }
-    pipelineState.scenarioDetailsOpen = !pipelineState.scenarioDetailsOpen;
-    renderPipeline();
-  });
-
-  // Bind Explore Stage Toggle
-  exploreStageBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    pipelineState.expandedStage = !pipelineState.expandedStage;
-    renderPipeline();
-  });
-
-  // Bind Interactive Feedback Loop Button
-  if (feedbackLoopBtn) {
-    const toggleLoop = (e) => {
-      if (e) e.preventDefault();
-      if (pipelineCollapseTimer) {
-        clearTimeout(pipelineCollapseTimer);
-        pipelineCollapseTimer = null;
-      }
-      pipelineState.isReversed = !pipelineState.isReversed;
-      renderPipeline();
-
-      const toastLabel = pipelineState.isReversed
-        ? 'Demand Feedback Loop: Active upstream pull engaged'
-        : 'Demand Feedback Loop: Restored to standard flow';
-      showToast(toastLabel);
-    };
-
-    feedbackLoopBtn.addEventListener('click', toggleLoop);
-    feedbackLoopBtn.addEventListener('pointerup', (e) => {
-      if (e.pointerType === 'touch') toggleLoop(e);
-    });
-    feedbackLoopBtn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        toggleLoop(e);
-      }
-    });
-  }
-
-  // Initial Pipeline Render
-  renderPipeline();
-
-  // Clicking empty SVG canvas (outside of nodes and feedback loop) also deselects
-  const pipelineSvg = $('.pipeline-svg');
-  if (pipelineSvg) {
-    pipelineSvg.addEventListener('click', (e) => {
-      if (e.target === pipelineSvg || e.target.classList.contains('pipe-track') || e.target.classList.contains('pipe-track-feedback')) {
-        if (!isPipelineDefault()) {
-          resetPipelineToDefault();
-        }
-      }
-    });
-  }
-
-  // ==========================================================================
-  // OUTSIDE-CLICK / OUTSIDE-POINTER BOUNDARY HANDLER FOR OPERATIONS PIPELINE (V27)
-  // Capture phase touchstart + pointerdown + click ensures immediate interception
-  // before any child element can stop propagation or prevent bubbling.
-  // ==========================================================================
-  function handleOutsidePipelineInteraction(event) {
-    const root = document.querySelector('[data-pipeline-root]') || document.getElementById('operationsVisual');
-    if (!root) return;
-    if (isPipelineDefault()) return;
-
-    const path = (event.composedPath && event.composedPath()) || [];
-    const isInside = root.contains(event.target) || path.includes(root);
-    if (isInside) return;
-
-    resetPipelineToDefault();
-  }
-
-  // Register in capture phase across all touch, pointer, and click input events
-  document.addEventListener('touchstart', handleOutsidePipelineInteraction, { capture: true, passive: true });
-  document.addEventListener('pointerdown', handleOutsidePipelineInteraction, true);
-  document.addEventListener('click', handleOutsidePipelineInteraction, true);
-
-  // ==========================================================================
-  // 7. PROGRESSIVE DISCLOSURE MODAL DIALOGS
-  // ==========================================================================
-  const allDialogs = $$('dialog.app-dialog');
-
-  function openDialog(dialogId) {
-    const dlg = $(`#${dialogId}`);
-    if (!dlg) return;
-    if (typeof dlg.showModal === 'function') {
-      dlg.showModal();
-    } else {
-      dlg.setAttribute('open', '');
-    }
-    document.body.classList.add('modal-open');
-  }
-
-  function closeDialog(dialogElement) {
-    if (!dialogElement) return;
-    if (typeof dialogElement.close === 'function') {
-      dialogElement.close();
-    } else {
-      dialogElement.removeAttribute('open');
-    }
-    document.body.classList.remove('modal-open');
-  }
-
-  function closeAllModals() {
-    allDialogs.forEach((dlg) => closeDialog(dlg));
-  }
-
-  // Backdrop click and close buttons
-  allDialogs.forEach((dlg) => {
-    dlg.addEventListener('click', (e) => {
-      // In native HTML5 <dialog>, clicking the backdrop targets the dialog element itself
-      if (e.target === dlg) {
-        closeDialog(dlg);
-      }
-    });
-  });
-
-  $$('[data-close-dialog]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.dataset.closeDialog;
-      closeDialog($(`#${targetId}`));
-    });
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeAllModals();
-      setMobileMenu(false);
-      resetPipelineToDefault();
-    }
-  });
-
-  // Trigger buttons for standalone modals
-  $('#openLoopBtn')?.addEventListener('click', () => openDialog('loopDialog'));
-  $('#openCapabilitiesBtn')?.addEventListener('click', () => openDialog('capabilitiesDialog'));
-  $('#openCredentialsBtn')?.addEventListener('click', () => openDialog('credentialsDialog'));
-  $('#openLabModalBtn')?.addEventListener('click', () => openDialog('labDialog'));
-
-  // ==========================================================================
-  // 7B. COMPACT DIGITAL IDENTITY CARD CONTROLLER (Portfolio V26)
-  // ==========================================================================
-  const profileDialog = $('#profileDialog');
-  const profileNavBtns = $$('.profile-nav-btn');
-  const profilePanels = $$('.profile-panel');
-
-  function setProfileTab(tabName) {
-    profileNavBtns.forEach((btn) => {
-      const isSelected = btn.dataset.profileTab === tabName;
-      btn.classList.toggle('is-active', isSelected);
-      btn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
-    });
-
-    profilePanels.forEach((panel) => {
-      const match = panel.id === `profilePanel${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`;
-      panel.classList.toggle('is-active', match);
-      if (match) {
-        panel.removeAttribute('hidden');
-      } else {
-        panel.setAttribute('hidden', '');
-      }
-    });
-  }
-
-  profileNavBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      setProfileTab(btn.dataset.profileTab);
-    });
-  });
-
-  // Keyboard navigation for profile tabs (Left / Right Arrow)
-  const profileNavWrap = $('.profile-id-nav');
-  profileNavWrap?.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-      e.preventDefault();
-      const currentIdx = profileNavBtns.findIndex((b) => b.classList.contains('is-active'));
-      const nextIdx = e.key === 'ArrowRight'
-        ? (currentIdx + 1) % profileNavBtns.length
-        : (currentIdx - 1 + profileNavBtns.length) % profileNavBtns.length;
-      profileNavBtns[nextIdx].focus();
-      setProfileTab(profileNavBtns[nextIdx].dataset.profileTab);
-    }
-  });
-
-  // Journey Stepper Controller (4 Chapters)
-  const journeyChapters = {
-    cs: {
-      tag: 'CHAPTER 01 // COMPUTER SCIENCE FOUNDATIONS',
-      period: '2020 – 2024',
-      title: 'B.Tech in Computer Science & Engineering — Lovely Professional University',
-      text: 'Built a rigorous foundation in algorithms, relational databases, data structures, and software architecture. This computer science grounding forms the analytical backbone for building modern operational models and automated reporting logic.',
-      metrics: ['Algorithms & Data Structures', 'Relational Database Systems', 'Quantitative Problem-Solving', 'Graduated 2024']
-    },
-    solar: {
-      tag: 'CHAPTER 02 // ENTREPRENEURSHIP & TRADE',
-      period: '2024 – EARLY 2025',
-      title: 'Co-Founder & Business Head — Only Solar (Import & Export)',
-      text: 'Led cross-border commercial sourcing of solar products from overseas manufacturers. Negotiated vendor MOQs, modeled landed unit costs across fluctuating currency exchange rates, managed customs documentation, and scheduled inventory fulfillment to domestic distributors.',
-      metrics: ['Overseas Manufacturer MOQs', 'Landed-Cost Financial Modeling', 'Port Customs Documentation', 'Inventory Buffer Cycles']
-    },
-    cavinkare: {
-      tag: 'CHAPTER 03 // FMCG FRONTLINE FIELD SALES',
-      period: 'OCTOBER 2025 – FEBRUARY 2026',
-      title: 'Sales Representative — CavinKare (Third-Party Payroll)',
-      text: 'Managed frontline General Trade distribution and secondary sales beats across Mumbai (Andheri to Bandra). Maintained 50+ active retail outlets, onboarded 10+ new GT accounts within Month 1, achieved a +20% active retailer-base expansion, and delivered a +30% month-on-month focus-category revenue increase.',
-      metrics: ['50+ Retail Outlets Covered', '10+ GT Accounts M1', '+20% Retailer Expansion', '+30% MoM Focus Category Lift']
-    },
-    mba: {
-      tag: 'CHAPTER 04 // ADVANCED OPERATIONS ARCHITECTURE',
-      period: '2026 – 2028 (PURSUING)',
-      title: 'MBA — Operations & Logistics — Lovely Professional University',
-      text: 'Pursuing graduate specialization connecting quantitative models with commercial execution. Focus areas include multi-echelon inventory optimization, logistics network design, supplier contract structures, and practical operations systems.',
-      metrics: ['Supply Chain Optimization', 'Inventory Theory & Replenishment', 'Logistics Network Design', 'Commercial Systems']
-    }
-  };
-
-  const journeyStepBtns = $$('.journey-step-btn');
-  const journeyChapterTag = $('#journeyChapterTag');
-  const journeyPeriodTag = $('#journeyPeriodTag');
-  const journeyDetailTitle = $('#journeyDetailTitle');
-  const journeyDetailText = $('#journeyDetailText');
-  const journeyDetailMetrics = $('#journeyDetailMetrics');
-
-  function setJourneyChapter(chapterKey) {
-    const chapter = journeyChapters[chapterKey];
-    if (!chapter) return;
-
-    journeyStepBtns.forEach((btn) => {
-      const isSelected = btn.dataset.chapter === chapterKey;
-      btn.classList.toggle('is-active', isSelected);
-      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
-    });
-
-    if (journeyChapterTag) journeyChapterTag.textContent = chapter.tag;
-    if (journeyPeriodTag) journeyPeriodTag.textContent = chapter.period;
-    if (journeyDetailTitle) journeyDetailTitle.textContent = chapter.title;
-    if (journeyDetailText) journeyDetailText.textContent = chapter.text;
-
-    if (journeyDetailMetrics) {
-      journeyDetailMetrics.innerHTML = chapter.metrics
-        .map((m) => `<span class="metric-pill">${m}</span>`)
-        .join('');
-    }
-  }
-
-  journeyStepBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      setJourneyChapter(btn.dataset.chapter);
-    });
-  });
-
-  // Interests Discovery Controller (5 Topics)
-  const interestTopics = {
-    ops: {
-      tag: 'INTEREST FOCUS // OPERATIONS & LOGISTICS',
-      title: 'Frictionless Flow from Sourcing to Shelf',
-      desc: 'Optimizing the physical flow of goods from import container docks to local neighborhood retail shelves with minimal friction and maximum velocity. Ensuring operational models reflect field reality rather than theoretical assumptions.',
-      note: 'Informed by direct beat route logistics in Mumbai and import turnaround at Only Solar.'
-    },
-    supply: {
-      tag: 'INTEREST FOCUS // SUPPLY CHAIN DYNAMICS',
-      title: 'Resilience, Buffer Stock & Lead-Time Governance',
-      desc: 'Aligning vendor lead times, safety stocks, and replenishment cycles so unexpected transit disruptions or demand spikes do not lead to out-of-stock retail shelves.',
-      note: 'Grounded in overseas shipping cycles, port clearance variance, and regional depot replenishment.'
-    },
-    commercial: {
-      tag: 'INTEREST FOCUS // COMMERCIAL OPERATIONS',
-      title: 'Bridging Warehouse Availability with Beat Sales Pull',
-      desc: 'Connecting warehouse inventory availability with frontline beat sales incentives to drive measurable sell-through and distributor profitability.',
-      note: 'Reflects firsthand FMCG distributor interactions, credit terms, and retailer margin structures.'
-    },
-    process: {
-      tag: 'INTEREST FOCUS // PROCESS THINKING',
-      title: 'Standardized Workflows & Bottleneck Elimination',
-      desc: 'Deconstructing complex commercial workflows into standardized, repeatable steps that eliminate friction, reduce cycle time, and prevent costly operational mistakes.',
-      note: 'Combining Computer Science algorithmic thinking with real-world distribution protocols.'
-    },
-    analysis: {
-      tag: 'INTEREST FOCUS // BUSINESS ANALYSIS',
-      title: 'Translating Ground Signals into Actionable Decisions',
-      desc: 'Translating point-of-sale data, beat coverage metrics, and landed costs into actionable operational decisions rather than static vanity reports.',
-      note: 'Practical focus on metrics that directly impact stock turn, fulfillment rate, and working capital.'
-    }
-  };
-
-  const interestPillBtns = $$('.interest-pill-btn');
-  const interestFocusTag = $('#interestFocusTag');
-  const interestCardTitle = $('#interestCardTitle');
-  const interestCardDesc = $('#interestCardDesc');
-  const interestPracticalNote = $('#interestPracticalNote');
-
-  function setInterestTopic(topicKey) {
-    const topic = interestTopics[topicKey];
-    if (!topic) return;
-
-    interestPillBtns.forEach((btn) => {
-      const isSelected = btn.dataset.interest === topicKey;
-      btn.classList.toggle('is-active', isSelected);
-      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
-    });
-
-    if (interestFocusTag) interestFocusTag.textContent = topic.tag;
-    if (interestCardTitle) interestCardTitle.textContent = topic.title;
-    if (interestCardDesc) interestCardDesc.textContent = topic.desc;
-    if (interestPracticalNote) {
-      interestPracticalNote.innerHTML = `<strong>Grounding:</strong> ${topic.note}`;
-    }
-  }
-
-  interestPillBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      setInterestTopic(btn.dataset.interest);
-    });
-  });
-
-  // Profile Popup Trigger: reset to default states on open
-  $('#profilePopupTrigger')?.addEventListener('click', () => {
-    setProfileTab('overview');
-    setJourneyChapter('cavinkare');
-    setInterestTopic('ops');
-    openDialog('profileDialog');
-  });
-
-
-  // ==========================================================================
-  // 7C. SECTION 02: EDITORIAL OPERATING PRINCIPLES CONTROLLER (Portfolio V29)
-  // Minimalist, spacious, three typographic principles with subtle expansion
-  // ==========================================================================
-  const principleItems = $$('.editorial-principle-item');
-
-  function togglePrinciple(targetItem) {
-    if (!targetItem) return;
-    const isCurrentlyActive = targetItem.classList.contains('is-active');
-
-    // Close all items
-    principleItems.forEach((item) => {
-      item.classList.remove('is-active');
-      item.setAttribute('aria-selected', 'false');
-      const ind = item.querySelector('.principle-toggle-indicator');
-      if (ind) ind.textContent = '+';
-    });
-
-    // If it wasn't already active, open it
-    if (!isCurrentlyActive) {
-      targetItem.classList.add('is-active');
-      targetItem.setAttribute('aria-selected', 'true');
-      const ind = targetItem.querySelector('.principle-toggle-indicator');
-      if (ind) ind.textContent = '−';
-    }
-  }
-
-  principleItems.forEach((item, idx) => {
-    const summaryRow = item.querySelector('.principle-summary-row');
-    summaryRow?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      togglePrinciple(item);
-    });
-
-    item.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        togglePrinciple(item);
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const next = principleItems[(idx + 1) % principleItems.length];
-        next.focus();
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const prev = principleItems[(idx - 1 + principleItems.length) % principleItems.length];
-        prev.focus();
-      }
-    });
-  });
-
-  // Clicking outside principles list resets to compact state
-  document.addEventListener('pointerdown', (e) => {
-    const principlesList = document.querySelector('.editorial-principles-list');
-    if (principlesList && !principlesList.contains(e.target)) {
-      principleItems.forEach((item) => {
-        item.classList.remove('is-active');
-        item.setAttribute('aria-selected', 'false');
-        const ind = item.querySelector('.principle-toggle-indicator');
-        if (ind) ind.textContent = '+';
+      // Add expanding shockwave ring
+      shockwaves.push({
+        x,
+        y,
+        radius: 12,
+        maxRadius: 260,
+        speed: 14,
+        alpha: 1
       });
-      // Set principle 01 as default active
-      const first = principleItems[0];
-      if (first) {
-        first.classList.add('is-active');
-        first.setAttribute('aria-selected', 'true');
-        const ind = first.querySelector('.principle-toggle-indicator');
-        if (ind) ind.textContent = '−';
-      }
-    }
-  });
 
-  // Bridge Links from Section 02 to Section 03
-  $$('.principle-bridge-link').forEach((link) => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.dataset.bridgeTo;
-      const targetRow = document.querySelector(`.editorial-project-row[data-project-id="${targetId}"]`);
-      const workSection = document.getElementById('work');
-      if (workSection) {
-        workSection.scrollIntoView({ behavior: 'smooth' });
-      }
-      if (targetRow) {
-        targetRow.classList.remove('is-highlighted');
-        void targetRow.offsetWidth;
-        targetRow.classList.add('is-highlighted');
-        targetRow.focus();
-      }
-    });
-  });
-
-  // ==========================================================================
-  // 7D. SECTION 03: EDITORIAL PROJECT INDEX CONTROLLER (Portfolio V29)
-  // Spacious typographic index with click-to-open case study dossiers
-  // ==========================================================================
-  const projectRows = $$('.editorial-project-row');
-
-  projectRows.forEach((row, idx) => {
-    // Clicking anywhere on row opens case study dossier
-    row.addEventListener('click', (e) => {
-      if (e.target.closest('[data-open-case]')) return;
-      const projectId = row.dataset.projectId;
-      if (projectId && typeof openCaseDossierById === 'function') {
-        openCaseDossierById(projectId);
-      }
-    });
-
-    row.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const projectId = row.dataset.projectId;
-        if (projectId && typeof openCaseDossierById === 'function') {
-          openCaseDossierById(projectId);
+      // Blast nearby particles with outward impulse
+      for (const p of particles) {
+        const dx = p.x - x;
+        const dy = p.y - y;
+        const dist = Math.hypot(dx, dy) || 1;
+        if (dist < 260) {
+          const force = (1 - dist / 260) * 22 / p.mass;
+          p.vx += (dx / dist) * force;
+          p.vy += (dy / dist) * force;
         }
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const next = projectRows[(idx + 1) % projectRows.length];
-        next.focus();
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const prev = projectRows[(idx - 1 + projectRows.length) % projectRows.length];
-        prev.focus();
       }
-    });
-  });
 
-  // ==========================================================================
-  // 8. CASE STUDY DOSSIER DATA & INJECTION (All 4 Retained & Factually Audited)
-  // ==========================================================================
-  const caseDossiers = {
-    cavinkare: {
-      category: 'PROFESSIONAL EXPERIENCE // CAVINKARE',
-      title: 'Making a Beat Work Harder: FMCG Retail Beat & Territory Expansion in Mumbai',
-      sections: [
-        {
-          heading: '01 // Verified Role & Operating Scope',
-          body: 'Sales Representative — CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026\nTerritory: Andheri to Bandra corridor, Mumbai (50+ General Trade retail outlets, supermarkets, and local distributors).'
-        },
-        {
-          heading: '02 // The Frontline Bottleneck',
-          body: 'High outlet density, tight retailer working capital, and asynchronous reorder cycles between field order booking and distributor dispatch risked stockouts on fast-moving SKUs while leaving underserved accounts neglected.'
-        },
-        {
-          heading: '03 // 3-Step Field Execution Architecture',
-          body: '1. Beat Segmentation & Route Planning: Sequenced 50+ retail outlets by sales velocity and order reliability, reserving dedicated prospecting windows that onboarded 10+ new General Trade accounts in Month 1 (+20% active retailer-base expansion).\n2. Replenishment Synchronization: Coordinated primary and secondary order booking directly with distributor closing stock to maintain on-shelf product availability.\n3. Merchandising & Trade Schemes: Secured prime counter visibility and executed targeted trade schemes, delivering a confirmed +30% month-on-month revenue growth in focus categories.'
-        },
-        {
-          heading: '04 // Market Intelligence & Operational Takeaway',
-          body: 'Consistently tracked performance against sales targets and shared competitor pricing and market feedback to guide territory decisions. Confirms how revenue growth in General Trade distribution depends directly on replenishment reliability and disciplined beat routines.'
-        }
-      ],
-      takeaways: {
-        title: 'Core Field Lesson',
-        text: 'A territory sales representative is the vital sensory link in consumer distribution—connecting counter-level buying patterns to distributor fulfillment.'
-      }
-    },
-    onlysolar: {
-      category: 'ENTREPRENEURSHIP // ONLY SOLAR',
-      title: 'From Supplier to Shelf: Cross-Border Sourcing, Pricing & Commercial Operations',
-      sections: [
-        {
-          heading: '01 // Verified Role & Operating Scope',
-          body: 'Co-Founder & Business Head — Only Solar (Import & Export) · 2024 – Early 2025\nMumbai, India · Commercial solar, street, and flood lighting equipment.'
-        },
-        {
-          heading: '02 // The Operational Challenge',
-          body: 'Launching an import-distribution venture required establishing reliable overseas manufacturer relationships, managing international freight logistics, and setting viable pricing structures for domestic commercial customers.'
-        },
-        {
-          heading: '03 // Genuine Operational Responsibilities',
-          body: '1. Supplier Sourcing & Negotiation: Sourced international manufacturers, conducted supplier due diligence, and negotiated purchase contracts and FOB pricing.\n2. Import Logistics Management: Managed overseas shipping, customs clearance coordination, port documentation, and inland transit to maintain supply reliability.\n3. Commercial GTM & P&L: Developed the venture sales strategy, pricing models, and go-to-market plan; built customer and distributor relationships and oversaw daily business operations and commercial decisions.'
-        },
-        {
-          heading: '04 // Entrepreneurial Takeaway',
-          body: 'Provided direct, end-to-end exposure to the entire commercial lifecycle of running a business: from overseas factory evaluation and logistics documentation to customer conversion and P&L control.'
-        }
-      ],
-      takeaways: {
-        title: 'Core Venture Lesson',
-        text: 'Commercial viability in import distribution depends on disciplined cost modeling—factoring tariffs, shipping volatility, and working capital into every pricing decision.'
-      }
-    },
-    pipeline: {
-      category: 'INDEPENDENT ANALYTICAL CONCEPT',
-      title: 'See the Whole Flow: Field-to-Distributor Inventory Visibility Architecture',
-      sections: [
-        {
-          heading: '01 // Nature of Project: Independent Analytical Concept',
-          body: 'Independent conceptual architecture combining Computer Science engineering fundamentals (B.Tech CS, Graduated 2024) with FMCG field distribution observations. Note: Uses synthetic datasets to model supply chain visibility.'
-        },
-        {
-          heading: '02 // The Structural Problem',
-          body: 'In traditional retail distribution, field sales representatives often book orders without visibility into distributor warehouse inventory, while supply planners only see aggregated primary sales—leading to avoidable stockout gaps.'
-        },
-        {
-          heading: '03 // Conceptual System Design',
-          body: '1. Relational Database Schema (SQL): Designed a conceptual third-normal-form (3NF) relational data model linking Store Masters, Beat Visit Logs, SKU Bookings, and Distributor Closing Stock.\n2. Replenishment Dashboards (Power BI): Modeled key operational indicators including Beat Strike Rate, SKU Fill-Rate Gaps, and Days-Since-Last-Order.\n3. Exception Triggers: Specified automated rules to flag high-velocity retail outlets at risk of stockout before the morning beat begins.'
-        },
-        {
-          heading: '04 // Analytical Takeaway',
-          body: 'Demonstrates how computational data structures and business intelligence tools can resolve physical information handoffs between field sales and warehouse replenishment.'
-        }
-      ],
-      takeaways: {
-        title: 'Conceptual Architecture Lesson',
-        text: 'Relational clarity beats dashboard vanity. A useful system highlights exactly where human operational intervention is needed before a stockout occurs.'
-      }
-    },
-    reverse: {
-      category: 'INDEPENDENT OPERATIONS ANALYTICS CONCEPT',
-      title: 'Exceptions First: Closed-Loop Reverse Logistics & Warranty Lifecycle Triage Model',
-      sections: [
-        {
-          heading: '01 // Nature of Project: Independent Analytical Concept',
-          body: 'Independent operations analytics model exploring structured warranty workflows and return triage protocols. Note: Uses illustrative operational scenarios to demonstrate decision logic.'
-        },
-        {
-          heading: '02 // The Reverse Logistics Challenge',
-          body: 'In hardware distribution, returned equipment and warranty authorizations often sit idle in regional depots without structured triage, locking capital and triggering customer friction.'
-        },
-        {
-          heading: '03 // Conceptual Workflow Architecture',
-          body: '1. 3-Tier Diagnostic Intake: Conceptualized triage criteria at depot receipt (Tier A: immediate repair, Tier B: supplier warranty reclamation, Tier C: scrap recovery).\n2. Standardized SOP Workflows: Modeled turnaround target SLAs with serialized tracking.\n3. Supplier Warranty Reclamation: Mapped diagnostic reporting workflows to recover vendor credits against future purchase lots.'
-        },
-        {
-          heading: '04 // Operational Takeaway',
-          body: 'Shows how reverse logistics can be transformed from an unstructured cost center into an actionable quality feedback mechanism.'
-        }
-      ],
-      takeaways: {
-        title: 'Analytical Modeling Lesson',
-        text: 'Reverse logistics is not waste disposal—it is a critical diagnostic feedback loop for supplier quality audits.'
-      }
-    }
-  };
-
-  const caseDialog = $('#caseDialog');
-  const caseDialogCategory = $('#caseDialogCategory');
-  const caseDialogBody = $('#caseDialogBody');
-
-  function openCaseDossierById(caseId) {
-    const data = caseDossiers[caseId];
-    if (!data) return;
-
-    if (caseDialogCategory) caseDialogCategory.textContent = data.category;
-    if (caseDialogBody) {
-      let html = `<h3 class="dialog-title">${data.title}</h3>`;
-      html += '<div class="dossier-body">';
-      data.sections.forEach((sec) => {
-        html += `
-          <div class="dossier-section">
-            <h4>${sec.heading}</h4>
-            <p>${sec.body}</p>
-          </div>
-        `;
-      });
-      if (data.takeaways) {
-        html += `
-          <div class="dossier-takeaways">
-            <strong>${data.takeaways.title}</strong>
-            <p>${data.takeaways.text}</p>
-          </div>
-        `;
-      }
-      html += '</div>';
-      caseDialogBody.innerHTML = html;
-    }
-
-    openDialog('caseDialog');
-  }
-
-  // Delegated click listener for any [data-open-case]
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-open-case]');
-    if (btn) {
-      e.stopPropagation();
-      openCaseDossierById(btn.dataset.openCase);
-    }
-  });
-
-  // ==========================================================================
-  // 9. MILESTONE INSPECTOR MODAL (Factually Audited Career Records)
-  // ==========================================================================
-  const milestoneData = {
-    mba: {
-      category: 'GRADUATE EDUCATION // PURSUING',
-      title: 'Master of Business Administration (MBA) — 2026–2028',
-      inst: 'Lovely Professional University (LPU), Punjab, India',
-      overview: 'Currently pursuing an MBA specializing in Operations & Logistics to sharpen strategic management, global supply chain planning, and commercial operations capabilities. (Minor is currently undecided).',
-      highlights: [
-        'Confirmed Major: Operations & Logistics Management.',
-        'Supply Chain & Sourcing: Quantitative inventory models, procurement strategy, and distribution network planning.',
-        'Enterprise Systems: Operations planning, ERP integration concepts, and process standard operating procedures (SOPs).'
-      ]
-    },
-    cavinkare: {
-      category: 'FIELD SALES // PROFESSIONAL EXPERIENCE',
-      title: 'Sales Representative — CavinKare (Third-Party Payroll) · Oct 2025 – Feb 2026',
-      inst: 'Territory: Andheri to Bandra, Mumbai',
-      overview: 'Managed field sales and retail distribution across the high-density Andheri-Bandra corridor, covering General Trade outlets, supermarkets, and local distributors.',
-      highlights: [
-        '50+ Retail Outlets Covered: Managed regular route coverage and order booking across general trade and supermarkets.',
-        '+20% Active Retail Base: Prospected and onboarded 10+ new General Trade accounts within Month 1 through route planning.',
-        '+30% MoM Revenue Lift: Achieved confirmed month-on-month revenue growth in focus categories through planogram compliance and trade schemes.',
-        'Distributor Replenishment: Coordinated primary and secondary order booking directly with distributor inventory to maintain product availability.',
-        'Market Feedback: Shared regular competitor insights and market feedback to guide territory decisions.'
-      ]
-    },
-    venture: {
-      category: 'ENTREPRENEURSHIP // VENTURE LEADERSHIP',
-      title: 'Co-Founder & Business Head — Only Solar · 2024 – Early 2025',
-      inst: 'Import & Export of Commercial Solar, Street & Flood Lighting, Mumbai',
-      overview: 'Co-founded an import-export venture focused on sourcing and distributing commercial solar, street, and flood lighting products.',
-      highlights: [
-        'International Supplier Sourcing: Sourced and vetted overseas manufacturers; led vendor negotiations.',
-        'Import Logistics & Compliance: Managed cross-border freight coordination, port clearing documentation, and inland transit.',
-        'Commercial GTM & Pricing: Formulated sales strategy, pricing structures, and go-to-market plans.',
-        'Distributor Relationships & P&L: Managed customer and distributor accounts, oversaw daily business operations, and made commercial P&L decisions.'
-      ]
-    },
-    btech: {
-      category: 'UNDERGRADUATE EDUCATION // ENGINEERING',
-      title: 'Bachelor of Technology (BTech), Computer Science Engineering — Graduated 2024',
-      inst: 'Lovely Professional University (LPU), Punjab, India',
-      overview: 'Four-year engineering degree providing rigorous training in relational database systems, algorithms, software engineering, and computational problem-solving.',
-      highlights: [
-        'Relational Databases & SQL: Third-normal-form schema design, indexing, transactions, and analytical queries.',
-        'Data Structures & Algorithms: Computational optimization and graph traversal logic applicable to routing and scheduling.',
-        'Analytical Foundation: Translating operational and commercial handoffs into structured, repeatable data workflows.'
-      ]
-    }
-  };
-
-  const milestoneCategory = $('#milestoneCategory');
-  const milestoneDialogBody = $('#milestoneDialogBody');
-
-  $$('[data-inspect-milestone]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.inspectMilestone;
-      const data = milestoneData[id];
-      if (!data) return;
-
-      if (milestoneCategory) milestoneCategory.textContent = data.category;
-      if (milestoneDialogBody) {
-        let html = `
-          <h3 class="dialog-title">${data.title}</h3>
-          <p class="dialog-intro">${data.inst}</p>
-          <div class="dossier-section">
-            <h4>Role &amp; Context Overview</h4>
-            <p>${data.overview}</p>
-          </div>
-          <div class="dossier-section">
-            <h4>Key Responsibilities &amp; Highlights</h4>
-            <ul class="cap-list" style="margin-top:0.75rem;">
-        `;
-        data.highlights.forEach((h) => {
-          html += `<li><strong>•</strong> ${h}</li>`;
+      // Spawn glowing firework spark embers
+      const sparkCount = 18 + Math.floor(Math.random() * 10);
+      const isDark = document.documentElement.getAttribute('data-mode') === 'dark';
+      for (let i = 0; i < sparkCount; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2.5 + Math.random() * 6.5;
+        embers.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: 2 + Math.random() * 2.5,
+          alpha: 1,
+          decay: 0.02 + Math.random() * 0.025,
+          color: isDark ? (Math.random() > 0.4 ? '#E58A4E' : '#38BDF8') : (Math.random() > 0.4 ? '#C2410C' : '#0284C7')
         });
-        html += '</ul></div>';
-        milestoneDialogBody.innerHTML = html;
       }
 
-      openDialog('milestoneDialog');
+      // Tactile sound effect
+      playSound('click');
+    }
+
+    hero.addEventListener('click', (e) => {
+      if (e.target.closest('a, button, [role="button"], input, select, .fig__card, .kpi-chip, .typer__badge, .typer__skip')) return;
+      const rect = hero.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      triggerBlast(x, y);
     });
-  });
 
-  // ==========================================================================
-  // 10. OPERATIONS LAB: DECISION SIMULATORS (Synthetic Assumptions & Scenarios)
-  // ==========================================================================
-  // Lab Tab Switching
-  const labTabs = $$('.lab-tab-btn');
-  const toolCalculator = $('#toolCalculator');
-  const toolTriage = $('#toolTriage');
+    // 60FPS Game Loop
+    function renderGame() {
+      requestAnimationFrame(renderGame);
+      if (!heroInView) return;
 
-  labTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      labTabs.forEach((t) => t.classList.toggle('is-active', t === tab));
-      const tool = tab.dataset.labTool;
-      if (tool === 'calculator') {
-        toolCalculator?.classList.add('is-active');
-        toolTriage?.classList.remove('is-active');
+      const isDark = document.documentElement.getAttribute('data-mode') === 'dark';
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.scale(dpr, dpr);
+
+      // Mouse Gravity Well vortex when mouse button held
+      if (mouse.down && mouse.active) {
+        mouse.wellRadius = Math.min(260, mouse.wellRadius + 14);
+
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, mouse.wellRadius * 0.4, 0, Math.PI * 2);
+        ctx.strokeStyle = isDark ? 'rgba(229, 138, 78, 0.45)' : 'rgba(194, 65, 12, 0.4)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, mouse.wellRadius * 0.75, 0, Math.PI * 2);
+        ctx.setLineDash([4, 6]);
+        ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.35)' : 'rgba(2, 132, 199, 0.3)';
+        ctx.stroke();
+        ctx.setLineDash([]);
       } else {
-        toolCalculator?.classList.remove('is-active');
-        toolTriage?.classList.add('is-active');
+        mouse.wellRadius = Math.max(0, mouse.wellRadius - 20);
       }
+
+      // Render shockwaves
+      for (let i = shockwaves.length - 1; i >= 0; i--) {
+        const sw = shockwaves[i];
+        sw.radius += sw.speed;
+        sw.alpha -= 0.028;
+
+        if (sw.alpha <= 0 || sw.radius >= sw.maxRadius) {
+          shockwaves.splice(i, 1);
+          continue;
+        }
+
+        ctx.beginPath();
+        ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = isDark
+          ? `rgba(229, 138, 78, ${sw.alpha * 0.85})`
+          : `rgba(194, 65, 12, ${sw.alpha * 0.8})`;
+        ctx.lineWidth = Math.max(1, 4 * (1 - sw.radius / sw.maxRadius));
+        ctx.stroke();
+
+        // Secondary inner shock ring
+        if (sw.radius > 30) {
+          ctx.beginPath();
+          ctx.arc(sw.x, sw.y, sw.radius * 0.7, 0, Math.PI * 2);
+          ctx.strokeStyle = isDark
+            ? `rgba(56, 189, 248, ${sw.alpha * 0.5})`
+            : `rgba(2, 132, 199, ${sw.alpha * 0.45})`;
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+      }
+
+      // Render & update spark embers
+      for (let i = embers.length - 1; i >= 0; i--) {
+        const em = embers[i];
+        em.x += em.vx;
+        em.y += em.vy;
+        em.vx *= 0.94;
+        em.vy = (em.vy * 0.94) + 0.12;
+        em.alpha -= em.decay;
+
+        if (em.alpha <= 0) {
+          embers.splice(i, 1);
+          continue;
+        }
+
+        ctx.beginPath();
+        ctx.arc(em.x, em.y, em.size * em.alpha, 0, Math.PI * 2);
+        ctx.fillStyle = em.color;
+        ctx.globalAlpha = Math.max(0, em.alpha);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+      // Update & render particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        // Breathing pulse
+        p.pulse += p.pulseSpeed;
+        const curRadius = p.radius + Math.sin(p.pulse) * 0.5;
+
+        // Apply friction returning velocity toward ambient drift
+        p.vx = p.vx * 0.98 + p.baseVx * 0.02;
+        p.vy = p.vy * 0.98 + p.baseVy * 0.02;
+
+        // Mouse interaction
+        if (mouse.active) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.hypot(dx, dy) || 1;
+
+          if (mouse.down) {
+            // Gravity well pull & planetary orbital swirl
+            if (dist < 260) {
+              const pullForce = (1 - dist / 260) * 1.8;
+              p.vx += (dx / dist) * pullForce + (-dy / dist) * 0.45;
+              p.vy += (dy / dist) * pullForce + (dx / dist) * 0.45;
+            }
+          } else {
+            // Gentle cursor repulsion
+            if (dist < 90) {
+              const repel = (1 - dist / 90) * 1.2;
+              p.vx -= (dx / dist) * repel;
+              p.vy -= (dy / dist) * repel;
+            }
+          }
+        }
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Edge bounce
+        if (p.x < 15) { p.x = 15; p.vx = Math.abs(p.vx); }
+        if (p.x > W - 15) { p.x = W - 15; p.vx = -Math.abs(p.vx); }
+        if (p.y < 15) { p.y = 15; p.vy = Math.abs(p.vy); }
+        if (p.y > H - 15) { p.y = H - 15; p.vy = -Math.abs(p.vy); }
+
+        // Draw particle node
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, curRadius, 0, Math.PI * 2);
+        if (p.tier === 'accent') {
+          ctx.fillStyle = isDark ? '#E58A4E' : '#C2410C';
+        } else if (p.tier === 'secondary') {
+          ctx.fillStyle = isDark ? '#38BDF8' : '#0284C7';
+        } else {
+          ctx.fillStyle = isDark ? 'rgba(226, 232, 240, 0.65)' : 'rgba(51, 65, 85, 0.65)';
+        }
+        ctx.fill();
+
+        // Connect to other particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const d = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (d < 115) {
+            const lineAlpha = (1 - d / 115) * (isDark ? 0.32 : 0.22);
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = isDark
+              ? `rgba(229, 138, 78, ${lineAlpha})`
+              : `rgba(194, 65, 12, ${lineAlpha})`;
+            ctx.lineWidth = 0.85;
+            ctx.stroke();
+          }
+        }
+
+        // Connect to mouse cursor with interactive laser tether
+        if (mouse.active) {
+          const dMouse = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+          if (dMouse < 160) {
+            const tetherAlpha = (1 - dMouse / 160) * (isDark ? 0.75 : 0.65);
+            ctx.beginPath();
+            ctx.moveTo(mouse.x, mouse.y);
+            ctx.lineTo(p.x, p.y);
+            ctx.strokeStyle = isDark
+              ? `rgba(56, 189, 248, ${tetherAlpha})`
+              : `rgba(2, 132, 199, ${tetherAlpha})`;
+            ctx.lineWidth = 1.35;
+            ctx.stroke();
+
+            // Glow ring on tethered particle
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, curRadius + 2.5, 0, Math.PI * 2);
+            ctx.strokeStyle = isDark
+              ? `rgba(56, 189, 248, ${tetherAlpha * 0.7})`
+              : `rgba(2, 132, 199, ${tetherAlpha * 0.7})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Cursor reticle when active
+      if (mouse.active) {
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = isDark ? '#38BDF8' : '#0284C7';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 14, 0, Math.PI * 2);
+        ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.45)' : 'rgba(2, 132, 199, 0.4)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    renderGame();
+  }
+  initHeroGame();
+
+  /* ==========================================================================
+     05b. DYNAMIC EXECUTIVE TYPEWRITER
+     ========================================================================== */
+  function initTypewriter() {
+    const typerText = $('#typerText');
+    const typerCount = $('#typerCount');
+    const typerBadge = $('#typerBadge');
+    const typerSkip = $('#typerSkip');
+    if (!typerText) return;
+
+    const ROLES = [
+      'Frontline FMCG Strategist',
+      'Global Sourcing & Trade Architect',
+      'Supply Chain Analytics Modeler',
+      'Operations & Logistics Leader',
+      'B.Tech CS + MBA Synthesis'
+    ];
+    let roleIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+    let typeTimer = null;
+
+    function updateCount() {
+      if (typerCount) {
+        typerCount.textContent = `${String(roleIdx + 1).padStart(2, '0')} / ${String(ROLES.length).padStart(2, '0')}`;
+      }
+    }
+
+    function typeStep() {
+      const currentRole = ROLES[roleIdx];
+
+      if (!isDeleting) {
+        charIdx++;
+        typerText.textContent = currentRole.slice(0, charIdx);
+        if (charIdx % 4 === 0) playSound('click');
+
+        if (charIdx === currentRole.length) {
+          isDeleting = true;
+          typeTimer = setTimeout(typeStep, 2300);
+          return;
+        }
+        const speed = 65 + Math.random() * 45;
+        typeTimer = setTimeout(typeStep, speed);
+      } else {
+        charIdx--;
+        typerText.textContent = currentRole.slice(0, charIdx);
+
+        if (charIdx === 0) {
+          isDeleting = false;
+          roleIdx = (roleIdx + 1) % ROLES.length;
+          updateCount();
+          typeTimer = setTimeout(typeStep, 380);
+          return;
+        }
+        typeTimer = setTimeout(typeStep, 32);
+      }
+    }
+
+    function skipToNext() {
+      clearTimeout(typeTimer);
+      playSound('click');
+      roleIdx = (roleIdx + 1) % ROLES.length;
+      updateCount();
+      isDeleting = false;
+      charIdx = 0;
+      typerText.textContent = '';
+      typeStep();
+    }
+
+    updateCount();
+    typeTimer = setTimeout(typeStep, 700);
+
+    if (typerBadge) {
+      typerBadge.addEventListener('click', skipToNext);
+      typerBadge.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          skipToNext();
+        }
+      });
+    }
+    if (typerSkip) {
+      typerSkip.addEventListener('click', skipToNext);
+    }
+  }
+  initTypewriter();
+
+  /* ==========================================================================
+     05. FLIP CALENDAR (MECHANICAL DESK CALENDAR DESIGN)
+     ========================================================================== */
+  const cal = $('#cal');
+  if (cal) {
+    const SKILLS = [
+      'Operations Leader',
+      'FMCG Distribution',
+      'Global Sourcing',
+      'Supply Chain Analytics',
+      'Product Systems'
+    ];
+    let curIdx = 0;
+    const n = SKILLS.length;
+    const body = $('.cal__body', cal);
+    const leaf = $('.cal__leaf', cal);
+    const under = $('[data-under]', cal);
+    const face = $('.cal__face', cal);
+    const measure = $('.cal__measure', cal);
+    const rings = $('.cal__rings', cal);
+    let flipping = false;
+
+    function paint(page, idx) {
+      const wEl = $('.cal__word', page);
+      const nEl = $('.cal__no', page);
+      if (wEl) wEl.textContent = SKILLS[idx];
+      if (nEl) nEl.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`;
+    }
+
+    paint(face, 0);
+    paint(under, 1);
+
+    // Dynamically fit width and inject spiral rings & punch holes
+    function fitCal() {
+      if (!measure || !body) return;
+      cal.style.fontSize = '';
+      const baseFs = parseFloat(getComputedStyle(cal).fontSize) || 28;
+      const heroLeft = cal.closest('.hero__left');
+      const availW = Math.min(window.innerWidth * 0.88, (heroLeft ? heroLeft.clientWidth : 600) - 20);
+
+      let maxW = 0;
+      for (const w of SKILLS) {
+        measure.textContent = w;
+        maxW = Math.max(maxW, measure.getBoundingClientRect().width);
+      }
+
+      const neededW = maxW + (baseFs * 1.5);
+      if (neededW > availW && availW > 100) {
+        const scale = availW / neededW;
+        cal.style.fontSize = `${Math.max(14, (baseFs * scale)).toFixed(1)}px`;
+      }
+
+      const curFs = parseFloat(getComputedStyle(cal).fontSize) || baseFs;
+      const wEm = (maxW / curFs) + 1.35;
+      body.style.setProperty('--cal-w', `${wEm.toFixed(3)}em`);
+      cal.style.setProperty('--cal-w', `${wEm.toFixed(3)}em`);
+
+      const count = Math.max(5, Math.round((wEm - 0.6) / 0.75) + 1);
+      if (rings) rings.innerHTML = '<i></i>'.repeat(count);
+      cal.querySelectorAll('.cal__holes').forEach(h => {
+        h.innerHTML = '<i></i>'.repeat(count);
+      });
+    }
+
+    fitCal();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitCal);
+    }
+    window.addEventListener('resize', fitCal);
+
+    function nextFlip() {
+      if (flipping) return;
+      flipping = true;
+      playSound('flip');
+      const nextIdx = (curIdx + 1) % n;
+      paint(under, nextIdx);
+
+      cal.classList.add('flipping');
+      setTimeout(() => {
+        curIdx = nextIdx;
+        paint(face, curIdx);
+        cal.classList.remove('flipping');
+        paint(under, (curIdx + 1) % n);
+        flipping = false;
+      }, 650);
+    }
+
+    let calTimer = setInterval(nextFlip, 3200);
+    cal.addEventListener('click', () => {
+      clearInterval(calTimer);
+      nextFlip();
+      calTimer = setInterval(nextFlip, 3500);
     });
-  });
-
-  // Tool 1: Landed-Cost Calculator Engine (Synthetic Model Assumptions)
-  const calcUnits = $('#calcUnits');
-  const calcFob = $('#calcFob');
-  const calcFreight = $('#calcFreight');
-  const calcDuty = $('#calcDuty');
-  const calcTransit = $('#calcTransit');
-  const targetMargin = $('#targetMargin');
-
-  const valUnits = $('#valUnits');
-  const valFob = $('#valFob');
-  const valFreight = $('#valFreight');
-  const valDuty = $('#valDuty');
-  const valTransit = $('#valTransit');
-
-  const resUnitLanded = $('#resUnitLanded');
-  const resFobShare = $('#resFobShare');
-  const resFobTotal = $('#resFobTotal');
-  const resFreightTotal = $('#resFreightTotal');
-  const resDutyTotal = $('#resDutyTotal');
-  const resTransitTotal = $('#resTransitTotal');
-  const resGrandTotal = $('#resGrandTotal');
-  const resTargetPrice = $('#resTargetPrice');
-
-  const USD_TO_INR = 83.0; // Illustrative reference rate
-
-  function formatRupees(num) {
-    return '₹' + Math.round(num).toLocaleString('en-IN');
   }
 
-  function calculateLandedCosts() {
-    const units = parseFloat(calcUnits?.value || 1000);
-    const fobUsd = parseFloat(calcFob?.value || 45);
-    const freightUsd = parseFloat(calcFreight?.value || 2800);
-    const dutyPct = parseFloat(calcDuty?.value || 18);
-    const transitInr = parseFloat(calcTransit?.value || 120);
-    const marginPct = parseFloat(targetMargin?.value || 25);
+  /* ==========================================================================
+     06. 3D ARCHITECTURAL DOORS & DYNAMIC HUD
+     ========================================================================== */
+  const doors = $$('.doors__row .unit');
+  const dinfo = $('#dinfo');
+  const dinfoH = $('.dinfo__h', dinfo);
+  const dinfoT = $('.dinfo__t', dinfo);
+  const dinfoP = $('.dinfo__p', dinfo);
+  const doorDots = $$('.doors__dots i');
 
-    // Update slider label readouts
-    if (valUnits) valUnits.textContent = units.toLocaleString();
-    if (valFob) valFob.textContent = `$${fobUsd.toFixed(2)}`;
-    if (valFreight) valFreight.textContent = `$${freightUsd.toLocaleString()}`;
-    if (valDuty) valDuty.textContent = `${dutyPct}%`;
-    if (valTransit) valTransit.textContent = `₹${transitInr}`;
-
-    // Financial calculations
-    const fobTotalInr = units * fobUsd * USD_TO_INR;
-    const freightTotalInr = freightUsd * USD_TO_INR;
-    const dutyTotalInr = (fobTotalInr + freightTotalInr) * (dutyPct / 100);
-    const transitTotalInr = units * transitInr;
-    const grandTotalInr = fobTotalInr + freightTotalInr + dutyTotalInr + transitTotalInr;
-
-    const unitLandedInr = grandTotalInr / units;
-    const targetPriceInr = unitLandedInr / (1 - (marginPct / 100));
-    const fobSharePct = Math.round((fobTotalInr / grandTotalInr) * 100);
-
-    // Update result cards
-    if (resUnitLanded) resUnitLanded.textContent = formatRupees(unitLandedInr);
-    if (resFobShare) resFobShare.textContent = `Factory FOB represents ${fobSharePct}% of total landed cost`;
-    if (resFobTotal) resFobTotal.textContent = formatRupees(fobTotalInr);
-    if (resFreightTotal) resFreightTotal.textContent = formatRupees(freightTotalInr);
-    if (resDutyTotal) resDutyTotal.textContent = formatRupees(dutyTotalInr);
-    if (resTransitTotal) resTransitTotal.textContent = formatRupees(transitTotalInr);
-    if (resGrandTotal) resGrandTotal.textContent = formatRupees(grandTotalInr);
-    if (resTargetPrice) resTargetPrice.textContent = `${formatRupees(targetPriceInr)} / Unit`;
-  }
-
-  [calcUnits, calcFob, calcFreight, calcDuty, calcTransit, targetMargin].forEach((input) => {
-    input?.addEventListener('input', calculateLandedCosts);
-  });
-  calculateLandedCosts();
-
-  // Tool 2: Illustrative Exception Triage Simulator (Synthetic Scenarios)
-  const initialIncidents = [
+  const DOOR_DATA = [
     {
-      id: 'SYN-101',
-      title: 'Port Custom Documentation Verification Delay',
-      desc: 'Illustrative import container awaiting tariff classification verification at port customs. Free demurrage buffer ends in 48 hours.',
-      sev: 'sev-high',
-      sevLabel: 'HIGH PRIORITY',
-      time: 'T-48h',
-      resolved: false,
-      impact: 'Illustrative demurrage cost risk and downstream distributor fulfillment delay.',
-      options: [
-        {
-          label: 'A: File provisional tariff guarantee and submit clarification note.',
-          resolution: 'Provisional release granted. Demurrage avoided; compliance documents submitted.'
-        },
-        {
-          label: 'B: Route secondary buffer inventory to protect customer delivery SLAs.',
-          resolution: 'Customer deliveries preserved; depot buffer drawn down by 30%.'
-        }
+      title: 'Making a Beat Work Harder',
+      territory: 'CavinKare · Mumbai General Trade (Andheri to Bandra)',
+      points: [
+        '50+ Active General Trade & Supermarket Accounts',
+        '+20% Month 1 Retailer Network Expansion',
+        '+30% MoM Focus Personal Care Category Lift'
       ]
     },
     {
-      id: 'SYN-202',
-      title: 'High-Velocity General Trade SKU Out of Stock',
-      desc: 'Illustrative retail cluster reports zero stock of fast-moving SKU ahead of weekend buying peak.',
-      sev: 'sev-high',
-      sevLabel: 'HIGH PRIORITY',
-      time: 'T-12h',
-      resolved: false,
-      impact: 'Lost counter sales and retailer shelf-share displacement.',
-      options: [
-        {
-          label: 'A: Coordinate emergency cross-dock replenishment with distributor.',
-          resolution: 'Emergency morning dispatch scheduled; retail counter stock restored by 9:00 AM.'
-        },
-        {
-          label: 'B: Execute inter-outlet stock balancing from lower-velocity stores.',
-          resolution: 'Inter-outlet transfer completed; core retail tier protected without extra freight.'
-        }
+      title: 'From Supplier to Shelf',
+      territory: 'Only Solar · 0-to-1 Commercial Import Venture',
+      points: [
+        'Direct Overseas Factory RFQs & QA Contract Terms',
+        'Customs Clearance, Port Handling & Ocean Logistics',
+        'Unit-Level Landed-Cost Architecture & Channel Pricing'
       ]
     },
     {
-      id: 'SYN-303',
-      title: 'Distributor Credit Limit Reorder Check',
-      desc: 'Illustrative key distributor order reaches 95% credit ceiling pending bank clearing.',
-      sev: 'sev-med',
-      sevLabel: 'MEDIUM',
-      time: 'T-24h',
-      resolved: false,
-      impact: 'Dispatch staged at warehouse pending credit confirmation.',
-      options: [
-        {
-          label: 'A: Confirm bank transfer reference with accounts and approve dispatch.',
-          resolution: 'Payment verified; order cleared for next-morning beat delivery.'
-        },
-        {
-          label: 'B: Deliver partial shipment against cash-on-delivery balance.',
-          resolution: 'Commercial risk balanced; partial lot delivered to maintain stock continuity.'
-        }
+      title: 'See the Whole Flow',
+      territory: 'Supply Chain Decision Analytics · Power BI & SQL',
+      points: [
+        'Multi-Echelon Inventory & Lead-Time Variance Models',
+        'Economic Order Quantity (EOQ) & Safety Stock Tuning',
+        'Structured Exception Triage & Service Level SLAs'
+      ]
+    },
+    {
+      title: 'Exceptions First',
+      territory: 'Product Systems & Tech Interop · B.Tech CS + MBA',
+      points: [
+        'Warehouse Management System (WMS) & ERP Logic',
+        'Relational Database Schemas & Automated Replenishment',
+        'Bridging Frontline Execution with Software Engineering'
       ]
     }
   ];
 
-  let incidents = JSON.parse(JSON.stringify(initialIncidents));
-  let selectedIncident = null;
+  let doorGraceTimer = null;
 
-  const incidentList = $('#incidentList');
-  const activeIncidentCount = $('#activeIncidentCount');
-  const selectedIncidentId = $('#selectedIncidentId');
-  const resolutionBody = $('#resolutionBody');
-  const resetTriageBtn = $('#resetTriageBtn');
-
-  function renderIncidentList() {
-    if (!incidentList) return;
-    incidentList.innerHTML = '';
-
-    const pendingCount = incidents.filter((i) => !i.resolved).length;
-    if (activeIncidentCount) {
-      activeIncidentCount.textContent = `${pendingCount} Pending`;
+  function closeAllDoors() {
+    if (doorGraceTimer) {
+      clearTimeout(doorGraceTimer);
+      doorGraceTimer = null;
     }
-
-    incidents.forEach((inc) => {
-      const card = document.createElement('div');
-      card.className = `incident-card incident-row ${inc.resolved ? 'is-resolved' : ''} ${selectedIncident?.id === inc.id ? 'is-selected' : ''}`;
-      card.dataset.incidentId = inc.id;
-      card.innerHTML = `
-        <div class="incident-card-top">
-          <span class="incident-severity ${inc.sev}">${inc.resolved ? 'RESOLVED ✓' : inc.sevLabel}</span>
-          <span class="incident-time">${inc.time}</span>
-        </div>
-        <div class="incident-title">${inc.id}: ${inc.title}</div>
-        <p class="incident-desc">${inc.desc}</p>
-      `;
-      card.addEventListener('click', () => {
-        selectedIncident = inc;
-        renderIncidentList();
-        renderResolutionPanel(inc);
-      });
-      incidentList.appendChild(card);
-    });
+    doors.forEach(u => u.classList.remove('on'));
+    doorDots.forEach(dot => dot.classList.remove('on'));
   }
 
-  function renderResolutionPanel(inc) {
-    if (!resolutionBody) return;
-    if (selectedIncidentId) selectedIncidentId.textContent = inc.id;
+  function scheduleDoorClose(delayMs = 2000) {
+    if (doorGraceTimer) clearTimeout(doorGraceTimer);
+    doorGraceTimer = setTimeout(() => {
+      closeAllDoors();
+    }, delayMs);
+  }
 
-    if (inc.resolved) {
-      resolutionBody.innerHTML = `
-        <div class="resolution-panel">
-          <h5 class="res-title">${inc.title}</h5>
-          <div class="res-impact" style="border-left-color:var(--accent-teal);background:var(--accent-teal-soft)">
-            <strong style="color:var(--accent-teal)">RESOLUTION SIMULATED</strong>
-            <p>${inc.resolvedText || 'This scenario has been evaluated and resolved.'}</p>
-          </div>
-        </div>
-      `;
+  function openDoor(idx) {
+    if (doorGraceTimer) {
+      clearTimeout(doorGraceTimer);
+      doorGraceTimer = null;
+    }
+
+    if (idx < 0 || idx >= doors.length) {
+      closeAllDoors();
       return;
     }
 
-    let html = `
-      <div class="resolution-panel">
-        <h5 class="res-title">${inc.title}</h5>
-        <div class="res-impact">
-          <strong>OPERATIONAL RISK &amp; TRADE-OFF</strong>
-          <p>${inc.impact}</p>
-        </div>
-        <strong style="font:700 11px var(--mono);color:var(--ink-light);text-transform:uppercase;">Select Decision Option:</strong>
-        <div class="res-options-list">
-    `;
+    doors.forEach((u, k) => u.classList.toggle('on', k === idx));
+    doorDots.forEach((dot, k) => dot.classList.toggle('on', k === idx));
 
-    inc.options.forEach((opt, idx) => {
-      html += `
-        <button class="btn-res-option btn-sim-action" data-opt-idx="${idx}" type="button">
-          ${opt.label}
-        </button>
-      `;
+    const data = DOOR_DATA[idx];
+    if (data && dinfoH && dinfoT && dinfoP) {
+      dinfoH.textContent = data.title;
+      dinfoT.textContent = data.territory;
+      dinfoP.innerHTML = data.points.map(pt => `<li>${pt}</li>`).join('');
+    }
+  }
+
+  doors.forEach((unit, idx) => {
+    unit.addEventListener('mouseenter', () => {
+      // Stays open while cursor is on it!
+      openDoor(idx);
     });
+    unit.addEventListener('mouseleave', () => {
+      // Stays open for 2 seconds after cursor leaves, then closes!
+      scheduleDoorClose(2000);
+    });
+    unit.addEventListener('focusin', () => {
+      openDoor(idx);
+    });
+    unit.addEventListener('focusout', () => {
+      scheduleDoorClose(2000);
+    });
+    unit.addEventListener('click', () => {
+      closeAllDoors();
+      openChamber(idx);
+    });
+  });
 
-    html += '</div></div>';
-    resolutionBody.innerHTML = html;
-
-    $$('.btn-res-option').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const optIdx = parseInt(btn.dataset.optIdx, 10);
-        const chosen = inc.options[optIdx];
-        inc.resolved = true;
-        inc.resolvedText = chosen.resolution;
-        renderIncidentList();
-        renderResolutionPanel(inc);
-        showToast(`Decision executed for ${inc.id}`);
-      });
+  const doorsRow = $('#doorsRow');
+  if (doorsRow) {
+    doorsRow.addEventListener('mouseleave', () => {
+      scheduleDoorClose(2000);
     });
   }
 
-  resetTriageBtn?.addEventListener('click', () => {
-    incidents = JSON.parse(JSON.stringify(initialIncidents));
-    selectedIncident = null;
-    renderIncidentList();
-    if (resolutionBody) {
-      resolutionBody.innerHTML = '<p class="placeholder-text">Click on any pending synthetic incident from the left to inspect trade-offs and simulate resolution protocol.</p>';
+  /* ==========================================================================
+     07. DEEP DOMAIN VAULT MODAL (CHAMBER DIALOG)
+     ========================================================================== */
+  const chamberModal = $('#chamberModal');
+  const chamberTitle = $('#chamberTitle');
+  const chamberLead = $('#chamberLead');
+  const chamberTag = $('#chamberTag');
+  const chamberBody = $('#chamberBody');
+  const chamberClose = $('#chamberClose');
+  const chamberDone = $('#chamberDone');
+
+  const CHAMBER_DETAILS = [
+    {
+      tag: '01 · FIELD OPERATIONS',
+      title: 'Frontline FMCG Retail Distribution (CavinKare)',
+      lead: 'Hands-on territory execution across Mumbai’s dense retail landscape: 50+ General Trade grocers, local supermarkets, and distribution points between Andheri and Bandra.',
+      sections: [
+        {
+          h: 'Territory Coverage & Route Beat Optimization',
+          p: 'Managed daily order booking and inventory replenishment schedules. Designed structured weekly beat routes across high-traffic retail pockets (SV Road, Linking Road, Hill Road, Lokhandwala) to maximize distributor drop efficiency.',
+          stats: [
+            { stat: '50+', label: 'Active Retail Accounts' },
+            { stat: '+20%', label: 'Month 1 Onboarding Lift' },
+            { stat: '4 Days', label: 'Order-to-Delivery SLA' }
+          ]
+        },
+        {
+          h: 'Merchandising & Focus Category Sales Acceleration',
+          p: 'Enforced planogram compliance on prime eye-level shelves, audited competitor stockouts, and negotiated high-visibility primary placements. Leveraged targeted trade schemes to drive a <strong>+30% MoM sales lift</strong> in focus personal-care categories.',
+          stats: [
+            { stat: '+30%', label: 'MoM Focus Category Growth' },
+            { stat: '96%', label: 'Planogram Compliance' },
+            { stat: '100%', label: 'Verified Trade Schemes' }
+          ]
+        }
+      ]
+    },
+    {
+      tag: '02 · ENTREPRENEURSHIP',
+      title: 'Global Sourcing & Supply Chain Economics (Only Solar)',
+      lead: 'Co-founded and spearheaded an import-export venture importing commercial solar lighting hardware, handling direct international manufacturer negotiations, landed-cost modeling, and B2B distributor networks.',
+      sections: [
+        {
+          h: 'Cross-Border Procurement & Supplier Negotiations',
+          p: 'Led end-to-end supplier discovery and RFQ bidding across overseas manufacturers in China. Formulated contract terms, sample testing QA protocols, and container freight terms (FOB/CIF).',
+          stats: [
+            { stat: '0-to-1', label: 'Commercial Build' },
+            { stat: '100%', label: 'Customs & Port Compliance' },
+            { stat: '18%', label: 'Procurement Savings' }
+          ]
+        },
+        {
+          h: 'Landed-Cost Financial Architecture & Channel Pricing',
+          p: 'Developed unit-level economic formulas incorporating ocean freight, port container handling, basic customs duty, IGST, inland transport, and distributor margins to protect gross profitability.',
+          stats: [
+            { stat: '22%', label: 'Distributor Gross Margin' },
+            { stat: 'FOB to Door', label: 'Complete Unit Economics' },
+            { stat: 'B2B', label: 'Institutional Distribution' }
+          ]
+        }
+      ]
+    },
+    {
+      tag: '03 · DECISION SYSTEMS',
+      title: 'Supply Chain Decision Analytics & Optimization',
+      lead: 'Connecting operational frontline reality with quantitative rigor: Power BI dashboards, SQL databases, safety stock algorithms, and automated exception queues.',
+      sections: [
+        {
+          h: 'Inventory Theory & Multi-Echelon Replenishment',
+          p: 'Applying classical inventory formulations: Economic Order Quantity (EOQ), reorder point modeling under lead-time variance, and service-level safety stocks to balance working capital against stockout risks.',
+          stats: [
+            { stat: 'Simplilearn', label: 'Power BI Certified' },
+            { stat: 'Udemy', label: 'SQL Analytics Certified' },
+            { stat: '99%', label: 'Target Service Level' }
+          ]
+        },
+        {
+          h: 'Operational Exception Management',
+          p: 'Replacing chaotic manual spreadsheets with structured exception queues. Categorizing stockout alerts, pricing disputes, credit holds, and transit delays into prioritized triage workflows.',
+          stats: [
+            { stat: '<2 Hrs', label: 'Exception Triage SLA' },
+            { stat: 'Automated', label: 'Threshold Triggers' },
+            { stat: 'Audit-Ready', label: 'Complete Data Trail' }
+          ]
+        }
+      ]
+    },
+    {
+      tag: '04 · SYSTEMS SYNTHESIS',
+      title: 'Systems Architecture & Enterprise Interoperability',
+      lead: 'Leveraging a B.Tech in Computer Science (75.8%) alongside an MBA in Operations to bridge engineering teams and supply chain operators.',
+      sections: [
+        {
+          h: 'Algorithmic Systems & Data Pipelines',
+          p: 'Engineering automated Python scripts to parse sales order records, sync inventory across warehouse nodes, and compute supplier replenishment schedules without manual data entry.',
+          stats: [
+            { stat: 'Python & SQL', label: 'Core Technical Stack' },
+            { stat: '75.8%', label: 'B.Tech CSE Aggregate' },
+            { stat: 'Zero-Waste', label: 'Automated Pipeline Sync' }
+          ]
+        },
+        {
+          h: 'Warehouse Management & ERP Interop',
+          p: 'Designing relational schemas, API payloads, and database constraints for modern logistics software: from purchase order generation to dispatch barcoding and delivery reconciliation.',
+          stats: [
+            { stat: 'Schema Design', label: 'Relational Database Eng' },
+            { stat: 'APM Ready', label: 'Product & Tech Synthesis' },
+            { stat: 'End-to-End', label: 'Data & Physical Flow' }
+          ]
+        }
+      ]
     }
-    if (selectedIncidentId) selectedIncidentId.textContent = 'Select an incident';
-    showToast('Synthetic triage queue reset');
+  ];
+
+  function openChamber(idx) {
+    playSound('door');
+    const data = CHAMBER_DETAILS[idx] || CHAMBER_DETAILS[0];
+    if (chamberTag) chamberTag.textContent = data.tag;
+    if (chamberTitle) chamberTitle.textContent = data.title;
+    if (chamberLead) chamberLead.textContent = data.lead;
+
+    if (chamberBody) {
+      chamberBody.innerHTML = data.sections.map(sec => `
+        <div class="chamber-section">
+          <h3 class="cs__h">${sec.h}</h3>
+          <p class="cs__p">${sec.p}</p>
+          <div class="cs__grid">
+            ${sec.stats.map(s => `
+              <div class="cs__card">
+                <span class="cs__stat">${s.stat}</span>
+                <span class="cs__label">${s.label}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    if (chamberModal) {
+      chamberModal.showModal();
+    }
+  }
+
+  if (chamberClose) chamberClose.addEventListener('click', () => chamberModal.close());
+  if (chamberDone) chamberDone.addEventListener('click', () => chamberModal.close());
+  if (chamberModal) {
+    chamberModal.addEventListener('click', e => {
+      if (e.target === chamberModal) {
+        chamberModal.close();
+      }
+    });
+  }
+
+  /* ==========================================================================
+     08. DECISION STUDIO: LANDED COST CALCULATOR
+     ========================================================================== */
+  const fobInput = $('#fobInput');
+  const freightInput = $('#freightInput');
+  const dutyInput = $('#dutyInput');
+  const marginInput = $('#marginInput');
+
+  const fobVal = $('#fobVal');
+  const freightVal = $('#freightVal');
+  const dutyVal = $('#dutyVal');
+  const marginVal = $('#marginVal');
+
+  const dspVal = $('#dspVal');
+  const landedVal = $('#landedVal');
+  const profitVal = $('#profitVal');
+  const beVal = $('#beVal');
+  const landedBar = $('#landedBar');
+  const profitBar = $('#profitBar');
+  const calcInsight = $('#calcInsight');
+
+  const USD_INR = 84.50;
+  const PORT_HANDLING_INR = 180;
+  const INLAND_FREIGHT_INR = 120;
+
+  function updateSliderFill(input) {
+    if (!input) return;
+    const min = parseFloat(input.min) || 0;
+    const max = parseFloat(input.max) || 100;
+    const val = parseFloat(input.value) || 0;
+    const pct = ((val - min) / (max - min)) * 100;
+    input.style.setProperty('--val', `${pct}%`);
+  }
+
+  function updateCostCalc() {
+    if (!fobInput) return;
+    const fob = parseFloat(fobInput.value) || 28;
+    const freight = parseFloat(freightInput.value) || 4.5;
+    const dutyPct = parseFloat(dutyInput.value) || 12.5;
+    const marginPct = parseFloat(marginInput.value) || 22;
+
+    [fobInput, freightInput, dutyInput, marginInput].forEach(updateSliderFill);
+
+    if (fobVal) fobVal.textContent = `$${fob.toFixed(2)}`;
+    if (freightVal) freightVal.textContent = `$${freight.toFixed(2)}`;
+    if (dutyVal) dutyVal.textContent = `${dutyPct.toFixed(1)}%`;
+    if (marginVal) marginVal.textContent = `${marginPct.toFixed(0)}%`;
+
+    const cifUSD = fob + freight;
+    const cifINR = cifUSD * USD_INR;
+    const dutyINR = cifINR * (dutyPct / 100);
+    const totalLandedINR = Math.round(cifINR + dutyINR + PORT_HANDLING_INR + INLAND_FREIGHT_INR);
+
+    const marginDecimal = marginPct / 100;
+    const targetDSPINR = Math.round(totalLandedINR / Math.max(0.01, 1 - marginDecimal));
+    const grossProfitINR = targetDSPINR - totalLandedINR;
+    const breakevenUnits = Math.round(100000 / Math.max(1, grossProfitINR));
+
+    if (dspVal) dspVal.textContent = `₹${targetDSPINR.toLocaleString('en-IN')}`;
+    if (landedVal) landedVal.textContent = `₹${totalLandedINR.toLocaleString('en-IN')}`;
+    if (profitVal) profitVal.textContent = `₹${grossProfitINR.toLocaleString('en-IN')}`;
+    if (beVal) beVal.textContent = `${breakevenUnits} units`;
+
+    const landedPct = Math.min(100, Math.round((totalLandedINR / targetDSPINR) * 100));
+    const profitBarPct = 100 - landedPct;
+    if (landedBar) landedBar.style.width = `${landedPct}%`;
+    if (profitBar) profitBar.style.width = `${profitBarPct}%`;
+
+    if (calcInsight) {
+      if (marginPct >= 30) {
+        calcInsight.textContent = `High margin tier (${marginPct}%): Ensure premium positioning or institutional RFP specifications to sustain dealer demand above ₹${targetDSPINR.toLocaleString('en-IN')}.`;
+      } else if (fob > 80) {
+        calcInsight.textContent = `High-spec hardware unit: Breakeven reached at only ${breakevenUnits} units per month, minimizing warehouse carrying cost exposure.`;
+      } else {
+        calcInsight.textContent = `Balanced commercial model: ₹${targetDSPINR.toLocaleString('en-IN')} retail price maintains healthy channel traction while yielding ₹${grossProfitINR.toLocaleString('en-IN')} net contribution per box.`;
+      }
+    }
+  }
+
+  [fobInput, freightInput, dutyInput, marginInput].forEach(inp => {
+    if (inp) inp.addEventListener('input', updateCostCalc);
+  });
+  updateCostCalc();
+
+  /* ==========================================================================
+     09. DECISION STUDIO: 3-WAY TAB SWITCHER & BEAT DISPATCH ENGINE
+     ========================================================================== */
+  const tabCost = $('#tab-cost');
+  const tabExc = $('#tab-exc');
+  const tabBeat = $('#tab-beat');
+  const panelCost = $('#panel-cost');
+  const panelExc = $('#panel-exc');
+  const panelBeat = $('#panel-beat');
+
+  function switchStudioTab(targetTab, targetPanel) {
+    [tabCost, tabExc, tabBeat].forEach(t => {
+      if (t) {
+        const isActive = t === targetTab;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      }
+    });
+    [panelCost, panelExc, panelBeat].forEach(p => {
+      if (p) {
+        const isActive = p === targetPanel;
+        p.classList.toggle('active', isActive);
+        p.hidden = !isActive;
+      }
+    });
+    playSound('click');
+    if (targetTab === tabBeat) {
+      setTimeout(initBeatSimulator, 60);
+    }
+  }
+
+  if (tabCost) tabCost.addEventListener('click', () => switchStudioTab(tabCost, panelCost));
+  if (tabExc) tabExc.addEventListener('click', () => switchStudioTab(tabExc, panelExc));
+  if (tabBeat) tabBeat.addEventListener('click', () => switchStudioTab(tabBeat, panelBeat));
+
+  // Connect capability matrix chips to live decision surfaces (Neha Yadav inspired)
+  $$('.stack-chip[data-tab-hint]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const hint = chip.dataset.tabHint;
+      if (hint === 'tab-cost') switchStudioTab(tabCost, panelCost);
+      else if (hint === 'tab-exc') switchStudioTab(tabExc, panelExc);
+      else if (hint === 'tab-beat') switchStudioTab(tabBeat, panelBeat);
+      const studioTabs = $('.studio__tabs');
+      if (studioTabs) {
+        studioTabs.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
   });
 
-  renderIncidentList();
+  /* --- MUMBAI ROUTE BEAT SIMULATOR ENGINE --- */
+  let beatInitialized = false;
 
-  // ==========================================================================
-  // 11. CLIPBOARD COPY & TOAST NOTIFICATION SYSTEM
-  // ==========================================================================
-  const toastManager = $('#toastManager');
-  function showToast(message) {
-    if (!toastManager) return;
-    while (toastManager.children.length >= 2) {
-      toastManager.removeChild(toastManager.firstChild);
-    }
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    toastManager.appendChild(toast);
+  function initBeatSimulator() {
+    const canvas = $('#beatCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
-    requestAnimationFrame(() => {
-      toast.classList.add('is-visible');
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = rect.width || 600;
+    const H = 320;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+
+    let activeZone = 'andheri';
+    const corridorCards = $$('.corridor-card');
+    corridorCards.forEach(card => {
+      card.addEventListener('click', () => {
+        corridorCards.forEach(c => {
+          c.classList.remove('active');
+          const st = c.querySelector('.corr-status');
+          if (st) { st.textContent = 'STANDBY'; st.classList.remove('live'); }
+        });
+        card.classList.add('active');
+        const st = card.querySelector('.corr-status');
+        if (st) { st.textContent = '● ACTIVE BEAT'; st.classList.add('live'); }
+        activeZone = card.dataset.corr;
+        playSound('click');
+      });
     });
 
-    setTimeout(() => {
-      toast.classList.remove('is-visible');
-      setTimeout(() => toast.remove(), 350);
-    }, 2800);
+    const hub = { x: W * 0.15, y: H * 0.5, name: 'Andheri Central Hub' };
+    const zones = {
+      andheri: {
+        color: '#E07A5F',
+        nodes: [
+          { x: W * 0.32, y: H * 0.35, name: 'Lokhandwala Grocers', dropped: false },
+          { x: W * 0.45, y: H * 0.28, name: '4 Bungalows Mart', dropped: false },
+          { x: W * 0.62, y: H * 0.38, name: 'Versova Link Kirana', dropped: false },
+          { x: W * 0.78, y: H * 0.32, name: 'Seven Bungalows Retail', dropped: false }
+        ]
+      },
+      bandra: {
+        color: '#4A90E2',
+        nodes: [
+          { x: W * 0.35, y: H * 0.65, name: 'Linking Road Store', dropped: false },
+          { x: W * 0.52, y: H * 0.72, name: 'Hill Road Provision', dropped: false },
+          { x: W * 0.70, y: H * 0.62, name: 'Pali Naka Superette', dropped: false },
+          { x: W * 0.85, y: H * 0.70, name: 'Turner Road Retailers', dropped: false }
+        ]
+      },
+      khar: {
+        color: '#EBB338',
+        nodes: [
+          { x: W * 0.38, y: H * 0.48, name: 'SV Road Khar Mart', dropped: false },
+          { x: W * 0.58, y: H * 0.52, name: 'Santacruz West Depot', dropped: false },
+          { x: W * 0.76, y: H * 0.50, name: 'Milan Subway Grocers', dropped: false }
+        ]
+      },
+      juhu: {
+        color: '#4CAF50',
+        nodes: [
+          { x: W * 0.40, y: H * 0.20, name: 'Tara Road Coastal Stores', dropped: false },
+          { x: W * 0.65, y: H * 0.18, name: 'JVPD Supermarket', dropped: false }
+        ]
+      }
+    };
+
+    let vans = [
+      { id: 1, x: hub.x, y: hub.y, targetIdx: 0, progress: 0, zone: 'andheri', speed: 0.008 },
+      { id: 2, x: hub.x, y: hub.y, targetIdx: 0, progress: 0, zone: 'bandra', speed: 0.007 },
+      { id: 3, x: hub.x, y: hub.y, targetIdx: 0, progress: 0, zone: 'khar', speed: 0.009 }
+    ];
+
+    let isRunning = false;
+    let completedDrops = 0;
+
+    function renderBeat(now) {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 36) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      }
+      for (let y = 0; y < H; y += 36) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      // Draw route spines
+      Object.keys(zones).forEach(zKey => {
+        const z = zones[zKey];
+        const isSel = zKey === activeZone;
+        ctx.beginPath();
+        ctx.moveTo(hub.x, hub.y);
+        z.nodes.forEach(nd => ctx.lineTo(nd.x, nd.y));
+        ctx.strokeStyle = isSel ? z.color : 'rgba(255, 255, 255, 0.14)';
+        ctx.lineWidth = isSel ? 2.5 : 1.2;
+        ctx.setLineDash(isSel ? [] : [4, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      });
+
+      // Draw Hub
+      ctx.beginPath();
+      ctx.arc(hub.x, hub.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = '#E07A5F';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '600 10px var(--mono)';
+      ctx.fillText('DISPATCH HUB', hub.x - 35, hub.y - 14);
+
+      // Draw Store Nodes
+      Object.keys(zones).forEach(zKey => {
+        const z = zones[zKey];
+        const isSel = zKey === activeZone;
+        z.nodes.forEach((nd, i) => {
+          ctx.beginPath();
+          ctx.arc(nd.x, nd.y, nd.dropped ? 7 : 5, 0, Math.PI * 2);
+          ctx.fillStyle = nd.dropped ? '#4CAF50' : (isSel ? z.color : 'rgba(255, 255, 255, 0.35)');
+          ctx.fill();
+
+          if (isSel || nd.dropped) {
+            ctx.strokeStyle = nd.dropped ? '#4CAF50' : z.color;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.arc(nd.x, nd.y, 9 + Math.sin(now * 0.005 + i) * 2, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          if (isSel) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+            ctx.font = '500 9px var(--mono)';
+            ctx.fillText(nd.name.split(' ')[0], nd.x - 12, nd.y + 16);
+          }
+        });
+      });
+
+      // Move delivery vans
+      if (isRunning) {
+        vans.forEach(van => {
+          const z = zones[van.zone];
+          if (!z) return;
+          const target = z.nodes[van.targetIdx];
+          if (!target) return;
+
+          const startPt = van.targetIdx === 0 ? hub : z.nodes[van.targetIdx - 1];
+          van.progress += van.speed;
+
+          if (van.progress >= 1) {
+            van.progress = 0;
+            target.dropped = true;
+            completedDrops++;
+            playSound('tick');
+
+            const cartonsEl = $('#beatCartons');
+            if (cartonsEl) cartonsEl.textContent = `${142 + completedDrops * 3} Cases`;
+
+            if (van.targetIdx < z.nodes.length - 1) {
+              van.targetIdx++;
+            } else {
+              van.targetIdx = 0;
+            }
+          }
+
+          van.x = startPt.x + (target.x - startPt.x) * van.progress;
+          van.y = startPt.y + (target.y - startPt.y) * van.progress;
+
+          ctx.beginPath();
+          ctx.arc(van.x, van.y, 6, 0, Math.PI * 2);
+          ctx.fillStyle = '#fff';
+          ctx.fill();
+          ctx.strokeStyle = z.color;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(van.x, van.y, 10, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+          ctx.stroke();
+        });
+      }
+
+      requestAnimationFrame(renderBeat);
+    }
+
+    if (!beatInitialized) {
+      beatInitialized = true;
+      requestAnimationFrame(renderBeat);
+
+      const runBtn = $('#runBeatBtn');
+      const resetBtn = $('#resetBeatBtn');
+      const vehiclesEl = $('#beatVehicles');
+      const compEl = $('#beatCompliance');
+
+      if (runBtn) {
+        runBtn.addEventListener('click', () => {
+          isRunning = true;
+          playSound('door');
+          const pillIn = runBtn.querySelector('.pill__in');
+          if (pillIn) pillIn.textContent = '⚡ Beat In Transit...';
+          runBtn.style.opacity = '0.85';
+          if (vehiclesEl) vehiclesEl.textContent = '3 Vans Dispatched';
+          if (compEl) compEl.textContent = '98.4% Syncing';
+          showToast('08:00 AM FMCG Route Dispatched across 4 Mumbai Corridors!');
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          isRunning = false;
+          completedDrops = 0;
+          playSound('click');
+          vans.forEach(v => { v.x = hub.x; v.y = hub.y; v.targetIdx = 0; v.progress = 0; });
+          Object.keys(zones).forEach(k => zones[k].nodes.forEach(n => n.dropped = false));
+          if (runBtn) {
+            const pillIn = runBtn.querySelector('.pill__in');
+            if (pillIn) pillIn.textContent = '▶ Run 08:00 AM Dispatch';
+            runBtn.style.opacity = '1';
+          }
+          if (vehiclesEl) vehiclesEl.textContent = '3 Vans Active';
+          const cartonsEl = $('#beatCartons');
+          if (cartonsEl) cartonsEl.textContent = '142 Cases';
+          if (compEl) compEl.textContent = '96.0% Verified';
+          showToast('Corridor routes reset to baseline standby.');
+        });
+      }
+    }
+  }
+
+  const qFilters = $$('.q-filter');
+  const qCards = $$('.q-card');
+
+  qFilters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      qFilters.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const sev = btn.dataset.sev;
+
+      qCards.forEach(card => {
+        if (sev === 'all' || card.classList.contains(sev)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  $$('.resolve-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const card = e.target.closest('.q-card');
+      const status = card.querySelector('.q-status');
+      const badge = card.querySelector('.q-badge');
+
+      btn.disabled = true;
+      btn.textContent = 'Resolved ✓';
+      btn.style.background = '#4CAF50';
+      btn.style.color = '#fff';
+
+      if (status) {
+        status.textContent = 'Resolved & Logged into Beat SLA';
+        status.style.color = '#4CAF50';
+      }
+      if (badge) {
+        badge.className = 'q-badge resolved';
+        badge.textContent = 'CLEARED';
+      }
+      showToast('Action executed and synchronized to beat dispatcher!');
+    });
+  });
+
+  /* ==========================================================================
+     10. STORY & TIMELINE ("Let's go back in time")
+     ========================================================================== */
+  const storySec = $('#about');
+  if (storySec) {
+    const list = $('.story__list', storySec);
+    const chs = $$('.ch', list);
+    const cols = $$('.dg__c', storySec);
+    const when = $('.story__when', storySec);
+    const count = $('.story__count', storySec);
+    const dot = $('.story__dot', storySec);
+    const barFill = $('#storyBarFill');
+    const cvClock = $('.story__bg', storySec);
+    const ctxClock = cvClock ? cvClock.getContext('2d') : null;
+    let shownIdx = -1;
+
+    function setYearDigits(yearStr) {
+      const digits = String(yearStr).split('');
+      digits.forEach((d, k) => {
+        if (cols[k]) cols[k].style.setProperty('--d', d);
+      });
+    }
+
+    const ERA_TITLES = [
+      'MBA, Operations & Logistics (Major)',
+      'Sales Representative (CavinKare FMCG)',
+      'Co-Founder & Business Head (Only Solar)',
+      'B.Tech Computer Science & Engineering'
+    ];
+
+    function activateChapter(idx) {
+      if (idx === shownIdx || !chs[idx]) return;
+      const isInitial = shownIdx === -1;
+      shownIdx = idx;
+
+      chs.forEach((c, k) => c.classList.toggle('on', k === idx));
+      const targetCh = chs[idx];
+      setYearDigits(targetCh.dataset.y);
+      if (when) when.textContent = targetCh.dataset.when;
+      if (count) count.textContent = String(idx + 1).padStart(2, '0');
+      if (barFill) barFill.style.width = `${((idx + 1) / chs.length) * 100}%`;
+      const eraTitle = $('#chronoEraTitle');
+      const eraIdx = $('#chronoEraIdx');
+      if (eraIdx) eraIdx.textContent = `${String(idx + 1).padStart(2, '0')} / 04`;
+      if (eraTitle && ERA_TITLES[idx]) {
+        eraTitle.style.opacity = '0';
+        setTimeout(() => {
+          eraTitle.textContent = ERA_TITLES[idx];
+          eraTitle.style.opacity = '1';
+        }, 150);
+      }
+
+      // Synchronize interactive era navigation pills
+      const eraPills = $$('.chrono__pill', storySec);
+      eraPills.forEach((p, k) => p.classList.toggle('on', k === idx));
+
+      if (!isInitial) {
+        playSound('tick');
+        const storyYr = $('.story__yr', storySec);
+        if (storyYr) {
+          storyYr.classList.remove('pulse');
+          void storyYr.offsetWidth;
+          storyYr.classList.add('pulse');
+        }
+      }
+
+      if (dot) {
+        const chTop = targetCh.offsetTop;
+        dot.style.top = `${chTop + 24}px`;
+      }
+    }
+
+    let storyScrollProgress = 0;
+    let targetScrollProgress = 0;
+
+    function checkStoryScroll() {
+      const mid = window.innerHeight * 0.5;
+      let activeI = 0;
+      chs.forEach((ch, i) => {
+        const rect = ch.getBoundingClientRect();
+        if (rect.top <= mid) {
+          activeI = i;
+        }
+      });
+      activateChapter(activeI);
+
+      // Compute precise continuous progress through the timeline scrollytelling runway
+      if (storySec) {
+        const secRect = storySec.getBoundingClientRect();
+        const startOffset = window.innerHeight * 0.3;
+        const totalTravel = storySec.offsetHeight - window.innerHeight * 0.7;
+        if (totalTravel > 0) {
+          targetScrollProgress = Math.max(0, Math.min(1, (startOffset - secRect.top) / totalTravel));
+        }
+      }
+    }
+    window.addEventListener('scroll', checkStoryScroll, { passive: true });
+    checkStoryScroll();
+
+    // Interactive Era Quick-Pills Navigation
+    const eraPills = $$('.chrono__pill', storySec);
+    eraPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const era = parseInt(pill.dataset.era, 10);
+        if (chs[era]) {
+          chs[era].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          activateChapter(era);
+          playSound('tick');
+        }
+      });
+    });
+
+    // Precision Swiss Horology Chronometer Engine & Interactive Dial
+    if (cvClock && ctxClock && !isReduced) {
+      let W = 0, H = 0, dpr = 1;
+      const dialCircle = $('#chronoDial') || cvClock.parentElement;
+
+      function resizeClock() {
+        dpr = Math.min(2, window.devicePixelRatio || 1);
+        W = cvClock.clientWidth; H = cvClock.clientHeight;
+        cvClock.width = W * dpr; cvClock.height = H * dpr;
+      }
+      resizeClock();
+      window.addEventListener('resize', resizeClock);
+
+      let currentSweepAngle = -Math.PI / 2;
+      let isDraggingDial = false;
+      let hoveredEra = -1;
+
+      // Era Milestones: 12 o'clock = 2026, 3 o'clock = 2025, 6 o'clock = 2024, 9 o'clock = 2020
+      const eraAngles = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
+      const eraLabels = ["'26", "'25", "'24", "'20"];
+
+      function seekToProgress(progress) {
+        if (!storySec) return;
+        const storyTop = storySec.offsetTop;
+        const totalTravel = storySec.offsetHeight - window.innerHeight * 0.7;
+        const targetY = storyTop - window.innerHeight * 0.3 + progress * totalTravel;
+        window.scrollTo({ top: targetY, behavior: 'auto' });
+      }
+
+      function getAngleAndDist(e) {
+        const rect = cvClock.getBoundingClientRect();
+        const x = e.clientX - (rect.left + rect.width / 2);
+        const y = e.clientY - (rect.top + rect.height / 2);
+        const ang = Math.atan2(y, x);
+        const dist = Math.hypot(x, y);
+        return { ang, dist };
+      }
+
+      function handleDialPointer(e) {
+        const { ang } = getAngleAndDist(e);
+        // Map angle from -PI/2 (top, 0) clockwise to +PI (left, 1) across 270 degrees
+        let norm = ang + Math.PI / 2;
+        if (norm < 0) norm += Math.PI * 2;
+        const maxSweep = Math.PI * 1.5;
+        const progress = Math.max(0, Math.min(1, norm / maxSweep));
+        seekToProgress(progress);
+      }
+
+      if (dialCircle) {
+        dialCircle.addEventListener('pointerdown', e => {
+          isDraggingDial = true;
+          dialCircle.classList.add('is-scrubbing');
+          handleDialPointer(e);
+          playSound('tick');
+          window.addEventListener('pointermove', onDialPointerMove);
+          window.addEventListener('pointerup', onDialPointerUp);
+          window.addEventListener('pointercancel', onDialPointerUp);
+        });
+
+        function onDialPointerMove(e) {
+          if (!isDraggingDial) return;
+          handleDialPointer(e);
+        }
+
+        function onDialPointerUp() {
+          isDraggingDial = false;
+          dialCircle.classList.remove('is-scrubbing');
+          window.removeEventListener('pointermove', onDialPointerMove);
+          window.removeEventListener('pointerup', onDialPointerUp);
+          window.removeEventListener('pointercancel', onDialPointerUp);
+        }
+
+        dialCircle.addEventListener('pointermove', e => {
+          if (isDraggingDial) return;
+          const { ang, dist } = getAngleAndDist(e);
+          const R_bezel = Math.min(W, H) * 0.46;
+          // Check proximity to the 4 milestone nodes
+          let foundEra = -1;
+          eraAngles.forEach((a, idx) => {
+            const nx = Math.cos(a) * (R_bezel - 12);
+            const ny = Math.sin(a) * (R_bezel - 12);
+            const rect = cvClock.getBoundingClientRect();
+            const px = e.clientX - (rect.left + rect.width / 2);
+            const py = e.clientY - (rect.top + rect.height / 2);
+            if (Math.hypot(px - nx, py - ny) <= 22) {
+              foundEra = idx;
+            }
+          });
+          hoveredEra = foundEra;
+
+          if (hoveredEra !== -1) {
+            dialCircle.style.cursor = 'pointer';
+            if (cursorLabel) cursorLabel.textContent = `Seek ${eraLabels[hoveredEra]}`;
+          } else if (dist >= 75 && dist <= R_bezel + 15) {
+            dialCircle.style.cursor = 'grab';
+            if (cursorLabel) cursorLabel.textContent = 'Scrub';
+          } else {
+            dialCircle.style.cursor = 'default';
+          }
+        });
+
+        dialCircle.addEventListener('pointerleave', () => {
+          hoveredEra = -1;
+          if (dialCircle) dialCircle.style.cursor = 'grab';
+        });
+
+        dialCircle.addEventListener('click', e => {
+          const { ang, dist } = getAngleAndDist(e);
+          // If clicked near a milestone or outer dial sector, jump to that era
+          if (dist >= 60) {
+            let norm = ang + Math.PI / 2;
+            if (norm < 0) norm += Math.PI * 2;
+            const frac = norm / (Math.PI * 1.5);
+            let targetEra = 0;
+            if (frac > 0.16 && frac <= 0.5) targetEra = 1;
+            else if (frac > 0.5 && frac <= 0.83) targetEra = 2;
+            else if (frac > 0.83) targetEra = 3;
+
+            if (chs[targetEra]) {
+              chs[targetEra].scrollIntoView({ behavior: 'smooth', block: 'center' });
+              activateChapter(targetEra);
+              playSound('tick');
+            }
+          }
+        });
+      }
+
+      function renderClock() {
+        ctxClock.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctxClock.clearRect(0, 0, W, H);
+
+        // Smoothly interpolate scroll progress for liquid horological sweep pointer physics
+        storyScrollProgress += (targetScrollProgress - storyScrollProgress) * 0.14;
+
+        const cx = W * 0.5;
+        const cy = H * 0.5;
+        const isDark = root.dataset.mode === 'dark';
+
+        const R_bezel = Math.min(W, H) * 0.46;
+        const R_railOuter = R_bezel - 8;
+        const R_railInner = R_railOuter - 14;
+        const R_centerDisc = 82;
+
+        // 1. Soft atmospheric center glow
+        const glowColor = isDark ? '240, 154, 91' : '229, 138, 78';
+        const centerGlow = ctxClock.createRadialGradient(cx, cy, 0, cx, cy, R_bezel * 1.15);
+        centerGlow.addColorStop(0, `rgba(${glowColor}, ${isDark ? 0.22 : 0.14})`);
+        centerGlow.addColorStop(0.6, `rgba(${glowColor}, ${isDark ? 0.06 : 0.03})`);
+        centerGlow.addColorStop(1, `rgba(${glowColor}, 0)`);
+        ctxClock.fillStyle = centerGlow;
+        ctxClock.beginPath();
+        ctxClock.arc(cx, cy, R_bezel * 1.15, 0, Math.PI * 2);
+        ctxClock.fill();
+
+        // 2. Machined Fluted / Knurled Outer Bezel Ring (120 precision micro-teeth)
+        const bezelStroke = isDark ? 'rgba(255, 255, 255, 0.14)' : 'rgba(0, 0, 0, 0.12)';
+        const bezelFill = isDark ? 'rgba(30, 26, 24, 0.5)' : 'rgba(245, 240, 235, 0.5)';
+        ctxClock.beginPath();
+        ctxClock.arc(cx, cy, R_bezel, 0, Math.PI * 2);
+        ctxClock.fillStyle = bezelFill;
+        ctxClock.fill();
+        ctxClock.strokeStyle = bezelStroke;
+        ctxClock.lineWidth = 1;
+        ctxClock.stroke();
+
+        // Fluted micro-notches (watchmaker knurling)
+        const knurlCount = 120;
+        ctxClock.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.10)';
+        ctxClock.lineWidth = 0.75;
+        for (let k = 0; k < knurlCount; k++) {
+          const a = (k / knurlCount) * Math.PI * 2;
+          const x1 = cx + Math.cos(a) * (R_bezel - 3.5);
+          const y1 = cy + Math.sin(a) * (R_bezel - 3.5);
+          const x2 = cx + Math.cos(a) * R_bezel;
+          const y2 = cy + Math.sin(a) * R_bezel;
+          ctxClock.beginPath();
+          ctxClock.moveTo(x1, y1);
+          ctxClock.lineTo(x2, y2);
+          ctxClock.stroke();
+        }
+
+        // 3. Railway Minute Track (Chemin de Fer)
+        ctxClock.beginPath();
+        ctxClock.arc(cx, cy, R_railOuter, 0, Math.PI * 2);
+        ctxClock.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.22)' : 'rgba(0, 0, 0, 0.18)';
+        ctxClock.lineWidth = 1;
+        ctxClock.stroke();
+
+        ctxClock.beginPath();
+        ctxClock.arc(cx, cy, R_railInner, 0, Math.PI * 2);
+        ctxClock.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.12)';
+        ctxClock.lineWidth = 1;
+        ctxClock.stroke();
+
+        // 60 Precision Minute & Telemetry Calibration Ticks
+        const accentColor = isDark ? 'rgba(240, 154, 91, 0.95)' : 'rgba(215, 110, 50, 0.95)';
+        const accentSoft = isDark ? 'rgba(240, 154, 91, 0.4)' : 'rgba(215, 110, 50, 0.35)';
+        const tickBase = isDark ? 'rgba(240, 235, 230, 0.65)' : 'rgba(40, 35, 30, 0.6)';
+        const tickMuted = isDark ? 'rgba(240, 235, 230, 0.22)' : 'rgba(40, 35, 30, 0.2)';
+
+        for (let t = 0; t < 60; t++) {
+          const a = (t / 60) * Math.PI * 2;
+          const isCardinal = (t % 15 === 0);
+          const isFive = (t % 5 === 0);
+
+          let r1 = R_railInner;
+          let r2 = R_railOuter;
+          let w = 0.8;
+          let col = tickMuted;
+
+          if (isCardinal) {
+            r1 = R_railInner - 2;
+            r2 = R_railOuter + 2;
+            w = 2.2;
+            col = accentColor;
+          } else if (isFive) {
+            w = 1.4;
+            col = tickBase;
+          }
+
+          ctxClock.beginPath();
+          ctxClock.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
+          ctxClock.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
+          ctxClock.strokeStyle = col;
+          ctxClock.lineWidth = w;
+          ctxClock.stroke();
+        }
+
+        // 4. Living Automatic Movement: Sub-Seconds Escapement Satellite
+        // Orbiting at 1 revolution per 60 seconds
+        const subSecAngle = ((Date.now() % 60000) / 60000) * Math.PI * 2 - Math.PI / 2;
+        const R_orbit = (R_railInner + R_centerDisc) * 0.5;
+        
+        ctxClock.save();
+        ctxClock.beginPath();
+        ctxClock.setLineDash([2, 5]);
+        ctxClock.arc(cx, cy, R_orbit, 0, Math.PI * 2);
+        ctxClock.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.07)';
+        ctxClock.lineWidth = 1;
+        ctxClock.stroke();
+        ctxClock.restore();
+
+        // Orbiting satellite jewel with comet glow
+        const satX = cx + Math.cos(subSecAngle) * R_orbit;
+        const satY = cy + Math.sin(subSecAngle) * R_orbit;
+        ctxClock.beginPath();
+        ctxClock.arc(satX, satY, 2.5, 0, Math.PI * 2);
+        ctxClock.fillStyle = accentColor;
+        ctxClock.fill();
+        ctxClock.beginPath();
+        ctxClock.arc(satX, satY, 6, 0, Math.PI * 2);
+        ctxClock.strokeStyle = accentSoft;
+        ctxClock.lineWidth = 1;
+        ctxClock.stroke();
+
+        // 5. Four Cardinal Era Milestone Nodes ('26, '25, '24, '20)
+        const R_node = (R_railOuter + R_railInner) * 0.5;
+
+        eraAngles.forEach((ang, idx) => {
+          const nx = cx + Math.cos(ang) * R_node;
+          const ny = cy + Math.sin(ang) * R_node;
+          const isActive = (idx === shownIdx);
+          const isHovered = (idx === hoveredEra);
+
+          // Outer bearing collar
+          ctxClock.beginPath();
+          ctxClock.arc(nx, ny, isActive ? 8 : (isHovered ? 7 : 5.5), 0, Math.PI * 2);
+          ctxClock.fillStyle = isDark ? '#1C1816' : '#FFFFFF';
+          ctxClock.fill();
+          ctxClock.strokeStyle = isActive ? accentColor : (isHovered ? accentSoft : (isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.25)'));
+          ctxClock.lineWidth = isActive ? 2 : 1.2;
+          ctxClock.stroke();
+
+          // Center jewel pip
+          ctxClock.beginPath();
+          ctxClock.arc(nx, ny, isActive ? 4 : (isHovered ? 3.5 : 2.5), 0, Math.PI * 2);
+          ctxClock.fillStyle = isActive ? accentColor : (isHovered ? accentColor : (isDark ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.35)'));
+          ctxClock.fill();
+
+          if (isActive) {
+            // Luminous pulsing aura
+            ctxClock.beginPath();
+            ctxClock.arc(nx, ny, 13, 0, Math.PI * 2);
+            ctxClock.strokeStyle = accentSoft;
+            ctxClock.lineWidth = 1.2;
+            ctxClock.stroke();
+          }
+
+          // Micro badge numeral outside the rail
+          const labelDist = R_bezel + 11;
+          const lx = cx + Math.cos(ang) * labelDist;
+          const ly = cy + Math.sin(ang) * labelDist;
+
+          ctxClock.save();
+          ctxClock.fillStyle = isActive ? (isDark ? 'rgba(240, 154, 91, 0.18)' : 'rgba(229, 138, 78, 0.15)') : 'transparent';
+          ctxClock.beginPath();
+          if (ctxClock.roundRect) {
+            ctxClock.roundRect(lx - 12, ly - 7, 24, 14, 4);
+          } else {
+            ctxClock.rect(lx - 12, ly - 7, 24, 14);
+          }
+          ctxClock.fill();
+          if (isActive) {
+            ctxClock.strokeStyle = accentSoft;
+            ctxClock.lineWidth = 1;
+            ctxClock.stroke();
+          }
+
+          ctxClock.font = `${isActive ? '800' : '600'} 10px 'DM Mono', monospace`;
+          ctxClock.fillStyle = isActive ? accentColor : (isDark ? 'rgba(240, 235, 230, 0.7)' : 'rgba(40, 35, 30, 0.7)');
+          ctxClock.textAlign = 'center';
+          ctxClock.textBaseline = 'middle';
+          ctxClock.fillText(eraLabels[idx], lx, ly);
+          ctxClock.restore();
+        });
+
+        // 6. Main Chronograph Sweep Needle & Progress Trail Arc
+        const targetAngle = -Math.PI / 2 + storyScrollProgress * (Math.PI * 1.5);
+        currentSweepAngle += (targetAngle - currentSweepAngle) * 0.16;
+
+        // Glowing trajectory arc
+        if (currentSweepAngle > -Math.PI / 2) {
+          ctxClock.beginPath();
+          ctxClock.arc(cx, cy, R_node, -Math.PI / 2, currentSweepAngle, false);
+          ctxClock.strokeStyle = accentColor;
+          ctxClock.lineWidth = 2.8;
+          ctxClock.lineCap = 'round';
+          ctxClock.stroke();
+
+          ctxClock.beginPath();
+          ctxClock.arc(cx, cy, R_node, -Math.PI / 2, currentSweepAngle, false);
+          ctxClock.strokeStyle = accentSoft;
+          ctxClock.lineWidth = 6;
+          ctxClock.lineCap = 'round';
+          ctxClock.stroke();
+        }
+
+        // Chrono Hand Needle
+        const needleLen = R_railOuter - 3;
+        const nx = cx + Math.cos(currentSweepAngle) * needleLen;
+        const ny = cy + Math.sin(currentSweepAngle) * needleLen;
+        const tailLen = 18;
+        const tx = cx - Math.cos(currentSweepAngle) * tailLen;
+        const ty = cy - Math.sin(currentSweepAngle) * tailLen;
+
+        ctxClock.beginPath();
+        ctxClock.moveTo(tx, ty);
+        ctxClock.lineTo(nx, ny);
+        ctxClock.strokeStyle = accentColor;
+        ctxClock.lineWidth = 2;
+        ctxClock.stroke();
+
+        ctxClock.beginPath();
+        ctxClock.arc(nx, ny, 3.8, 0, Math.PI * 2);
+        ctxClock.fillStyle = isDark ? '#FFFFFF' : '#1C1816';
+        ctxClock.fill();
+        ctxClock.strokeStyle = accentColor;
+        ctxClock.lineWidth = 2;
+        ctxClock.stroke();
+
+        ctxClock.beginPath();
+        ctxClock.arc(tx, ty, 3, 0, Math.PI * 2);
+        ctxClock.fillStyle = isDark ? '#1C1816' : '#FFFFFF';
+        ctxClock.fill();
+        ctxClock.strokeStyle = accentColor;
+        ctxClock.lineWidth = 1.5;
+        ctxClock.stroke();
+
+        // 7. Sapphire Crystal Lens Sheen (Curved Reflection)
+        const glassSheen = ctxClock.createLinearGradient(cx - R_bezel, cy - R_bezel, cx + R_bezel, cy + R_bezel);
+        glassSheen.addColorStop(0, isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(255, 255, 255, 0.35)');
+        glassSheen.addColorStop(0.35, isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.08)');
+        glassSheen.addColorStop(0.5, 'transparent');
+        ctxClock.save();
+        ctxClock.beginPath();
+        ctxClock.arc(cx, cy, R_bezel - 1, 0, Math.PI * 2);
+        ctxClock.fillStyle = glassSheen;
+        ctxClock.fill();
+        ctxClock.restore();
+
+        requestAnimationFrame(renderClock);
+      }
+      requestAnimationFrame(renderClock);
+    }
+  }
+
+  /* ==========================================================================
+     11. 3D HOLOGRAPHIC ABILITY CARD (MODAL & TILT)
+     ========================================================================== */
+  const holo = $('#holo');
+  const holoOpen = $('#holoOpen');
+  const holoClose = $('#holoClose');
+  const hc = $('#hc');
+  const openHoloFromFooter = $('#openHoloFromFooter');
+
+  function openHoloCard() {
+    if (holo) {
+      playSound('door');
+      holo.hidden = false;
+      document.body.style.overflow = 'hidden';
+      if (hc) {
+        hc.classList.remove('flipped');
+        hc.style.transform = 'none';
+      }
+      setTimeout(() => {
+        $$('.hc__meter i', holo).forEach(bar => {
+          const target = bar.getAttribute('data-pct') || '90%';
+          bar.style.width = target;
+        });
+      }, 120);
+    }
+  }
+
+  function closeHoloCard() {
+    if (holo) {
+      holo.hidden = true;
+      document.body.style.overflow = '';
+      if (hc) {
+        hc.classList.remove('flipped');
+        hc.style.transform = 'none';
+      }
+      $$('.hc__meter i', holo).forEach(bar => {
+        bar.style.width = '0%';
+      });
+    }
+  }
+
+  if (holoOpen) holoOpen.addEventListener('click', openHoloCard);
+  if (openHoloFromFooter) openHoloFromFooter.addEventListener('click', openHoloCard);
+  if (holoClose) holoClose.addEventListener('click', closeHoloCard);
+  if (holo) {
+    holo.addEventListener('click', e => {
+      if (e.target === holo) closeHoloCard();
+    });
+  }
+
+  const hcEmailCopy = $('#hcEmailCopy');
+  if (hcEmailCopy) {
+    hcEmailCopy.addEventListener('click', e => {
+      e.stopPropagation();
+      copyEmailAction();
+    });
+  }
+
+  if (hc) {
+    hc.addEventListener('click', () => {
+      hc.classList.toggle('flipped');
+    });
+
+    if (!isReduced) {
+      hc.addEventListener('pointermove', e => {
+        const rect = hc.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const rotX = -y * 24;
+        const rotY = x * 24;
+
+        hc.style.setProperty('--glare-x', `${(x + 0.5) * 100}%`);
+        hc.style.setProperty('--glare-y', `${(y + 0.5) * 100}%`);
+        hc.style.setProperty('--foil-opacity', `${Math.min(0.6, Math.hypot(x, y) * 1.2)}`);
+
+        if (!hc.classList.contains('flipped')) {
+          hc.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        } else {
+          hc.style.transform = `rotateX(${rotX}deg) rotateY(${rotY + 180}deg)`;
+        }
+      });
+
+      hc.addEventListener('pointerleave', () => {
+        if (!hc.classList.contains('flipped')) {
+          hc.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        } else {
+          hc.style.transform = 'rotateX(0deg) rotateY(180deg)';
+        }
+      });
+    }
+  }
+
+  /* ==========================================================================
+     12. FLUID EDGE-TO-EDGE NAME FOOTER RESIZING
+     ========================================================================== */
+  function fitFooterWord() {
+    const word = $('.sf__word');
+    if (!word) return;
+    const span = [...word.children].find(s => getComputedStyle(s).display !== 'none');
+    if (!span) return;
+
+    word.style.removeProperty('--wf');
+    const containerW = word.parentElement.clientWidth;
+    const currentW = span.scrollWidth;
+    if (currentW > 0 && containerW > 0) {
+      const ratio = containerW / currentW;
+      const computedFont = parseFloat(getComputedStyle(word).fontSize) || 16;
+      const targetSize = Math.floor(computedFont * ratio * 0.98);
+      word.style.setProperty('--wf', `${targetSize}px`);
+    }
+  }
+  window.addEventListener('resize', fitFooterWord);
+  window.addEventListener('load', fitFooterWord);
+
+  /* ==========================================================================
+     13. CONTACT / REQUEST MODAL & COPY TOAST
+     ========================================================================== */
+  const modal = $('#modal');
+  const mClose = $('#mClose');
+  const mDone = $('#mDone');
+  const reqForm = $('#reqForm');
+  const mFormWrap = $('#mFormWrap');
+  const mSuccess = $('#mSuccess');
+  const toast = $('#toast');
+  const toastText = $('#toastText');
+  let toastTimer = null;
+
+  function showToast(msg) {
+    if (!toast) return;
+    if (toastText) toastText.textContent = msg;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.hidden = true; }, 3200);
+  }
+
+  function openContactModal() {
+    if (modal) {
+      modal.hidden = false;
+      if (mFormWrap) mFormWrap.hidden = false;
+      if (mSuccess) mSuccess.hidden = true;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeContactModal() {
+    if (modal) {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+  }
+
+  $$('[data-contact]').forEach(b => b.addEventListener('click', openContactModal));
+  if (mClose) mClose.addEventListener('click', closeContactModal);
+  if (mDone) mDone.addEventListener('click', closeContactModal);
+  if (modal) {
+    modal.addEventListener('click', e => {
+      if (e.target === modal) closeContactModal();
+    });
+  }
+
+  if (reqForm) {
+    reqForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = $('#f-name').value;
+      const email = $('#f-email').value;
+      const role = $('#f-role').value;
+      const project = $('#f-project').value;
+
+      const subject = encodeURIComponent(`Inquiry from ${name} (${role})`);
+      const body = encodeURIComponent(`Hi Jayesh,\n\nName: ${name}\nEmail: ${email}\nOpportunity: ${role}\n\nScope / Message:\n${project}\n\nBest regards,\n${name}`);
+      window.location.href = `mailto:jayeshsingh9b@gmail.com?subject=${subject}&body=${body}`;
+
+      if (mFormWrap) mFormWrap.hidden = true;
+      if (mSuccess) mSuccess.hidden = false;
+    });
+  }
+
+  function copyEmailAction() {
+    const email = 'jayeshsingh9b@gmail.com';
+    navigator.clipboard.writeText(email).then(() => {
+      showToast('Copied jayeshsingh9b@gmail.com to clipboard! ✓');
+    }).catch(() => {
+      showToast('Email: jayeshsingh9b@gmail.com');
+    });
   }
 
   const copyEmailBtn = $('#copyEmailBtn');
-  const copyBtnText = $('#copyBtnText');
-  const contactEmailLink = $('#contactEmailLink');
-  const VERIFIED_EMAIL = 'jayeshsingh9b@gmail.com';
+  const mCopyEmail = $('#mCopyEmail');
+  if (copyEmailBtn) copyEmailBtn.addEventListener('click', copyEmailAction);
+  if (mCopyEmail) mCopyEmail.addEventListener('click', copyEmailAction);
 
-  function copyEmailToClipboard() {
-    if (copyBtnText) copyBtnText.textContent = 'Email Copied ✓';
-    showToast(`Copied ${VERIFIED_EMAIL} to clipboard`);
+  // Mobile menu
+  const menuBtn = $('#menuBtn');
+  const navm = $('#navm');
+  const navClose = $('#navClose');
 
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(VERIFIED_EMAIL).catch(() => {
-        try {
-          const ta = document.createElement('textarea');
-          ta.value = VERIFIED_EMAIL;
-          ta.style.position = 'fixed';
-          ta.style.opacity = '0';
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand('copy');
-          ta.remove();
-        } catch (e) {
-          // ignore
-        }
-      });
-    }
-
-    setTimeout(() => {
-      if (copyBtnText) copyBtnText.textContent = 'Copy Email';
-    }, 2500);
+  function openMobileMenu() {
+    if (!navm) return;
+    navm.hidden = false;
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    playSound('door');
   }
 
-  copyEmailBtn?.addEventListener('click', copyEmailToClipboard);
+  function closeMobileMenu() {
+    if (!navm) return;
+    navm.hidden = true;
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
 
-  // Global ⌘C / Ctrl+C shortcut handler when user has not selected other text
-  document.addEventListener('keydown', (e) => {
-    const isCopy = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'c';
-    const selection = window.getSelection().toString();
-    if (isCopy && !selection) {
-      const activeEl = document.activeElement;
-      const isInput = activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA';
-      if (!isInput) {
-        copyEmailToClipboard();
-      }
-    }
-  });
+  if (menuBtn) menuBtn.addEventListener('click', openMobileMenu);
+  if (navClose) navClose.addEventListener('click', closeMobileMenu);
+  if (navm) {
+    navm.addEventListener('click', e => {
+      if (e.target === navm) closeMobileMenu();
+    });
+  }
 
-  // ==========================================================================
-  // 12. INTERACTIVE CONTACT SECTION & GMAIL REDIRECT WORKFLOW (Portfolio V25)
-  // Conversation Category Chips, Dynamic Subject Prefill, and Direct Compose
-  // ==========================================================================
-  const categoryChips = $$('.category-chip');
-  const categoryContextNote = $('#categoryContextNote');
-  const contactFormCard = $('#contactFormCard');
-  const userSubjectInput = $('#userSubject');
+  // Section navigation buttons & Scroll Spy (Home -> Work -> Operations Lab -> Journey -> Contact)
+  const navButtons = $$('.nav button');
+  const spyTargets = [
+    { id: 'contact', btnTarget: 'contact', railTarget: 'about' },
+    { id: 'about', btnTarget: 'about', railTarget: 'about' },
+    { id: 'studio', btnTarget: 'studio', railTarget: 'studio' },
+    { id: 'works', btnTarget: 'works', railTarget: 'works' },
+    { id: 'home', btnTarget: 'home', railTarget: 'home' }
+  ];
 
-  const topicMap = {
-    ops: {
-      subject: 'Operations & Logistics Discussion',
-      note: 'Discussing inventory visibility, beat route productivity, and warehouse fulfillment optimization.',
-      className: 'topic-ops'
-    },
-    supply: {
-      subject: 'Supply Chain & Sourcing Inquiry',
-      note: 'Discussing overseas vendor vetting, landed-cost modeling, and cross-border import logistics.',
-      className: 'topic-supply'
-    },
-    commercial: {
-      subject: 'Commercial & Business Opportunity',
-      note: 'Discussing FMCG territory sales, retailer acquisition, and commercial partnerships.',
-      className: 'topic-commercial'
-    },
-    projects: {
-      subject: 'Project Collaboration & Systems',
-      note: 'Discussing operations consulting, relational database tools, or co-building new systems.',
-      className: 'topic-projects'
-    },
-    general: {
-      subject: 'General Inquiry / Operational Networking',
-      note: 'General questions, professional networking, or discussing ideas across technology and operations.',
-      className: 'topic-general'
-    }
-  };
-
-  categoryChips.forEach((chip) => {
-    chip.addEventListener('click', (e) => {
-      e.preventDefault();
-      const topicKey = chip.dataset.topic;
-      const data = topicMap[topicKey];
-      if (!data) return;
-
-      categoryChips.forEach((c) => {
-        const isCurrent = c === chip;
-        c.classList.toggle('is-selected', isCurrent);
-        c.setAttribute('aria-checked', isCurrent ? 'true' : 'false');
+  function updateNavSpy() {
+    // When near top of home page (< 140px scroll), unconditionally anchor to 'home'
+    if (window.scrollY < 140) {
+      navButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.go === 'home');
       });
+      $$('.side-rail__dot').forEach(dot => {
+        dot.classList.toggle('active', dot.dataset.railTo === 'home');
+      });
+      document.body.classList.remove('scrolled');
+      const railProgress = $('#railProgress');
+      if (railProgress) railProgress.style.height = '0%';
+      return;
+    }
 
-      if (categoryContextNote) {
-        categoryContextNote.textContent = data.note;
+    document.body.classList.toggle('scrolled', window.scrollY > 150);
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = maxScroll > 0 ? (window.scrollY / maxScroll) : 0;
+    const railProgress = $('#railProgress');
+    if (railProgress) railProgress.style.height = `${(progress * 100).toFixed(1)}%`;
+
+    // When near bottom of page (< 80px remaining), anchor to 'contact'
+    if (maxScroll > 0 && window.scrollY >= maxScroll - 80) {
+      navButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.go === 'contact');
+      });
+      $$('.side-rail__dot').forEach(dot => {
+        dot.classList.toggle('active', dot.dataset.railTo === 'about');
+      });
+      return;
+    }
+
+    const scrollPos = window.scrollY + 220;
+    let activeTarget = 'home';
+    let activeRailTarget = 'home';
+
+    for (const target of spyTargets) {
+      const el = document.getElementById(target.id);
+      if (el) {
+        const docTop = el.getBoundingClientRect().top + window.scrollY;
+        if (docTop <= scrollPos) {
+          activeTarget = target.btnTarget;
+          activeRailTarget = target.railTarget || target.btnTarget;
+          break;
+        }
       }
+    }
 
-      if (contactFormCard) {
-        contactFormCard.className = `contact-form-card ${data.className}`;
+    navButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.go === activeTarget);
+    });
+
+    // Update side-rail active dots
+    $$('.side-rail__dot').forEach(dot => {
+      const rTarget = dot.dataset.railTo;
+      dot.classList.toggle('active', rTarget === activeRailTarget);
+    });
+  }
+  window.updateNavSpy = updateNavSpy;
+  window.addEventListener('scroll', updateNavSpy, { passive: true });
+  updateNavSpy();
+
+  $$('[data-rail-to]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.railTo;
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        playSound('tick');
       }
-
-      if (userSubjectInput) {
-        userSubjectInput.value = data.subject;
-      }
-
-      showToast(`Topic selected: ${chip.textContent.trim()}`);
     });
   });
 
-  const inquiryForm = $('#inquiryForm');
-  const formFeedback = $('#formFeedback');
-  const formFallback = $('#formFallback');
-  const fallbackMailtoLink = $('#fallbackMailtoLink');
+  $$('[data-go]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.go;
+      const el = document.getElementById(targetId);
+      if (el) {
+        closeMobileMenu();
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 
-  inquiryForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
+  $$('.navm a, .navm [data-contact]').forEach(item => {
+    item.addEventListener('click', closeMobileMenu);
+  });
 
-    const name = $('#userName')?.value.trim();
-    const email = $('#userEmail')?.value.trim();
-    const subject = $('#userSubject')?.value.trim();
-    const message = $('#userMsg')?.value.trim();
+  $$('[data-door]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.door, 10);
+      const works = $('#works');
+      if (works) {
+        works.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => { setActiveDoor(idx); }, 500);
+      }
+    });
+  });
 
-    // 1. Validate required fields
-    if (!name || !email || !subject || !message) {
-      if (formFeedback) {
-        formFeedback.style.color = 'var(--accent-coral)';
-        formFeedback.textContent = 'Please fill out all required fields before continuing.';
+  const toTopBtn = $('#toTopBtn');
+  if (toTopBtn) {
+    window.addEventListener('scroll', () => {
+      toTopBtn.hidden = window.scrollY < 600;
+    }, { passive: true });
+    toTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /* ==========================================================================
+     13. COMMAND PALETTE CONTROLLER (⌘K) & GLOBAL SHORTCUTS
+     ========================================================================== */
+  const cmdDialog = $('#cmdDialog');
+  const cmdBtn = $('#cmdBtn');
+  const cmdInput = $('#cmdInput');
+  const cmdList = $('#cmdList');
+  const cmdEsc = $('#cmdEsc');
+  const cmdItems = $$('.cmd-item', cmdList);
+  let selectedCmdIdx = 0;
+
+  function openCommandPalette() {
+    if (!cmdDialog) return;
+    playSound('click');
+    cmdDialog.showModal();
+    if (cmdInput) {
+      cmdInput.value = '';
+      cmdInput.focus();
+    }
+    filterCmdItems('');
+  }
+
+  function closeCommandPalette() {
+    if (!cmdDialog || !cmdDialog.open) return;
+    cmdDialog.close();
+  }
+
+  function executeCmdAction(action) {
+    closeCommandPalette();
+    playSound('click');
+    switch (action) {
+      case 'go-home': {
+        const el = $('#home');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        break;
+      }
+      case 'go-works': {
+        const el = $('#works');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        break;
+      }
+      case 'go-studio': {
+        const el = $('#studio');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        break;
+      }
+      case 'go-about': {
+        const el = $('#about');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        break;
+      }
+      case 'open-holo':
+        openHoloCard();
+        break;
+      case 'open-contact':
+        openContactModal();
+        break;
+      case 'copy-email':
+        copyEmailAction();
+        break;
+      case 'toggle-theme':
+        toggleTheme();
+        break;
+      case 'download-cv':
+        window.open('assets/Jayesh-Singh-Resume.pdf', '_blank', 'noopener,noreferrer');
+        break;
+    }
+  }
+
+  function filterCmdItems(query) {
+    const q = query.trim().toLowerCase();
+    const visibleItems = [];
+
+    $$('.cmd-group', cmdList).forEach(group => {
+      let groupHasMatch = false;
+      $$('.cmd-item', group).forEach(item => {
+        const text = (item.textContent || '').toLowerCase();
+        const matches = !q || text.includes(q);
+        item.style.display = matches ? 'flex' : 'none';
+        item.classList.remove('selected');
+        if (matches) {
+          visibleItems.push(item);
+          groupHasMatch = true;
+        }
+      });
+      group.style.display = groupHasMatch ? 'flex' : 'none';
+    });
+
+    selectedCmdIdx = 0;
+    if (visibleItems.length > 0) {
+      visibleItems[0].classList.add('selected');
+    }
+  }
+
+  function getVisibleCmdItems() {
+    return $$('.cmd-item', cmdList).filter(item => item.style.display !== 'none');
+  }
+
+  function selectCmdItem(idx) {
+    const visible = getVisibleCmdItems();
+    if (visible.length === 0) return;
+    visible.forEach(it => it.classList.remove('selected'));
+    selectedCmdIdx = (idx + visible.length) % visible.length;
+    visible[selectedCmdIdx].classList.add('selected');
+    visible[selectedCmdIdx].scrollIntoView({ block: 'nearest' });
+  }
+
+  const railCmdBtn = $('#railCmdBtn');
+  if (cmdBtn) cmdBtn.addEventListener('click', openCommandPalette);
+  if (railCmdBtn) railCmdBtn.addEventListener('click', openCommandPalette);
+  if (cmdEsc) cmdEsc.addEventListener('click', closeCommandPalette);
+
+  if (cmdDialog) {
+    cmdDialog.addEventListener('click', e => {
+      if (e.target === cmdDialog) closeCommandPalette();
+    });
+  }
+
+  if (cmdInput) {
+    cmdInput.addEventListener('input', e => {
+      filterCmdItems(e.target.value);
+    });
+
+    cmdInput.addEventListener('keydown', e => {
+      const visible = getVisibleCmdItems();
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectCmdItem(selectedCmdIdx + 1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectCmdItem(selectedCmdIdx - 1);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (visible[selectedCmdIdx]) {
+          const action = visible[selectedCmdIdx].dataset.action;
+          if (action) executeCmdAction(action);
+        }
+      } else if (e.key === 'Escape') {
+        closeCommandPalette();
+      }
+    });
+  }
+
+  cmdItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const action = item.dataset.action;
+      if (action) executeCmdAction(action);
+    });
+  });
+
+  window.addEventListener('keydown', e => {
+    const isInput = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      if (cmdDialog && cmdDialog.open) {
+        closeCommandPalette();
+      } else {
+        openCommandPalette();
       }
       return;
     }
 
-    // 2. Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      if (formFeedback) {
-        formFeedback.style.color = 'var(--accent-coral)';
-        formFeedback.textContent = 'Please enter a valid email address.';
-      }
+    if (e.key === 'Escape') {
+      if (profileDialog && profileDialog.open) closeProfileSummary();
+      if (cmdDialog && cmdDialog.open) closeCommandPalette();
+      if (chamberModal && chamberModal.open) chamberModal.close();
+      closeHoloCard();
+      closeContactModal();
+      if (navm) navm.hidden = true;
       return;
     }
 
-    // 3. Prepare message body
-    const activeChip = $('.category-chip.is-selected');
-    const selectedTopic = activeChip ? activeChip.textContent.trim() : 'Operations & Logistics';
-    const bodyText = `Hi Jayesh,\n\n${message}\n\n---\nDiscussion Topic: ${selectedTopic}\nFrom: ${name}\nSender's Email: ${email}`;
-
-    // 4. Construct Gmail URL pattern
-    const recipient = VERIFIED_EMAIL;
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
-
-    // Prepare mailto fallback
-    const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
-    if (fallbackMailtoLink) {
-      fallbackMailtoLink.setAttribute('href', mailtoUrl);
-    }
-
-    // 5. Open Gmail in a new tab
-    let popupBlocked = false;
-    try {
-      const newWindow = window.open(gmailUrl, '_blank', 'noopener,noreferrer');
-      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-        popupBlocked = true;
+    if (!isInput) {
+      if (e.key === 'f' || e.key === 'F') {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      } else if (e.key === 'c' || e.key === 'C') {
+        openContactModal();
+      } else if (e.key === 'e' || e.key === 'E') {
+        copyEmailAction();
+      } else if (e.key === 'd' || e.key === 'D') {
+        toggleTheme();
+      } else if (e.key === 'r' || e.key === 'R') {
+        window.open('assets/Jayesh-Singh-Resume.pdf', '_blank', 'noopener,noreferrer');
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        openHoloCard();
       }
-    } catch (err) {
-      popupBlocked = true;
-    }
-
-    // 6. Appropriate feedback (DO NOT show false "sent" notification)
-    if (formFeedback) {
-      formFeedback.style.color = 'var(--accent-teal)';
-      formFeedback.textContent = 'Opening Gmail compose window with your prefilled message. Review and send it directly from your Gmail account.';
-    }
-
-    // 7. Fallback if popup blocked
-    if (popupBlocked && formFallback) {
-      formFallback.style.display = 'block';
     }
   });
 
-  console.log('Jayesh Singh — Portfolio V21 initialized successfully.');
 })();
